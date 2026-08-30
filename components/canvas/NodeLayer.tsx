@@ -15,6 +15,7 @@ import {
 } from '@/lib/canvas/geometry';
 import { leafReadingOrder } from '@/lib/canvas/readingOrder';
 import { INITIAL_FOCUS_WORLD, type ViewportSize } from '@/lib/canvas/viewport';
+import { MOTION } from '@/lib/motion/tokens';
 
 const PRIORITY_COUNT = 6;
 
@@ -121,7 +122,7 @@ export function NodeLayer({
               key={node.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: MOTION.hub, ease: MOTION.easeOut }}
               className="pointer-events-none absolute w-80"
               style={{
                 left: node.position.x,
@@ -130,10 +131,10 @@ export function NodeLayer({
                 transformOrigin: 'top left',
               }}
             >
-              <h2 className="text-3xl font-semibold tracking-tight text-white">
+              <h2 className="font-display text-display text-ink">
                 {node.label}
               </h2>
-              <p className="mt-1 max-w-xs text-sm leading-snug text-neutral-400">
+              <p className="mt-1 max-w-xs text-caption leading-snug text-mute">
                 {node.description}
               </p>
             </motion.div>
@@ -152,7 +153,7 @@ export function NodeLayer({
             type="button"
             data-node-id={node.id}
             aria-label={`${node.title}. ${node.hoverDescription}`}
-            className="absolute cursor-pointer overflow-hidden border-0 bg-neutral-800 p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="absolute cursor-pointer overflow-hidden border-0 bg-void p-0 ring-1 ring-hairline/50"
             style={{
               left: node.position.x,
               top: node.position.y,
@@ -178,6 +179,7 @@ export function NodeLayer({
           >
             {visible ? (
               <span className="absolute inset-0">
+                <span className="tk-loading absolute inset-0" aria-hidden />
                 <Image
                   src={node.thumbnail.src}
                   alt={node.thumbnail.alt}
@@ -200,8 +202,8 @@ export function NodeLayer({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.16 }}
-            className="pointer-events-none absolute z-10 w-64 bg-neutral-950 px-4 py-3 text-white"
+            transition={{ duration: MOTION.hover, ease: MOTION.easeOut }}
+            className="pointer-events-none absolute z-10 w-64 border border-hairline bg-void/95 px-4 py-3 text-ink"
             style={{
               left: hovered.position.x,
               top: hovered.position.y + hovered.position.tileWidth + 10,
@@ -209,10 +211,10 @@ export function NodeLayer({
               transformOrigin: 'top left',
             }}
           >
-            <p className="text-lg leading-tight font-semibold tracking-tight">
+            <p className="font-display text-lede leading-tight">
               {hovered.title}
             </p>
-            <p className="mt-1 text-sm leading-snug text-neutral-400">
+            <p className="mt-1 text-caption leading-snug text-mute">
               {hovered.hoverDescription}
             </p>
           </motion.div>

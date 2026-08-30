@@ -17,7 +17,8 @@ export function AboutSheet({ section }: { section: AboutSection }) {
           <ul className="grid gap-6 sm:grid-cols-2">
             {section.teamMembers.map((member) => (
               <li key={member.name} className="flex flex-col gap-3">
-                <div className="relative aspect-square overflow-hidden bg-neutral-900">
+                <div className="relative aspect-square overflow-hidden bg-void">
+                  <span className="tk-loading absolute inset-0" aria-hidden />
                   <Image
                     src={member.portrait.src}
                     alt={member.portrait.alt}
@@ -27,8 +28,10 @@ export function AboutSheet({ section }: { section: AboutSection }) {
                     className="object-cover"
                   />
                 </div>
-                <p className="font-semibold">{member.name}</p>
-                <p className="text-sm text-neutral-400">{member.role}</p>
+                <p className="font-display text-lede">{member.name}</p>
+                <p className="font-mono text-caption text-mute">
+                  {member.role}
+                </p>
               </li>
             ))}
           </ul>
@@ -41,12 +44,14 @@ export function AboutSheet({ section }: { section: AboutSection }) {
               .sort((a, b) => a.step - b.step)
               .map((step) => (
                 <li key={step.step} className="flex gap-4">
-                  <span className="font-mono text-sm text-neutral-500">
+                  <span className="font-mono text-caption text-signal">
                     {String(step.step).padStart(2, '0')}
                   </span>
                   <div>
-                    <p className="font-semibold">{step.title}</p>
-                    <p className="mt-1 text-neutral-300">{step.description}</p>
+                    <p className="font-display text-lede">{step.title}</p>
+                    <p className="mt-1 text-body text-mute">
+                      {step.description}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -61,8 +66,10 @@ export function AboutSheet({ section }: { section: AboutSection }) {
           <ul className="space-y-6">
             {section.services.map((service) => (
               <li key={service.slug.current}>
-                <p className="font-semibold">{service.title}</p>
-                <p className="mt-1 text-neutral-300">{service.description}</p>
+                <p className="font-display text-lede">{service.title}</p>
+                <p className="mt-1 text-body text-mute">
+                  {service.description}
+                </p>
               </li>
             ))}
           </ul>

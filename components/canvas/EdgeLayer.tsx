@@ -17,7 +17,7 @@ export function EdgeLayer({
   return (
     <svg
       viewBox={`0 0 ${WORLD_WIDTH} ${WORLD_HEIGHT}`}
-      className="pointer-events-none absolute inset-0 text-neutral-500"
+      className="pointer-events-none absolute inset-0 text-hairline"
       aria-hidden
     >
       {edges.map((edge) => {

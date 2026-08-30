@@ -3,11 +3,11 @@ import Image from 'next/image';
 import type { PortableText } from '@/types/content';
 
 const headingClass: Record<string, string> = {
-  h2: 'text-2xl font-semibold tracking-tight',
-  h3: 'text-xl font-semibold tracking-tight',
-  h4: 'text-lg font-semibold',
-  blockquote: 'border-l border-neutral-600 pl-4 text-neutral-300 italic',
-  normal: 'text-neutral-200 leading-relaxed',
+  h2: 'font-display text-title text-ink',
+  h3: 'font-display text-lede text-ink',
+  h4: 'font-display text-body text-ink',
+  blockquote: 'border-l border-signal pl-4 text-lede text-mute italic',
+  normal: 'text-body leading-relaxed text-ink',
 };
 
 export function PortableBody({ value }: { value: PortableText }) {
@@ -16,7 +16,11 @@ export function PortableBody({ value }: { value: PortableText }) {
       {value.map((block) => {
         if (block._type === 'image') {
           return (
-            <div key={block._key} className="relative aspect-video w-full">
+            <div
+              key={block._key}
+              className="relative aspect-video w-full overflow-hidden bg-void"
+            >
+              <span className="tk-loading absolute inset-0" aria-hidden />
               <Image
                 src={block.image.src}
                 alt={block.image.alt}
@@ -32,7 +36,7 @@ export function PortableBody({ value }: { value: PortableText }) {
         const text = block.children.map((child) => child.text).join('');
         const style = block.style ?? 'normal';
         const className =
-          headingClass[style] ?? 'text-neutral-200 leading-relaxed';
+          headingClass[style] ?? 'text-body leading-relaxed text-ink';
         if (block.style === 'h2') {
           return (
             <h2 key={block._key} className={className}>

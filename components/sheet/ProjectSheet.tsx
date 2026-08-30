@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
+import { EmptyState } from '@/components/ui/EmptyState';
 import type { Project } from '@/types/content';
 
 export function ProjectSheet({
@@ -23,7 +24,7 @@ export function ProjectSheet({
   return (
     <Sheet title={`${project.client} — ${project.title}`}>
       <div className="mx-auto flex max-w-3xl flex-col gap-8">
-        <div className="relative aspect-video overflow-hidden bg-neutral-900">
+        <div className="relative aspect-video overflow-hidden bg-void">
           {playing && vimeoId ? (
             <iframe
               title={`${project.title} film`}
@@ -37,6 +38,7 @@ export function ProjectSheet({
               className="relative h-full w-full cursor-pointer"
               onClick={() => setPlaying(true)}
             >
+              <span className="tk-loading absolute inset-0" aria-hidden />
               <Image
                 src={project.posterImage.src}
                 alt={project.posterImage.alt}
@@ -45,7 +47,7 @@ export function ProjectSheet({
                 unoptimized={project.posterImage.src.endsWith('.svg')}
                 className="object-cover"
               />
-              <span className="absolute inset-0 flex items-center justify-center bg-black/30 text-sm tracking-wide uppercase">
+              <span className="absolute inset-0 flex items-center justify-center bg-void/40 font-mono text-caption tracking-[0.2em] text-ink uppercase">
                 Play
               </span>
             </button>
@@ -53,12 +55,14 @@ export function ProjectSheet({
         </div>
 
         <header>
-          <p className="text-sm text-neutral-400">{project.client}</p>
-          <p className="mt-2 text-neutral-300">{project.hoverDescription}</p>
+          <p className="font-mono text-caption tracking-widest text-mute uppercase">
+            {project.client}
+          </p>
+          <p className="mt-2 text-lede text-ink">{project.hoverDescription}</p>
         </header>
 
         {project.credits.length > 0 ? (
-          <ul className="space-y-1 font-mono text-sm text-neutral-400">
+          <ul className="space-y-1 font-mono text-caption text-mute">
             {project.credits.map((credit) => (
               <li key={`${credit.role}-${credit.name}`}>
                 {credit.role} — {credit.name}
@@ -75,8 +79,9 @@ export function ProjectSheet({
               item._type === 'image' ? (
                 <div
                   key={`${item.image.src}-${index}`}
-                  className="relative aspect-square"
+                  className="relative aspect-square overflow-hidden bg-void"
                 >
+                  <span className="tk-loading absolute inset-0" aria-hidden />
                   <Image
                     src={item.image.src}
                     alt={item.image.alt}
@@ -87,19 +92,21 @@ export function ProjectSheet({
                   />
                 </div>
               ) : (
-                <p key={item.url} className="text-sm text-neutral-400">
+                <p key={item.url} className="text-caption text-mute">
                   {item.url}
                 </p>
               ),
             )}
           </div>
-        ) : null}
+        ) : (
+          <EmptyState message="Stills will appear here." />
+        )}
 
-        <nav className="flex justify-between border-t border-neutral-800 pt-6 text-sm">
+        <nav className="flex justify-between border-t border-hairline pt-6 font-mono text-caption tracking-widest uppercase">
           {prevSlug ? (
             <Link
               href={`/work/${prevSlug}`}
-              className="underline-offset-4 hover:underline"
+              className="text-mute underline-offset-4 hover:text-ink hover:underline"
             >
               Previous
             </Link>
@@ -109,7 +116,7 @@ export function ProjectSheet({
           {nextSlug ? (
             <Link
               href={`/work/${nextSlug}`}
-              className="underline-offset-4 hover:underline"
+              className="text-mute underline-offset-4 hover:text-ink hover:underline"
             >
               Next
             </Link>

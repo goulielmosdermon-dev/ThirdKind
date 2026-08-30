@@ -301,7 +301,7 @@ export function CanvasViewport({
   return (
     <div
       ref={frameRef}
-      className={`relative h-dvh w-dvw overflow-hidden bg-neutral-950 select-none ${
+      className={`relative h-dvh w-dvw overflow-hidden bg-void select-none ${
         panning ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       style={{ touchAction: 'none' }}
@@ -334,26 +334,26 @@ export function CanvasViewport({
         ) : null}
       </div>
 
-      <p className="pointer-events-none absolute top-8 left-10 text-6xl font-semibold tracking-tight text-white">
+      <p className="font-display pointer-events-none absolute top-8 left-10 text-wordmark text-ink">
         Third
       </p>
-      <p className="pointer-events-none absolute right-10 bottom-24 text-6xl font-semibold tracking-tight text-white">
+      <p className="font-display pointer-events-none absolute right-10 bottom-24 text-wordmark text-ink">
         Kind
       </p>
 
-      <p className="pointer-events-none absolute bottom-6 left-6 rounded-full border border-neutral-600 px-3 py-1.5 text-sm text-neutral-300">
+      <p className="pointer-events-none absolute bottom-6 left-6 rounded-full border border-hairline px-3 py-1.5 text-caption text-mute">
         Click a node to open it
       </p>
 
       <div
         data-chrome
-        className="absolute right-6 bottom-6 flex items-center gap-2 text-sm text-neutral-200"
+        className="absolute right-6 bottom-6 flex items-center gap-2 font-mono text-caption tracking-widest text-mute uppercase"
       >
         <span>Zoom</span>
         <button
           type="button"
           aria-label="Zoom in"
-          className="flex h-11 w-11 items-center justify-center border border-neutral-600"
+          className="flex h-11 w-11 items-center justify-center border border-hairline text-ink"
           onClick={() => onZoomButton(1)}
         >
           +
@@ -361,7 +361,7 @@ export function CanvasViewport({
         <button
           type="button"
           aria-label="Zoom out"
-          className="flex h-11 w-11 items-center justify-center border border-neutral-600"
+          className="flex h-11 w-11 items-center justify-center border border-hairline text-ink"
           onClick={() => onZoomButton(-1)}
         >
           −

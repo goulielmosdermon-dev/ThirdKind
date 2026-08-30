@@ -20,7 +20,8 @@ export function ArticleSheet({ article }: { article: Article }) {
   return (
     <Sheet title={article.title}>
       <div className="mx-auto flex max-w-3xl flex-col gap-8">
-        <div className="relative aspect-[16/9] overflow-hidden bg-neutral-900">
+        <div className="relative aspect-[16/9] overflow-hidden bg-void">
+          <span className="tk-loading absolute inset-0" aria-hidden />
           <Image
             src={article.coverImage.src}
             alt={article.coverImage.alt}
@@ -30,14 +31,14 @@ export function ArticleSheet({ article }: { article: Article }) {
             className="object-cover"
           />
         </div>
-        <p className="text-sm text-neutral-400">
+        <p className="font-mono text-caption tracking-widest text-mute uppercase">
           {published} · {minutes} min read
         </p>
-        <p className="text-neutral-300">{article.excerpt}</p>
+        <p className="text-lede text-ink">{article.excerpt}</p>
         <PortableBody value={article.body} />
         <button
           type="button"
-          className="self-start border border-neutral-600 px-4 py-2 text-sm"
+          className="self-start border border-hairline px-4 py-2 font-mono text-caption tracking-widest uppercase"
           onClick={async () => {
             await navigator.clipboard.writeText(window.location.href);
             setCopied(true);

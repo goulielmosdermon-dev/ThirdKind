@@ -1,6 +1,7 @@
 import { WORLD_HEIGHT, WORLD_WIDTH, type Viewport } from '@/types/content';
 
 import { screenToWorld, type Point } from '@/lib/canvas/coords';
+import { MOTION } from '@/lib/motion/tokens';
 
 export type ViewportSize = {
   width: number;
@@ -12,7 +13,7 @@ export const SCALE_MAX = 2.6;
 export const INITIAL_SCALE = 0.55;
 export const INITIAL_FOCUS_WORLD = { x: 2480, y: 1520 };
 export const ZOOM_STEP = 1.25;
-export const ZOOM_ANIMATION_MS = 220;
+export const ZOOM_ANIMATION_MS = MOTION.zoom * 1000;
 export const MIN_VISIBLE_FRACTION = 0.6;
 export const CLICK_TRAVEL_PX = 6;
 export const CLICK_MAX_DURATION_MS = 400;

@@ -14,14 +14,10 @@ import {
 } from 'react';
 
 import { useSheetNav } from '@/components/sheet/SheetNav';
+import { MOTION } from '@/lib/motion/tokens';
 
-const ENTER_MS = 0.42;
-const EXIT_MS = 0.32;
-const BACKDROP_MS = 0.24;
-const REDUCED_MS = 0.12;
 const SWIPE_PX = 120;
 const SWIPE_VELOCITY = 0.55;
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 function focusable(root: HTMLElement): HTMLElement[] {
   return [
@@ -95,7 +91,7 @@ export function Sheet({
     if (!closing) {
       return;
     }
-    const wait = (reduced ? REDUCED_MS : EXIT_MS) * 1000 + 80;
+    const wait = (reduced ? MOTION.reduced : MOTION.sheetOut) * 1000 + 80;
     const timer = window.setTimeout(() => {
       if (!closedRef.current) {
         closedRef.current = true;
@@ -169,17 +165,21 @@ export function Sheet({
     setDragY(0);
   };
 
-  const duration = reduced ? REDUCED_MS : closing ? EXIT_MS : ENTER_MS;
+  const duration = reduced
+    ? MOTION.reduced
+    : closing
+      ? MOTION.sheetOut
+      : MOTION.sheetIn;
 
   return (
     <div className="fixed inset-0 z-40">
       <motion.button
         type="button"
         aria-label="Close overlay"
-        className="absolute inset-0 bg-black"
+        className="absolute inset-0 bg-void"
         initial={{ opacity: 0 }}
-        animate={{ opacity: closing ? 0 : 0.45 }}
-        transition={{ duration: reduced ? REDUCED_MS : BACKDROP_MS }}
+        animate={{ opacity: closing ? 0 : 0.72 }}
+        transition={{ duration: reduced ? MOTION.reduced : MOTION.backdrop }}
         onClick={requestClose}
       />
       <motion.div
@@ -188,7 +188,7 @@ export function Sheet({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="absolute inset-x-0 bottom-0 flex h-[min(92dvh,900px)] flex-col bg-neutral-950 text-white outline-none"
+        className="absolute inset-x-0 bottom-0 flex h-[min(92dvh,900px)] flex-col border-t border-hairline bg-void text-ink outline-none"
         initial={reduced ? { opacity: 0 } : { y: '100%', opacity: 1 }}
         animate={
           reduced
@@ -197,7 +197,7 @@ export function Sheet({
         }
         transition={{
           duration: !closing && dragY > 0 ? 0 : duration,
-          ease: EASE,
+          ease: MOTION.easeOut,
         }}
         onAnimationComplete={() => {
           if (closing && !closedRef.current) {
@@ -207,22 +207,19 @@ export function Sheet({
         }}
       >
         <div
-          className="flex shrink-0 items-center justify-between border-b border-neutral-800 px-6 py-4"
+          className="flex shrink-0 items-center justify-between border-b border-hairline px-6 py-4"
           onPointerDown={onHeaderPointerDown}
           onPointerMove={onHeaderPointerMove}
           onPointerUp={onHeaderPointerUp}
           onPointerCancel={onHeaderPointerUp}
         >
-          <h1
-            id={titleId}
-            className="pr-4 text-xl font-semibold tracking-tight"
-          >
+          <h1 id={titleId} className="font-display pr-4 text-title text-ink">
             {title}
           </h1>
           <button
             type="button"
             aria-label="Close"
-            className="flex h-11 w-11 shrink-0 items-center justify-center border border-neutral-600"
+            className="flex h-11 w-11 shrink-0 items-center justify-center border border-hairline font-mono text-mute"
             onClick={requestClose}
             onPointerDown={(event) => event.stopPropagation()}
           >

@@ -117,3 +117,30 @@ export function isClickGesture(travelPx: number, durationMs: number): boolean {
 export function viewportCenter(size: ViewportSize): Point {
   return { x: size.width / 2, y: size.height / 2 };
 }
+
+export function viewportToCenterWorld(
+  viewport: Viewport,
+  world: Point,
+  size: ViewportSize,
+): Viewport {
+  return clampViewport(
+    {
+      x: size.width / 2 - world.x * viewport.scale,
+      y: size.height / 2 - world.y * viewport.scale,
+      scale: viewport.scale,
+    },
+    size,
+  );
+}
+
+export function lerpViewport(
+  from: Viewport,
+  to: Viewport,
+  t: number,
+): Viewport {
+  return {
+    x: from.x + (to.x - from.x) * t,
+    y: from.y + (to.y - from.y) * t,
+    scale: from.scale + (to.scale - from.scale) * t,
+  };
+}

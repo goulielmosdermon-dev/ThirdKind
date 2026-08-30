@@ -8,10 +8,11 @@ import {
   type PointerEvent,
 } from 'react';
 
-import type { CanvasNode } from '@/types/content';
+import type { CanvasNode, Edge, LeafCanvasNode } from '@/types/content';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '@/types/content';
 
 import type { Point } from '@/lib/canvas/coords';
+import { tileCenter } from '@/lib/canvas/geometry';
 import { useViewport } from '@/lib/canvas/useViewport';
 import {
   CLICK_TRAVEL_PX,
@@ -21,24 +22,8 @@ import {
   type ViewportSize,
 } from '@/lib/canvas/viewport';
 
-const TILE_ASPECT = 1;
-
-const HUB_FILL = {
-  work: '#e85d4c',
-  thoughts: '#3db8a0',
-  about: '#d4a017',
-  contact: '#c45ed1',
-} as const;
-
-function nodeFill(node: CanvasNode): string {
-  if (node.kind === 'hub') {
-    return '#5b7cfa';
-  }
-  if (node.kind === 'ambient') {
-    return '#3a3a42';
-  }
-  return HUB_FILL[node.hubKey];
-}
+import { EdgeLayer } from '@/components/canvas/EdgeLayer';
+import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
 
 function localPoint(
   event: PointerEvent<HTMLElement> | WheelEvent,
@@ -74,14 +59,28 @@ type PanSession = {
   suppressClick: boolean;
 };
 
-export function CanvasViewport({ nodes }: { nodes: CanvasNode[] }) {
+export function CanvasViewport({
+  nodes,
+  edges,
+}: {
+  nodes: CanvasNode[];
+  edges: Edge[];
+}) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<ViewportSize | null>(null);
   const [panning, setPanning] = useState(false);
   const [gestureActive, setGestureActive] = useState(false);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  const { viewport, panBy, zoomTo, zoomByFactor, animateZoomTo, readViewport } =
-    useViewport(size);
+  const {
+    viewport,
+    panBy,
+    zoomTo,
+    zoomByFactor,
+    animateZoomTo,
+    centerOnWorld,
+    readViewport,
+  } = useViewport(size);
 
   const pointersRef = useRef(new Map<number, Point>());
   const panRef = useRef<PanSession | null>(null);
@@ -220,6 +219,7 @@ export function CanvasViewport({ nodes }: { nodes: CanvasNode[] }) {
 
     if (pan.travel >= CLICK_TRAVEL_PX && !panning) {
       setPanning(true);
+      setHoveredId(null);
     }
 
     panBy(dx, dy);
@@ -268,6 +268,15 @@ export function CanvasViewport({ nodes }: { nodes: CanvasNode[] }) {
     endGestureIfIdle();
   };
 
+  const onFocusNode = (node: LeafCanvasNode) => {
+    if (!size) {
+      return;
+    }
+    if (shouldCenterOnFocus(node, readViewport(), size)) {
+      centerOnWorld(tileCenter(node.position));
+    }
+  };
+
   const onZoomButton = (direction: 1 | -1) => {
     if (!size) {
       return;
@@ -297,31 +306,18 @@ export function CanvasViewport({ nodes }: { nodes: CanvasNode[] }) {
           willChange: gestureActive ? 'transform' : undefined,
         }}
       >
-        {nodes.map((node) => {
-          const width = node.position.tileWidth;
-          const height = width * TILE_ASPECT;
-          const clickable = node.kind === 'leaf';
-          return (
-            <div
-              key={node.id}
-              data-node-id={clickable ? node.id : undefined}
-              aria-hidden={node.kind === 'ambient' ? true : undefined}
-              className="absolute"
-              style={{
-                left: node.position.x,
-                top: node.position.y,
-                width,
-                height,
-                background: nodeFill(node),
-                opacity: node.kind === 'ambient' ? node.opacity : 1,
-                transform: node.position.rotation
-                  ? `rotate(${node.position.rotation}deg)`
-                  : undefined,
-                pointerEvents: clickable ? 'auto' : 'none',
-              }}
-            />
-          );
-        })}
+        <EdgeLayer nodes={nodes} edges={edges} />
+        {size ? (
+          <NodeLayer
+            nodes={nodes}
+            viewport={viewport}
+            size={size}
+            panning={panning}
+            hoveredId={hoveredId}
+            onHover={setHoveredId}
+            onFocusNode={onFocusNode}
+          />
+        ) : null}
       </div>
 
       <p className="pointer-events-none absolute top-8 left-10 text-6xl font-semibold tracking-tight text-white">

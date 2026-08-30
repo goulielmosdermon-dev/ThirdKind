@@ -12,15 +12,23 @@ import type {
   SiteSettings,
 } from '@/types/content';
 
-const PLACEHOLDER: ImageAsset = {
-  src: '/placeholders/tile.svg',
-  alt: 'Placeholder still',
-  width: 480,
-  height: 270,
-};
+const PLACEHOLDER_COUNT = 6;
+
+function placeholderSrc(alt: string): string {
+  let hash = 0;
+  for (let index = 0; index < alt.length; index += 1) {
+    hash = (hash + alt.charCodeAt(index) * (index + 1)) % PLACEHOLDER_COUNT;
+  }
+  return `/placeholders/tile-${hash}.svg`;
+}
 
 function image(alt: string): ImageAsset {
-  return { ...PLACEHOLDER, alt };
+  return {
+    src: placeholderSrc(alt),
+    alt,
+    width: 480,
+    height: 480,
+  };
 }
 
 let portableKey = 0;

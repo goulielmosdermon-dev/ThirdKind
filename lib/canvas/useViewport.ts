@@ -9,7 +9,9 @@ import {
   ZOOM_ANIMATION_MS,
   clampViewport,
   createInitialViewport,
+  lerpViewport,
   viewportReducer,
+  viewportToCenterWorld,
   zoomAroundPoint,
   type ViewportAction,
   type ViewportSize,
@@ -27,6 +29,7 @@ export function useViewport(size: ViewportSize | null): {
   zoomTo: (scale: number, anchor: Point) => void;
   zoomByFactor: (factor: number, anchor: Point) => void;
   animateZoomTo: (scale: number, anchor: Point) => void;
+  centerOnWorld: (world: Point) => void;
   cancelAnimation: () => void;
   readViewport: () => Viewport;
 } {
@@ -101,21 +104,16 @@ export function useViewport(size: ViewportSize | null): {
 
   const readViewport = useCallback(() => draftRef.current, []);
 
-  const animateZoomTo = useCallback(
-    (scale: number, anchor: Point) => {
+  const animateTo = useCallback(
+    (end: Viewport) => {
       cancelAnimation();
       const start = draftRef.current;
-      const end = zoomAroundPoint(start, scale, anchor, sizeRef.current);
       const origin = performance.now();
 
       const step = (now: number) => {
         const t = Math.min(1, (now - origin) / ZOOM_ANIMATION_MS);
         const eased = easeOutCubic(t);
-        commit({
-          x: start.x + (end.x - start.x) * eased,
-          y: start.y + (end.y - start.y) * eased,
-          scale: start.scale + (end.scale - start.scale) * eased,
-        });
+        commit(lerpViewport(start, end, eased));
         if (t < 1) {
           animRef.current = requestAnimationFrame(step);
         } else {
@@ -126,6 +124,24 @@ export function useViewport(size: ViewportSize | null): {
       animRef.current = requestAnimationFrame(step);
     },
     [cancelAnimation, commit],
+  );
+
+  const animateZoomTo = useCallback(
+    (scale: number, anchor: Point) => {
+      animateTo(
+        zoomAroundPoint(draftRef.current, scale, anchor, sizeRef.current),
+      );
+    },
+    [animateTo],
+  );
+
+  const centerOnWorld = useCallback(
+    (world: Point) => {
+      animateTo(
+        viewportToCenterWorld(draftRef.current, world, sizeRef.current),
+      );
+    },
+    [animateTo],
   );
 
   useEffect(() => {
@@ -160,6 +176,7 @@ export function useViewport(size: ViewportSize | null): {
     zoomTo,
     zoomByFactor,
     animateZoomTo,
+    centerOnWorld,
     cancelAnimation,
     readViewport,
   };

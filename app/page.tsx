@@ -1,6 +1,6 @@
 import { CanvasViewport } from '@/components/canvas/CanvasViewport';
-import { canvasNodes } from '@/lib/fixtures/content';
+import { canvasNodes, edges } from '@/lib/fixtures/content';
 
 export default function Home() {
-  return <CanvasViewport nodes={canvasNodes} />;
+  return <CanvasViewport nodes={canvasNodes} edges={edges} />;
 }

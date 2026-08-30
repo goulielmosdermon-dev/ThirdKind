@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import {
   useCallback,
   useEffect,
@@ -24,6 +25,7 @@ import {
 
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
+import { useSheetNav } from '@/components/sheet/SheetNav';
 
 function localPoint(
   event: PointerEvent<HTMLElement> | WheelEvent,
@@ -71,6 +73,8 @@ export function CanvasViewport({
   const [panning, setPanning] = useState(false);
   const [gestureActive, setGestureActive] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const router = useRouter();
+  const { markOpenedFromCanvas } = useSheetNav();
 
   const {
     viewport,
@@ -239,7 +243,11 @@ export function CanvasViewport({
       pan.leafId &&
       isClickGesture(pan.travel, event.timeStamp - pan.startTime)
     ) {
-      console.log(pan.leafId);
+      const node = nodes.find((candidate) => candidate.id === pan.leafId);
+      if (node?.kind === 'leaf') {
+        markOpenedFromCanvas(node.id);
+        router.push(node.href);
+      }
     }
 
     pointersRef.current.delete(event.pointerId);
@@ -266,6 +274,11 @@ export function CanvasViewport({
     panRef.current = null;
     pinchRef.current = null;
     endGestureIfIdle();
+  };
+
+  const openLeaf = (node: LeafCanvasNode) => {
+    markOpenedFromCanvas(node.id);
+    router.push(node.href);
   };
 
   const onFocusNode = (node: LeafCanvasNode) => {
@@ -316,6 +329,7 @@ export function CanvasViewport({
             hoveredId={hoveredId}
             onHover={setHoveredId}
             onFocusNode={onFocusNode}
+            onActivateNode={openLeaf}
           />
         ) : null}
       </div>

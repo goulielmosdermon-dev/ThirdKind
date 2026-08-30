@@ -57,6 +57,7 @@ export function NodeLayer({
   hoveredId,
   onHover,
   onFocusNode,
+  onActivateNode,
 }: {
   nodes: CanvasNode[];
   viewport: Viewport;
@@ -65,6 +66,7 @@ export function NodeLayer({
   hoveredId: string | null;
   onHover: (id: string | null) => void;
   onFocusNode: (node: LeafCanvasNode) => void;
+  onActivateNode: (node: LeafCanvasNode) => void;
 }) {
   const pointerFine = usePointerFine();
   const view: WorldRect = visibleWorldRect(viewport, size);
@@ -167,6 +169,12 @@ export function NodeLayer({
             }}
             onMouseLeave={() => onHover(null)}
             onFocus={() => onFocusNode(node)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                onActivateNode(node);
+              }
+            }}
           >
             {visible ? (
               <span className="absolute inset-0">

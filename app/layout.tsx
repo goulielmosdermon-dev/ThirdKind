@@ -1,6 +1,8 @@
-import type { Metadata } from 'next';
+import { AppShell } from '@/components/AppShell';
 
 import './globals.css';
+
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Third Kind',
@@ -8,10 +10,12 @@ export const metadata: Metadata = {
     'A creative agency producing films, documentaries, and commercials.',
 };
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default function RootLayout({ children, sheet }: LayoutProps<'/'>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AppShell sheet={sheet}>{children}</AppShell>
+      </body>
     </html>
   );
 }

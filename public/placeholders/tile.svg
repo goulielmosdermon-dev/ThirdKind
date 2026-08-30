@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270" viewBox="0 0 480 270" role="img" aria-label="Placeholder tile">
+  <rect width="480" height="270" fill="#1a1a1c"/>
+  <rect x="24" y="24" width="432" height="222" fill="none" stroke="#3a3a40" stroke-width="2"/>
+  <circle cx="240" cy="135" r="18" fill="#3a3a40"/>
+</svg>

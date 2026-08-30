@@ -58,62 +58,62 @@ const settings: SiteSettings = {
       key: 'work',
       label: 'Work',
       description: 'Films, commercials, and branded documentaries.',
-      canvasPosition: { x: 920, y: 640, tileWidth: 224 },
+      canvasPosition: { x: 1680, y: 1080, tileWidth: 224 },
     },
     {
       key: 'thoughts',
       label: 'Thoughts',
       description: 'Perspectives from the intersection of film and craft.',
-      canvasPosition: { x: 3280, y: 700, tileWidth: 224 },
+      canvasPosition: { x: 3120, y: 980, tileWidth: 224 },
     },
     {
       key: 'about',
       label: 'About',
       description: 'The people, the process, and why we exist.',
-      canvasPosition: { x: 1080, y: 1980, tileWidth: 224 },
+      canvasPosition: { x: 1760, y: 2040, tileWidth: 224 },
     },
     {
       key: 'contact',
       label: 'Contact',
       description: 'New business and collaborations.',
-      canvasPosition: { x: 3420, y: 2080, tileWidth: 224 },
+      canvasPosition: { x: 3280, y: 2100, tileWidth: 224 },
     },
   ],
   ambientTiles: [
     {
       id: 'ambient-1',
       image: image('Ambient texture'),
-      canvasPosition: { x: 2100, y: 420, tileWidth: 96, rotation: -8 },
+      canvasPosition: { x: 2280, y: 760, tileWidth: 96, rotation: -8 },
       opacity: 0.35,
     },
     {
       id: 'ambient-2',
       image: image('Ambient texture'),
-      canvasPosition: { x: 2360, y: 1480, tileWidth: 128, rotation: 6 },
+      canvasPosition: { x: 2460, y: 1480, tileWidth: 128, rotation: 6 },
       opacity: 0.28,
     },
     {
       id: 'ambient-3',
       image: image('Ambient texture'),
-      canvasPosition: { x: 1880, y: 2380, tileWidth: 96, rotation: 4 },
+      canvasPosition: { x: 2480, y: 2180, tileWidth: 96, rotation: 4 },
       opacity: 0.4,
     },
     {
       id: 'ambient-4',
       image: image('Ambient texture'),
-      canvasPosition: { x: 4200, y: 380, tileWidth: 96, rotation: -3 },
+      canvasPosition: { x: 3720, y: 720, tileWidth: 96, rotation: -3 },
       opacity: 0.3,
     },
     {
       id: 'ambient-5',
       image: image('Ambient texture'),
-      canvasPosition: { x: 260, y: 1680, tileWidth: 128, rotation: 7 },
+      canvasPosition: { x: 1220, y: 1680, tileWidth: 128, rotation: 7 },
       opacity: 0.32,
     },
     {
       id: 'ambient-6',
       image: image('Ambient texture'),
-      canvasPosition: { x: 4540, y: 1680, tileWidth: 96, rotation: -5 },
+      canvasPosition: { x: 3920, y: 1860, tileWidth: 96, rotation: -5 },
       opacity: 0.26,
     },
   ],
@@ -162,7 +162,7 @@ const projects: Project[] = [
     body: copy('Placeholder body. Real copy and Vimeo URLs land in Phase 5.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scytáles still') }],
-    canvasPosition: { x: 700, y: 420, tileWidth: 176, rotation: -3 },
+    canvasPosition: { x: 1420, y: 820, tileWidth: 176, rotation: -3 },
     featured: true,
   },
   {
@@ -179,7 +179,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Scania Vehicle E-Wallet.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scania still') }],
-    canvasPosition: { x: 1140, y: 380, tileWidth: 224 },
+    canvasPosition: { x: 1880, y: 780, tileWidth: 224 },
     featured: true,
   },
   {
@@ -196,7 +196,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Scytáles Internal Sales.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scytáles sales still') }],
-    canvasPosition: { x: 1380, y: 620, tileWidth: 128, rotation: 4 },
+    canvasPosition: { x: 2140, y: 1020, tileWidth: 128, rotation: 4 },
     featured: false,
   },
   {
@@ -213,7 +213,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for A Christmas UP-ROL.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('UP Hellas still') }],
-    canvasPosition: { x: 540, y: 680, tileWidth: 128 },
+    canvasPosition: { x: 1380, y: 1120, tileWidth: 128 },
     featured: false,
   },
   {
@@ -230,7 +230,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Will It Ever Stop.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Rap Therapy still') }],
-    canvasPosition: { x: 980, y: 880, tileWidth: 176, rotation: 2 },
+    canvasPosition: { x: 1720, y: 1360, tileWidth: 176, rotation: 2 },
     featured: true,
   },
   {
@@ -247,7 +247,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Nordic Collection.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Augustine still') }],
-    canvasPosition: { x: 1320, y: 960, tileWidth: 128, rotation: -5 },
+    canvasPosition: { x: 2080, y: 1320, tileWidth: 128, rotation: -5 },
     featured: false,
   },
   {
@@ -264,7 +264,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Worldwide Neighbourhood.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('OldBoy still') }],
-    canvasPosition: { x: 640, y: 980, tileWidth: 176 },
+    canvasPosition: { x: 1480, y: 1480, tileWidth: 176 },
     featured: false,
   },
   {
@@ -281,7 +281,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Ilana.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Ilana still') }],
-    canvasPosition: { x: 420, y: 860, tileWidth: 96, rotation: 6 },
+    canvasPosition: { x: 1240, y: 1280, tileWidth: 96, rotation: 6 },
     featured: false,
   },
   {
@@ -300,7 +300,7 @@ const projects: Project[] = [
     ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('A&M still') }],
-    canvasPosition: { x: 1180, y: 1180, tileWidth: 176, rotation: -2 },
+    canvasPosition: { x: 1960, y: 1580, tileWidth: 176, rotation: -2 },
     featured: false,
   },
   {
@@ -317,7 +317,7 @@ const projects: Project[] = [
     body: copy('Placeholder body for Noir Gaze New Product Launch.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Noir Gaze still') }],
-    canvasPosition: { x: 860, y: 1200, tileWidth: 128 },
+    canvasPosition: { x: 1680, y: 1680, tileWidth: 128 },
     featured: false,
   },
 ];
@@ -339,7 +339,7 @@ const articles: Article[] = [
     body: copy(
       'Placeholder article body. Full Portable Text migrates from the live site in Phase 5.',
     ),
-    canvasPosition: { x: 3040, y: 460, tileWidth: 176, rotation: -4 },
+    canvasPosition: { x: 2860, y: 720, tileWidth: 176, rotation: -4 },
     seo: {
       title:
         'Should companies follow the digital change or should they be the change?',
@@ -355,7 +355,7 @@ const articles: Article[] = [
     hoverDescription: 'How a brief becomes a film people actually finish.',
     excerpt: 'The production path from first conversation to last frame.',
     body: copy('Placeholder article body for From Idea to Impact.'),
-    canvasPosition: { x: 3480, y: 420, tileWidth: 128 },
+    canvasPosition: { x: 3360, y: 680, tileWidth: 128 },
     seo: { title: 'From Idea to Impact: Our Approach to Production' },
   },
   {
@@ -368,7 +368,7 @@ const articles: Article[] = [
     hoverDescription: 'Hunger, range, and the cost of only hiring veterans.',
     excerpt: 'Why young teams are a production advantage, not a risk.',
     body: copy('Placeholder article body for young creative teams.'),
-    canvasPosition: { x: 3720, y: 640, tileWidth: 176, rotation: 3 },
+    canvasPosition: { x: 3580, y: 900, tileWidth: 176, rotation: 3 },
     seo: { title: 'The Hidden Value of Young Creative Teams' },
   },
   {
@@ -383,7 +383,7 @@ const articles: Article[] = [
     hoverDescription: 'Messages expire. Stories compound.',
     excerpt: 'Brand communication as narrative craft, not campaign clutter.',
     body: copy('Placeholder article body for Why Storytelling Wins.'),
-    canvasPosition: { x: 3060, y: 780, tileWidth: 128, rotation: 5 },
+    canvasPosition: { x: 2880, y: 1080, tileWidth: 128, rotation: 5 },
     seo: { title: 'Why Storytelling Wins: The Future of Brand Communication' },
   },
   {
@@ -399,7 +399,7 @@ const articles: Article[] = [
     hoverDescription: 'Safe work is not a strategy. It is a slow exit.',
     excerpt: 'What happens when brands trade invention for template.',
     body: copy('Placeholder article body for abandoning creativity.'),
-    canvasPosition: { x: 3420, y: 960, tileWidth: 224 },
+    canvasPosition: { x: 3240, y: 1240, tileWidth: 224 },
     seo: { title: 'Abandoning creativity is professional suicide' },
   },
   {
@@ -413,7 +413,7 @@ const articles: Article[] = [
     hoverDescription: 'Ten moves that still cut through when the feed is full.',
     excerpt: 'Tactics for commercials that sell without shouting.',
     body: copy('Placeholder article body for ten ad tactics.'),
-    canvasPosition: { x: 3800, y: 980, tileWidth: 128, rotation: -6 },
+    canvasPosition: { x: 3600, y: 1280, tileWidth: 128, rotation: -6 },
     seo: {
       title:
         'Ten Ad Tactics That Will Still Work When Everyone Else Gets Ignored',
@@ -431,7 +431,7 @@ const articles: Article[] = [
     hoverDescription: 'B2B is still made of people. Film them that way.',
     excerpt: 'How B2B work can feel human without losing the brief.',
     body: copy('Placeholder article body for B2B advertising.'),
-    canvasPosition: { x: 2920, y: 1040, tileWidth: 176 },
+    canvasPosition: { x: 2760, y: 1320, tileWidth: 176 },
     seo: {
       title: 'Business to Business Doesn’t Have to Mean Boring-to-Boring',
     },
@@ -448,7 +448,7 @@ const articles: Article[] = [
     hoverDescription: 'Wrong story, right budget: a quiet way to stall.',
     excerpt: 'Choosing the story that actually moves a brand forward.',
     body: copy('Placeholder article body for the right stories.'),
-    canvasPosition: { x: 3240, y: 1220, tileWidth: 128, rotation: 4 },
+    canvasPosition: { x: 3080, y: 1480, tileWidth: 128, rotation: 4 },
     seo: {
       title:
         'What If the Story You’re Telling Is the Reason You’re Not Growing?',
@@ -468,7 +468,7 @@ const articles: Article[] = [
     excerpt:
       'People who know a company well are far more likely to like it. Film accordingly.',
     body: copy('Placeholder article body for corporate creative.'),
-    canvasPosition: { x: 3640, y: 1280, tileWidth: 176, rotation: -3 },
+    canvasPosition: { x: 3480, y: 1520, tileWidth: 176, rotation: -3 },
     seo: { title: 'Corporate Creative Doesn’t Have to Be Corporate' },
   },
   {
@@ -484,7 +484,7 @@ const articles: Article[] = [
     hoverDescription: 'Causes need witnesses, not slogans.',
     excerpt: 'Nonprofit films that ask without preaching.',
     body: copy('Placeholder article body for donations and story.'),
-    canvasPosition: { x: 3000, y: 1360, tileWidth: 96 },
+    canvasPosition: { x: 2920, y: 1600, tileWidth: 96 },
     seo: { title: 'Donations Start With a Story' },
   },
 ];
@@ -498,7 +498,7 @@ const aboutSections: AboutSection[] = [
     hoverDescription: 'Five people. One stubborn standard for the work.',
     thumbnail: image('Third Kind team'),
     body: copy('The people who make the films.'),
-    canvasPosition: { x: 860, y: 1760, tileWidth: 176, rotation: -3 },
+    canvasPosition: { x: 1520, y: 1840, tileWidth: 176, rotation: -3 },
     teamMembers: [
       {
         name: 'Goulielmos Dermon',
@@ -535,7 +535,7 @@ const aboutSections: AboutSection[] = [
     hoverDescription: 'From brief to delivery, with the numbers kept honest.',
     thumbnail: image('Process'),
     body: copy('How a project moves from first conversation to last delivery.'),
-    canvasPosition: { x: 1320, y: 1800, tileWidth: 128, rotation: 4 },
+    canvasPosition: { x: 2000, y: 1860, tileWidth: 128, rotation: 4 },
     processSteps: [
       {
         step: 1,
@@ -580,7 +580,7 @@ const aboutSections: AboutSection[] = [
         'A close encounter of the third kind, in Hynek’s classification — popularised by Close Encounters of the Third Kind (1977) — is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.',
       ),
     ],
-    canvasPosition: { x: 900, y: 2140, tileWidth: 224 },
+    canvasPosition: { x: 1580, y: 2200, tileWidth: 224 },
   },
   {
     _id: 'about-services',
@@ -590,7 +590,7 @@ const aboutSections: AboutSection[] = [
     hoverDescription: 'Entertainment, story, production, and human-led AI.',
     thumbnail: image('Services'),
     body: copy('Four offerings. One standard.'),
-    canvasPosition: { x: 1360, y: 2200, tileWidth: 176, rotation: -4 },
+    canvasPosition: { x: 2040, y: 2240, tileWidth: 176, rotation: -4 },
     services: [
       {
         title: 'Entertainment in Business',
@@ -627,7 +627,7 @@ const contact: ContactInfo = {
   formRecipient: 'goulielmos@thirdkindcreative.com',
   hoverDescription: 'A conversation. Not a funnel.',
   thumbnail: image('Contact'),
-  canvasPosition: { x: 3680, y: 2240, tileWidth: 176, rotation: 3 },
+  canvasPosition: { x: 3520, y: 2260, tileWidth: 176, rotation: 3 },
 };
 
 export const siteContent: SiteContent = {

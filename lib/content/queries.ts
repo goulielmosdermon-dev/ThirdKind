@@ -1,46 +1,56 @@
 import { notFound } from 'next/navigation';
 
-import { siteContent } from '@/lib/fixtures/content';
+import { fetchSiteContent } from '@/sanity/lib/fetch';
 import type {
   AboutSection,
   AboutSectionKey,
   Article,
   ContactInfo,
   Project,
+  SiteContent,
 } from '@/types/content';
 
 export const ABOUT_KEYS = ['team', 'process', 'why', 'services'] as const;
 
-export function getProject(slug: string): Project | undefined {
-  return siteContent.projects.find((project) => project.slug.current === slug);
+export async function getSiteContent(): Promise<SiteContent> {
+  return fetchSiteContent();
 }
 
-export function requireProject(slug: string): Project {
-  const project = getProject(slug);
+export async function getProject(slug: string): Promise<Project | undefined> {
+  const { projects } = await getSiteContent();
+  return projects.find((project) => project.slug.current === slug);
+}
+
+export async function requireProject(slug: string): Promise<Project> {
+  const project = await getProject(slug);
   if (!project) {
     notFound();
   }
   return project;
 }
 
-export function getArticle(slug: string): Article | undefined {
-  return siteContent.articles.find((article) => article.slug.current === slug);
+export async function getArticle(slug: string): Promise<Article | undefined> {
+  const { articles } = await getSiteContent();
+  return articles.find((article) => article.slug.current === slug);
 }
 
-export function requireArticle(slug: string): Article {
-  const article = getArticle(slug);
+export async function requireArticle(slug: string): Promise<Article> {
+  const article = await getArticle(slug);
   if (!article) {
     notFound();
   }
   return article;
 }
 
-export function getAboutSection(key: string): AboutSection | undefined {
-  return siteContent.aboutSections.find((section) => section.key === key);
+export async function getAboutSection(
+  key: string,
+): Promise<AboutSection | undefined> {
+  const { aboutSections } = await getSiteContent();
+  return aboutSections.find((section) => section.key === key);
 }
 
-export function requireAboutSection(key: string): AboutSection {
-  const section = getAboutSection(key);
+export async function requireAboutSection(key: string): Promise<AboutSection> {
+  const section = await getAboutSection(key);
   if (!section) {
     notFound();
   }
@@ -51,15 +61,17 @@ export function isAboutKey(key: string): key is AboutSectionKey {
   return (ABOUT_KEYS as readonly string[]).includes(key);
 }
 
-export function getContact(): ContactInfo {
-  return siteContent.contact;
+export async function getContact(): Promise<ContactInfo> {
+  const { contact } = await getSiteContent();
+  return contact;
 }
 
-export function adjacentProjects(slug: string): {
+export async function adjacentProjects(slug: string): Promise<{
   prev: Project | undefined;
   next: Project | undefined;
-} {
-  const ordered = [...siteContent.projects].sort((a, b) => a.order - b.order);
+}> {
+  const { projects } = await getSiteContent();
+  const ordered = [...projects].sort((a, b) => a.order - b.order);
   const index = ordered.findIndex((project) => project.slug.current === slug);
   if (index < 0) {
     return { prev: undefined, next: undefined };
@@ -70,16 +82,14 @@ export function adjacentProjects(slug: string): {
   };
 }
 
-export function projectStaticParams(): { slug: string }[] {
-  return siteContent.projects.map((project) => ({
-    slug: project.slug.current,
-  }));
+export async function projectStaticParams(): Promise<{ slug: string }[]> {
+  const { projects } = await getSiteContent();
+  return projects.map((project) => ({ slug: project.slug.current }));
 }
 
-export function articleStaticParams(): { slug: string }[] {
-  return siteContent.articles.map((article) => ({
-    slug: article.slug.current,
-  }));
+export async function articleStaticParams(): Promise<{ slug: string }[]> {
+  const { articles } = await getSiteContent();
+  return articles.map((article) => ({ slug: article.slug.current }));
 }
 
 export function aboutStaticParams(): { section: AboutSectionKey }[] {

@@ -1,9 +1,7 @@
 import type {
   AboutSection,
   Article,
-  CanvasNode,
   ContactInfo,
-  Edge,
   ImageAsset,
   PortableText,
   PortableTextBlock,
@@ -11,6 +9,8 @@ import type {
   SiteContent,
   SiteSettings,
 } from '@/types/content';
+
+import { deriveCanvasNodes, deriveEdges } from '@/lib/canvas/derive';
 
 const PLACEHOLDER_COUNT = 6;
 
@@ -165,9 +165,12 @@ const projects: Project[] = [
     order: 1,
     thumbnail: image('Scytáles ID Authentication'),
     hoverDescription: 'Identity, proven on camera — without the lecture.',
-    heroVideoUrl: 'https://vimeo.com/000000001',
+    heroVideoUrl: 'https://vimeo.com/1174819047',
     posterImage: image('Scytáles ID Authentication poster'),
-    body: copy('Placeholder body. Real copy and Vimeo URLs land in Phase 5.'),
+    body: copy(
+      'In this project, we handled the full production journey, from creative all the way to VFX and post-production, across four emotional short films, each exploring a domain where verifying identity genuinely matters: pornography, alcohol, gambling, and social media.',
+      'At the heart of the work is a simple, human idea: these are the people whose identities Scytáles’ authentication technology quietly protects. Rather than lead with the tech, we led with the lives it safeguards.',
+    ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scytáles still') }],
     canvasPosition: { x: 1420, y: 820, tileWidth: 176, rotation: -3 },
@@ -182,9 +185,13 @@ const projects: Project[] = [
     order: 2,
     thumbnail: image('Scania Vehicle E-Wallet'),
     hoverDescription: 'A fleet film about paying for the road, not the paper.',
-    heroVideoUrl: 'https://vimeo.com/000000002',
+    heroVideoUrl: 'https://vimeo.com/1174801751',
     posterImage: image('Scania Vehicle E-Wallet poster'),
-    body: copy('Placeholder body for Scania Vehicle E-Wallet.'),
+    body: copy(
+      'The Scania team is planning to revolutionise the truck driving industry with bespoke technology that will give freedom to millions of drivers worldwide.',
+      'They needed a solid video that communicates this change, balancing creativity with corporate presentation.',
+      'Because we know that, corporate or not, communication is always referred to humans, we achieved the right balance of immersion through 3D work and storytelling through a standalone script.',
+    ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scania still') }],
     canvasPosition: { x: 1880, y: 780, tileWidth: 224 },
@@ -199,7 +206,7 @@ const projects: Project[] = [
     order: 3,
     thumbnail: image('Scytáles Internal Sales'),
     hoverDescription: 'An internal story told like an external one.',
-    heroVideoUrl: 'https://vimeo.com/000000003',
+    heroVideoUrl: 'https://vimeo.com/1162194421',
     posterImage: image('Scytáles Internal Sales poster'),
     body: copy('Placeholder body for Scytáles Internal Sales.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
@@ -216,7 +223,7 @@ const projects: Project[] = [
     order: 4,
     thumbnail: image('UP Hellas A Christmas UP-ROL'),
     hoverDescription: 'Seasonal warmth without the usual jingle trap.',
-    heroVideoUrl: 'https://vimeo.com/000000004',
+    heroVideoUrl: 'https://vimeo.com/1148438581',
     posterImage: image('UP Hellas poster'),
     body: copy('Placeholder body for A Christmas UP-ROL.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
@@ -233,9 +240,12 @@ const projects: Project[] = [
     order: 5,
     thumbnail: image('Rap Therapy Will It Ever Stop'),
     hoverDescription: 'A music film that lets the wound speak first.',
-    heroVideoUrl: 'https://vimeo.com/000000005',
+    heroVideoUrl: 'https://vimeo.com/1070483583',
     posterImage: image('Rap Therapy poster'),
-    body: copy('Placeholder body for Will It Ever Stop.'),
+    body: copy(
+      'Inspired by Rap Therapy, a powerful initiative led by Bhishma that empowers young people from underserved neighbourhoods through music, the film captures more than just a performance. It’s a protest.',
+      'Through a bold and technically demanding tracking shot, young performers deliver a unified message: they want a life free from crime, fear, and violence.',
+    ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Rap Therapy still') }],
     canvasPosition: { x: 1720, y: 1360, tileWidth: 176, rotation: 2 },
@@ -250,7 +260,7 @@ const projects: Project[] = [
     order: 6,
     thumbnail: image('Augustine Jewels Nordic Collection'),
     hoverDescription: 'Light, metal, and the quiet of a northern room.',
-    heroVideoUrl: 'https://vimeo.com/000000006',
+    heroVideoUrl: 'https://vimeo.com/935002942',
     posterImage: image('Augustine Jewels poster'),
     body: copy('Placeholder body for Nordic Collection.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
@@ -267,7 +277,7 @@ const projects: Project[] = [
     order: 7,
     thumbnail: image('OldBoy Brand Worldwide Neighbourhood'),
     hoverDescription: 'A neighbourhood that happens to span a planet.',
-    heroVideoUrl: 'https://vimeo.com/000000007',
+    heroVideoUrl: 'https://vimeo.com/891108973',
     posterImage: image('OldBoy Brand poster'),
     body: copy('Placeholder body for Worldwide Neighbourhood.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
@@ -284,11 +294,14 @@ const projects: Project[] = [
     order: 8,
     thumbnail: image('Ilana'),
     hoverDescription: 'A portrait built from gesture, fabric, and pause.',
-    heroVideoUrl: 'https://vimeo.com/000000008',
+    heroVideoUrl: 'https://vimeo.com/897034201',
     posterImage: image('Ilana poster'),
     body: copy('Placeholder body for Ilana.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
-    gallery: [{ _type: 'image', image: image('Ilana still') }],
+    gallery: [
+      { _type: 'image', image: image('Ilana still') },
+      { _type: 'videoUrl', url: 'https://vimeo.com/958965737' },
+    ],
     canvasPosition: { x: 1240, y: 1280, tileWidth: 96, rotation: 6 },
     featured: false,
   },
@@ -301,7 +314,7 @@ const projects: Project[] = [
     order: 9,
     thumbnail: image('A&M Architects'),
     hoverDescription: 'Architecture as a story of light, not floorplans.',
-    heroVideoUrl: 'https://vimeo.com/000000009',
+    heroVideoUrl: 'https://vimeo.com/838480328',
     posterImage: image('A&M Architects poster'),
     body: copy(
       'Placeholder body for A Brighter Tomorrow for a Bright Architect Firm.',
@@ -320,7 +333,7 @@ const projects: Project[] = [
     order: 10,
     thumbnail: image('Noir Gaze New Product Launch'),
     hoverDescription: 'A launch film that treats product like character.',
-    heroVideoUrl: 'https://vimeo.com/000000010',
+    heroVideoUrl: 'https://vimeo.com/956762066',
     posterImage: image('Noir Gaze poster'),
     body: copy('Placeholder body for Noir Gaze New Product Launch.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
@@ -362,7 +375,12 @@ const articles: Article[] = [
     coverImage: image('From Idea to Impact'),
     hoverDescription: 'How a brief becomes a film people actually finish.',
     excerpt: 'The production path from first conversation to last frame.',
-    body: copy('Placeholder article body for From Idea to Impact.'),
+    body: copy(
+      'We begin with listening. We study the audience, learn the brand’s goals, and uncover the stories that can spark a connection.',
+      'With insights in place, we shape the concept. We write scripts, build storyboards, and design a narrative that feels alive.',
+      'Every project is tailored. Some require a lean crew, others demand larger sets. Editing is where the story comes together, then we adapt the work across formats.',
+      'A campaign is not complete at launch. We review performance, gather feedback, and refine our approach.',
+    ),
     canvasPosition: { x: 3360, y: 680, tileWidth: 128 },
     seo: { title: 'From Idea to Impact: Our Approach to Production' },
   },
@@ -375,7 +393,12 @@ const articles: Article[] = [
     coverImage: image('The Hidden Value of Young Creative Teams'),
     hoverDescription: 'Hunger, range, and the cost of only hiring veterans.',
     excerpt: 'Why young teams are a production advantage, not a risk.',
-    body: copy('Placeholder article body for young creative teams.'),
+    body: copy(
+      'Young creatives are not tied to the formulas of the past. They experiment, adapt, and pull influence from new cultures and formats.',
+      'Marketing moves fast. Younger teams are used to reacting quickly, testing new tools, and working at the pace of digital culture.',
+      'Big agencies carry big overheads. Smaller and younger teams can deliver the same quality of work at a more efficient cost.',
+      'Choosing a young team is not a compromise. It is often the smarter choice.',
+    ),
     canvasPosition: { x: 3580, y: 900, tileWidth: 176, rotation: 3 },
     seo: { title: 'The Hidden Value of Young Creative Teams' },
   },
@@ -582,7 +605,10 @@ const aboutSections: AboutSection[] = [
     body: [
       block('Stop making ads, tell more stories.', 'h2'),
       block(
-        'We work from genuine intentions: to inspire, to entertain, and to provide value. Nobody likes to be interrupted. Nobody likes to be preached to.',
+        'We stand on the fundamental belief that when a business has genuine intentions to inspire, entertain, and to provide value through its communication, it will build strong relationships, and invite more customers.',
+      ),
+      block(
+        'No one likes to get interrupted by ads, no one likes to be preached to, but everyone likes to be entertained, feel, and believe.',
       ),
       block(
         'A close encounter of the third kind, in Hynek’s classification — popularised by Close Encounters of the Third Kind (1977) — is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.',
@@ -646,105 +672,7 @@ export const siteContent: SiteContent = {
   contact,
 };
 
-export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
-  const hubs: CanvasNode[] = content.settings.hubs.map((hub) => ({
-    id: `hub-${hub.key}`,
-    kind: 'hub',
-    hubKey: hub.key,
-    label: hub.label,
-    description: hub.description,
-    position: hub.canvasPosition,
-  }));
-
-  const projectLeaves: CanvasNode[] = content.projects.map((project) => ({
-    id: project._id,
-    kind: 'leaf',
-    hubKey: 'work',
-    href: `/work/${project.slug.current}`,
-    title: `${project.client} — ${project.title}`,
-    hoverDescription: project.hoverDescription,
-    thumbnail: project.thumbnail,
-    documentId: project._id,
-    position: project.canvasPosition,
-  }));
-
-  const articleLeaves: CanvasNode[] = content.articles.map((article) => ({
-    id: article._id,
-    kind: 'leaf',
-    hubKey: 'thoughts',
-    href: `/thoughts/${article.slug.current}`,
-    title: article.title,
-    hoverDescription: article.hoverDescription,
-    thumbnail: article.coverImage,
-    documentId: article._id,
-    position: article.canvasPosition,
-  }));
-
-  const aboutLeaves: CanvasNode[] = content.aboutSections.map((section) => ({
-    id: section._id,
-    kind: 'leaf',
-    hubKey: 'about',
-    href: `/about/${section.key}`,
-    title: section.title,
-    hoverDescription: section.hoverDescription,
-    thumbnail: section.thumbnail,
-    documentId: section._id,
-    position: section.canvasPosition,
-  }));
-
-  const contactLeaf: CanvasNode = {
-    id: content.contact._id,
-    kind: 'leaf',
-    hubKey: 'contact',
-    href: '/contact',
-    title: content.contact.heading,
-    hoverDescription: content.contact.hoverDescription,
-    thumbnail: content.contact.thumbnail,
-    documentId: content.contact._id,
-    position: content.contact.canvasPosition,
-  };
-
-  const ambient: CanvasNode[] = content.settings.ambientTiles.map((tile) => ({
-    id: tile.id,
-    kind: 'ambient',
-    image: tile.image,
-    opacity: tile.opacity,
-    position: tile.canvasPosition,
-  }));
-
-  return [
-    ...hubs,
-    ...projectLeaves,
-    ...articleLeaves,
-    ...aboutLeaves,
-    contactLeaf,
-    ...ambient,
-  ];
-}
-
-export function deriveEdges(nodes: CanvasNode[]): Edge[] {
-  const hubs = nodes.filter((node) => node.kind === 'hub');
-
-  return nodes.flatMap((node) => {
-    if (node.kind !== 'leaf') {
-      return [];
-    }
-
-    const hub = hubs.find((candidate) => candidate.hubKey === node.hubKey);
-    if (!hub) {
-      return [];
-    }
-
-    return [
-      {
-        id: `edge-${hub.id}-${node.id}`,
-        fromNodeId: hub.id,
-        toNodeId: node.id,
-        kind: 'spoke' as const,
-      },
-    ];
-  });
-}
+export { deriveCanvasNodes, deriveEdges };
 
 export const canvasNodes = deriveCanvasNodes(siteContent);
 export const edges = deriveEdges(canvasNodes);

@@ -5,7 +5,7 @@ import {
   requireProject,
 } from '@/lib/content/queries';
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return projectStaticParams();
 }
 
@@ -15,8 +15,8 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = requireProject(slug);
-  const { prev, next } = adjacentProjects(slug);
+  const project = await requireProject(slug);
+  const { prev, next } = await adjacentProjects(slug);
   return (
     <ProjectSheet
       project={project}

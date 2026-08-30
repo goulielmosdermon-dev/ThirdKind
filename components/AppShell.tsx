@@ -6,15 +6,23 @@ import type { ReactNode } from 'react';
 
 import { CanvasViewport } from '@/components/canvas/CanvasViewport';
 import { SheetNavProvider } from '@/components/sheet/SheetNav';
-import { canvasNodes, edges } from '@/lib/fixtures/content';
 import { MOTION } from '@/lib/motion/tokens';
+import type { CanvasNode, Edge } from '@/types/content';
 
 export function AppShell({
   children,
   sheet,
+  nodes,
+  edges,
+  wordmarkLeft,
+  wordmarkRight,
 }: {
   children: ReactNode;
   sheet: ReactNode;
+  nodes: CanvasNode[];
+  edges: Edge[];
+  wordmarkLeft: string;
+  wordmarkRight: string;
 }) {
   const pathname = usePathname();
   const reduced = useReducedMotion();
@@ -38,7 +46,12 @@ export function AppShell({
             ease: MOTION.easeOut,
           }}
         >
-          <CanvasViewport nodes={canvasNodes} edges={edges} />
+          <CanvasViewport
+            nodes={nodes}
+            edges={edges}
+            wordmarkLeft={wordmarkLeft}
+            wordmarkRight={wordmarkRight}
+          />
         </motion.div>
         {sheet}
         {children}

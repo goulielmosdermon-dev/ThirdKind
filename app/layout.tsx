@@ -1,4 +1,3 @@
-import { AppShell } from '@/components/AppShell';
 import { Figtree, Fraunces, IBM_Plex_Mono } from 'next/font/google';
 
 import './globals.css';
@@ -31,15 +30,17 @@ export const metadata: Metadata = {
     'A creative agency producing films, documentaries, and commercials.',
 };
 
-export default function RootLayout({ children, sheet }: LayoutProps<'/'>) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
       className={`${figtree.variable} ${fraunces.variable} ${plex.variable}`}
     >
-      <body className="bg-void font-sans text-ink antialiased">
-        <AppShell sheet={sheet}>{children}</AppShell>
-      </body>
+      <body className="bg-void font-sans text-ink antialiased">{children}</body>
     </html>
   );
 }

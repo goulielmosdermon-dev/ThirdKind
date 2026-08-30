@@ -1,6 +1,7 @@
 import { AboutSheet } from '@/components/sheet/AboutSheet';
 import {
   aboutStaticParams,
+  getSiteContent,
   isAboutKey,
   requireAboutSection,
 } from '@/lib/content/queries';
@@ -19,5 +20,9 @@ export default async function AboutPage({
   if (!isAboutKey(section)) {
     notFound();
   }
-  return <AboutSheet section={requireAboutSection(section)} />;
+  const [about, content] = await Promise.all([
+    requireAboutSection(section),
+    getSiteContent(),
+  ]);
+  return <AboutSheet section={about} poem={content.settings.poem} />;
 }

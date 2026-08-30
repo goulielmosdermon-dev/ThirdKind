@@ -4,10 +4,15 @@ import Image from 'next/image';
 
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
-import { siteContent } from '@/lib/fixtures/content';
-import type { AboutSection } from '@/types/content';
+import type { AboutSection, PortableText } from '@/types/content';
 
-export function AboutSheet({ section }: { section: AboutSection }) {
+export function AboutSheet({
+  section,
+  poem,
+}: {
+  section: AboutSection;
+  poem: PortableText;
+}) {
   return (
     <Sheet title={section.title}>
       <div className="mx-auto flex max-w-3xl flex-col gap-8">
@@ -58,9 +63,7 @@ export function AboutSheet({ section }: { section: AboutSection }) {
           </ol>
         ) : null}
 
-        {section.key === 'why' ? (
-          <PortableBody value={siteContent.settings.poem} />
-        ) : null}
+        {section.key === 'why' ? <PortableBody value={poem} /> : null}
 
         {section.key === 'services' ? (
           <ul className="space-y-6">

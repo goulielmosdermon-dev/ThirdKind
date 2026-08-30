@@ -64,9 +64,13 @@ type PanSession = {
 export function CanvasViewport({
   nodes,
   edges,
+  wordmarkLeft,
+  wordmarkRight,
 }: {
   nodes: CanvasNode[];
   edges: Edge[];
+  wordmarkLeft: string;
+  wordmarkRight: string;
 }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<ViewportSize | null>(null);
@@ -335,10 +339,10 @@ export function CanvasViewport({
       </div>
 
       <p className="font-display pointer-events-none absolute top-8 left-10 text-wordmark text-ink">
-        Third
+        {wordmarkLeft}
       </p>
       <p className="font-display pointer-events-none absolute right-10 bottom-24 text-wordmark text-ink">
-        Kind
+        {wordmarkRight}
       </p>
 
       <p className="pointer-events-none absolute bottom-6 left-6 rounded-full border border-hairline px-3 py-1.5 text-caption text-mute">

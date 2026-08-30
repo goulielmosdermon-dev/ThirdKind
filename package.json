@@ -13,6 +13,7 @@
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "seed:sanity": "tsx scripts/seed-sanity.ts",
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -27,10 +28,15 @@
     ]
   },
   "dependencies": {
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^6.11.0",
     "motion": "^13.1.1",
     "next": "16.3.3",
+    "next-sanity": "^13.3.3",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "sanity": "^6.11.0",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
@@ -38,6 +44,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/styled-components": "^5.1.36",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
     "eslint-config-prettier": "^10.1.8",
@@ -45,6 +52,7 @@
     "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "tsx": "^4.23.12",
     "typescript": "^5",
     "vitest": "^3.2.4"
   },

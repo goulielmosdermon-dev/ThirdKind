@@ -811,11 +811,11 @@ const aboutSections: AboutSection[] = [
     _id: 'about-services',
     _type: 'aboutSection',
     key: 'services',
-    title: 'About',
+    title: 'Services',
     hoverDescription: '',
     thumbnail: {
       src: '/about/our-work-together.jpg',
-      alt: 'About',
+      alt: 'Services',
       width: 1600,
       height: 1558,
     },

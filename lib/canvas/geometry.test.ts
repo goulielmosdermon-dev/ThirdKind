@@ -158,7 +158,8 @@ describe('geometry', () => {
     );
 
     expect(origin.x).toBe(200);
-    expect(origin.y).toBe(80 + TILE + 10);
+    // Flush against the tile's lower edge, no gap.
+    expect(origin.y).toBe(80 + TILE);
     expect(origin.above).toBe(false);
   });
 
@@ -175,7 +176,7 @@ describe('geometry', () => {
     );
 
     expect(origin.above).toBe(true);
-    // Clear of the tile's top edge, not sitting on the image.
-    expect(origin.y + 104).toBeLessThanOrEqual(520);
+    // Flush against the tile's upper edge, not sitting on the image.
+    expect(origin.y + 104).toBe(520);
   });
 });

@@ -64,6 +64,20 @@ function PoemReveal({ lines, framed }: { lines: string[]; framed: boolean }) {
             {line}
           </motion.p>
         ))}
+        <motion.p
+          initial={reduced ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: reduced ? MOTION.reduced : 0.95,
+            // Lands after the last line, so the poem finishes before the
+            // credit arrives.
+            delay: reduced ? 0 : 0.08 + lines.length * 0.16,
+            ease: MOTION.easeOut,
+          }}
+          className="mt-8 text-[0.85rem] tracking-[0.06em] text-mute"
+        >
+          Felix Dennis
+        </motion.p>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { AppLink } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
+import { PillLabel } from '@/components/sheet/PillLabel';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import type { Project } from '@/types/content';
@@ -30,16 +31,14 @@ function FeaturedProject({ project }: { project: Project }) {
       />
       <span className="absolute inset-x-0 top-0 flex flex-col items-start gap-3 p-[4cqi] @md:p-[3cqi]">
         <span className="block">
-          <span className="block font-display text-[clamp(1rem,1.9cqi,1.4rem)] leading-tight font-semibold text-white">
+          <span className="block font-display text-[clamp(1rem,1.9cqi,1.4rem)] leading-tight text-white">
             {project.client}
           </span>
           <span className="mt-0.5 block text-[clamp(0.85rem,1.5cqi,1.1rem)] leading-tight text-white/80">
             {project.title}
           </span>
         </span>
-        <span className="rounded-full bg-white px-4 py-1.5 text-[0.78rem] text-ink transition-colors duration-300 group-hover:bg-white/85">
-          View
-        </span>
+        <PillLabel label="View" tone="paper" />
       </span>
     </AppLink>
   );
@@ -60,7 +59,7 @@ function ProjectCard({ project }: { project: Project }) {
             className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
           />
         </span>
-        <span className="mt-3 block font-display text-[1.05rem] leading-tight font-semibold text-ink">
+        <span className="mt-3 block font-display text-[1.05rem] leading-tight text-ink">
           {project.client}
         </span>
         <span className="mt-1 block text-[0.95rem] leading-snug text-mute">

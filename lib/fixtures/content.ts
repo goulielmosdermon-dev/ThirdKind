@@ -537,6 +537,7 @@ const articles: Article[] = [
     body: copy(
       'Placeholder article body. Full Portable Text migrates from the live site in Phase 5.',
     ),
+    featured: true,
     canvasPosition: { x: 2540, y: 840, tileWidth: 176, rotation: -6 },
     seo: {
       title:

@@ -111,6 +111,7 @@ export const article = defineType({
     hover,
     defineField({ name: 'excerpt', type: 'text', rows: 3 }),
     defineField({ name: 'body', type: 'blockContent' }),
+    defineField({ name: 'featured', type: 'boolean', initialValue: false }),
     defineField({
       name: 'canvasPosition',
       type: 'canvasPosition',

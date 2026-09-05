@@ -67,6 +67,7 @@ export const siteContentQuery = groq`{
     publishedAt,
     hoverDescription,
     excerpt,
+    featured,
     canvasPosition,
     seo{ title, description, ogImage ${imageFields} },
     coverImage ${imageFields},

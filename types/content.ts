@@ -159,6 +159,8 @@ export type Article = {
   hoverDescription: string;
   excerpt: string;
   body: PortableText;
+  /** Pins the piece to the lead slot on the Thoughts index. */
+  featured?: boolean;
   canvasPosition: CanvasPosition;
   seo: Seo;
 };

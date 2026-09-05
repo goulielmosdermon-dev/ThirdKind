@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { AppLink } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
+import { PillLabel } from '@/components/sheet/PillLabel';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import type { Article } from '@/types/content';
@@ -22,7 +23,7 @@ function published(value: string): string {
 
 function FeaturedArticle({ article }: { article: Article }) {
   return (
-    <div className="grid gap-[3cqi] @lg:grid-cols-[1.6fr_1fr] @lg:gap-[3cqi]">
+    <div className="grid gap-[3cqi] @lg:grid-cols-[1.75fr_1fr]">
       <AppLink
         href={`/thoughts/${article.slug.current}`}
         className="group relative block aspect-[16/10] w-full overflow-hidden bg-hairline"
@@ -33,27 +34,25 @@ function FeaturedArticle({ article }: { article: Article }) {
           alt=""
           fill
           priority
-          sizes="(min-width: 900px) 62vw, 100vw"
+          sizes="(min-width: 900px) 64vw, 100vw"
           unoptimized={isUnoptimizedAsset(article.coverImage)}
           className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
         />
       </AppLink>
 
-      <div className="flex flex-col items-start self-center">
-        <p className="text-[0.8rem] tracking-[0.08em] text-mute">
-          {published(article.publishedAt)}
-        </p>
-        <h2 className="mt-3 font-display text-[clamp(1.3rem,2.6cqi,2rem)] leading-[1.12] font-semibold text-ink">
+      {/* Title, standfirst and action stack down the right-hand column. */}
+      <div className="flex flex-col items-start">
+        <h2 className="font-display text-[clamp(1.3rem,2.4cqi,1.95rem)] leading-[1.12] text-ink">
           {article.title}
         </h2>
-        <p className="mt-3 max-w-[38ch] text-[1rem] leading-snug text-mute">
+        <p className="mt-4 max-w-[34ch] text-[1rem] leading-snug text-mute">
           {article.excerpt}
         </p>
         <AppLink
           href={`/thoughts/${article.slug.current}`}
-          className="mt-6 rounded-full bg-ink px-5 py-2 text-[0.82rem] text-paper transition-opacity duration-300 hover:opacity-85"
+          className="mt-6 transition-opacity duration-300 hover:opacity-85"
         >
-          Read More
+          <PillLabel label="Read Story" />
         </AppLink>
       </div>
     </div>
@@ -81,7 +80,7 @@ function ArticleCard({ article }: { article: Article }) {
         <span className="mt-3 block text-[0.78rem] tracking-[0.08em] text-mute">
           {published(article.publishedAt)}
         </span>
-        <span className="mt-1.5 block font-display text-[1.05rem] leading-tight font-semibold text-ink">
+        <span className="mt-1.5 block font-display text-[1.05rem] leading-tight text-ink">
           {article.title}
         </span>
       </AppLink>
@@ -89,22 +88,17 @@ function ArticleCard({ article }: { article: Article }) {
   );
 }
 
-export function ThoughtsIndexSheet({
-  articles,
-  standfirst,
-}: {
-  articles: Article[];
-  standfirst: string;
-}) {
-  // allArticles() sorts newest first, so the lead is simply the latest piece
-  // and the grid carries the rest.
-  const [featured, ...rest] = articles;
+export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
+  // A pinned piece leads when one is marked; otherwise allArticles() has
+  // already sorted newest first, so the latest takes the slot.
+  const featured = articles.find((article) => article.featured) ?? articles[0];
+  const rest = articles.filter((article) => article !== featured);
 
   return (
     <Sheet title="Thoughts" tone="editorial">
       <div data-surface="light" className="bg-paper pb-24">
         <div className="px-[5cqi] pt-[7cqi] pb-[3cqi] @md:pt-[5cqi]">
-          <IndexHeading name="Thoughts" standfirst={standfirst} />
+          <IndexHeading name="Thoughts" />
         </div>
 
         {featured ? (

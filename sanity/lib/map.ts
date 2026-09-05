@@ -236,6 +236,7 @@ export function mapArticle(doc: {
   };
   coverImage?: SanityImage;
   body?: SanityBlock[];
+  featured?: boolean;
 }): Article {
   const title = doc.title ?? 'Untitled';
   return {
@@ -248,6 +249,7 @@ export function mapArticle(doc: {
     hoverDescription: doc.hoverDescription ?? '',
     excerpt: doc.excerpt ?? '',
     body: mapPortable(doc.body),
+    featured: Boolean(doc.featured),
     canvasPosition: mapPosition(doc.canvasPosition ?? {}),
     seo: {
       title: doc.seo?.title,

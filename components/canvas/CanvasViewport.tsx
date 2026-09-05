@@ -736,10 +736,11 @@ export function CanvasViewport({
         }}
       >
         {(
+          // The constellation view stays in the code — only its button is
+          // hidden — so restoring it is one line.
           [
             ['matrix2', 'Organized'],
             ['index', 'Index'],
-            ['matrix', 'Matrix'],
           ] as const
         ).map(([mode, label]) => (
           <button

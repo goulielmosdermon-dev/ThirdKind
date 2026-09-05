@@ -27,6 +27,7 @@ import {
 } from '@/lib/canvas/geometry';
 import {
   GRID_HEADER,
+  gridSectionKey,
   isGridTagLeaf,
   isPoemLeaf,
   sortGridTagLeaves,
@@ -201,6 +202,13 @@ export function NodeLayer({
     };
   })();
 
+  // Hub labels only show for the section the cursor is in. The poem is filed
+  // under Thoughts on the canvas, so use the same rule the layouts do.
+  const hoveredHubKey = (() => {
+    const node = leaves.find((leaf) => leaf.id === hoveredId);
+    return node ? gridSectionKey(node) : null;
+  })();
+
   const isEntered = (id: string) =>
     packed || reduced || !revealEnabled || entered.has(id);
 
@@ -237,13 +245,26 @@ export function NodeLayer({
             >
               <motion.div
                 initial={false}
-                animate={{ opacity: shown ? 1 : 0 }}
+                animate={{
+                  opacity:
+                    shown && node.kind === 'hub' && hoveredHubKey === node.hubKey
+                      ? 1
+                      : 0,
+                }}
                 transition={{
-                  duration: reduced ? MOTION.reduced : MOTION.sheetIn,
+                  duration: reduced ? MOTION.reduced : MOTION.hub,
                   ease: MOTION.easeOut,
                 }}
               >
-                <h2 className="font-sans text-lede font-normal text-ink/50">
+                {/*
+                  globals.css sets a display face on h1-h6 outside any cascade
+                  layer, which beats Tailwind's layered font-sans utility, so
+                  the family is set here directly.
+                */}
+                <h2
+                  className="text-lede font-normal text-ink/50"
+                  style={{ fontFamily: 'var(--font-sans)' }}
+                >
                   {node.label}
                 </h2>
               </motion.div>

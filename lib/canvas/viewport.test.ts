@@ -6,6 +6,8 @@ import { screenToWorld, worldToScreen } from '@/lib/canvas/coords';
 import {
   CLICK_MAX_DURATION_MS,
   CLICK_TRAVEL_PX,
+  FIT_PADDING_PX,
+  FIT_SCALE_MIN,
   INITIAL_FOCUS_WORLD,
   INITIAL_SCALE,
   MIN_VISIBLE_FRACTION,
@@ -17,6 +19,7 @@ import {
   createInitialViewport,
   isClickGesture,
   viewportReducer,
+  viewportToFitRect,
   zoomAroundPoint,
 } from '@/lib/canvas/viewport';
 
@@ -58,7 +61,7 @@ describe('clampTranslation', () => {
 describe('clampViewport', () => {
   it('clamps scale then pan against the world', () => {
     const next = clampViewport({ x: 50_000, y: -50_000, scale: 0.01 }, size);
-    expect(next.scale).toBe(SCALE_MIN);
+    expect(next.scale).toBe(FIT_SCALE_MIN);
     const worldW = WORLD_WIDTH * next.scale;
     const worldH = WORLD_HEIGHT * next.scale;
     const minOverlapX = MIN_VISIBLE_FRACTION * Math.min(worldW, size.width);
@@ -111,6 +114,24 @@ describe('isClickGesture', () => {
     expect(isClickGesture(CLICK_TRAVEL_PX, 80)).toBe(false);
     expect(isClickGesture(2, CLICK_MAX_DURATION_MS)).toBe(false);
     expect(isClickGesture(20, 800)).toBe(false);
+  });
+});
+
+describe('viewportToFitRect', () => {
+  it('centers the rect in the viewport with equal side margins', () => {
+    const rect = { x: 1000, y: 400, width: 1600, height: 1200 };
+    const view = { width: 1200, height: 800 };
+    const fitted = viewportToFitRect(rect, view);
+    const center = worldToScreen(
+      { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 },
+      fitted,
+    );
+    expect(center.x).toBeCloseTo(view.width / 2);
+    expect(center.y).toBeCloseTo(view.height / 2);
+    const scaledW = rect.width * fitted.scale;
+    const scaledH = rect.height * fitted.scale;
+    expect(view.width - scaledW).toBeGreaterThanOrEqual(FIT_PADDING_PX * 2 - 0.5);
+    expect(view.height - scaledH).toBeGreaterThanOrEqual(FIT_PADDING_PX * 2 - 0.5);
   });
 });
 

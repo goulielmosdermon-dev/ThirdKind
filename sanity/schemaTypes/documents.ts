@@ -134,6 +134,7 @@ export const aboutSection = defineType({
           { title: 'Process', value: 'process' },
           { title: 'Why', value: 'why' },
           { title: 'Services', value: 'services' },
+          { title: 'Poem', value: 'poem' },
         ],
         layout: 'radio',
       },
@@ -142,7 +143,14 @@ export const aboutSection = defineType({
     defineField({
       name: 'title',
       type: 'string',
-      validation: (rule) => rule.required(),
+      hidden: ({ document }) => document?.key === 'poem',
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (context.document?.key === 'poem') {
+            return true;
+          }
+          return value ? true : 'Required';
+        }),
     }),
     hover,
     defineField({
@@ -189,6 +197,12 @@ export const aboutSection = defineType({
       ],
     }),
     defineField({
+      name: 'offer',
+      type: 'object',
+      hidden: ({ document }) => document?.key !== 'services',
+      fields: [defineField({ name: 'statement', type: 'text', rows: 2 })],
+    }),
+    defineField({
       name: 'services',
       type: 'array',
       hidden: ({ document }) => document?.key !== 'services',
@@ -204,6 +218,22 @@ export const aboutSection = defineType({
             }),
             defineField({ name: 'description', type: 'text' }),
           ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      type: 'array',
+      hidden: ({ document }) => document?.key !== 'services',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'question', type: 'string' }),
+            defineField({ name: 'answer', type: 'text', rows: 6 }),
+          ],
+          preview: { select: { title: 'question' } },
         },
       ],
     }),

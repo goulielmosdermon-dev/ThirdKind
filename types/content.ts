@@ -25,6 +25,7 @@ export type CanvasPosition = {
   x: number;
   y: number;
   tileWidth: TileWidth;
+  tileHeight?: TileWidth;
   rotation?: number;
 };
 
@@ -48,6 +49,8 @@ export type ImageAsset = {
   width: number;
   height: number;
   hotspot?: ImageHotspot;
+  /** Serve the original file untouched, skipping Next's image pipeline. */
+  unoptimized?: boolean;
 };
 
 export type Slug = {
@@ -106,7 +109,24 @@ export type GalleryVideo = {
   url: string;
 };
 
-export type GalleryItem = GalleryImage | GalleryVideo;
+export type GallerySilentVideo = {
+  _type: 'silentVideo';
+  vimeoId: string;
+};
+
+export type GalleryFilm = {
+  _type: 'film';
+  vimeoId: string;
+};
+
+export type GalleryItem =
+  GalleryImage | GalleryVideo | GallerySilentVideo | GalleryFilm;
+
+export type WorkBeat =
+  | { _type: 'copy'; text: string }
+  | { _type: 'image'; image: ImageAsset }
+  | { _type: 'silentVideo'; vimeoId: string }
+  | { _type: 'film'; vimeoId: string; poster?: ImageAsset };
 
 export type Project = {
   _id: string;
@@ -122,6 +142,9 @@ export type Project = {
   body: PortableText;
   credits: Credit[];
   gallery: GalleryItem[];
+  story: WorkBeat[];
+  /** Vertical loops shown as a strip at the foot of the page. */
+  reel?: string[];
   canvasPosition: CanvasPosition;
   featured: boolean;
 };
@@ -158,7 +181,17 @@ export type ServiceOffering = {
   description: string;
 };
 
-export type AboutSectionKey = 'team' | 'process' | 'why' | 'services';
+/** The single offer the stages belong to, above the scrolling column. */
+export type ServicesOffer = {
+  statement: string;
+};
+
+export type Faq = {
+  question: string;
+  answer: string;
+};
+
+export type AboutSectionKey = 'team' | 'process' | 'why' | 'services' | 'poem';
 
 type AboutSectionBase = {
   _id: string;
@@ -186,14 +219,21 @@ export type AboutWhySection = AboutSectionBase & {
 
 export type AboutServicesSection = AboutSectionBase & {
   key: 'services';
+  offer?: ServicesOffer;
   services: ServiceOffering[];
+  faqs: Faq[];
+};
+
+export type AboutPoemSection = AboutSectionBase & {
+  key: 'poem';
 };
 
 export type AboutSection =
   | AboutTeamSection
   | AboutProcessSection
   | AboutWhySection
-  | AboutServicesSection;
+  | AboutServicesSection
+  | AboutPoemSection;
 
 export type ContactInfo = {
   _id: string;
@@ -267,6 +307,7 @@ export type LeafCanvasNode = CanvasNodeBase & {
   hoverDescription: string;
   thumbnail: ImageAsset;
   documentId: string;
+  swatch?: string;
 };
 
 export type AmbientCanvasNode = CanvasNodeBase & {

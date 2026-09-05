@@ -54,13 +54,25 @@ async function main() {
   });
 
   for (const project of siteContent.projects) {
+    const { story: _story, ...projectDoc } = project;
     transaction.createOrReplace({
-      ...project,
+      ...projectDoc,
       thumbnail: { ...image, alt: project.thumbnail.alt },
       posterImage: { ...image, alt: project.posterImage.alt },
-      gallery: project.gallery.map((item) =>
-        item._type === 'image' ? { ...image, alt: item.image.alt } : item,
-      ),
+      gallery: project.gallery.flatMap((item) => {
+        if (item._type === 'image') {
+          return [{ ...image, alt: item.image.alt }];
+        }
+        if (item._type === 'videoUrl') {
+          return [item];
+        }
+        if (item._type === 'film' || item._type === 'silentVideo') {
+          return [
+            { _type: 'videoUrl' as const, url: `https://vimeo.com/${item.vimeoId}` },
+          ];
+        }
+        return [];
+      }),
     });
   }
 

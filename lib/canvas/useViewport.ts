@@ -12,6 +12,7 @@ import {
   lerpViewport,
   viewportReducer,
   viewportToCenterWorld,
+  viewportToFitRect,
   zoomAroundPoint,
   type ViewportAction,
   type ViewportSize,
@@ -30,6 +31,13 @@ export function useViewport(size: ViewportSize | null): {
   zoomByFactor: (factor: number, anchor: Point) => void;
   animateZoomTo: (scale: number, anchor: Point) => void;
   centerOnWorld: (world: Point) => void;
+  animateTo: (end: Viewport) => void;
+  animateFitRect: (rect: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }) => void;
   cancelAnimation: () => void;
   readViewport: () => Viewport;
 } {
@@ -144,6 +152,13 @@ export function useViewport(size: ViewportSize | null): {
     [animateTo],
   );
 
+  const animateFitRect = useCallback(
+    (rect: { x: number; y: number; width: number; height: number }) => {
+      animateTo(viewportToFitRect(rect, sizeRef.current));
+    },
+    [animateTo],
+  );
+
   useEffect(() => {
     if (!size) {
       return;
@@ -177,6 +192,8 @@ export function useViewport(size: ViewportSize | null): {
     zoomByFactor,
     animateZoomTo,
     centerOnWorld,
+    animateTo,
+    animateFitRect,
     cancelAnimation,
     readViewport,
   };

@@ -10,10 +10,33 @@ import type {
   SiteContent,
 } from '@/types/content';
 
-export const ABOUT_KEYS = ['team', 'process', 'why', 'services'] as const;
+export const ABOUT_KEYS = [
+  'team',
+  'process',
+  'why',
+  'services',
+  'poem',
+] as const;
+
+/**
+ * About sections hidden from the site. The content and its route handler stay
+ * in place; they are simply filtered out before anything renders, so the
+ * section disappears from the canvas, the nav, and the static params at once.
+ */
+const HIDDEN_ABOUT_KEYS: readonly AboutSectionKey[] = ['process'];
+
+function isHiddenAboutKey(key: AboutSectionKey): boolean {
+  return HIDDEN_ABOUT_KEYS.includes(key);
+}
 
 export async function getSiteContent(): Promise<SiteContent> {
-  return fetchSiteContent();
+  const content = await fetchSiteContent();
+  return {
+    ...content,
+    aboutSections: content.aboutSections.filter(
+      (section) => !isHiddenAboutKey(section.key),
+    ),
+  };
 }
 
 export async function getProject(slug: string): Promise<Project | undefined> {
@@ -66,25 +89,40 @@ export async function getContact(): Promise<ContactInfo> {
   return contact;
 }
 
-export async function adjacentProjects(slug: string): Promise<{
-  prev: Project | undefined;
-  next: Project | undefined;
-}> {
+export async function allProjects(): Promise<Project[]> {
   const { projects } = await getSiteContent();
-  const ordered = [...projects].sort((a, b) => a.order - b.order);
-  const index = ordered.findIndex((project) => project.slug.current === slug);
-  if (index < 0) {
-    return { prev: undefined, next: undefined };
-  }
-  return {
-    prev: ordered[index - 1],
-    next: ordered[index + 1],
-  };
+  return [...projects].sort((a, b) => a.order - b.order);
 }
 
 export async function projectStaticParams(): Promise<{ slug: string }[]> {
   const { projects } = await getSiteContent();
   return projects.map((project) => ({ slug: project.slug.current }));
+}
+
+export async function allArticles(): Promise<Article[]> {
+  const { articles } = await getSiteContent();
+  return [...articles].sort(
+    (left, right) =>
+      Date.parse(right.publishedAt) - Date.parse(left.publishedAt),
+  );
+}
+
+export async function articleByline(): Promise<{
+  name: string;
+  role: string;
+  linkedInUrl?: string;
+}> {
+  const { aboutSections, contact, settings } = await getSiteContent();
+  const lead = aboutSections.find((section) => section.key === 'team')
+    ?.teamMembers[0];
+  const linkedIn = settings.socialLinks.find((link) =>
+    /linkedin/i.test(`${link.label} ${link.url}`),
+  );
+  return {
+    name: lead?.name ?? contact.newBusinessName,
+    role: lead?.role ?? 'Creative Director',
+    linkedInUrl: linkedIn?.url,
+  };
 }
 
 export async function articleStaticParams(): Promise<{ slug: string }[]> {
@@ -93,5 +131,7 @@ export async function articleStaticParams(): Promise<{ slug: string }[]> {
 }
 
 export function aboutStaticParams(): { section: AboutSectionKey }[] {
-  return ABOUT_KEYS.map((section) => ({ section }));
+  return ABOUT_KEYS.filter((key) => !isHiddenAboutKey(key)).map(
+    (section) => ({ section }),
+  );
 }

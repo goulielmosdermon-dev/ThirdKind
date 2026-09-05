@@ -1,10 +1,245 @@
 'use client';
 
 import Image from 'next/image';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useId, useState } from 'react';
 
+import { useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
+import { ServicesFaq } from '@/components/sheet/ServicesFaq';
 import { Sheet } from '@/components/sheet/Sheet';
-import type { AboutSection, PortableText } from '@/types/content';
+import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
+import { MOTION } from '@/lib/motion/tokens';
+import type {
+  AboutSection,
+  Faq,
+  PortableText,
+  ProcessStep,
+  ServiceOffering,
+  ServicesOffer,
+} from '@/types/content';
+
+const PROCESS_INTRO = 'From brief to delivery, with the numbers kept honest.';
+
+const TEAM_INTRO =
+  'From slightly elsewhere. Different backgrounds, one stubborn standard for the work.';
+
+function poemLines(value: PortableText): string[] {
+  return value
+    .flatMap((block) =>
+      block._type === 'block'
+        ? [
+            block.children
+              .map((child) => child.text)
+              .join('')
+              .trim(),
+          ]
+        : [],
+    )
+    .filter(Boolean);
+}
+
+function PoemReveal({ lines, framed }: { lines: string[]; framed: boolean }) {
+  const reduced = useReducedMotion();
+
+  return (
+    <div
+      className={`flex min-h-[var(--frame-h,calc(100dvh-5rem))] items-center px-[8cqi] pb-24 ${
+        framed ? 'pt-[6.5rem]' : 'pt-20'
+      }`}
+    >
+      <div className="max-w-[28ch]">
+        {lines.map((line, index) => (
+          <motion.p
+            key={`${index}-${line}`}
+            initial={reduced ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: reduced ? MOTION.reduced : 0.95,
+              delay: reduced ? 0 : 0.08 + index * 0.16,
+              ease: MOTION.easeOut,
+            }}
+            className="font-display text-[1.05rem] leading-[1.85] text-ink"
+          >
+            {line}
+          </motion.p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProcessView({
+  title,
+  intro,
+  steps,
+  framed,
+}: {
+  title: string;
+  intro: string;
+  steps: ProcessStep[];
+  framed: boolean;
+}) {
+  const ordered = steps.slice().sort((a, b) => a.step - b.step);
+
+  return (
+    <div className="px-[8cqi] pb-28">
+      <header className={`pb-10 ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}>
+        <p className="text-sm text-white/50">About</p>
+        <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
+          {title}
+        </h1>
+        {intro ? (
+          <p className="mt-6 max-w-[36rem] text-[1.05rem] leading-snug text-white/70">
+            {intro}
+          </p>
+        ) : null}
+      </header>
+      {/* Two across: the whole process is on screen when the page opens, so
+          there is nothing to scroll through to see it. */}
+      <ol className="grid grid-cols-1 gap-x-12 gap-y-14 pt-8 @md:grid-cols-2">
+        {ordered.map((step) => (
+          <li key={step.step} className="flex flex-col">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/80 text-sm text-white">
+              {step.step}
+            </span>
+            <h2 className="font-display mt-6 text-[clamp(1.5rem,2.6cqi,2.25rem)] leading-tight text-white">
+              {step.title}
+            </h2>
+            <p className="mt-5 text-[clamp(1.15rem,1.9cqi,1.5rem)] leading-[1.4] text-white">
+              {step.description}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+/**
+ * One discipline, dressed like the FAQ rows beside it. The panel still opens
+ * over whatever sits below it in the grid so the other column never reflows.
+ */
+function DisciplineRow({
+  service,
+  open,
+  onToggle,
+}: {
+  service: ServiceOffering;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const reduced = useReducedMotion() ?? false;
+  const panelId = useId();
+
+  return (
+    // The open cell is lifted as a whole so its panel paints over the rows
+    // that follow it in the grid, not just over its own box.
+    <li className={`relative ${open ? 'z-30' : 'z-0'}`}>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={panelId}
+        className={`flex w-full items-center justify-between gap-4 rounded-md px-4 py-2.5 text-left text-[0.875rem] leading-snug transition-colors duration-200 ${
+          open
+            ? 'bg-ink text-white'
+            : 'bg-black/[0.06] text-ink hover:bg-black/[0.1]'
+        }`}
+      >
+        <span>{service.title}</span>
+        <span aria-hidden className="shrink-0 text-base leading-none">
+          +
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.div
+            id={panelId}
+            key="panel"
+            role="region"
+            // In the grid the panel lies over the row beneath it so the other
+            // columns never reflow. In one column there is nothing to protect
+            // and hiding the next item would just lose it, so it pushes.
+            className="overflow-hidden @md:absolute @md:inset-x-0 @md:top-full @md:z-30 @md:bg-paper"
+            initial={reduced ? { height: 'auto' } : { height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={reduced ? { height: 0 } : { height: 0, opacity: 0 }}
+            transition={{
+              duration: reduced ? MOTION.reduced : MOTION.hub,
+              ease: MOTION.easeOut,
+            }}
+          >
+            <div className="flex gap-3 pt-3 pr-1 pb-2 pl-7 @md:pb-8">
+              <span aria-hidden className="text-mute">
+                &#8627;
+              </span>
+              <p className="text-[0.875rem] leading-[1.45] text-ink">
+                {service.description}
+              </p>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </li>
+  );
+}
+
+function DisciplineGrid({ services }: { services: ServiceOffering[] }) {
+  const [open, setOpen] = useState<string | null>(null);
+
+  return (
+    <ul className="mt-14 grid grid-cols-1 gap-x-8 gap-y-2 @md:grid-cols-2">
+      {services.map((service) => {
+        const key = service.slug.current;
+        return (
+          <DisciplineRow
+            key={key}
+            service={service}
+            open={open === key}
+            onToggle={() =>
+              setOpen((current) => (current === key ? null : key))
+            }
+          />
+        );
+      })}
+    </ul>
+  );
+}
+
+function ServicesView({
+  title,
+  offer,
+  services,
+  faqs,
+  framed,
+}: {
+  title: string;
+  offer?: ServicesOffer;
+  services: ServiceOffering[];
+  faqs: Faq[];
+  framed: boolean;
+}) {
+  return (
+    <div className="px-[8cqi] pb-28 @md:grid @md:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] @md:items-start @md:gap-16">
+      <div className={framed ? 'pt-[6.5rem] pb-16' : 'pt-20 pb-24'}>
+        <p className="text-sm text-mute">About</p>
+        <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
+          {title}
+        </h1>
+        {offer ? (
+          <p className="mt-6 max-w-[38rem] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink">
+            {offer.statement}
+          </p>
+        ) : null}
+        <DisciplineGrid services={services} />
+      </div>
+      <aside className="w-full pt-4 pb-24 @md:sticky @md:top-0 @md:flex @md:h-dvh @md:flex-col @md:items-stretch @md:pt-20 @md:pb-28">
+        <ServicesFaq faqs={faqs} />
+      </aside>
+    </div>
+  );
+}
 
 export function AboutSheet({
   section,
@@ -13,71 +248,98 @@ export function AboutSheet({
   section: AboutSection;
   poem: PortableText;
 }) {
+  // Why opens its body with the same line as an h2, so a standfirst would repeat it.
+  let intro = section.hoverDescription;
+  if (section.key === 'team') {
+    intro = TEAM_INTRO;
+  } else if (section.key === 'process') {
+    intro = PROCESS_INTRO;
+  } else if (section.key === 'why') {
+    intro = '';
+  }
+  const process = section.key === 'process';
+  const poemPage = section.key === 'poem';
+  const services = section.key === 'services';
+  const framed = useFramed();
+
   return (
-    <Sheet title={section.title}>
-      <div className="mx-auto flex max-w-3xl flex-col gap-8">
-        <PortableBody value={section.body} />
-
-        {section.key === 'team' ? (
-          <ul className="grid gap-6 sm:grid-cols-2">
-            {section.teamMembers.map((member) => (
-              <li key={member.name} className="flex flex-col gap-3">
-                <div className="relative aspect-square overflow-hidden bg-void">
-                  <span className="tk-loading absolute inset-0" aria-hidden />
-                  <Image
-                    src={member.portrait.src}
-                    alt={member.portrait.alt}
-                    fill
-                    sizes="300px"
-                    unoptimized={member.portrait.src.endsWith('.svg')}
-                    className="object-cover"
-                  />
-                </div>
-                <p className="font-display text-lede">{member.name}</p>
-                <p className="font-mono text-caption text-mute">
-                  {member.role}
+    <Sheet
+      title={poemPage ? 'Poem' : section.title}
+      tone="editorial"
+      panelClassName={process ? 'bg-black text-white' : undefined}
+    >
+      <article
+        data-surface={process ? 'dark' : 'light'}
+        className={process ? 'bg-black text-white' : 'bg-paper'}
+      >
+        {poemPage ? (
+          <PoemReveal lines={poemLines(poem)} framed={framed} />
+        ) : process && section.key === 'process' ? (
+          <ProcessView
+            title={section.title}
+            intro={intro}
+            steps={section.processSteps}
+            framed={framed}
+          />
+        ) : services && section.key === 'services' ? (
+          <ServicesView
+            title={section.title}
+            offer={section.offer}
+            services={section.services}
+            faqs={section.faqs}
+            framed={framed}
+          />
+        ) : (
+          <>
+            <header
+              className={`snap-start pl-[8cqi] pr-4 pb-10 ${
+                framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
+              }`}
+            >
+              <p className="text-sm text-mute">About</p>
+              <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
+                {section.title}
+              </h1>
+              {intro ? (
+                <p className="mt-6 max-w-[36rem] text-[1.05rem] leading-snug text-mute">
+                  {intro}
                 </p>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+              ) : null}
+            </header>
 
-        {section.key === 'process' ? (
-          <ol className="space-y-6">
-            {section.processSteps
-              .slice()
-              .sort((a, b) => a.step - b.step)
-              .map((step) => (
-                <li key={step.step} className="flex gap-4">
-                  <span className="font-mono text-caption text-signal">
-                    {String(step.step).padStart(2, '0')}
-                  </span>
-                  <div>
-                    <p className="font-display text-lede">{step.title}</p>
-                    <p className="mt-1 text-body text-mute">
-                      {step.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-          </ol>
-        ) : null}
+            <div
+              className={`mx-auto max-w-[42rem] px-[8cqi] @md:px-0 ${
+                section.key === 'why' ? 'pb-48 @md:pb-56' : 'pb-24 @md:pb-28'
+              }`}
+            >
+              {section.key === 'team' ? (
+                <ul className="grid gap-6 @md:grid-cols-2">
+                  {section.teamMembers.map((member) => (
+                    <li key={member.name} className="flex flex-col gap-3">
+                      <div className="relative aspect-square overflow-hidden bg-paper">
+                        <Image
+                          src={member.portrait.src}
+                          alt={member.portrait.alt}
+                          fill
+                          sizes="300px"
+                          unoptimized={isUnoptimizedSrc(member.portrait.src)}
+                          className="object-cover"
+                        />
+                      </div>
+                      <p className="font-display text-lede">{member.name}</p>
+                      <p className="text-sm text-mute">{member.role}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
 
-        {section.key === 'why' ? <PortableBody value={poem} /> : null}
-
-        {section.key === 'services' ? (
-          <ul className="space-y-6">
-            {section.services.map((service) => (
-              <li key={service.slug.current}>
-                <p className="font-display text-lede">{service.title}</p>
-                <p className="mt-1 text-body text-mute">
-                  {service.description}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </div>
+              {section.key === 'why' ? (
+                <PortableBody value={section.body} density="editorial" />
+              ) : null}
+            </div>
+          </>
+        )}
+      </article>
     </Sheet>
   );
 }

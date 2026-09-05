@@ -1,128 +1,124 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+
+import { AppLink } from '@/components/mobile/MobileChrome';
 
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
-import { EmptyState } from '@/components/ui/EmptyState';
+import { HeroFilm, WorkReel, WorkStory } from '@/components/sheet/WorkMedia';
+import { isUnoptimizedAsset, isUnoptimizedSrc } from '@/lib/content/mediaSrc';
+import { vimeoIdFromUrl } from '@/lib/content/vimeo';
 import type { Project } from '@/types/content';
 
 export function ProjectSheet({
   project,
-  prevSlug,
-  nextSlug,
+  moreWork,
 }: {
   project: Project;
-  prevSlug?: string;
-  nextSlug?: string;
+  moreWork: Project[];
 }) {
-  const [playing, setPlaying] = useState(false);
-  const vimeoId = project.heroVideoUrl.split('/').filter(Boolean).at(-1);
+  const vimeoId = vimeoIdFromUrl(project.heroVideoUrl);
+  const useStory = project.story.length > 0;
 
   return (
-    <Sheet title={`${project.client} — ${project.title}`}>
-      <div className="mx-auto flex max-w-3xl flex-col gap-8">
-        <div className="relative aspect-video overflow-hidden bg-void">
-          {playing && vimeoId ? (
-            <iframe
-              title={`${project.title} film`}
-              src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1`}
-              className="h-full w-full"
-              allow="autoplay; fullscreen"
-            />
-          ) : (
-            <button
-              type="button"
-              className="relative h-full w-full cursor-pointer"
-              onClick={() => setPlaying(true)}
-            >
-              <span className="tk-loading absolute inset-0" aria-hidden />
-              <Image
-                src={project.posterImage.src}
-                alt={project.posterImage.alt}
-                fill
-                sizes="(min-width: 768px) 768px, 100vw"
-                unoptimized={project.posterImage.src.endsWith('.svg')}
-                className="object-cover"
-              />
-              <span className="absolute inset-0 flex items-center justify-center bg-void/40 font-mono text-caption tracking-[0.2em] text-ink uppercase">
-                Play
-              </span>
-            </button>
-          )}
-        </div>
-
-        <header>
-          <p className="font-mono text-caption tracking-widest text-mute uppercase">
-            {project.client}
-          </p>
-          <p className="mt-2 text-lede text-ink">{project.hoverDescription}</p>
+    <Sheet title={project.title} tone="editorial">
+      <article>
+        <header
+          data-surface="dark"
+          className="relative min-h-[var(--frame-h,100dvh)] overflow-hidden"
+        >
+          <span className="tk-loading absolute inset-0" aria-hidden />
+          <Image
+            src={project.posterImage.src}
+            alt={project.posterImage.alt}
+            fill
+            priority
+            sizes="100vw"
+            unoptimized={isUnoptimizedAsset(project.posterImage)}
+            className="object-cover"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
+            aria-hidden
+          />
+          <div className="absolute inset-x-0 bottom-0 px-[6cqi] pb-28 @md:px-[8cqi] @md:pb-20">
+            <h1 className="font-display max-w-[18ch] text-[clamp(1.75rem,3.5cqi,3.15rem)] leading-[1.05] text-white">
+              {project.title}
+            </h1>
+            <p className="mt-4 max-w-[36rem] text-[1.05rem] leading-snug text-white/90 @md:text-xl">
+              {project.hoverDescription}
+            </p>
+          </div>
         </header>
 
-        {project.credits.length > 0 ? (
-          <ul className="space-y-1 font-mono text-caption text-mute">
-            {project.credits.map((credit) => (
-              <li key={`${credit.role}-${credit.name}`}>
-                {credit.role} — {credit.name}
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <div
+          data-surface="light"
+          className="bg-paper px-[6cqi] pt-16 pb-24 @md:px-[8cqi] @md:pt-24"
+        >
+          <div className="mx-auto flex max-w-[1100px] flex-col gap-14 @md:gap-16">
+            {vimeoId ? (
+              <HeroFilm vimeoId={vimeoId} title={`${project.title} film`} />
+            ) : null}
 
-        <PortableBody value={project.body} />
-
-        {project.gallery.length > 0 ? (
-          <div className="grid grid-cols-2 gap-3">
-            {project.gallery.map((item, index) =>
-              item._type === 'image' ? (
-                <div
-                  key={`${item.image.src}-${index}`}
-                  className="relative aspect-square overflow-hidden bg-void"
-                >
-                  <span className="tk-loading absolute inset-0" aria-hidden />
-                  <Image
-                    src={item.image.src}
-                    alt={item.image.alt}
-                    fill
-                    sizes="300px"
-                    unoptimized={item.image.src.endsWith('.svg')}
-                    className="object-cover"
-                  />
-                </div>
-              ) : (
-                <p key={item.url} className="text-caption text-mute">
-                  {item.url}
-                </p>
-              ),
+            {useStory ? (
+              <WorkStory beats={project.story} />
+            ) : (
+              <div className="max-w-[38rem]">
+                <PortableBody value={project.body} density="editorial" />
+              </div>
             )}
-          </div>
-        ) : (
-          <EmptyState message="Stills will appear here." />
-        )}
 
-        <nav className="flex justify-between border-t border-hairline pt-6 font-mono text-caption tracking-widest uppercase">
-          {prevSlug ? (
-            <Link
-              href={`/work/${prevSlug}`}
-              className="text-mute underline-offset-4 hover:text-ink hover:underline"
-            >
-              Previous
-            </Link>
-          ) : (
-            <span />
-          )}
-          {nextSlug ? (
-            <Link
-              href={`/work/${nextSlug}`}
-              className="text-mute underline-offset-4 hover:text-ink hover:underline"
-            >
-              Next
-            </Link>
-          ) : null}
-        </nav>
-      </div>
+            <WorkReel vimeoIds={project.reel ?? []} />
+
+            {project.credits.length > 0 ? (
+              <div className="max-w-[38rem] text-[1.05rem] leading-[1.8] text-ink">
+                <p className="font-semibold">Services</p>
+                <ul className="mt-2">
+                  {project.credits.map((credit) => (
+                    <li key={`${credit.role}-${credit.name}`}>
+                      {credit.name
+                        ? `${credit.role} — ${credit.name}`
+                        : credit.role}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        {moreWork.length > 0 ? (
+          <section data-surface="dark" className="bg-black pt-20 pb-28">
+            <ul className="flex items-end gap-1.5 overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {moreWork.map((item) => (
+                <li key={item._id} className="shrink-0">
+                  <AppLink
+                    href={`/work/${item.slug.current}`}
+                    className="block"
+                  >
+                    <p className="font-display text-[1.2rem] leading-tight text-white">
+                      {item.client}
+                    </p>
+                    <p className="mt-1 max-w-[16rem] text-sm leading-snug text-white/70">
+                      {item.hoverDescription}
+                    </p>
+                    <Image
+                      src={item.thumbnail.src}
+                      alt=""
+                      width={item.thumbnail.width}
+                      height={item.thumbnail.height}
+                      sizes="40vw"
+                      unoptimized={isUnoptimizedSrc(item.thumbnail.src)}
+                      className="mt-3 h-auto w-auto max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)]"
+                    />
+                  </AppLink>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+      </article>
     </Sheet>
   );
 }

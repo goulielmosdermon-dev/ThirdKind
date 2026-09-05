@@ -1,5 +1,10 @@
 import { ArticleSheet } from '@/components/sheet/ArticleSheet';
-import { articleStaticParams, requireArticle } from '@/lib/content/queries';
+import {
+  allArticles,
+  articleByline,
+  articleStaticParams,
+  requireArticle,
+} from '@/lib/content/queries';
 
 export async function generateStaticParams() {
   return articleStaticParams();
@@ -11,5 +16,12 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  return <ArticleSheet article={await requireArticle(slug)} />;
+  const [article, more, byline] = await Promise.all([
+    requireArticle(slug),
+    allArticles(),
+    articleByline(),
+  ]);
+  return (
+    <ArticleSheet article={article} moreThoughts={more} byline={byline} />
+  );
 }

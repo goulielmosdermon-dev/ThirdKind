@@ -1,33 +1,42 @@
 import Image from 'next/image';
 
+import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import type { PortableText } from '@/types/content';
 
 const headingClass: Record<string, string> = {
-  h2: 'font-display text-title text-ink',
+  h2: 'font-display text-[1.65rem] leading-snug text-ink',
   h3: 'font-display text-lede text-ink',
   h4: 'font-display text-body text-ink',
   blockquote: 'border-l border-signal pl-4 text-lede text-mute italic',
   normal: 'text-body leading-relaxed text-ink',
 };
 
-export function PortableBody({ value }: { value: PortableText }) {
+export function PortableBody({
+  value,
+  density = 'compact',
+}: {
+  value: PortableText;
+  density?: 'compact' | 'editorial';
+}) {
+  const copyClass =
+    density === 'editorial'
+      ? 'text-[1.05rem] leading-[1.8] text-ink'
+      : 'text-body leading-relaxed text-ink';
+
   return (
-    <div className="space-y-4">
+    <div className={density === 'editorial' ? 'space-y-10' : 'space-y-4'}>
       {value.map((block) => {
         if (block._type === 'image') {
           return (
-            <div
-              key={block._key}
-              className="relative aspect-video w-full overflow-hidden bg-void"
-            >
-              <span className="tk-loading absolute inset-0" aria-hidden />
+            <div key={block._key}>
               <Image
                 src={block.image.src}
                 alt={block.image.alt}
-                fill
+                width={block.image.width}
+                height={block.image.height}
                 sizes="768px"
-                unoptimized={block.image.src.endsWith('.svg')}
-                className="object-cover"
+                unoptimized={isUnoptimizedSrc(block.image.src)}
+                className="h-auto w-full"
               />
             </div>
           );
@@ -36,10 +45,15 @@ export function PortableBody({ value }: { value: PortableText }) {
         const text = block.children.map((child) => child.text).join('');
         const style = block.style ?? 'normal';
         const className =
-          headingClass[style] ?? 'text-body leading-relaxed text-ink';
+          style === 'normal' || !headingClass[style]
+            ? copyClass
+            : headingClass[style];
         if (block.style === 'h2') {
           return (
-            <h2 key={block._key} className={className}>
+            <h2
+              key={block._key}
+              className={`${className} ${density === 'editorial' ? 'pt-6' : ''}`}
+            >
               {text}
             </h2>
           );

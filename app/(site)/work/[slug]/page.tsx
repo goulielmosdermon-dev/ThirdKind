@@ -1,6 +1,6 @@
 import { ProjectSheet } from '@/components/sheet/ProjectSheet';
 import {
-  adjacentProjects,
+  allProjects,
   projectStaticParams,
   requireProject,
 } from '@/lib/content/queries';
@@ -15,13 +15,9 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await requireProject(slug);
-  const { prev, next } = await adjacentProjects(slug);
-  return (
-    <ProjectSheet
-      project={project}
-      prevSlug={prev?.slug.current}
-      nextSlug={next?.slug.current}
-    />
-  );
+  const [project, moreWork] = await Promise.all([
+    requireProject(slug),
+    allProjects(),
+  ]);
+  return <ProjectSheet project={project} moreWork={moreWork} />;
 }

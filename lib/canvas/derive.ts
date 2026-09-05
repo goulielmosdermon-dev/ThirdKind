@@ -1,4 +1,17 @@
-import type { CanvasNode, Edge, SiteContent } from '@/types/content';
+import type {
+  AboutSectionKey,
+  CanvasNode,
+  Edge,
+  HubKey,
+  SiteContent,
+} from '@/types/content';
+
+const ABOUT_SWATCH: Partial<Record<AboutSectionKey, string>> = {
+  why: '#F2FF00',
+  services: '#2F6BFF',
+  process: '#FF1A1A',
+  poem: '#FFFFFF',
+};
 
 export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
   const hubs: CanvasNode[] = content.settings.hubs.map((hub) => ({
@@ -44,6 +57,7 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     thumbnail: section.thumbnail,
     documentId: section._id,
     position: section.canvasPosition,
+    swatch: ABOUT_SWATCH[section.key],
   }));
 
   const contactLeaf: CanvasNode = {
@@ -56,6 +70,7 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     thumbnail: content.contact.thumbnail,
     documentId: content.contact._id,
     position: content.contact.canvasPosition,
+    swatch: '#B44AFF',
   };
 
   const ambient: CanvasNode[] = content.settings.ambientTiles.map((tile) => ({
@@ -76,10 +91,29 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
   ];
 }
 
+const BRIDGE_SPOKES: ReadonlyArray<readonly [string, HubKey]> = [
+  ['project-scytales', 'thoughts'],
+  ['project-noirgaze', 'thoughts'],
+  ['project-a-m', 'about'],
+  ['article-leading-the-creative-landscape', 'work'],
+  ['article-storytelling-wins', 'work'],
+  ['article-b2b', 'work'],
+  ['article-donations', 'about'],
+  ['about-team', 'work'],
+  ['about-process', 'thoughts'],
+];
+
+const HUB_SPINE: ReadonlyArray<readonly [HubKey, HubKey]> = [
+  ['work', 'thoughts'],
+  ['work', 'about'],
+  ['thoughts', 'about'],
+];
+
 export function deriveEdges(nodes: CanvasNode[]): Edge[] {
   const hubs = nodes.filter((node) => node.kind === 'hub');
+  const ids = new Set(nodes.map((node) => node.id));
 
-  return nodes.flatMap((node) => {
+  const spokes: Edge[] = nodes.flatMap((node) => {
     if (node.kind !== 'leaf') {
       return [];
     }
@@ -98,4 +132,40 @@ export function deriveEdges(nodes: CanvasNode[]): Edge[] {
       },
     ];
   });
+
+  const bridges: Edge[] = BRIDGE_SPOKES.flatMap(([leafId, hubKey]) => {
+    const leaf = nodes.find((node) => node.id === leafId);
+    const hub = hubs.find((candidate) => candidate.hubKey === hubKey);
+    if (!leaf || !hub || leaf.kind !== 'leaf' || leaf.hubKey === hubKey) {
+      return [];
+    }
+
+    return [
+      {
+        id: `edge-${hub.id}-${leaf.id}`,
+        fromNodeId: hub.id,
+        toNodeId: leaf.id,
+        kind: 'spoke' as const,
+      },
+    ];
+  });
+
+  const spine: Edge[] = HUB_SPINE.flatMap(([fromKey, toKey]) => {
+    const from = hubs.find((hub) => hub.hubKey === fromKey);
+    const to = hubs.find((hub) => hub.hubKey === toKey);
+    if (!from || !to || !ids.has(from.id) || !ids.has(to.id)) {
+      return [];
+    }
+
+    return [
+      {
+        id: `edge-spine-${from.id}-${to.id}`,
+        fromNodeId: from.id,
+        toNodeId: to.id,
+        kind: 'related' as const,
+      },
+    ];
+  });
+
+  return [...spokes, ...bridges, ...spine];
 }

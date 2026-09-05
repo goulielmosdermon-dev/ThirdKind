@@ -1,4 +1,5 @@
-import { Figtree, Fraunces, IBM_Plex_Mono } from 'next/font/google';
+import { Figtree, IBM_Plex_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import './globals.css';
 
@@ -10,11 +11,10 @@ const figtree = Figtree({
   display: 'swap',
 });
 
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-fraunces',
+const plantin = localFont({
+  src: './fonts/PlantinInfantMTStd-Regular.otf',
+  variable: '--font-plantin',
   display: 'swap',
-  axes: ['SOFT', 'WONK', 'opsz'],
 });
 
 const plex = IBM_Plex_Mono({
@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${figtree.variable} ${fraunces.variable} ${plex.variable}`}
+      className={`${figtree.variable} ${plantin.variable} ${plex.variable}`}
     >
       <body className="bg-void font-sans text-ink antialiased">{children}</body>
     </html>

@@ -2,11 +2,18 @@ import { describe, expect, it } from 'vitest';
 
 import {
   isNodeInView,
+  overlapArea,
+  pickAdjacentHoverCaptionScreen,
+  pickHoverCaptionScreen,
   rectsIntersect,
+  spokeAnchor,
   tileCenter,
   visibleWorldRect,
 } from '@/lib/canvas/geometry';
-import type { LeafCanvasNode } from '@/types/content';
+import type { HubCanvasNode, LeafCanvasNode, TileWidth } from '@/types/content';
+
+/** Smallest authored tile width; the hover cases only need a known size. */
+const TILE: TileWidth = 96;
 
 const leaf = (overrides: Partial<LeafCanvasNode> = {}): LeafCanvasNode => ({
   id: 'project-a',
@@ -34,6 +41,27 @@ describe('geometry', () => {
     });
   });
 
+  it('uses tileHeight when the tile is not square', () => {
+    expect(
+      tileCenter({ x: 10, y: 20, tileWidth: 176, tileHeight: 96 }),
+    ).toEqual({
+      x: 98,
+      y: 68,
+    });
+  });
+
+  it('hides hub spoke origins behind the heading', () => {
+    const hub: HubCanvasNode = {
+      id: 'hub-work',
+      kind: 'hub',
+      hubKey: 'work',
+      label: 'Work',
+      description: 'Films',
+      position: { x: 100, y: 200, tileWidth: 224 },
+    };
+    expect(spokeAnchor(hub, 0.5)).toEqual({ x: 260, y: 244 });
+    expect(spokeAnchor(leaf(), 1)).toEqual({ x: 164, y: 164 });
+  });
   it('detects AABB overlap', () => {
     expect(
       rectsIntersect(
@@ -77,5 +105,59 @@ describe('geometry', () => {
         1,
       ),
     ).toBe(false);
+  });
+
+  it('measures overlapping area', () => {
+    expect(
+      overlapArea(
+        { x: 0, y: 0, width: 10, height: 10 },
+        { x: 5, y: 0, width: 10, height: 10 },
+      ),
+    ).toBe(50);
+    expect(
+      overlapArea(
+        { x: 0, y: 0, width: 10, height: 10 },
+        { x: 20, y: 0, width: 10, height: 10 },
+      ),
+    ).toBe(0);
+  });
+
+  it('keeps hover copy next to the hovered tile', () => {
+    const hovered = leaf({
+      position: { x: 40, y: 40, tileWidth: TILE },
+    });
+    const blocker = leaf({
+      id: 'project-b',
+      documentId: 'project-b',
+      position: { x: 40, y: 130 + TILE, tileWidth: TILE },
+    });
+    const origin = pickHoverCaptionScreen(
+      hovered,
+      [hovered, blocker],
+      { x: 0, y: 0, scale: 1 },
+      { width: 900, height: 700 },
+    );
+
+    const tileCx = 40 + TILE / 2;
+    const tileCy = 40 + TILE / 2;
+    const distance = Math.hypot(
+      origin.x + 144 - tileCx,
+      origin.y + 52 - tileCy,
+    );
+    expect(distance).toBeLessThan(220);
+  });
+
+  it('pins grid hover copy under the tile', () => {
+    const hovered = leaf({
+      position: { x: 200, y: 80, tileWidth: TILE },
+    });
+    const origin = pickAdjacentHoverCaptionScreen(
+      hovered,
+      { x: 0, y: 0, scale: 1 },
+      { width: 900, height: 700 },
+    );
+
+    expect(origin.x).toBe(200);
+    expect(origin.y).toBe(80 + TILE + 10);
   });
 });

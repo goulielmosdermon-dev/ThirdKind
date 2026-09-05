@@ -1,15 +1,17 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-void: #07070c;
-  --color-ink: #f2eee6;
-  --color-mute: #9a9488;
-  --color-hairline: #3a3834;
-  --color-signal: #c9a227;
-  --color-scrim: #04040873;
+  --color-void: color-mix(in srgb, #ffffff 70%, #f3efe6 30%);
+  --color-paper: color-mix(in srgb, #ffffff 70%, #f3efe6 30%);
+  --color-ink: #1c1a16;
+  --color-mute: #6e6860;
+  --color-hairline: #d5cfc4;
+  --color-signal: #9a7a18;
+  --color-scrim: #1c1a1626;
 
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+  --font-display:
+    var(--font-plantin), 'Palatino Linotype', Palatino, Georgia, serif;
   --font-mono: var(--font-plex), ui-monospace, Menlo, monospace;
 
   --text-caption: 0.6875rem;
@@ -43,6 +45,7 @@ body {
   margin: 0;
   background: var(--color-void);
   color: var(--color-ink);
+  color-scheme: light;
 }
 
 ::selection {
@@ -55,9 +58,44 @@ body {
   outline-offset: 2px;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+
 @keyframes tk-pulse {
   50% {
     opacity: 0.45;
+  }
+}
+
+@keyframes tk-scroll-hint {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes tk-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(var(--tk-rot, 0deg));
+  }
+  22% {
+    transform: translate(8px, -6px) rotate(var(--tk-rot, 0deg));
+  }
+  48% {
+    transform: translate(-6px, 7px) rotate(var(--tk-rot, 0deg));
+  }
+  74% {
+    transform: translate(5px, 3px) rotate(var(--tk-rot, 0deg));
   }
 }
 
@@ -66,8 +104,21 @@ body {
   background: var(--color-hairline);
 }
 
+.tk-scroll-hint {
+  animation: tk-scroll-hint 2.8s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tk-loading {
     animation: none;
+  }
+
+  .tk-scroll-hint {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  .tk-drift {
+    animation: none !important;
   }
 }

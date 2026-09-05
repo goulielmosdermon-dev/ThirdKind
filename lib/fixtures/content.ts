@@ -11,6 +11,32 @@ import type {
 } from '@/types/content';
 
 import { deriveCanvasNodes, deriveEdges } from '@/lib/canvas/derive';
+import media from '@/lib/fixtures/webflow-media.json';
+
+/** Service lists as published on thirdkindcreative.com/work/* */
+const PROJECT_SERVICES: Record<string, string[]> = {
+  'scytales-2': ['Creative', 'Production', 'Post-Production', 'VFX'],
+  scania: ['Creative', 'Production', 'Post-Production', 'VFX'],
+  scytales: ['Production', 'Post-Production'],
+  'up-hellas': [
+    'Creative',
+    'Production',
+    'Post-Production',
+    'VFX',
+    'Graphic Design',
+  ],
+  'augustine-jewels': [
+    'Creative',
+    'Production',
+    'Post Production',
+    'Visual Effects',
+  ],
+  ilana: ['Creative', 'Production', 'Post-Production'],
+  'rap-therapy': ['Creative', 'Production', 'Post Production'],
+  'oldboy-brand': ['Production', 'Post Production'],
+  noirgaze: ['Production', 'Post Production'],
+  'a-m': ['Production', 'Post-Production'],
+};
 
 const PLACEHOLDER_COUNT = 6;
 
@@ -56,6 +82,174 @@ function copy(...paragraphs: string[]): PortableText {
   return paragraphs.map((paragraph) => block(paragraph));
 }
 
+function isSectionHeading(text: string): boolean {
+  const trimmed = text.trim();
+  return trimmed.length > 0 && trimmed.length <= 52 && !/[.!?]/.test(trimmed);
+}
+
+function articleCopy(...paragraphs: string[]): PortableText {
+  return paragraphs.map((paragraph) =>
+    block(paragraph, isSectionHeading(paragraph) ? 'h2' : 'normal'),
+  );
+}
+
+function localPortrait(alt: string, file: string): ImageAsset {
+  return {
+    src: `/about/${file}`,
+    alt,
+    width: 896,
+    height: 896,
+  };
+}
+
+const TEAM_PORTRAITS: Record<string, string> = {
+  'Goulielmos Dermon': 'goulielmos-dermon.png',
+  'Goncalo Fonseça': 'goncalo-fonseca.png',
+  'Daria Dikalo': 'daria-dikalo.jpeg',
+  'Tejas Ewing': 'tejas-ewing.png',
+  'Carrie Penn': 'carrie-penn.png',
+};
+
+function hydrateAboutSection(section: AboutSection): AboutSection {
+  if (section.key === 'team') {
+    const teamMembers = section.teamMembers.map((member) => {
+      const file = TEAM_PORTRAITS[member.name];
+      return file
+        ? { ...member, portrait: localPortrait(member.name, file) }
+        : member;
+    });
+    const tilePortrait =
+      teamMembers.find((member) => member.name === 'Daria Dikalo') ??
+      teamMembers[0];
+
+    return {
+      ...section,
+      thumbnail: tilePortrait ? tilePortrait.portrait : section.thumbnail,
+      teamMembers,
+    };
+  }
+
+  return section;
+}
+
+/** Stills we ship ourselves, kept at native size and served uncompressed. */
+const LOCAL_STILL: Record<string, { width: number; height: number }> = {
+  '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
+  '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
+  '/work/scytales-2/sc-2.jpg': { width: 5504, height: 3072 },
+  '/work/up-hellas/poster.png': { width: 1736, height: 974 },
+  '/work/up-hellas/still-1.png': { width: 1314, height: 1158 },
+  '/work/up-hellas/still-2.png': { width: 2068, height: 1154 },
+};
+
+function optimized(asset: ImageAsset): ImageAsset {
+  if (!asset.unoptimized) {
+    return asset;
+  }
+  const next = { ...asset };
+  delete next.unoptimized;
+  return next;
+}
+
+function remote(alt: string, src: string | undefined): ImageAsset {
+  if (!src) {
+    return image(alt);
+  }
+  const local = LOCAL_STILL[src];
+  if (local) {
+    return { src, alt, ...local, unoptimized: true };
+  }
+  return { src: encodeURI(src), alt, width: 1600, height: 900 };
+}
+
+function hydrateProject(project: Project): Project {
+  const item = media.work[project.slug.current as keyof typeof media.work] as
+    | {
+        thumb?: string;
+        poster?: string;
+        heroVideo?: string | null;
+        body: string[];
+        gallery: Array<
+          | { type: 'image'; src: string }
+          | { type: 'silentVideo'; vimeoId: string }
+          | { type: 'film'; vimeoId: string }
+        >;
+        story: Array<
+          | { type: 'copy'; text: string }
+          | { type: 'image'; src: string }
+          | { type: 'silentVideo'; vimeoId: string }
+          | { type: 'film'; vimeoId: string; poster?: string }
+        >;
+        reel?: string[];
+      }
+    | undefined;
+  const services = PROJECT_SERVICES[project.slug.current];
+  const credits = services
+    ? services.map((role) => ({ role, name: '' }))
+    : project.credits;
+  if (!item) {
+    return services ? { ...project, credits } : project;
+  }
+  const paras = item.body.filter((paragraph) => paragraph.length > 40);
+  return {
+    ...project,
+    // Thumbnails are only ever shown small, so they keep going through the
+    // optimiser even when the full-size still beside them does not.
+    thumbnail: optimized(remote(project.thumbnail.alt, item.thumb)),
+    posterImage: remote(project.posterImage.alt, item.poster || item.thumb),
+    heroVideoUrl: item.heroVideo ? `https://vimeo.com/${item.heroVideo}` : '',
+    body: paras.length > 0 ? copy(...paras) : project.body,
+    credits,
+    gallery: item.gallery.map((entry) => {
+      if (entry.type === 'image') {
+        return {
+          _type: 'image' as const,
+          image: remote(project.title, entry.src),
+        };
+      }
+      if (entry.type === 'silentVideo') {
+        return { _type: 'silentVideo' as const, vimeoId: entry.vimeoId };
+      }
+      return { _type: 'film' as const, vimeoId: entry.vimeoId };
+    }),
+    story: item.story.map((beat) => {
+      if (beat.type === 'copy') {
+        return { _type: 'copy' as const, text: beat.text };
+      }
+      if (beat.type === 'image') {
+        return {
+          _type: 'image' as const,
+          image: remote(project.title, beat.src),
+        };
+      }
+      if (beat.type === 'silentVideo') {
+        return { _type: 'silentVideo' as const, vimeoId: beat.vimeoId };
+      }
+      return {
+        _type: 'film' as const,
+        vimeoId: beat.vimeoId,
+        ...(beat.poster
+          ? { poster: remote(`${project.title} film still`, beat.poster) }
+          : {}),
+      };
+    }),
+    ...(item.reel?.length ? { reel: item.reel } : {}),
+  };
+}
+
+function hydrateArticle(article: Article): Article {
+  const item = media.posts[article.slug.current as keyof typeof media.posts];
+  if (!item) {
+    return article;
+  }
+  const paras = item.body.filter((paragraph) => paragraph.trim().length > 0);
+  return {
+    ...article,
+    coverImage: remote(article.coverImage.alt, item.cover),
+    body: paras.length > 0 ? articleCopy(...paras) : article.body,
+  };
+}
+
 const settings: SiteSettings = {
   _id: 'siteSettings',
   _type: 'siteSettings',
@@ -66,65 +260,28 @@ const settings: SiteSettings = {
       key: 'work',
       label: 'Work',
       description: 'Films, commercials, and branded documentaries.',
-      canvasPosition: { x: 1680, y: 1080, tileWidth: 224 },
+      canvasPosition: { x: 1800, y: 1160, tileWidth: 224 },
     },
     {
       key: 'thoughts',
       label: 'Thoughts',
       description: 'Perspectives from the intersection of film and craft.',
-      canvasPosition: { x: 3120, y: 980, tileWidth: 224 },
+      canvasPosition: { x: 2860, y: 1120, tileWidth: 224 },
     },
     {
       key: 'about',
       label: 'About',
       description: 'The people, the process, and why we exist.',
-      canvasPosition: { x: 1760, y: 2040, tileWidth: 224 },
+      canvasPosition: { x: 2260, y: 1560, tileWidth: 224, rotation: -6 },
     },
     {
       key: 'contact',
       label: 'Contact',
       description: 'New business and collaborations.',
-      canvasPosition: { x: 3280, y: 2100, tileWidth: 224 },
+      canvasPosition: { x: 3120, y: 1720, tileWidth: 224 },
     },
   ],
-  ambientTiles: [
-    {
-      id: 'ambient-1',
-      image: image('Ambient texture'),
-      canvasPosition: { x: 2280, y: 760, tileWidth: 96, rotation: -8 },
-      opacity: 0.35,
-    },
-    {
-      id: 'ambient-2',
-      image: image('Ambient texture'),
-      canvasPosition: { x: 2460, y: 1480, tileWidth: 128, rotation: 6 },
-      opacity: 0.28,
-    },
-    {
-      id: 'ambient-3',
-      image: image('Ambient texture'),
-      canvasPosition: { x: 2480, y: 2180, tileWidth: 96, rotation: 4 },
-      opacity: 0.4,
-    },
-    {
-      id: 'ambient-4',
-      image: image('Ambient texture'),
-      canvasPosition: { x: 3720, y: 720, tileWidth: 96, rotation: -3 },
-      opacity: 0.3,
-    },
-    {
-      id: 'ambient-5',
-      image: image('Ambient texture'),
-      canvasPosition: { x: 1220, y: 1680, tileWidth: 128, rotation: 7 },
-      opacity: 0.32,
-    },
-    {
-      id: 'ambient-6',
-      image: image('Ambient texture'),
-      canvasPosition: { x: 3920, y: 1860, tileWidth: 96, rotation: -5 },
-      opacity: 0.26,
-    },
-  ],
+  ambientTiles: [],
   defaultSeo: {
     title: 'Third Kind',
     description:
@@ -134,6 +291,10 @@ const settings: SiteSettings = {
     {
       label: 'Instagram',
       url: 'https://www.instagram.com/thirdkindcreative',
+    },
+    {
+      label: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/goulielmos-dermon-64a8ba18a',
     },
   ],
   poem: [
@@ -173,7 +334,8 @@ const projects: Project[] = [
     ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scytáles still') }],
-    canvasPosition: { x: 1420, y: 820, tileWidth: 176, rotation: -3 },
+    story: [],
+    canvasPosition: { x: 1520, y: 880, tileWidth: 176, rotation: -6 },
     featured: true,
   },
   {
@@ -194,7 +356,8 @@ const projects: Project[] = [
     ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scania still') }],
-    canvasPosition: { x: 1880, y: 780, tileWidth: 224 },
+    story: [],
+    canvasPosition: { x: 1820, y: 860, tileWidth: 128, rotation: 5 },
     featured: true,
   },
   {
@@ -211,7 +374,14 @@ const projects: Project[] = [
     body: copy('Placeholder body for Scytáles Internal Sales.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scytáles sales still') }],
-    canvasPosition: { x: 2140, y: 1020, tileWidth: 128, rotation: 4 },
+    story: [],
+    canvasPosition: {
+      x: 2160,
+      y: 860,
+      tileWidth: 176,
+      tileHeight: 96,
+      rotation: 8,
+    },
     featured: false,
   },
   {
@@ -228,7 +398,8 @@ const projects: Project[] = [
     body: copy('Placeholder body for A Christmas UP-ROL.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('UP Hellas still') }],
-    canvasPosition: { x: 1380, y: 1120, tileWidth: 128 },
+    story: [],
+    canvasPosition: { x: 1380, y: 1040, tileWidth: 176, rotation: -4 },
     featured: false,
   },
   {
@@ -248,7 +419,8 @@ const projects: Project[] = [
     ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Rap Therapy still') }],
-    canvasPosition: { x: 1720, y: 1360, tileWidth: 176, rotation: 2 },
+    story: [],
+    canvasPosition: { x: 1400, y: 1280, tileWidth: 176, rotation: 4 },
     featured: true,
   },
   {
@@ -265,7 +437,8 @@ const projects: Project[] = [
     body: copy('Placeholder body for Nordic Collection.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Augustine still') }],
-    canvasPosition: { x: 2080, y: 1320, tileWidth: 128, rotation: -5 },
+    story: [],
+    canvasPosition: { x: 1780, y: 1420, tileWidth: 96, rotation: -7 },
     featured: false,
   },
   {
@@ -282,7 +455,8 @@ const projects: Project[] = [
     body: copy('Placeholder body for Worldwide Neighbourhood.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('OldBoy still') }],
-    canvasPosition: { x: 1480, y: 1480, tileWidth: 176 },
+    story: [],
+    canvasPosition: { x: 1320, y: 1180, tileWidth: 128, rotation: 3 },
     featured: false,
   },
   {
@@ -302,7 +476,8 @@ const projects: Project[] = [
       { _type: 'image', image: image('Ilana still') },
       { _type: 'videoUrl', url: 'https://vimeo.com/958965737' },
     ],
-    canvasPosition: { x: 1240, y: 1280, tileWidth: 96, rotation: 6 },
+    story: [],
+    canvasPosition: { x: 1540, y: 760, tileWidth: 128, rotation: 6 },
     featured: false,
   },
   {
@@ -321,7 +496,8 @@ const projects: Project[] = [
     ),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('A&M still') }],
-    canvasPosition: { x: 1960, y: 1580, tileWidth: 176, rotation: -2 },
+    story: [],
+    canvasPosition: { x: 1980, y: 1440, tileWidth: 176, rotation: -5 },
     featured: false,
   },
   {
@@ -338,7 +514,8 @@ const projects: Project[] = [
     body: copy('Placeholder body for Noir Gaze New Product Launch.'),
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Noir Gaze still') }],
-    canvasPosition: { x: 1680, y: 1680, tileWidth: 128 },
+    story: [],
+    canvasPosition: { x: 2340, y: 1220, tileWidth: 128, rotation: 2 },
     featured: false,
   },
 ];
@@ -360,7 +537,7 @@ const articles: Article[] = [
     body: copy(
       'Placeholder article body. Full Portable Text migrates from the live site in Phase 5.',
     ),
-    canvasPosition: { x: 2860, y: 720, tileWidth: 176, rotation: -4 },
+    canvasPosition: { x: 2540, y: 840, tileWidth: 176, rotation: -6 },
     seo: {
       title:
         'Should companies follow the digital change or should they be the change?',
@@ -381,7 +558,7 @@ const articles: Article[] = [
       'Every project is tailored. Some require a lean crew, others demand larger sets. Editing is where the story comes together, then we adapt the work across formats.',
       'A campaign is not complete at launch. We review performance, gather feedback, and refine our approach.',
     ),
-    canvasPosition: { x: 3360, y: 680, tileWidth: 128 },
+    canvasPosition: { x: 2900, y: 800, tileWidth: 96, rotation: 4 },
     seo: { title: 'From Idea to Impact: Our Approach to Production' },
   },
   {
@@ -399,7 +576,7 @@ const articles: Article[] = [
       'Big agencies carry big overheads. Smaller and younger teams can deliver the same quality of work at a more efficient cost.',
       'Choosing a young team is not a compromise. It is often the smarter choice.',
     ),
-    canvasPosition: { x: 3580, y: 900, tileWidth: 176, rotation: 3 },
+    canvasPosition: { x: 3260, y: 860, tileWidth: 176, rotation: 6 },
     seo: { title: 'The Hidden Value of Young Creative Teams' },
   },
   {
@@ -414,7 +591,7 @@ const articles: Article[] = [
     hoverDescription: 'Messages expire. Stories compound.',
     excerpt: 'Brand communication as narrative craft, not campaign clutter.',
     body: copy('Placeholder article body for Why Storytelling Wins.'),
-    canvasPosition: { x: 2880, y: 1080, tileWidth: 128, rotation: 5 },
+    canvasPosition: { x: 2560, y: 1040, tileWidth: 128, rotation: 5 },
     seo: { title: 'Why Storytelling Wins: The Future of Brand Communication' },
   },
   {
@@ -430,7 +607,7 @@ const articles: Article[] = [
     hoverDescription: 'Safe work is not a strategy. It is a slow exit.',
     excerpt: 'What happens when brands trade invention for template.',
     body: copy('Placeholder article body for abandoning creativity.'),
-    canvasPosition: { x: 3240, y: 1240, tileWidth: 224 },
+    canvasPosition: { x: 3260, y: 1320, tileWidth: 176, rotation: -4 },
     seo: { title: 'Abandoning creativity is professional suicide' },
   },
   {
@@ -444,7 +621,7 @@ const articles: Article[] = [
     hoverDescription: 'Ten moves that still cut through when the feed is full.',
     excerpt: 'Tactics for commercials that sell without shouting.',
     body: copy('Placeholder article body for ten ad tactics.'),
-    canvasPosition: { x: 3600, y: 1280, tileWidth: 128, rotation: -6 },
+    canvasPosition: { x: 3440, y: 1180, tileWidth: 128, rotation: -6 },
     seo: {
       title:
         'Ten Ad Tactics That Will Still Work When Everyone Else Gets Ignored',
@@ -462,7 +639,7 @@ const articles: Article[] = [
     hoverDescription: 'B2B is still made of people. Film them that way.',
     excerpt: 'How B2B work can feel human without losing the brief.',
     body: copy('Placeholder article body for B2B advertising.'),
-    canvasPosition: { x: 2760, y: 1320, tileWidth: 176 },
+    canvasPosition: { x: 2480, y: 1200, tileWidth: 176 },
     seo: {
       title: 'Business to Business Doesn’t Have to Mean Boring-to-Boring',
     },
@@ -479,7 +656,7 @@ const articles: Article[] = [
     hoverDescription: 'Wrong story, right budget: a quiet way to stall.',
     excerpt: 'Choosing the story that actually moves a brand forward.',
     body: copy('Placeholder article body for the right stories.'),
-    canvasPosition: { x: 3080, y: 1480, tileWidth: 128, rotation: 4 },
+    canvasPosition: { x: 2900, y: 1400, tileWidth: 96, rotation: 8 },
     seo: {
       title:
         'What If the Story You’re Telling Is the Reason You’re Not Growing?',
@@ -499,7 +676,7 @@ const articles: Article[] = [
     excerpt:
       'People who know a company well are far more likely to like it. Film accordingly.',
     body: copy('Placeholder article body for corporate creative.'),
-    canvasPosition: { x: 3480, y: 1520, tileWidth: 176, rotation: -3 },
+    canvasPosition: { x: 3320, y: 1380, tileWidth: 176, rotation: -5 },
     seo: { title: 'Corporate Creative Doesn’t Have to Be Corporate' },
   },
   {
@@ -515,7 +692,7 @@ const articles: Article[] = [
     hoverDescription: 'Causes need witnesses, not slogans.',
     excerpt: 'Nonprofit films that ask without preaching.',
     body: copy('Placeholder article body for donations and story.'),
-    canvasPosition: { x: 2920, y: 1600, tileWidth: 96 },
+    canvasPosition: { x: 2620, y: 1420, tileWidth: 128, rotation: 3 },
     seo: { title: 'Donations Start With a Story' },
   },
 ];
@@ -526,10 +703,13 @@ const aboutSections: AboutSection[] = [
     _type: 'aboutSection',
     key: 'team',
     title: 'Team',
-    hoverDescription: 'Five people. One stubborn standard for the work.',
+    hoverDescription:
+      'From slightly elsewhere. Different backgrounds, one stubborn standard for the work.',
     thumbnail: image('Third Kind team'),
-    body: copy('The people who make the films.'),
-    canvasPosition: { x: 1520, y: 1840, tileWidth: 176, rotation: -3 },
+    body: copy(
+      'From slightly elsewhere. Different backgrounds, one stubborn standard for the work.',
+    ),
+    canvasPosition: { x: 1688, y: 1624, tileWidth: 176, rotation: -6 },
     teamMembers: [
       {
         name: 'Goulielmos Dermon',
@@ -563,10 +743,10 @@ const aboutSections: AboutSection[] = [
     _type: 'aboutSection',
     key: 'process',
     title: 'Process',
-    hoverDescription: 'From brief to delivery, with the numbers kept honest.',
+    hoverDescription: '',
     thumbnail: image('Process'),
     body: copy('How a project moves from first conversation to last delivery.'),
-    canvasPosition: { x: 2000, y: 1860, tileWidth: 128, rotation: 4 },
+    canvasPosition: { x: 2788, y: 1592, tileWidth: 96, rotation: 5 },
     processSteps: [
       {
         step: 1,
@@ -600,7 +780,7 @@ const aboutSections: AboutSection[] = [
     _type: 'aboutSection',
     key: 'why',
     title: 'Why',
-    hoverDescription: 'Stop making ads. Tell more stories.',
+    hoverDescription: '',
     thumbnail: image('Why Third Kind'),
     body: [
       block('Stop making ads, tell more stories.', 'h2'),
@@ -614,39 +794,120 @@ const aboutSections: AboutSection[] = [
         'A close encounter of the third kind, in Hynek’s classification — popularised by Close Encounters of the Third Kind (1977) — is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.',
       ),
     ],
-    canvasPosition: { x: 1580, y: 2200, tileWidth: 224 },
+    canvasPosition: { x: 2040, y: 1800, tileWidth: 176, rotation: 4 },
+  },
+  {
+    _id: 'about-poem',
+    _type: 'aboutSection',
+    key: 'poem',
+    title: '',
+    hoverDescription: '',
+    thumbnail: image('About'),
+    body: [],
+    canvasPosition: { x: 2288, y: 1992, tileWidth: 96, rotation: -3 },
   },
   {
     _id: 'about-services',
     _type: 'aboutSection',
     key: 'services',
-    title: 'Services',
-    hoverDescription: 'Entertainment, story, production, and human-led AI.',
+    title: 'Creative Services',
+    hoverDescription: '',
     thumbnail: image('Services'),
-    body: copy('Four offerings. One standard.'),
-    canvasPosition: { x: 2040, y: 2240, tileWidth: 176, rotation: -4 },
+    body: copy('One offer, several disciplines.'),
+    canvasPosition: { x: 2500, y: 1800, tileWidth: 128, rotation: -5 },
+    offer: {
+      statement:
+        'A brand has to keep showing up: big moments and small, broad and personal. We make work that holds across all of it, cut for every channel it lands on, personal where that earns attention, and made without waste.',
+    },
     services: [
       {
-        title: 'Entertainment in Business',
-        slug: { current: 'entertainment-in-business' },
+        title: 'Reading the room',
+        slug: { current: 'reading-the-room' },
         description:
-          'Work that holds attention inside a commercial context, without apology.',
+          "Your customers belonged to something before they belonged to you. A sport, a scene, a group chat. We go and look at what those worlds actually care about this year, and find you a way in that doesn't make everyone wince.",
       },
       {
-        title: 'Storytelling',
-        slug: { current: 'storytelling' },
-        description: 'Narrative as the operating system, not the garnish.',
-      },
-      {
-        title: 'Production',
-        slug: { current: 'production' },
-        description: 'Films, documentaries, and commercials made end to end.',
-      },
-      {
-        title: 'Human-Led AI Creativity',
-        slug: { current: 'human-led-ai-creativity' },
+        title: 'Brand Strategy',
+        slug: { current: 'brand-strategy' },
         description:
-          'Machine speed, human taste. The model does not get the last cut.',
+          'Before anyone writes a word, the room has to agree on what you stand for and who you are for. We get that onto one page in plain language, so every decision after it has something to point at.',
+      },
+      {
+        title: 'How it feels',
+        slug: { current: 'how-it-feels' },
+        description:
+          'People remember how you made them feel long after they forget what you said. We work on the parts that carry the feeling: how you sound, how you move, what you look like when nobody is paying close attention.',
+      },
+      {
+        title: 'Getting heard',
+        slug: { current: 'getting-heard' },
+        description:
+          'A good film nobody sees is an expensive hobby. We work out where the work goes, in what order, and what each piece is there to do, so the whole run adds up to something.',
+      },
+      {
+        title: 'Worth watching',
+        slug: { current: 'worth-watching' },
+        description:
+          'Most ads get skipped because they earned it. We make the ones people sit through, and now and then send to a mate, which is the only share worth counting.',
+      },
+      {
+        title: 'Proof it worked',
+        slug: { current: 'proof-it-worked' },
+        description:
+          'You should not have to take our word for it. We agree what we are watching before the work goes out, take a reading, take another one after, and show you both.',
+      },
+      {
+        title: 'Steady stream',
+        slug: { current: 'steady-stream' },
+        description:
+          'One big film a year stopped carrying a brand a while ago. We set you up to keep making things: quick where it can be quick, careful where it counts, without spending the whole budget on the small stuff.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'How long does a film take from brief to delivery?',
+        answer:
+          'A narrative spine lands in the first week and a treatment follows inside two. After that the schedule depends on the work: a single-location brand film is usually four to six weeks end to end; a campaign with several cutdowns, eight to ten. We quote a date we can hold.',
+      },
+      {
+        question: 'How is Third Kind different from an agency?',
+        answer:
+          'An agency sells you a message and then hires someone to shoot it. We start with the story and stay on it through the last cut, so nobody hands the idea over halfway and hopes it survives.',
+      },
+      {
+        question: 'What happens after I get in touch?',
+        answer:
+          'A conversation, not a funnel. We listen for the brief, the audience, and the thing that must not be said, then come back with a story direction and an honest number. If the work is not right for us we will say so in that first call rather than three weeks later.',
+      },
+      {
+        question: 'What does a project cost?',
+        answer:
+          'It is scoped per film. A two-day shoot and a multi-country campaign are not the same animal. What stays fixed is how the number is built: every line is something you can see on screen.',
+      },
+      {
+        question: 'Do you only make commercials?',
+        answer:
+          'No. Commercials, brand films, branded documentaries, internal films, and music films all pass through the same process. The format changes; the belief that someone has to actually want to finish watching does not.',
+      },
+      {
+        question: 'Can you work with a script or treatment we already have?',
+        answer:
+          'Yes. We will read it properly before suggesting a change. If the story holds we produce it. If it does not, we will tell you where it loses the audience and let you decide how far to take that.',
+      },
+      {
+        question: 'How do you use AI?',
+        answer:
+          'For speed in concepting, stills, and motion tests, where a machine is genuinely faster than a mood board. It never gets the last cut. Taste, casting, performance, and the final edit stay with people, because that is the part an audience can feel.',
+      },
+      {
+        question: 'Do you shoot globally?',
+        answer:
+          'Yes. We produce wherever the story needs to be, working with local crew we have used before rather than whoever is cheapest that week. Remote briefs are normal for us; the shoot moves, the process does not.',
+      },
+      {
+        question: 'What do we get at the end?',
+        answer:
+          'Masters in the formats you actually need — broadcast, social, and archive — plus the cutdowns and versions agreed at the start. Edit, sound, and colour are treated as one argument, so the fifteen-second version still holds the film together instead of looking like an offcut.',
       },
     ],
   },
@@ -659,16 +920,16 @@ const contact: ContactInfo = {
   newBusinessName: 'Goulielmos Dermon',
   email: 'goulielmos@thirdkindcreative.com',
   formRecipient: 'goulielmos@thirdkindcreative.com',
-  hoverDescription: 'A conversation. Not a funnel.',
+  hoverDescription: '',
   thumbnail: image('Contact'),
-  canvasPosition: { x: 3520, y: 2260, tileWidth: 176, rotation: 3 },
+  canvasPosition: { x: 3380, y: 1600, tileWidth: 128, rotation: 6 },
 };
 
 export const siteContent: SiteContent = {
   settings,
-  projects,
-  articles,
-  aboutSections,
+  projects: projects.map(hydrateProject),
+  articles: articles.map(hydrateArticle),
+  aboutSections: aboutSections.map(hydrateAboutSection),
   contact,
 };
 

@@ -1,9 +1,26 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+async function finishIntro(page: Page) {
+  if (await page.locator('[data-intro-complete]').count()) {
+    return;
+  }
+  await page.evaluate(() => {
+    window.dispatchEvent(
+      new WheelEvent('wheel', {
+        deltaY: 8000,
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+  });
+  await expect(page.locator('[data-intro-complete]')).toBeAttached();
+}
 
 test.describe('sheet routing', () => {
   test('open from canvas, deep-link, back, and close', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText('Third', { exact: true })).toBeVisible();
+    await expect(page.getByRole('img', { name: 'Third Kind' })).toBeVisible();
+    await finishIntro(page);
 
     await page.getByRole('button', { name: /Rap Therapy/ }).click();
     const dialog = page.getByRole('dialog');
@@ -15,10 +32,10 @@ test.describe('sheet routing', () => {
 
     await page.goto('/work/scania');
     await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.getByText('Third', { exact: true })).toBeVisible();
-    await expect(page.getByText('Kind', { exact: true })).toBeVisible();
+    await expect(page.getByRole('img', { name: 'Third Kind' })).toBeVisible();
 
     await page.goto('/');
+    await finishIntro(page);
     await page.getByRole('button', { name: /Rap Therapy/ }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.goBack();

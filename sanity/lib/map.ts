@@ -131,18 +131,22 @@ function mapPosition(position: {
   x?: number;
   y?: number;
   tileWidth?: number;
+  tileHeight?: number;
   rotation?: number;
 }): {
   x: number;
   y: number;
   tileWidth: TileWidth;
+  tileHeight?: TileWidth;
   rotation?: number;
 } {
   const tileWidth = position.tileWidth;
+  const tileHeight = position.tileHeight;
   return {
     x: position.x ?? 0,
     y: position.y ?? 0,
     tileWidth: tileWidth && isTileWidth(tileWidth) ? tileWidth : 128,
+    tileHeight: tileHeight && isTileWidth(tileHeight) ? tileHeight : undefined,
     rotation: position.rotation,
   };
 }
@@ -177,6 +181,7 @@ export function mapProject(doc: {
     x?: number;
     y?: number;
     tileWidth?: number;
+    tileHeight?: number;
     rotation?: number;
   };
   credits?: { role?: string; name?: string }[];
@@ -204,6 +209,7 @@ export function mapProject(doc: {
         : [],
     ),
     gallery: mapGallery(doc.gallery),
+    story: [],
     canvasPosition: mapPosition(doc.canvasPosition ?? {}),
     featured: Boolean(doc.featured),
   };
@@ -220,6 +226,7 @@ export function mapArticle(doc: {
     x?: number;
     y?: number;
     tileWidth?: number;
+    tileHeight?: number;
     rotation?: number;
   };
   seo?: {
@@ -250,7 +257,13 @@ export function mapArticle(doc: {
   };
 }
 
-const ABOUT_KEYS: AboutSectionKey[] = ['team', 'process', 'why', 'services'];
+const ABOUT_KEYS: AboutSectionKey[] = [
+  'team',
+  'process',
+  'why',
+  'services',
+  'poem',
+];
 
 function isAboutKey(value: string): value is AboutSectionKey {
   return ABOUT_KEYS.includes(value as AboutSectionKey);
@@ -265,25 +278,35 @@ export function mapAboutSection(doc: {
     x?: number;
     y?: number;
     tileWidth?: number;
+    tileHeight?: number;
     rotation?: number;
   };
   thumbnail?: SanityImage;
   body?: SanityBlock[];
   teamMembers?: { name?: string; role?: string; portrait?: SanityImage }[];
-  processSteps?: { step?: number; title?: string; description?: string }[];
+  processSteps?: {
+    step?: number;
+    title?: string;
+    description?: string;
+  }[];
+  offer?: { statement?: string };
   services?: {
     title?: string;
     slug?: { current?: string };
     description?: string;
   }[];
+  faqs?: { question?: string; answer?: string }[];
 }): AboutSection {
   const key = doc.key && isAboutKey(doc.key) ? doc.key : 'why';
   const base = {
     _id: doc._id,
     _type: 'aboutSection' as const,
-    title: doc.title ?? key,
+    title: doc.title ?? (key === 'poem' ? '' : key),
     hoverDescription: doc.hoverDescription ?? '',
-    thumbnail: mapImage(doc.thumbnail, doc.title ?? key),
+    thumbnail: mapImage(
+      doc.thumbnail,
+      doc.title || (key === 'poem' ? 'About' : key),
+    ),
     body: mapPortable(doc.body),
     canvasPosition: mapPosition(doc.canvasPosition ?? {}),
   };
@@ -324,10 +347,19 @@ export function mapAboutSection(doc: {
     };
   }
 
+  if (key === 'poem') {
+    return { ...base, key };
+  }
+
   if (key === 'services') {
     return {
       ...base,
       key,
+      ...(doc.offer?.statement
+        ? {
+            offer: { statement: doc.offer.statement },
+          }
+        : {}),
       services: (doc.services ?? []).flatMap((service) =>
         service.title && service.description
           ? [
@@ -337,6 +369,11 @@ export function mapAboutSection(doc: {
                 description: service.description,
               },
             ]
+          : [],
+      ),
+      faqs: (doc.faqs ?? []).flatMap((faq) =>
+        faq.question && faq.answer
+          ? [{ question: faq.question, answer: faq.answer }]
           : [],
       ),
     };
@@ -356,6 +393,7 @@ export function mapContact(doc: {
     x?: number;
     y?: number;
     tileWidth?: number;
+    tileHeight?: number;
     rotation?: number;
   };
   thumbnail?: SanityImage;
@@ -385,6 +423,7 @@ export function mapSettings(doc: {
       x?: number;
       y?: number;
       tileWidth?: number;
+      tileHeight?: number;
       rotation?: number;
     };
   }[];
@@ -395,6 +434,7 @@ export function mapSettings(doc: {
       x?: number;
       y?: number;
       tileWidth?: number;
+      tileHeight?: number;
       rotation?: number;
     };
     image?: SanityImage;

@@ -10,8 +10,10 @@ export type ViewportSize = {
 
 export const SCALE_MIN = 0.45;
 export const SCALE_MAX = 2.6;
+export const FIT_SCALE_MIN = 0.12;
+export const FIT_PADDING_PX = 48;
 export const INITIAL_SCALE = 0.55;
-export const INITIAL_FOCUS_WORLD = { x: 2480, y: 1520 };
+export const INITIAL_FOCUS_WORLD = { x: 2360, y: 1320 };
 export const ZOOM_STEP = 1.25;
 export const ZOOM_ANIMATION_MS = MOTION.zoom * 1000;
 export const MIN_VISIBLE_FRACTION = 0.6;
@@ -51,8 +53,11 @@ export function clampTranslation(
 export function clampViewport(
   viewport: Viewport,
   size: ViewportSize,
+  minScale?: number,
 ): Viewport {
-  const scale = clampScale(viewport.scale);
+  const floor =
+    minScale ?? (viewport.scale < SCALE_MIN ? FIT_SCALE_MIN : SCALE_MIN);
+  const scale = Math.min(SCALE_MAX, Math.max(floor, viewport.scale));
   return {
     x: clampTranslation(viewport.x, WORLD_WIDTH * scale, size.width),
     y: clampTranslation(viewport.y, WORLD_HEIGHT * scale, size.height),
@@ -132,6 +137,29 @@ export function viewportToCenterWorld(
     },
     size,
   );
+}
+
+export function viewportToFitRect(
+  rect: { x: number; y: number; width: number; height: number },
+  size: ViewportSize,
+  paddingPx = FIT_PADDING_PX,
+): Viewport {
+  const availW = Math.max(1, size.width - paddingPx * 2);
+  const availH = Math.max(1, size.height - paddingPx * 2);
+  const scale = Math.min(
+    SCALE_MAX,
+    Math.max(
+      FIT_SCALE_MIN,
+      Math.min(availW / Math.max(rect.width, 1), availH / Math.max(rect.height, 1)),
+    ),
+  );
+  const cx = rect.x + rect.width / 2;
+  const cy = rect.y + rect.height / 2;
+  return {
+    x: size.width / 2 - cx * scale,
+    y: size.height / 2 - cy * scale,
+    scale,
+  };
 }
 
 export function lerpViewport(

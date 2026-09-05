@@ -21,6 +21,11 @@ export const canvasPosition = defineType({
       options: { list: [96, 128, 176, 224] },
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'tileHeight',
+      type: 'number',
+      options: { list: [96, 128, 176, 224] },
+    }),
     defineField({ name: 'rotation', type: 'number' }),
   ],
 });

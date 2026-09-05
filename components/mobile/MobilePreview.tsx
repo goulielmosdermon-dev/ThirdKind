@@ -1,0 +1,248 @@
+'use client';
+
+import { motion, useReducedMotion } from 'motion/react';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
+
+import { IndexView } from '@/components/canvas/IndexView';
+import { useIntro } from '@/components/intro/IntroContext';
+import {
+  MOBILE_PREFIX,
+  withMobilePrefix,
+} from '@/components/mobile/MobileChrome';
+import { useSheetNav } from '@/components/sheet/SheetNav';
+import {
+  ALIEN_ASPECT,
+  HUMAN_ASPECT,
+  layoutHands,
+  mottoOpacity,
+  remap,
+  STORY_LINES,
+  storyLineOpacity,
+} from '@/lib/intro/layout';
+import { MOTION } from '@/lib/motion/tokens';
+import type { CanvasNode } from '@/types/content';
+
+/** CSS viewport of iPhone 15 Pro. */
+export const IPHONE_15_PRO = { width: 393, height: 852 } as const;
+/** Status bar + Dynamic Island. Time and battery sit in this band. */
+const IPHONE_SAFE_TOP = 62;
+const IPHONE_SAFE_BOTTOM = 34;
+const MOBILE_HANDS = {
+  endScale: 0.3,
+  safeTop: IPHONE_SAFE_TOP,
+  inset: 14,
+  dockBottom: IPHONE_SAFE_BOTTOM + 76,
+} as const;
+
+function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const reduced = useReducedMotion();
+  const sheetOpen = pathname !== MOBILE_PREFIX;
+  const { markOpenedFromCanvas } = useSheetNav();
+  const prefetch = useCallback(
+    (href: string) => router.prefetch(withMobilePrefix(href, true)),
+    [router],
+  );
+  const { progress, complete, advance } = useIntro();
+  const motto = mottoOpacity(progress);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<number | null>(null);
+  const completeRef = useRef(complete);
+  completeRef.current = complete;
+  const advanceRef = useRef(advance);
+  advanceRef.current = advance;
+  const [size, setSize] = useState<{ width: number; height: number }>(
+    IPHONE_15_PRO,
+  );
+
+  useEffect(() => {
+    const frame = screenRef.current;
+    if (!frame) {
+      return;
+    }
+    const measure = () => {
+      const rect = frame.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        setSize({ width: rect.width, height: rect.height });
+      }
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const frame = screenRef.current;
+    if (!frame) {
+      return;
+    }
+    const onWheel = (event: WheelEvent) => {
+      if (completeRef.current) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      const span = Math.max(size.height * 3.6, 2200);
+      advanceRef.current(event.deltaY / span);
+    };
+    frame.addEventListener('wheel', onWheel, { passive: false });
+    return () => frame.removeEventListener('wheel', onWheel);
+  }, [size.height]);
+
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (complete) {
+      return;
+    }
+    dragRef.current = event.clientY;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (complete || dragRef.current === null) {
+      return;
+    }
+    const dy = event.clientY - dragRef.current;
+    dragRef.current = event.clientY;
+    const span = Math.max(size.height * 3.6, 2200);
+    advance(-dy / span);
+  };
+
+  const onPointerUp = () => {
+    dragRef.current = null;
+  };
+
+  const hands = layoutHands(progress, size.width, size.height, MOBILE_HANDS);
+
+  return (
+    <motion.div
+      ref={screenRef}
+      className="relative h-full w-full origin-center overflow-hidden bg-void"
+      animate={
+        reduced
+          ? { opacity: sheetOpen ? 0.88 : 1 }
+          : { scale: sheetOpen ? 0.98 : 1, opacity: sheetOpen ? 0.92 : 1 }
+      }
+      transition={{
+        duration: reduced ? MOTION.reduced : MOTION.sheetIn,
+        ease: MOTION.easeOut,
+      }}
+      style={{ touchAction: complete ? 'pan-y' : 'none' }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+    >
+      {hands ? (
+        <>
+          <Image
+            src="/brand/hand-alien.png"
+            alt="Third Kind"
+            width={3354}
+            height={2203}
+            priority
+            className="pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+            style={{
+              height: hands.alien.height,
+              width: hands.alien.height * ALIEN_ASPECT,
+              transform: `translate(${hands.alien.x}px, ${hands.alien.y}px)`,
+              transition: complete
+                ? undefined
+                : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          />
+          <Image
+            src="/brand/hand-human.png"
+            alt=""
+            width={2517}
+            height={1819}
+            priority
+            className="pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+            style={{
+              height: hands.human.height,
+              width: hands.human.height * HUMAN_ASPECT,
+              transform: `translate(${hands.human.x}px, ${hands.human.y}px)`,
+              transition: complete
+                ? undefined
+                : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          />
+        </>
+      ) : null}
+
+      <div
+        className="pointer-events-none absolute inset-0 z-30 flex items-center px-6"
+        aria-hidden={progress < 0.02 || progress > 0.55}
+      >
+        <div className="w-full text-left">
+          {STORY_LINES.map((line, index) => (
+            <p
+              key={line}
+              className="font-display text-[1.15rem] leading-[1.35] text-ink"
+              style={{
+                opacity: storyLineOpacity(progress, index),
+                transition: complete
+                  ? undefined
+                  : 'opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+            >
+              {line}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      <p
+        className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[1.65rem] leading-[0.95] text-ink"
+        style={{
+          opacity: motto,
+          transition: complete ? undefined : 'opacity 0.4s ease',
+        }}
+        aria-hidden={motto < 0.05}
+      >
+        MAKE EXTRAORDINARY
+      </p>
+
+      {!complete ? (
+        <p
+          className="pointer-events-none absolute inset-x-0 bottom-8 z-30 text-center text-[0.65rem] tracking-[0.18em] text-ink lowercase"
+          style={{ opacity: 1 - remap(progress, 0.9, 1) }}
+          aria-hidden={progress > 0.95}
+        >
+          <span className="tk-scroll-hint inline-block">keep scrolling</span>
+        </p>
+      ) : null}
+
+      {complete ? (
+        <div
+          data-preview-scroll
+          data-surface="light"
+          className="h-full overflow-y-auto overscroll-y-contain"
+        >
+          <IndexView
+            density="phone"
+            nodes={nodes}
+            onOpen={(href, nodeId) => {
+              markOpenedFromCanvas(nodeId);
+              router.push(withMobilePrefix(href, true));
+            }}
+            onPrefetch={prefetch}
+          />
+        </div>
+      ) : null}
+    </motion.div>
+  );
+}
+
+export function MobileHome({ nodes }: { nodes: CanvasNode[] }) {
+  return <MobileScreen nodes={nodes} />;
+}

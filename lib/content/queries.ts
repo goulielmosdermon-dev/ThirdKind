@@ -6,6 +6,8 @@ import type {
   AboutSectionKey,
   Article,
   ContactInfo,
+  Hub,
+  HubKey,
   Project,
   SiteContent,
 } from '@/types/content';
@@ -105,6 +107,12 @@ export async function allArticles(): Promise<Article[]> {
     (left, right) =>
       Date.parse(right.publishedAt) - Date.parse(left.publishedAt),
   );
+}
+
+/** The hub blurb doubles as the standfirst on each index page. */
+export async function getHub(key: HubKey): Promise<Hub | undefined> {
+  const { settings } = await getSiteContent();
+  return settings.hubs.find((hub) => hub.key === key);
 }
 
 export async function articleByline(): Promise<{

@@ -18,8 +18,8 @@ import { MOTION } from '@/lib/motion/tokens';
 import type { CanvasNode } from '@/types/content';
 
 const PAGES = [
-  { label: 'Work', href: '/' },
-  { label: 'Thoughts', href: '/' },
+  { label: 'Work', href: '/work' },
+  { label: 'Thoughts', href: '/thoughts' },
   { label: 'About', href: '/about/team' },
   // Process is hidden for now; restore this entry to bring the section back.
   // { label: 'Process', href: '/about/process' },
@@ -30,7 +30,8 @@ const PAGES = [
 
 function pageIsCurrent(label: string, pathname: string): boolean {
   if (label === 'Work') {
-    return pathname === '/' || pathname.startsWith('/work');
+    // '/' is the canvas now that Work has an index of its own.
+    return pathname.startsWith('/work');
   }
   if (label === 'Thoughts') {
     return pathname.startsWith('/thoughts');
@@ -91,15 +92,7 @@ export function CommandNav({
     };
   }, [open]);
 
-  const resolveHref = (page: (typeof PAGES)[number]): string => {
-    if (page.label === 'Thoughts') {
-      const article = nodes.find(
-        (node) => node.kind === 'leaf' && node.hubKey === 'thoughts',
-      );
-      return article?.kind === 'leaf' ? article.href : '/';
-    }
-    return page.href;
-  };
+  const resolveHref = (page: (typeof PAGES)[number]): string => page.href;
 
   const go = (href: string, nodeId?: string) => {
     if (nodeId) {

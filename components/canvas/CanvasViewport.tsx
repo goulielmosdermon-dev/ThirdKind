@@ -545,7 +545,7 @@ export function CanvasViewport({
                 width={3354}
                 height={2203}
                 priority
-                className="pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+                className="tk-hands-in pointer-events-none absolute top-0 left-0 z-20 max-w-none"
                 style={{
                   height: hands.alien.height,
                   width: hands.alien.height * ALIEN_ASPECT,
@@ -561,7 +561,7 @@ export function CanvasViewport({
                 width={2517}
                 height={1819}
                 priority
-                className="pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+                className="tk-hands-in pointer-events-none absolute top-0 left-0 z-20 max-w-none"
                 style={{
                   height: hands.human.height,
                   width: hands.human.height * HUMAN_ASPECT,
@@ -609,13 +609,26 @@ export function CanvasViewport({
 
           {!complete ? (
             <p
-              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 text-center text-[0.7rem] tracking-[0.18em] text-ink lowercase"
+              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center text-ink"
               style={{ opacity: 1 - remap(progress, 0.9, 1) }}
+              aria-label="Scroll to continue"
               aria-hidden={progress > 0.95}
             >
-              <span className="tk-scroll-hint inline-block">
-                keep scrolling
-              </span>
+              <svg
+                className="tk-scroll-arrow"
+                width="16"
+                height="24"
+                viewBox="0 0 16 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <path d="M8 21V4" />
+                <path d="M2.5 9.5 8 4l5.5 5.5" />
+              </svg>
             </p>
           ) : null}
 

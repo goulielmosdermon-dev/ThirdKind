@@ -159,7 +159,7 @@ export const HOVER_CAPTION_WIDTH = 288;
  * The caption sits flush against the tile, top or bottom, so the copy reads
  * as part of the same block rather than floating near it.
  */
-export const HOVER_CAPTION_GAP = 0;
+export const HOVER_CAPTION_GAP = 4;
 export const HOVER_CAPTION_HEIGHT = 104;
 
 export function overlapArea(a: WorldRect, b: WorldRect): number {

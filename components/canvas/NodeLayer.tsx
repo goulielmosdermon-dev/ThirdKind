@@ -378,8 +378,11 @@ export function NodeLayer({
               [node.title, node.hoverDescription].filter(Boolean).join('. ') ||
               'Open'
             }
+            // Drift is paused while hovering: the caption is placed from the
+            // tile's layout position, so a tile still wandering under its own
+            // animation would slide over its own copy.
             className={`absolute z-[2] cursor-pointer overflow-hidden border-0 bg-transparent p-0 ${
-              packed ? '' : 'tk-drift'
+              packed || hovered ? '' : 'tk-drift'
             }`}
             initial={false}
             animate={{
@@ -394,7 +397,7 @@ export function NodeLayer({
             }}
             style={{
               zIndex: hoveredId === node.id ? 3 : 2,
-              ...(packed
+              ...(packed || hovered
                 ? undefined
                 : driftStyle(node.id, node.position.rotation)),
             }}

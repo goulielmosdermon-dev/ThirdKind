@@ -158,8 +158,8 @@ describe('geometry', () => {
     );
 
     expect(origin.x).toBe(200);
-    // Flush against the tile's lower edge, no gap.
-    expect(origin.y).toBe(80 + TILE);
+    // A hairline under the tile's lower edge.
+    expect(origin.y).toBe(80 + TILE + 4);
     expect(origin.above).toBe(false);
   });
 
@@ -176,7 +176,7 @@ describe('geometry', () => {
     );
 
     expect(origin.above).toBe(true);
-    // Flush against the tile's upper edge, not sitting on the image.
-    expect(origin.y + 104).toBe(520);
+    // A hairline above the tile's upper edge.
+    expect(origin.y + 104).toBe(520 - 4);
   });
 });

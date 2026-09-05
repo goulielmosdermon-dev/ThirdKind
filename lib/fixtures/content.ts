@@ -335,7 +335,7 @@ const projects: Project[] = [
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scytáles still') }],
     story: [],
-    canvasPosition: { x: 1520, y: 880, tileWidth: 176, rotation: -6 },
+    canvasPosition: { x: 1520, y: 880, tileWidth: 224, rotation: -6 },
     featured: true,
   },
   {
@@ -357,7 +357,7 @@ const projects: Project[] = [
     credits: [{ role: 'Creative Direction', name: 'Third Kind' }],
     gallery: [{ _type: 'image', image: image('Scania still') }],
     story: [],
-    canvasPosition: { x: 1820, y: 860, tileWidth: 128, rotation: 5 },
+    canvasPosition: { x: 1820, y: 860, tileWidth: 224, rotation: 5 },
     featured: true,
   },
   {
@@ -813,7 +813,12 @@ const aboutSections: AboutSection[] = [
     key: 'services',
     title: 'Creative Services',
     hoverDescription: '',
-    thumbnail: image('Services'),
+    thumbnail: {
+      src: '/about/our-work-together.jpg',
+      alt: 'Creative Services',
+      width: 1600,
+      height: 1558,
+    },
     body: copy('One offer, several disciplines.'),
     canvasPosition: { x: 2500, y: 1800, tileWidth: 128, rotation: -5 },
     offer: {
@@ -922,7 +927,12 @@ const contact: ContactInfo = {
   email: 'goulielmos@thirdkindcreative.com',
   formRecipient: 'goulielmos@thirdkindcreative.com',
   hoverDescription: '',
-  thumbnail: image('Contact'),
+  thumbnail: {
+    src: '/about/contact-past-present-future.jpg',
+    alt: 'Three hands holding a candlestick telephone, a red handset and a cordless phone, captioned past, present and future.',
+    width: 1400,
+    height: 1405,
+  },
   canvasPosition: { x: 3380, y: 1600, tileWidth: 128, rotation: 6 },
 };
 

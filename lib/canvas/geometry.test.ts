@@ -159,5 +159,23 @@ describe('geometry', () => {
 
     expect(origin.x).toBe(200);
     expect(origin.y).toBe(80 + TILE + 10);
+    expect(origin.above).toBe(false);
+  });
+
+  it('flips the copy above a tile sitting at the foot of the screen', () => {
+    const hovered = leaf({
+      position: { x: 200, y: 520, tileWidth: TILE },
+    });
+    const origin = pickAdjacentHoverCaptionScreen(
+      hovered,
+      { x: 0, y: 0, scale: 1 },
+      { width: 900, height: 700 },
+      undefined,
+      { width: 288, height: 104 },
+    );
+
+    expect(origin.above).toBe(true);
+    // Clear of the tile's top edge, not sitting on the image.
+    expect(origin.y + 104).toBeLessThanOrEqual(520);
   });
 });

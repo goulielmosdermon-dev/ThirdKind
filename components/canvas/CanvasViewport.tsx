@@ -1,11 +1,12 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type PointerEvent,
@@ -19,18 +20,21 @@ import type {
 } from '@/types/content';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '@/types/content';
 
-import type { Point } from '@/lib/canvas/coords';
+import { normalizeWheelDelta, type Point } from '@/lib/canvas/coords';
 import {
   hoverTileWorldRect,
-  pickHoverCaptionScreen,
+  pickAdjacentHoverCaptionScreen,
   tileCenter,
 } from '@/lib/canvas/geometry';
+import { spreadLayout } from '@/lib/canvas/spreadLayout';
 import { useViewport } from '@/lib/canvas/useViewport';
 import {
   CLICK_TRAVEL_PX,
+  WHEEL_DELTA_CLAMP,
   ZOOM_STEP,
   isClickGesture,
   viewportCenter,
+  viewportToFitRect,
   type ViewportSize,
 } from '@/lib/canvas/viewport';
 
@@ -49,7 +53,6 @@ import {
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { IndexView } from '@/components/canvas/IndexView';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
-import { SiteFooter } from '@/components/chrome/SiteFooter';
 import { useIntro } from '@/components/intro/IntroContext';
 import { useSheetNav } from '@/components/sheet/SheetNav';
 
@@ -77,6 +80,8 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
   return node?.getAttribute('data-node-id') ?? null;
 }
 
+type ViewMode = 'matrix' | 'matrix2' | 'index';
+
 type PanSession = {
   pointerId: number;
   lastX: number;
@@ -85,6 +90,10 @@ type PanSession = {
   travel: number;
   leafId: string | null;
   suppressClick: boolean;
+  /** Smoothed pointer speed in px/ms, used to throw the canvas on release. */
+  vx: number;
+  vy: number;
+  lastMove: number;
 };
 
 export function CanvasViewport({
@@ -124,6 +133,7 @@ export function CanvasViewport({
     [router],
   );
   const { progress, complete, advance } = useIntro();
+  const reducedMotion = useReducedMotion() === true;
   const reveal = contentOpacity(progress);
   const motto = mottoOpacity(progress);
   const completeRef = useRef(complete);
@@ -133,22 +143,27 @@ export function CanvasViewport({
   const sizeRef = useRef(size);
   sizeRef.current = size;
   const introDragRef = useRef<{ lastY: number } | null>(null);
-  const [viewMode, setViewMode] = useState<'matrix' | 'index'>('matrix');
+  const [viewMode, setViewMode] = useState<ViewMode>('matrix2');
   const indexed = viewMode === 'index';
+  const spread = viewMode === 'matrix2';
+  const spreadResult = useMemo(() => spreadLayout(nodes), [nodes]);
+  // Matrix 2 re-files the same nodes into loose per-hub grids; everything
+  // downstream (hover, reveal, hit-testing) reads these instead.
+  const viewNodes = spread ? spreadResult.nodes : nodes;
   const indexedRef = useRef(indexed);
   indexedRef.current = indexed;
   const matrixViewportRef = useRef<Viewport | null>(null);
-  const footerUnlockedRef = useRef(false);
-  const footerIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     viewport,
     panBy,
     zoomTo,
-    zoomByFactor,
+    smoothZoomByFactor,
+    glideBy,
     animateZoomTo,
     centerOnWorld,
     animateTo,
+    animateFitRect,
     readViewport,
   } = useViewport(size);
 
@@ -177,28 +192,24 @@ export function CanvasViewport({
     return () => observer.disconnect();
   }, []);
 
-  const armFooterUnlock = useCallback(() => {
-    if (footerIdleTimerRef.current) {
-      clearTimeout(footerIdleTimerRef.current);
-    }
-    footerIdleTimerRef.current = setTimeout(() => {
-      footerUnlockedRef.current = true;
-      footerIdleTimerRef.current = null;
-    }, 480);
-  }, []);
-
   useEffect(() => {
-    if (!complete) {
-      footerUnlockedRef.current = false;
+    const frame = frameRef.current;
+    if (!frame) {
       return;
     }
-    armFooterUnlock();
-    return () => {
-      if (footerIdleTimerRef.current) {
-        clearTimeout(footerIdleTimerRef.current);
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) {
+        return;
       }
-    };
-  }, [armFooterUnlock, complete]);
+      const { width, height } = entry.contentRect;
+      setSize({ width, height });
+    });
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const frame = frameRef.current;
@@ -223,24 +234,16 @@ export function CanvasViewport({
       if (event.target instanceof Element && event.target.closest('footer')) {
         return;
       }
-      const scroller = pageScrollRef.current;
-      if (scroller && scroller.scrollTop > 1) {
-        return;
-      }
-      if (!footerUnlockedRef.current) {
-        event.preventDefault();
-        armFooterUnlock();
-        return;
-      }
-      if (scroller && event.deltaY > 0 && !event.ctrlKey) {
-        event.preventDefault();
-        scroller.scrollTop += event.deltaY;
-        return;
-      }
       event.preventDefault();
+      const delta = normalizeWheelDelta(
+        event.deltaY,
+        event.deltaMode,
+        sizeRef.current?.height ?? 800,
+        WHEEL_DELTA_CLAMP,
+      );
       const intensity = event.ctrlKey ? 0.012 : 0.0025;
-      zoomByFactor(
-        Math.exp(-event.deltaY * intensity),
+      smoothZoomByFactor(
+        Math.exp(-delta * intensity),
         localPoint(event, frame),
       );
     };
@@ -250,7 +253,7 @@ export function CanvasViewport({
       capture: true,
     });
     return () => window.removeEventListener('wheel', onWheel, true);
-  }, [armFooterUnlock, zoomByFactor]);
+  }, [smoothZoomByFactor]);
 
   const endGestureIfIdle = useCallback(() => {
     if (pointersRef.current.size === 0) {
@@ -313,6 +316,9 @@ export function CanvasViewport({
       travel: 0,
       leafId: leafIdFromTarget(event.target),
       suppressClick: false,
+      vx: 0,
+      vy: 0,
+      lastMove: event.timeStamp,
     };
   };
 
@@ -356,6 +362,13 @@ export function CanvasViewport({
     pan.lastX = point.x;
     pan.lastY = point.y;
 
+    // Exponentially smoothed so one jittery sample cannot define the throw.
+    const dt = Math.max(1, event.timeStamp - pan.lastMove);
+    pan.lastMove = event.timeStamp;
+    const blend = Math.min(1, dt / 50);
+    pan.vx += (dx / dt - pan.vx) * blend;
+    pan.vy += (dy / dt - pan.vy) * blend;
+
     if (pan.travel >= CLICK_TRAVEL_PX && !panning) {
       setPanning(true);
       setHoveredId(null);
@@ -381,11 +394,21 @@ export function CanvasViewport({
       pan.leafId &&
       isClickGesture(pan.travel, event.timeStamp - pan.startTime)
     ) {
-      const node = nodes.find((candidate) => candidate.id === pan.leafId);
+      const node = viewNodes.find((candidate) => candidate.id === pan.leafId);
       if (node?.kind === 'leaf') {
         markOpenedFromCanvas(node.id);
         router.push(node.href);
       }
+    } else if (
+      pan &&
+      pan.pointerId === event.pointerId &&
+      pan.travel >= CLICK_TRAVEL_PX &&
+      pointersRef.current.size <= 1 &&
+      // A pause before release means the user set the canvas down.
+      event.timeStamp - pan.lastMove < 90 &&
+      !reducedMotion
+    ) {
+      glideBy(pan.vx, pan.vy);
     }
 
     pointersRef.current.delete(event.pointerId);
@@ -403,6 +426,9 @@ export function CanvasViewport({
           travel: 0,
           leafId: null,
           suppressClick: true,
+          vx: 0,
+          vy: 0,
+          lastMove: event.timeStamp,
         };
       }
       endGestureIfIdle();
@@ -436,7 +462,16 @@ export function CanvasViewport({
     animateZoomTo(viewport.scale * factor, viewportCenter(size));
   };
 
-  const onViewMode = (mode: 'matrix' | 'index') => {
+  const framedSpreadRef = useRef(false);
+  useEffect(() => {
+    if (framedSpreadRef.current || !size || viewMode !== 'matrix2') {
+      return;
+    }
+    framedSpreadRef.current = true;
+    animateTo(viewportToFitRect(spreadResult.bounds, size));
+  }, [animateTo, size, spreadResult.bounds, viewMode]);
+
+  const onViewMode = (mode: ViewMode) => {
     if (mode === viewMode) {
       return;
     }
@@ -447,26 +482,51 @@ export function CanvasViewport({
     if (mode === 'matrix' && matrixViewportRef.current) {
       animateTo(matrixViewportRef.current);
     }
+    // Matrix 2 is laid out somewhere else in the world, so frame it rather
+    // than leaving the viewport pointed at the constellation.
+    if (mode === 'matrix2') {
+      animateFitRect(spreadResult.bounds);
+    }
     pageScrollRef.current?.scrollTo({ top: 0 });
     setViewMode(mode);
   };
 
   const hovered =
     hoveredId && !panning
-      ? nodes.find(
+      ? viewNodes.find(
           (node): node is LeafCanvasNode =>
             node.kind === 'leaf' && node.id === hoveredId,
         )
       : undefined;
+  const [captionSize, setCaptionSize] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
+  // A two-line title is taller than the nominal box, and the neighbours have
+  // to make room for what is actually drawn.
+  const measureCaption = useCallback((node: HTMLDivElement | null) => {
+    if (!node) {
+      return;
+    }
+    const rect = node.getBoundingClientRect();
+    setCaptionSize((current) =>
+      current &&
+      Math.abs(current.width - rect.width) < 1 &&
+      Math.abs(current.height - rect.height) < 1
+        ? current
+        : { width: rect.width, height: rect.height },
+    );
+  }, []);
+
   const hoveredRect = hovered ? hoverTileWorldRect(hovered, aspects) : null;
   const captionOrigin =
     hovered && size && !indexed
-      ? pickHoverCaptionScreen(
+      ? pickAdjacentHoverCaptionScreen(
           hovered,
-          nodes,
           viewport,
           size,
           hoveredRect ?? undefined,
+          captionSize ?? undefined,
         )
       : null;
   const hands =
@@ -487,14 +547,7 @@ export function CanvasViewport({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      <div
-        ref={pageScrollRef}
-        className={`h-full ${
-          complete && !indexed
-            ? 'overflow-y-auto overscroll-y-contain'
-            : 'overflow-hidden'
-        }`}
-      >
+      <div ref={pageScrollRef} className="h-full overflow-hidden">
         <div className="relative h-dvh overflow-hidden">
           <div
             className="absolute origin-top-left"
@@ -513,7 +566,7 @@ export function CanvasViewport({
           >
             <EdgeLayer
               nodes={nodes}
-              edges={edges}
+              edges={spread ? [] : edges}
               scale={viewport.scale}
               viewport={viewport}
               size={size}
@@ -522,11 +575,13 @@ export function CanvasViewport({
             />
             {size ? (
               <NodeLayer
-                nodes={nodes}
+                nodes={viewNodes}
                 viewport={viewport}
                 size={size}
                 panning={panning}
                 hoveredId={hoveredId}
+                captionScreen={captionOrigin}
+                captionSize={captionSize}
                 revealEnabled={complete}
                 aspects={aspects}
                 onAspect={noteAspect}
@@ -638,6 +693,7 @@ export function CanvasViewport({
             (hovered.title || hovered.hoverDescription) ? (
               <motion.div
                 key={hovered.id}
+                ref={measureCaption}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -655,7 +711,6 @@ export function CanvasViewport({
             ) : null}
           </AnimatePresence>
         </div>
-        {complete && !indexed ? <SiteFooter /> : null}
       </div>
 
       <AnimatePresence>
@@ -680,26 +735,25 @@ export function CanvasViewport({
           pointerEvents: complete ? 'auto' : 'none',
         }}
       >
-        <button
-          type="button"
-          aria-pressed={viewMode === 'matrix'}
-          className={`rounded-md px-1.5 focus-visible:outline-none ${
-            viewMode === 'matrix' ? 'text-ink' : 'text-mute'
-          }`}
-          onClick={() => onViewMode('matrix')}
-        >
-          Matrix
-        </button>
-        <button
-          type="button"
-          aria-pressed={viewMode === 'index'}
-          className={`rounded-md px-1.5 focus-visible:outline-none ${
-            viewMode === 'index' ? 'text-ink' : 'text-mute'
-          }`}
-          onClick={() => onViewMode('index')}
-        >
-          Index
-        </button>
+        {(
+          [
+            ['matrix2', 'Organized'],
+            ['index', 'Index'],
+            ['matrix', 'Matrix'],
+          ] as const
+        ).map(([mode, label]) => (
+          <button
+            key={mode}
+            type="button"
+            aria-pressed={viewMode === mode}
+            className={`rounded-md px-1.5 focus-visible:outline-none ${
+              viewMode === mode ? 'text-ink' : 'text-mute'
+            }`}
+            onClick={() => onViewMode(mode)}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {!indexed ? (

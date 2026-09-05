@@ -6,8 +6,18 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 import type { CanvasNode, LeafCanvasNode, Viewport } from '@/types/content';
 
+import { screenToWorld, type Point } from '@/lib/canvas/coords';
 import { driftStyle } from '@/lib/canvas/drift';
 import {
+  clearOffset,
+  repelField,
+  repelOffset,
+  reservedRect,
+} from '@/lib/canvas/repel';
+import {
+  HOVER_CAPTION_GAP,
+  HOVER_CAPTION_HEIGHT,
+  HOVER_CAPTION_WIDTH,
   isNodeInView,
   isWorldPointOnScreen,
   tileCenter,
@@ -65,6 +75,8 @@ export function NodeLayer({
   size,
   panning,
   hoveredId,
+  captionScreen = null,
+  captionSize = null,
   packed = false,
   revealEnabled = true,
   aspects,
@@ -86,6 +98,10 @@ export function NodeLayer({
   onHover: (id: string | null) => void;
   onFocusNode: (node: LeafCanvasNode) => void;
   onActivateNode: (node: LeafCanvasNode) => void;
+  /** Where the caption actually landed, after clamping to the viewport. */
+  captionScreen?: Point | null;
+  /** Its measured box, so the reserved ground matches what is drawn. */
+  captionSize?: { width: number; height: number } | null;
 }) {
   const pointerFine = usePointerFine();
   const reduced = useReducedMotion() ?? false;
@@ -144,6 +160,47 @@ export function NodeLayer({
     });
   }, [nodes, packed, revealEnabled, revealView, viewport.scale]);
 
+  // Where the hovered tile actually sits once it has grown, so neighbours
+  // give way to the open frame rather than the resting thumbnail.
+  const hoveredField = (() => {
+    const node = leaves.find((leaf) => leaf.id === hoveredId);
+    if (!node) {
+      return null;
+    }
+    const rect = hoverTileWorldRect(node, aspects);
+    const width = rect?.width ?? node.position.tileWidth;
+    const height =
+      rect?.height ?? node.position.tileHeight ?? node.position.tileWidth;
+    const x = rect?.x ?? node.position.x;
+    const y = rect?.y ?? node.position.y;
+    const tile = { x, y, width, height };
+    // The caption is pinned under the tile at a fixed screen size, so its
+    // world footprint depends on how far the canvas is zoomed.
+    const captionWorld = captionScreen
+      ? screenToWorld(captionScreen, viewport)
+      : { x, y: y + height + HOVER_CAPTION_GAP / viewport.scale };
+    const caption = {
+      x: captionWorld.x,
+      y: captionWorld.y,
+      width: (captionSize?.width ?? HOVER_CAPTION_WIDTH) / viewport.scale,
+      height: (captionSize?.height ?? HOVER_CAPTION_HEIGHT) / viewport.scale,
+    };
+    return {
+      tile,
+      caption,
+      reserved: reservedRect(tile, caption),
+      centre: { x: x + width / 2, y: y + height / 2 },
+      captionCentre: {
+        x: caption.x + caption.width / 2,
+        y: caption.y + caption.height / 2,
+      },
+      ...repelField(width, height),
+      // tk-drift keeps nudging tiles by up to 8px after they are placed, so
+      // the margin has to clear that as well as look like breathing room.
+      margin: Math.max(26, Math.max(width, height) * 0.14),
+    };
+  })();
+
   const isEntered = (id: string) =>
     packed || reduced || !revealEnabled || entered.has(id);
 
@@ -170,7 +227,10 @@ export function NodeLayer({
             }}
           >
             <div
-              className={`w-80 bg-void px-1 ${packed ? '' : 'tk-drift'}`}
+              // The plate masks the spokes behind the label; the negative
+              // margin lets it grow outward without moving the text off the
+              // hub anchor.
+              className={`-m-2 w-[22rem] bg-void p-3 ${packed ? '' : 'tk-drift'}`}
               style={
                 packed ? undefined : driftStyle(node.id, node.position.rotation)
               }
@@ -183,7 +243,7 @@ export function NodeLayer({
                   ease: MOTION.easeOut,
                 }}
               >
-                <h2 className="font-sans text-lede font-normal text-ink">
+                <h2 className="font-sans text-lede font-normal text-ink/50">
                   {node.label}
                 </h2>
               </motion.div>
@@ -253,8 +313,41 @@ export function NodeLayer({
         const openWidth = grown?.width ?? width;
         const boxWidth = hovered && grown ? grown.width : width;
         const boxHeight = hovered && grown ? grown.height : height;
-        const boxLeft = hovered && grown ? grown.x : node.position.x;
-        const boxTop = hovered && grown ? grown.y : node.position.y;
+        const restLeft = hovered && grown ? grown.x : node.position.x;
+        const restTop = hovered && grown ? grown.y : node.position.y;
+        // Neighbours step aside; the hovered tile holds its ground.
+        const centre = {
+          x: node.position.x + width / 2,
+          y: node.position.y + height / 2,
+        };
+        // Nearby tiles drift aside for the look of it; anything still
+        // sitting under the open tile or its caption is then moved clear
+        // outright, so the copy is never covered.
+        const drift =
+          hoveredField && !hovered
+            ? repelOffset(
+                centre,
+                hoveredField.centre,
+                hoveredField.radius,
+                hoveredField.strength,
+              )
+            : { x: 0, y: 0 };
+        const drifted = {
+          x: node.position.x + drift.x,
+          y: node.position.y + drift.y,
+          width,
+          height,
+        };
+        const clear =
+          hoveredField && !hovered
+            ? clearOffset(drifted, hoveredField.reserved, hoveredField.margin)
+            : { x: 0, y: 0 };
+        const push = {
+          x: drift.x + clear.x,
+          y: drift.y + clear.y,
+        };
+        const boxLeft = restLeft + push.x;
+        const boxTop = restTop + push.y;
         return (
           <motion.button
             key={node.id}

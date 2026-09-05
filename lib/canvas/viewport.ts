@@ -17,6 +17,14 @@ export const INITIAL_FOCUS_WORLD = { x: 2360, y: 1320 };
 export const ZOOM_STEP = 1.25;
 export const ZOOM_ANIMATION_MS = MOTION.zoom * 1000;
 export const MIN_VISIBLE_FRACTION = 0.6;
+/** Time constant for easing the viewport toward its target, in ms. */
+export const GLIDE_TAU_MS = 95;
+/** Momentum decay per second after a drag ends. */
+export const GLIDE_FRICTION = 0.0022;
+/** Below this speed (px/ms) a glide is over. */
+export const GLIDE_MIN_SPEED = 0.015;
+/** A single wheel event may not ask for more than this much delta. */
+export const WHEEL_DELTA_CLAMP = 90;
 export const CLICK_TRAVEL_PX = 6;
 export const CLICK_MAX_DURATION_MS = 400;
 

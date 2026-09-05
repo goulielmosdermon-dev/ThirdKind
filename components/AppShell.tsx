@@ -58,7 +58,14 @@ export function AppShell({
                 wordmarkRight={wordmarkRight}
               />
             </motion.div>
-            {sheet}
+            {/*
+              Next keeps a parallel-route slot on its last match during soft
+              navigation — default.tsx only applies on a fresh load — so a
+              sheet closed with router.push('/') stays mounted, and its
+              invisible backdrop swallows every click on the canvas. The path
+              is the source of truth for whether a sheet exists.
+            */}
+            {sheetOpen ? sheet : null}
             {children}
             <CommandNav nodes={nodes} />
           </div>

@@ -6,9 +6,9 @@ import type {
   SiteContent,
 } from '@/types/content';
 
+// Services carries its own artwork, so it shows that instead of a swatch.
 const ABOUT_SWATCH: Partial<Record<AboutSectionKey, string>> = {
   why: '#F2FF00',
-  services: '#2F6BFF',
   process: '#FF1A1A',
   poem: '#FFFFFF',
 };
@@ -28,7 +28,12 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     kind: 'leaf',
     hubKey: 'work',
     href: `/work/${project.slug.current}`,
-    title: `${project.client} — ${project.title}`,
+    // Some projects are titled after the client; joining them would read
+    // "Ilana — Ilana".
+    title:
+      project.client.trim() === project.title.trim()
+        ? project.title
+        : `${project.client} — ${project.title}`,
     hoverDescription: project.hoverDescription,
     thumbnail: project.thumbnail,
     documentId: project._id,
@@ -70,7 +75,6 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     thumbnail: content.contact.thumbnail,
     documentId: content.contact._id,
     position: content.contact.canvasPosition,
-    swatch: '#B44AFF',
   };
 
   const ambient: CanvasNode[] = content.settings.ambientTiles.map((tile) => ({

@@ -30,6 +30,15 @@ export const HOVER_TILE_SCALE = 2;
  * own ratio, expanded from the centre. Shared so the tile and its caption
  * cannot disagree about where the tile actually is.
  */
+/**
+ * Art direction: flagship work opens larger than the default hover growth.
+ * Keyed by node id so it survives repositioning between canvas views.
+ */
+export const HOVER_BOOST: Record<string, number> = {
+  'project-scytales-2': 1.3,
+  'project-scania': 1.3,
+};
+
 export function hoverTileWorldRect(
   node: CanvasNode,
   aspects: Record<string, number>,
@@ -39,7 +48,7 @@ export function hoverTileWorldRect(
   }
   const { width, height } = tileSize(node.position);
   const ratio = aspects[node.id] ?? 1;
-  const grownWidth = width * HOVER_TILE_SCALE;
+  const grownWidth = width * HOVER_TILE_SCALE * (HOVER_BOOST[node.id] ?? 1);
   const grownHeight = grownWidth * ratio;
   return {
     x: node.position.x - (grownWidth - width) / 2,
@@ -146,6 +155,8 @@ export function isWorldPointOnScreen(
 }
 
 export const HOVER_CAPTION_WIDTH = 288;
+/** Screen gap between a tile and the caption pinned beneath it. */
+export const HOVER_CAPTION_GAP = 10;
 export const HOVER_CAPTION_HEIGHT = 104;
 
 export function overlapArea(a: WorldRect, b: WorldRect): number {
@@ -188,18 +199,33 @@ export function pickAdjacentHoverCaptionScreen(
   hovered: CanvasNode,
   viewport: Viewport,
   size: ViewportSize,
-): Point {
+  /** The tile's own world rect, when hovering has grown it. */
+  tileWorldRect?: WorldRect,
+  /** Measured caption box; falls back to the nominal size. */
+  captionSize?: { width: number; height: number },
+): Point & { above: boolean } {
   const margin = 24;
-  const gap = 10;
+  const gap = HOVER_CAPTION_GAP;
+  const width = captionSize?.width ?? HOVER_CAPTION_WIDTH;
+  const height = captionSize?.height ?? HOVER_CAPTION_HEIGHT;
   const tile = worldRectToScreen(
-    nodeWorldRect(hovered, viewport.scale),
+    tileWorldRect ?? nodeWorldRect(hovered, viewport.scale),
     viewport,
   );
-  return clampCaptionOrigin(
-    { x: tile.x, y: tile.y + tile.height + gap },
-    size,
-    margin,
-  );
+
+  // Sit under the tile, but flip above it rather than being clamped back
+  // over the image when the tile is near the foot of the screen.
+  const below = tile.y + tile.height + gap;
+  const above = tile.y - gap - height;
+  const fitsBelow = below + height + margin <= size.height;
+  const goAbove = !fitsBelow && above >= margin;
+  const y = goAbove ? above : below;
+
+  return {
+    x: Math.min(size.width - width - margin, Math.max(margin, tile.x)),
+    y: Math.min(size.height - height - margin, Math.max(margin, y)),
+    above: goAbove,
+  };
 }
 
 export function pickHoverCaptionScreen(

@@ -65,7 +65,8 @@ export function MobileFrame({
                 >
                   <InquiryProvider>
                     {children}
-                    {sheet}
+                    {/* See AppShell: a stale slot would block the canvas. */}
+                    {onHome ? null : sheet}
                     <CommandNav nodes={nodes} embedded />
                   </InquiryProvider>
                 </div>

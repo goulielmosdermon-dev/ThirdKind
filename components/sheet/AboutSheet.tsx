@@ -133,18 +133,16 @@ function DisciplineRow({
   const panelId = useId();
 
   return (
-    // The open cell is lifted as a whole so its panel paints over the rows
-    // that follow it in the grid, not just over its own box.
-    <li className={`relative ${open ? 'z-30' : 'z-0'}`}>
+    <li className="relative">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={panelId}
-        className={`flex w-full items-center justify-between gap-4 rounded-md px-4 py-2.5 text-left text-[0.875rem] leading-snug transition-colors duration-200 ${
+        className={`flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left text-[0.875rem] leading-snug transition-colors duration-200 ${
           open
-            ? 'bg-ink text-white'
-            : 'bg-black/[0.06] text-ink hover:bg-black/[0.1]'
+            ? 'rounded-t-md bg-ink text-white'
+            : 'rounded-md bg-black/[0.06] text-ink hover:bg-black/[0.1]'
         }`}
       >
         <span>{service.title}</span>
@@ -158,10 +156,10 @@ function DisciplineRow({
             id={panelId}
             key="panel"
             role="region"
-            // In the grid the panel lies over the row beneath it so the other
-            // columns never reflow. In one column there is nothing to protect
-            // and hiding the next item would just lose it, so it pushes.
-            className="overflow-hidden @md:absolute @md:inset-x-0 @md:top-full @md:z-30 @md:bg-paper"
+            // The panel is in flow, so opening a row pushes the rest of the
+            // list down. It used to be absolutely positioned at @md, which
+            // painted it straight over the next button and hid it.
+            className="overflow-hidden rounded-b-md bg-ink"
             initial={reduced ? { height: 'auto' } : { height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={reduced ? { height: 0 } : { height: 0, opacity: 0 }}
@@ -170,11 +168,11 @@ function DisciplineRow({
               ease: MOTION.easeOut,
             }}
           >
-            <div className="flex gap-3 pt-3 pr-1 pb-2 pl-7 @md:pb-8">
-              <span aria-hidden className="text-mute">
+            <div className="flex gap-3 pt-1 pr-4 pb-4 pl-7 @md:pb-5">
+              <span aria-hidden className="text-white/50">
                 &#8627;
               </span>
-              <p className="text-[0.875rem] leading-[1.45] text-ink">
+              <p className="text-[0.875rem] leading-[1.45] text-white/90">
                 {service.description}
               </p>
             </div>
@@ -220,23 +218,34 @@ function ServicesView({
   faqs: Faq[];
   framed: boolean;
 }) {
+  // Same shape as the Work index: one left-aligned column inset by the page
+  // gutter, with the image filling the width between those gutters.
   return (
-    <div className="px-[8cqi] pb-28 @md:grid @md:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] @md:items-start @md:gap-16">
-      <div className={framed ? 'pt-[6.5rem] pb-16' : 'pt-20 pb-24'}>
-        <p className="text-sm text-mute">About</p>
-        <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
+    <div className="px-[5cqi] pb-28">
+      <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
+        <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
           {title}
         </h1>
-        {offer ? (
-          <p className="mt-6 max-w-[38rem] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink">
-            {offer.statement}
-          </p>
-        ) : null}
-        <DisciplineGrid services={services} />
       </div>
-      <aside className="w-full pt-4 pb-24 @md:sticky @md:top-0 @md:flex @md:h-dvh @md:flex-col @md:items-stretch @md:pt-20 @md:pb-28">
+
+      <Image
+        src="/about/our-work-together.jpg"
+        alt="A constellation hand and a human hand reaching toward each other, the point where they meet marked “our work together”."
+        width={1600}
+        height={1558}
+        sizes="(min-width: 900px) 90vw, 100vw"
+        className="mt-[3cqi] w-full"
+      />
+
+      {offer ? (
+        <p className="mt-[4cqi] max-w-[42rem] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink">
+          {offer.statement}
+        </p>
+      ) : null}
+      <DisciplineGrid services={services} />
+      <section className="mt-[6cqi]">
         <ServicesFaq faqs={faqs} />
-      </aside>
+      </section>
     </div>
   );
 }

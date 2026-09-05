@@ -10,7 +10,7 @@ import type {
 const ABOUT_SWATCH: Partial<Record<AboutSectionKey, string>> = {
   why: '#F2FF00',
   process: '#FF1A1A',
-  poem: '#FFFFFF',
+  poem: '#0B0B0B',
 };
 
 export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { PillLabel } from '@/components/sheet/PillLabel';
 import type { WorldRect } from '@/lib/canvas/geometry';
@@ -44,18 +44,17 @@ export function HeroShowcase({
   ).filter((node): node is LeafCanvasNode => Boolean(node));
 
   const [index, setIndex] = useState(0);
-  const countRef = useRef(featured.length);
-  countRef.current = featured.length;
+  const count = featured.length;
 
   useEffect(() => {
-    if (paused || countRef.current < 2) {
+    if (paused || count < 2) {
       return;
     }
     const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % countRef.current);
+      setIndex((current) => (current + 1) % count);
     }, HERO_HOLD_MS);
     return () => window.clearInterval(timer);
-  }, [paused]);
+  }, [count, paused]);
 
   if (featured.length === 0) {
     return null;

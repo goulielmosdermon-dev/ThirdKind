@@ -8,17 +8,22 @@ export const HUMAN_CONTACT = { x: 1 / 2517, y: 237 / 1819 };
 export const HUMAN_SCALE = 0.85;
 export const HUMAN_NUDGE_Y = 5;
 
+/**
+ * The intro reads as beats, one after the other rather than on top of each
+ * other: the hands hold and part, then the story reads, then the motto, then
+ * the canvas comes up.
+ */
 export const INTRO = {
-  handsEnd: 0.38,
-  storyInStart: 0.04,
-  storyOutStart: 0.32,
-  storyStagger: 0.07,
-  storyLineWindow: 0.12,
-  mottoInStart: 0.48,
-  mottoInEnd: 0.62,
-  mottoOutStart: 0.7,
-  mottoOutEnd: 0.84,
-  contentStart: 0.8,
+  handsEnd: 0.3,
+  storyInStart: 0.34,
+  storyOutStart: 0.52,
+  storyStagger: 0.1,
+  storyLineWindow: 0.08,
+  mottoInStart: 0.72,
+  mottoInEnd: 0.8,
+  mottoOutStart: 0.86,
+  mottoOutEnd: 0.93,
+  contentStart: 0.9,
   contentEnd: 1,
 } as const;
 
@@ -68,11 +73,13 @@ export function storyLineOpacity(
     INTRO.storyInStart + offset,
     INTRO.storyInStart + offset + INTRO.storyLineWindow,
   );
-  const fadeOut = 1 - remap(
-    progress,
-    INTRO.storyOutStart + offset,
-    INTRO.storyOutStart + offset + INTRO.storyLineWindow,
-  );
+  const fadeOut =
+    1 -
+    remap(
+      progress,
+      INTRO.storyOutStart + offset,
+      INTRO.storyOutStart + offset + INTRO.storyLineWindow,
+    );
   return Math.min(fadeIn, fadeOut);
 }
 

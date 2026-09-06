@@ -21,6 +21,53 @@ type IntroValue = {
 
 const IntroContext = createContext<IntroValue | null>(null);
 
+/**
+ * The intro plays in beats where there is no wheel to drive it: the hands hold
+ * together, part, the story reads, the motto lands, and the canvas comes up.
+ * Each entry is [elapsed ms, progress], interpolated in between, so a beat is
+ * lengthened by moving one number rather than re-timing the whole thing.
+ */
+const AUTOPLAY_BEATS: ReadonlyArray<readonly [number, number]> = [
+  // Hands touching, held.
+  [0, 0],
+  [2200, 0],
+  // They part.
+  [4800, 0.3],
+  // The story reads itself out, a line at a time.
+  [10600, 0.7],
+  // "Make Extraordinary".
+  [13000, 0.86],
+  // And the canvas fades up.
+  [14400, 1],
+];
+
+const AUTOPLAY_MS = AUTOPLAY_BEATS[AUTOPLAY_BEATS.length - 1]![0];
+
+/** Progress at `elapsed`, straight-lined between the beats either side of it. */
+function autoplayProgress(elapsed: number): number {
+  for (let i = 1; i < AUTOPLAY_BEATS.length; i += 1) {
+    const [prevAt, prevValue] = AUTOPLAY_BEATS[i - 1]!;
+    const [at, value] = AUTOPLAY_BEATS[i]!;
+    if (elapsed <= at) {
+      const span = at - prevAt;
+      const t = span > 0 ? (elapsed - prevAt) / span : 1;
+      return prevValue + (value - prevValue) * t;
+    }
+  }
+  return 1;
+}
+
+/** A phone: no hover, a coarse pointer, or simply a narrow window. */
+function prefersAutoplay(): boolean {
+  if (typeof window === 'undefined' || !window.matchMedia) {
+    return false;
+  }
+  return (
+    window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+    window.matchMedia('(max-width: 767px)').matches
+  );
+}
+
 export function IntroProvider({
   children,
   skip = false,
@@ -31,10 +78,37 @@ export function IntroProvider({
   const reduced = useReducedMotion() === true;
   const [progress, setProgress] = useState(skip ? 1 : 0);
 
-  useEffect(() => {
+  // Adjusting state during render rather than in an effect: once the intro is
+  // skipped it stays played out, so returning to the canvas does not rewind it.
+  const [wasSkipped, setWasSkipped] = useState(skip);
+  if (skip !== wasSkipped) {
+    setWasSkipped(skip);
     if (skip) {
       setProgress(1);
     }
+  }
+
+  // Scrolling an intro is a chore on a touch screen, so on a phone it plays
+  // by itself: the hands part, the story reads, the motto lands, and the page
+  // fades up without the reader having to drag anything.
+  useEffect(() => {
+    if (skip || !prefersAutoplay()) {
+      return;
+    }
+    let frame = 0;
+    let start: number | null = null;
+    const tick = (now: number) => {
+      start ??= now;
+      const elapsed = now - start;
+      const played = clamp01(autoplayProgress(elapsed));
+      // Never runs backwards over a drag that has already carried further.
+      setProgress((current) => Math.max(current, played));
+      if (elapsed < AUTOPLAY_MS) {
+        frame = requestAnimationFrame(tick);
+      }
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, [skip]);
 
   const advance = useCallback((delta: number) => {

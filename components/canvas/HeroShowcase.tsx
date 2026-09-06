@@ -161,7 +161,11 @@ export function HeroCarousel({
               alt=""
               fill
               priority={position === 0}
-              sizes="100vw"
+              quality={90}
+              // The band stands upright on a phone, so a 16/9 still has to be
+              // roughly two and a half screens wide before it covers the box;
+              // asking for 100vw there is what made it look soft.
+              sizes="(max-width: 767px) 250vw, 100vw"
               unoptimized={isUnoptimizedAsset(node.thumbnail)}
               className="object-cover"
             />

@@ -148,7 +148,12 @@ export function IndexView({
         carries on into the index proper.
       */}
       <section
-        className="flex h-dvh items-center px-(--band-gutter)"
+        // The parked hands are not symmetric — the alien sits 32px down from
+        // the top, the human docks 112px up from the bottom to clear the
+        // command bar — so the band is placed between them rather than
+        // centred in the window, which is what made the top gap read as too
+        // wide and the bottom one as too tight.
+        className="flex h-dvh items-center px-(--band-gutter) pt-[4.5rem] pb-[9.5rem] md:pt-0 md:pb-0"
         style={
           {
             '--band-gutter': phone ? '1.25rem' : 'clamp(2rem,5.5vw,5.5rem)',
@@ -158,11 +163,10 @@ export function IndexView({
         {/* @container so the overlay can size itself from the band's own
             height, whatever the window does. */}
         <div
-          // On a narrow screen the band stands upright and nearly fills the
-          // window, held back top and bottom so the hands and the command bar
-          // keep their own air; from md up it goes back to the wide 16/9 crop
-          // the canvas shows.
-          className="@container relative mx-auto h-[calc(100dvh-(var(--band-gutter)*2)-13rem)] w-full overflow-hidden bg-black md:aspect-[16/9] md:h-auto md:max-w-[calc((100dvh-12rem)*16/9)]"
+          // On a narrow screen the band fills the space the section leaves it,
+          // so the air above and below is measured from the hands; from md up
+          // it goes back to the wide 16/9 crop the canvas shows.
+          className="@container relative mx-auto h-full w-full overflow-hidden bg-black md:aspect-[16/9] md:h-auto md:max-w-[calc((100dvh-12rem)*16/9)]"
         >
           <HeroCarousel
             nodes={nodes}

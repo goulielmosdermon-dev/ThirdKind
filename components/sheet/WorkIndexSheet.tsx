@@ -23,7 +23,10 @@ function FeaturedProject({ project }: { project: Project }) {
         alt=""
         fill
         priority
-        sizes="100vw"
+        quality={90}
+        // Portrait crop of a landscape still: it has to be far wider than the
+        // sheet to cover the box without softening.
+        sizes="(max-width: 767px) 200vw, 100vw"
         unoptimized={isUnoptimizedAsset(project.posterImage)}
         className="object-cover"
       />

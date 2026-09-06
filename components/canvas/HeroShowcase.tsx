@@ -143,8 +143,9 @@ export function HeroCarousel({
                 sized from the band's own height: these are world units, so a
                 fixed px value would be microscopic once drawn. */}
             <span
-              className={`absolute right-0 bottom-0 flex flex-col items-end text-right ${
-                screen ? 'gap-[3.5cqh] p-[5cqh]' : ''
+              // Title and action hold opposite corners of the lower edge.
+              className={`absolute inset-x-0 bottom-0 flex items-end justify-between ${
+                screen ? 'gap-[4cqh] p-[5cqh]' : ''
               }`}
               style={
                 screen
@@ -159,7 +160,7 @@ export function HeroCarousel({
                 {node.title}
               </span>
               <span
-                className="origin-bottom-right"
+                className="shrink-0 origin-bottom-right"
                 // PillLabel is built in fixed px for the sheets. In world
                 // units it has to be scaled up to sit with this type; on a
                 // page it is already the right size.

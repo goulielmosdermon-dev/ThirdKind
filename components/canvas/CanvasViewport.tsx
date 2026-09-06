@@ -55,7 +55,6 @@ import {
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { HeroShowcase } from '@/components/canvas/HeroShowcase';
 import { IndexView } from '@/components/canvas/IndexView';
-import { StackedView } from '@/components/canvas/StackedView';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
 import { useIntro } from '@/components/intro/IntroContext';
 import { useSheetNav } from '@/components/sheet/SheetNav';
@@ -84,7 +83,7 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
   return node?.getAttribute('data-node-id') ?? null;
 }
 
-type ViewMode = 'matrix' | 'matrix2' | 'stack' | 'index';
+type ViewMode = 'matrix' | 'matrix2' | 'index';
 
 /**
  * Air left around the showcase band. 88 is the tightest that still clears the
@@ -165,10 +164,8 @@ export function CanvasViewport({
   const sizeRef = useRef(size);
   sizeRef.current = size;
   const introDragRef = useRef<{ lastY: number } | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>('matrix2');
-  const stacked = viewMode === 'stack';
-  // Both page views take over the screen, so the canvas stops listening.
-  const indexed = viewMode === 'index' || stacked;
+  const [viewMode, setViewMode] = useState<ViewMode>('index');
+  const indexed = viewMode === 'index';
   const spread = viewMode === 'matrix2';
   const spreadResult = useMemo(() => spreadLayout(nodes), [nodes]);
   // Matrix 2 re-files the same nodes into loose per-hub grids; everything
@@ -270,6 +267,12 @@ export function CanvasViewport({
         return;
       }
       if (indexedRef.current) {
+        // The scroll that ended the intro must not carry on into the page and
+        // land the reader halfway down it. Native scrolling resumes with the
+        // next gesture.
+        if (gestureUsedRef.current) {
+          event.preventDefault();
+        }
         return;
       }
       if (event.target instanceof Element && event.target.closest('footer')) {
@@ -822,13 +825,7 @@ export function CanvasViewport({
       </div>
 
       <AnimatePresence>
-        {stacked && complete ? (
-          <StackedView key="stack" nodes={viewNodes} onOpen={openLeaf} />
-        ) : null}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {viewMode === 'index' && complete ? (
+        {indexed && complete ? (
           <IndexView
             key="index"
             nodes={nodes}
@@ -853,9 +850,8 @@ export function CanvasViewport({
           // The constellation view stays in the code — only its button is
           // hidden — so restoring it is one line.
           [
-            ['matrix2', 'Organized'],
-            ['stack', 'Organized 2'],
             ['index', 'Index'],
+            ['matrix2', 'Organized'],
           ] as const
         ).map(([mode, label]) => (
           <button

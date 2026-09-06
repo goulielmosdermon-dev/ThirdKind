@@ -9,6 +9,7 @@ import type { CanvasNode } from '@/types/content';
 import { editorialCopy, editorialLeaves } from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import { MOTION } from '@/lib/motion/tokens';
+import { HeroCarousel } from '@/components/canvas/HeroShowcase';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
 
 function IndexArrow() {
@@ -137,11 +138,32 @@ export function IndexView({
       }
       onPointerDown={(event) => event.stopPropagation()}
     >
+      {/*
+        The page opens on the showcase, framed as it is on the canvas — inset
+        with air around it rather than bleeding to the edges — and scrolling
+        carries on into the index proper.
+      */}
+      <section
+        className={
+          phone
+            ? 'flex h-dvh items-center px-5'
+            : 'flex h-dvh items-center px-[clamp(2rem,5.5vw,5.5rem)]'
+        }
+      >
+        <div className="relative mx-auto aspect-[16/9] w-full max-w-[calc((100dvh-12rem)*16/9)] overflow-hidden bg-black">
+          <HeroCarousel
+            nodes={nodes}
+            onOpen={(node) => onOpen(node.href, node.id)}
+            scale={phone ? 260 : 520}
+          />
+        </div>
+      </section>
+
       <div
         className={
           phone
-            ? 'px-5 pt-[9.25rem] pb-16'
-            : 'mx-auto min-h-full max-w-[92rem] px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(6.5rem,14vw,10rem)] pb-20'
+            ? 'px-5 pt-4 pb-16'
+            : 'mx-auto min-h-full max-w-[92rem] px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(3rem,7vw,6rem)] pb-20'
         }
       >
         <ul className={`flex flex-col ${phone ? 'gap-12' : 'gap-16 md:gap-0'}`}>

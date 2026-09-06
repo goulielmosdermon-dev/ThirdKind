@@ -16,7 +16,7 @@ export const HERO_IDS = [
 ] as const;
 
 /** How long a project holds before it gives way, in ms. */
-export const HERO_HOLD_MS = 4200;
+export const HERO_HOLD_MS = 10000;
 /** How long the outgoing slide takes, in ms. */
 export const HERO_SLIDE_MS = 900;
 

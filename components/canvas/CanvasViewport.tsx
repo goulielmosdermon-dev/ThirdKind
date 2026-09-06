@@ -84,6 +84,13 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
 
 type ViewMode = 'matrix' | 'matrix2' | 'index';
 
+/** Air left around the showcase band so the chrome never sits on it. */
+const HERO_FIT_PADDING = 116;
+/** Scrolling up only returns to the band from this strip of the screen. */
+const HERO_RETURN_STRIP = 0.18;
+/** Ignore further travel while a move is still running. */
+const TRAVEL_LOCK_MS = 700;
+
 type PanSession = {
   pointerId: number;
   lastX: number;
@@ -152,6 +159,9 @@ export function CanvasViewport({
   // Matrix 2 re-files the same nodes into loose per-hub grids; everything
   // downstream (hover, reveal, hit-testing) reads these instead.
   const viewNodes = spread ? spreadResult.nodes : nodes;
+  // Organized has two stations: the showcase band, and the sections below it.
+  const [heroFocused, setHeroFocused] = useState(true);
+  const travelLockRef = useRef(0);
   const indexedRef = useRef(indexed);
   indexedRef.current = indexed;
   const matrixViewportRef = useRef<Viewport | null>(null);
@@ -237,6 +247,34 @@ export function CanvasViewport({
         return;
       }
       event.preventDefault();
+
+      // In Organized the wheel also travels between the showcase band and the
+      // sections. Going down always leaves the band; coming back only happens
+      // from the top strip, because a scroll up in the middle of the matrix
+      // means zoom out, not navigate.
+      if (spread && !event.ctrlKey) {
+        const now = event.timeStamp;
+        const height = sizeRef.current?.height ?? 800;
+        const inTopStrip = event.clientY <= height * HERO_RETURN_STRIP;
+        const settled = now - travelLockRef.current > TRAVEL_LOCK_MS;
+        if (settled && event.deltaY > 0 && heroFocused) {
+          travelLockRef.current = now;
+          setHeroFocused(false);
+          animateFitRect(spreadResult.sections);
+          return;
+        }
+        if (settled && event.deltaY < 0 && !heroFocused && inTopStrip) {
+          travelLockRef.current = now;
+          setHeroFocused(true);
+          animateFitRect(spreadResult.hero, HERO_FIT_PADDING);
+          return;
+        }
+        if (heroFocused) {
+          // Nothing to zoom into while the band is framed.
+          return;
+        }
+      }
+
       const delta = normalizeWheelDelta(
         event.deltaY,
         event.deltaMode,
@@ -255,7 +293,14 @@ export function CanvasViewport({
       capture: true,
     });
     return () => window.removeEventListener('wheel', onWheel, true);
-  }, [smoothZoomByFactor]);
+  }, [
+    animateFitRect,
+    heroFocused,
+    smoothZoomByFactor,
+    spread,
+    spreadResult.hero,
+    spreadResult.sections,
+  ]);
 
   const endGestureIfIdle = useCallback(() => {
     if (pointersRef.current.size === 0) {
@@ -470,7 +515,7 @@ export function CanvasViewport({
       return;
     }
     framedSpreadRef.current = true;
-    animateTo(viewportToFitRect(spreadResult.hero, size));
+    animateTo(viewportToFitRect(spreadResult.hero, size, HERO_FIT_PADDING));
   }, [animateTo, size, spreadResult.bounds, viewMode]);
 
   // The carousel only runs while its band is actually on screen.
@@ -493,7 +538,8 @@ export function CanvasViewport({
     // Matrix 2 is laid out somewhere else in the world, so frame it rather
     // than leaving the viewport pointed at the constellation.
     if (mode === 'matrix2') {
-      animateFitRect(spreadResult.hero);
+      setHeroFocused(true);
+      animateFitRect(spreadResult.hero, HERO_FIT_PADDING);
     }
     pageScrollRef.current?.scrollTo({ top: 0 });
     setViewMode(mode);

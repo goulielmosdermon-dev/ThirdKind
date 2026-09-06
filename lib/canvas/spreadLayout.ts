@@ -68,6 +68,8 @@ export function spreadLayout(nodes: CanvasNode[]): {
   bounds: WorldRect;
   /** The showcase band, in world coordinates. */
   hero: WorldRect;
+  /** Just the four sections, without the band above them. */
+  sections: WorldRect;
 } {
   const leaves = leafReadingOrder(nodes);
   const byHub = new Map<HubKey, LeafCanvasNode[]>(
@@ -197,5 +199,11 @@ export function spreadLayout(nodes: CanvasNode[]): {
       height: contentH + SPREAD_SECTION_JITTER * 2,
     },
     hero,
+    sections: {
+      x: originX - SPREAD_SECTION_JITTER,
+      y: originY - SPREAD_SECTION_JITTER,
+      width: totalW + SPREAD_SECTION_JITTER * 2,
+      height: totalH + SPREAD_SECTION_JITTER * 2,
+    },
   };
 }

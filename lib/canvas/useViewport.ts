@@ -40,12 +40,10 @@ export function useViewport(size: ViewportSize | null): {
   animateZoomTo: (scale: number, anchor: Point) => void;
   centerOnWorld: (world: Point) => void;
   animateTo: (end: Viewport) => void;
-  animateFitRect: (rect: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  }) => void;
+  animateFitRect: (
+    rect: { x: number; y: number; width: number; height: number },
+    paddingPx?: number,
+  ) => void;
   cancelAnimation: () => void;
   readViewport: () => Viewport;
 } {
@@ -267,8 +265,11 @@ export function useViewport(size: ViewportSize | null): {
   );
 
   const animateFitRect = useCallback(
-    (rect: { x: number; y: number; width: number; height: number }) => {
-      animateTo(viewportToFitRect(rect, sizeRef.current));
+    (
+      rect: { x: number; y: number; width: number; height: number },
+      paddingPx?: number,
+    ) => {
+      animateTo(viewportToFitRect(rect, sizeRef.current, paddingPx));
     },
     [animateTo],
   );

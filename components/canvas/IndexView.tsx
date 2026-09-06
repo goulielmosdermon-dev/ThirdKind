@@ -2,12 +2,13 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import type { CanvasNode } from '@/types/content';
 
 import { editorialCopy, editorialLeaves } from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
+import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 import { MOTION } from '@/lib/motion/tokens';
 import { HeroCarousel } from '@/components/canvas/HeroShowcase';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
@@ -70,6 +71,8 @@ export function IndexView({
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
   const reduced = useReducedMotion() ?? false;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useSmoothScroll(scrollRef);
 
   // Touch has no hover, so the only reliable warm-up is up front.
   useEffect(() => {
@@ -126,6 +129,7 @@ export function IndexView({
 
   return (
     <motion.div
+      ref={scrollRef}
       data-index-view
       variants={sheet}
       initial="hidden"

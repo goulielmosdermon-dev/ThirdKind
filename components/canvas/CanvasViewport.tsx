@@ -31,6 +31,7 @@ import { spreadLayout } from '@/lib/canvas/spreadLayout';
 import { useViewport } from '@/lib/canvas/useViewport';
 import {
   CLICK_TRAVEL_PX,
+  TRAVEL_ANIMATION_MS,
   WHEEL_DELTA_CLAMP,
   ZOOM_STEP,
   isClickGesture,
@@ -84,8 +85,12 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
 
 type ViewMode = 'matrix' | 'matrix2' | 'index';
 
-/** Air left around the showcase band so the chrome never sits on it. */
-const HERO_FIT_PADDING = 116;
+/**
+ * Air left around the showcase band. 88 is the tightest that still clears the
+ * parked hands and the bottom bar; below it the band runs under the hand in
+ * the lower right.
+ */
+const HERO_FIT_PADDING = 88;
 /** Scrolling up only returns to the band from this strip of the screen. */
 const HERO_RETURN_STRIP = 0.18;
 /**
@@ -95,8 +100,8 @@ const HERO_RETURN_STRIP = 0.18;
  * will listen again.
  */
 const GESTURE_GAP_MS = 160;
-/** How long a travel animation owns the wheel, in ms. */
-const TRAVEL_LOCK_MS = 820;
+/** How long a travel animation owns the wheel; outlasts the move itself. */
+const TRAVEL_LOCK_MS = TRAVEL_ANIMATION_MS + 250;
 
 type PanSession = {
   pointerId: number;
@@ -283,21 +288,33 @@ export function CanvasViewport({
           gestureUsedRef.current = true;
           travelLockRef.current = now;
           setHeroFocused(false);
-          animateFitRect(spreadResult.sections);
+          animateFitRect(
+            spreadResult.sections,
+            undefined,
+            TRAVEL_ANIMATION_MS,
+          );
           return;
         }
         if (armed && event.deltaY < 0 && !heroFocused && inTopStrip) {
           gestureUsedRef.current = true;
           travelLockRef.current = now;
           setHeroFocused(true);
-          animateFitRect(spreadResult.hero, HERO_FIT_PADDING);
+          animateFitRect(
+            spreadResult.hero,
+            HERO_FIT_PADDING,
+            TRAVEL_ANIMATION_MS,
+          );
           return;
         }
         // A transition owns the wheel until it lands, so it cannot be left
         // stranded between the two stations.
-        if (animating || heroFocused) {
-          return;
-        }
+        return;
+      }
+
+      // Outside Organized the wheel still zooms; inside it, zoom belongs to
+      // the +/- buttons alone, so scrolling only ever travels.
+      if (spread) {
+        return;
       }
 
       const delta = normalizeWheelDelta(

@@ -16,6 +16,8 @@ export const INITIAL_SCALE = 0.55;
 export const INITIAL_FOCUS_WORLD = { x: 2360, y: 1320 };
 export const ZOOM_STEP = 1.25;
 export const ZOOM_ANIMATION_MS = MOTION.zoom * 1000;
+/** Moving between the showcase and the sections is a journey, not a nudge. */
+export const TRAVEL_ANIMATION_MS = 1150;
 export const MIN_VISIBLE_FRACTION = 0.6;
 /** Time constant for easing the viewport toward its target, in ms. */
 export const GLIDE_TAU_MS = 95;

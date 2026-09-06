@@ -39,10 +39,11 @@ export function useViewport(size: ViewportSize | null): {
   glideBy: (vx: number, vy: number) => void;
   animateZoomTo: (scale: number, anchor: Point) => void;
   centerOnWorld: (world: Point) => void;
-  animateTo: (end: Viewport) => void;
+  animateTo: (end: Viewport, durationMs?: number) => void;
   animateFitRect: (
     rect: { x: number; y: number; width: number; height: number },
     paddingPx?: number,
+    durationMs?: number,
   ) => void;
   cancelAnimation: () => void;
   readViewport: () => Viewport;
@@ -223,7 +224,7 @@ export function useViewport(size: ViewportSize | null): {
   const readViewport = useCallback(() => draftRef.current, []);
 
   const animateTo = useCallback(
-    (end: Viewport) => {
+    (end: Viewport, durationMs = ZOOM_ANIMATION_MS) => {
       cancelAnimation();
       const start = draftRef.current;
       const origin = performance.now();
@@ -231,7 +232,7 @@ export function useViewport(size: ViewportSize | null): {
       targetRef.current = clampViewport(end, sizeRef.current);
 
       const step = (now: number) => {
-        const t = Math.min(1, (now - origin) / ZOOM_ANIMATION_MS);
+        const t = Math.min(1, (now - origin) / durationMs);
         const eased = easeOutCubic(t);
         commit(lerpViewport(start, end, eased));
         if (t < 1) {
@@ -268,8 +269,9 @@ export function useViewport(size: ViewportSize | null): {
     (
       rect: { x: number; y: number; width: number; height: number },
       paddingPx?: number,
+      durationMs?: number,
     ) => {
-      animateTo(viewportToFitRect(rect, sizeRef.current, paddingPx));
+      animateTo(viewportToFitRect(rect, sizeRef.current, paddingPx), durationMs);
     },
     [animateTo],
   );

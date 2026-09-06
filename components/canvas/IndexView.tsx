@@ -150,11 +150,14 @@ export function IndexView({
             : 'flex h-dvh items-center px-[clamp(2rem,5.5vw,5.5rem)]'
         }
       >
-        <div className="relative mx-auto aspect-[16/9] w-full max-w-[calc((100dvh-12rem)*16/9)] overflow-hidden bg-black">
+        {/* @container so the overlay can size itself from the band's own
+            height, whatever the window does. */}
+        <div className="@container relative mx-auto aspect-[16/9] w-full max-w-[calc((100dvh-12rem)*16/9)] overflow-hidden bg-black">
           <HeroCarousel
             nodes={nodes}
             onOpen={(node) => onOpen(node.href, node.id)}
-            scale={phone ? 260 : 520}
+            scale={0}
+            mode="screen"
           />
         </div>
       </section>

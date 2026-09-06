@@ -72,11 +72,17 @@ export function ProjectSheet({
             <WorkReel vimeoIds={project.reel ?? []} />
 
             {project.credits.length > 0 ? (
-              <div className="max-w-[38rem] text-[1.05rem] leading-[1.8] text-ink">
-                <p className="font-semibold">Services</p>
-                <ul className="mt-2">
+              <div className="max-w-[38rem] text-ink">
+                <p className="text-[1.05rem] leading-[1.8] font-semibold">
+                  Services
+                </p>
+                {/* Tags wrap rather than stacking one to a line. */}
+                <ul className="mt-3 flex flex-wrap gap-2">
                   {project.credits.map((credit) => (
-                    <li key={`${credit.role}-${credit.name}`}>
+                    <li
+                      key={`${credit.role}-${credit.name}`}
+                      className="rounded-full border border-hairline px-3.5 py-1.5 text-[0.85rem] leading-none text-mute"
+                    >
                       {credit.name
                         ? `${credit.role} — ${credit.name}`
                         : credit.role}

@@ -60,21 +60,28 @@ export function HeroShowcase({
 }
 
 /**
- * The slides themselves. Fills whatever box it is given, and sizes its copy
- * from `scale` — the box's height — so the overlay holds its proportions
- * whether it is drawn in world units or on a page.
+ * The slides themselves, filling whatever box they are given.
+ *
+ * In `world` mode the box is measured in world units, so the copy is sized
+ * from `scale` — the box's height — and the View pill, which is built in
+ * fixed px for the sheets, is scaled to match. On a page the box is already
+ * in CSS px: type comes from container-query height units and the pill is
+ * left at its natural size, the same as every other button on the site.
  */
 export function HeroCarousel({
   nodes,
   onOpen,
   paused = false,
   scale,
+  mode = 'world',
 }: {
   nodes: CanvasNode[];
   onOpen: (node: LeafCanvasNode) => void;
   paused?: boolean;
   scale: number;
+  mode?: 'world' | 'screen';
 }) {
+  const screen = mode === 'screen';
   const featured = HERO_IDS.map((id) =>
     nodes.find(
       (node): node is LeafCanvasNode => node.kind === 'leaf' && node.id === id,
@@ -136,26 +143,30 @@ export function HeroCarousel({
                 sized from the band's own height: these are world units, so a
                 fixed px value would be microscopic once drawn. */}
             <span
-              className="absolute bottom-0 left-0 flex flex-col items-start"
-              style={{
-                padding: scale * 0.05,
-                gap: scale * 0.035,
-              }}
+              className={`absolute bottom-0 left-0 flex flex-col items-start ${
+                screen ? 'gap-[3.5cqh] p-[5cqh]' : ''
+              }`}
+              style={
+                screen
+                  ? undefined
+                  : { padding: scale * 0.05, gap: scale * 0.035 }
+              }
             >
               <span className="block">
                 <span
-                  className="font-display block leading-tight text-white"
-                  style={{ fontSize: scale * 0.055 }}
+                  className={`font-display block leading-tight text-white ${screen ? 'text-[5.5cqh]' : ''}`}
+                  style={screen ? undefined : { fontSize: scale * 0.055 }}
                 >
                   {node.title}
                 </span>
                 {node.hoverDescription ? (
                   <span
-                    className="block leading-snug text-white/80"
-                    style={{
-                      fontSize: scale * 0.026,
-                      marginTop: scale * 0.014,
-                    }}
+                    className={`block leading-snug text-white/80 ${screen ? 'mt-[1.4cqh] text-[2.6cqh]' : ''}`}
+                    style={
+                      screen
+                        ? undefined
+                        : { fontSize: scale * 0.026, marginTop: scale * 0.014 }
+                    }
                   >
                     {node.hoverDescription}
                   </span>
@@ -163,9 +174,10 @@ export function HeroCarousel({
               </span>
               <span
                 className="origin-bottom-left"
-                // PillLabel is built in fixed px for the sheets; its natural
-                // height is 2.65rem, so scale it to sit with this type.
-                style={{ scale: `${(scale * 0.05) / 42.4}` }}
+                // PillLabel is built in fixed px for the sheets. In world
+                // units it has to be scaled up to sit with this type; on a
+                // page it is already the right size.
+                style={screen ? undefined : { scale: `${(scale * 0.05) / 42.4}` }}
               >
                 <PillLabel label="View" tone="paper" />
               </span>

@@ -202,7 +202,7 @@ export function IndexView({
               <motion.li key={node.id} variants={entry} className={slot.wrap}>
                 <button
                   type="button"
-                  className="w-full cursor-pointer border-0 bg-transparent p-0 text-left text-ink"
+                  className="group w-full cursor-pointer border-0 bg-transparent p-0 text-left text-ink"
                   onClick={() => onOpen(node.href, node.id)}
                   onPointerEnter={() => onPrefetch?.(node.href)}
                   onFocus={() => onPrefetch?.(node.href)}
@@ -252,7 +252,7 @@ export function IndexView({
                         }
                         priority={index < 3}
                         unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
-                        className="object-cover"
+                        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
                       />
                     )}
                   </span>

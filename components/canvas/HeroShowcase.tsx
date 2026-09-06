@@ -88,42 +88,73 @@ export function HeroCarousel({
     ),
   ).filter((node): node is LeafCanvasNode => Boolean(node));
 
-  const [index, setIndex] = useState(0);
   const count = featured.length;
+  // The track runs one way only. It carries the list twice, so stepping past
+  // the last slide lands on an identical copy of the first, and the counter
+  // is reset there with the transition off — invisible, because the frame
+  // either side of the reset is the same picture. Wrapping the index instead
+  // would slide everything back to the right, which is the rewind we do not
+  // want.
+  const slides = count > 1 ? [...featured, ...featured] : featured;
+  const [step, setStep] = useState(0);
+  const [gliding, setGliding] = useState(true);
 
   useEffect(() => {
     if (paused || count < 2) {
       return;
     }
     const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % count);
+      setStep((current) => current + 1);
     }, HERO_HOLD_MS);
     return () => window.clearInterval(timer);
   }, [count, paused]);
+
+  useEffect(() => {
+    if (step !== count || count < 2) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      setGliding(false);
+      setStep(0);
+    }, HERO_SLIDE_MS + 60);
+    return () => window.clearTimeout(timer);
+  }, [count, step]);
+
+  // Restore the transition on the frame after the silent jump.
+  useEffect(() => {
+    if (gliding) {
+      return;
+    }
+    const raf = requestAnimationFrame(() => setGliding(true));
+    return () => cancelAnimationFrame(raf);
+  }, [gliding]);
 
   if (featured.length === 0) {
     return null;
   }
 
   return (
-    <>
-      {featured.map((node, position) => {
-        // Each slide waits to the right, holds centre, then leaves left.
-        const offset = position - index;
+    <div
+      className="absolute inset-0 flex"
+      style={{
+        width: `${slides.length * 100}%`,
+        transform: `translate3d(-${(step * 100) / slides.length}%, 0, 0)`,
+        transition: gliding
+          ? `transform ${HERO_SLIDE_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`
+          : 'none',
+      }}
+    >
+      {slides.map((node, position) => {
+        const duplicate = position >= count;
         return (
           <button
-            key={node.id}
+            key={`${node.id}-${position}`}
             type="button"
-            aria-hidden={offset !== 0}
-            tabIndex={offset === 0 ? 0 : -1}
+            aria-hidden={duplicate || position !== step % count}
+            tabIndex={!duplicate && position === step % count ? 0 : -1}
             onClick={() => onOpen(node)}
-            className="absolute inset-0 block cursor-pointer border-0 bg-transparent p-0 text-left"
-            style={{
-              transform: `translate3d(${offset * 100}%, 0, 0)`,
-              transition: `transform ${HERO_SLIDE_MS}ms cubic-bezier(0.65, 0, 0.35, 1)`,
-              // Only the slide leaving and the one arriving need painting.
-              visibility: Math.abs(offset) > 1 ? 'hidden' : 'visible',
-            }}
+            className="relative block h-full shrink-0 cursor-pointer border-0 bg-transparent p-0 text-left"
+            style={{ width: `${100 / slides.length}%` }}
           >
             <Image
               src={node.thumbnail.src}
@@ -138,10 +169,6 @@ export function HeroCarousel({
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
               aria-hidden
             />
-            {/* Same treatment as the Work page's featured project, stacked
-                at the foot of the frame rather than the head. Everything is
-                sized from the band's own height: these are world units, so a
-                fixed px value would be microscopic once drawn. */}
             <span
               // Title and action hold opposite corners of the lower edge.
               className={`absolute inset-x-0 bottom-0 flex items-end justify-between ${
@@ -172,6 +199,6 @@ export function HeroCarousel({
           </button>
         );
       })}
-    </>
+    </div>
   );
 }

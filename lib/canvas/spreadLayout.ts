@@ -10,7 +10,7 @@ import { HUB_KEYS } from '@/types/content';
 import type { WorldRect } from '@/lib/canvas/geometry';
 import { gridSectionKey } from '@/lib/canvas/gridLayout';
 import { leafReadingOrder } from '@/lib/canvas/readingOrder';
-import { INITIAL_FOCUS_WORLD } from '@/lib/canvas/viewport';
+import { WORLD_HEIGHT, WORLD_WIDTH } from '@/types/content';
 
 /** Nominal cell the jitter is applied inside. */
 export const SPREAD_CELL = 300;
@@ -21,6 +21,10 @@ export const SPREAD_SECTION_PAD = 100;
 export const SPREAD_JITTER = 30;
 /** How far a whole section may sit off the 2x2 axis, in px. */
 export const SPREAD_SECTION_JITTER = 110;
+/** The showcase band sits above the sections at this ratio. */
+export const HERO_ASPECT = 9 / 16;
+/** Air between the showcase and the first row of sections. */
+export const HERO_GAP = 200;
 
 const SECTION_ORDER: HubKey[] = [...HUB_KEYS];
 
@@ -62,6 +66,8 @@ export function enlargeTile(width: TileWidth): TileWidth {
 export function spreadLayout(nodes: CanvasNode[]): {
   nodes: CanvasNode[];
   bounds: WorldRect;
+  /** The showcase band, in world coordinates. */
+  hero: WorldRect;
 } {
   const leaves = leafReadingOrder(nodes);
   const byHub = new Map<HubKey, LeafCanvasNode[]>(
@@ -87,8 +93,20 @@ export function spreadLayout(nodes: CanvasNode[]): {
   const quadW = SPREAD_COLS * SPREAD_CELL + SPREAD_SECTION_PAD * 2;
   const totalW = quadW * 2;
   const totalH = bandHeight.reduce((sum, height) => sum + height, 0);
-  const originX = INITIAL_FOCUS_WORLD.x - totalW / 2;
-  const originY = INITIAL_FOCUS_WORLD.y - totalH / 2;
+
+  // The showcase spans the layout's full width and leads it, so the whole
+  // arrangement — band plus sections — is centred in the world together.
+  const heroHeight = totalW * HERO_ASPECT;
+  const contentH = heroHeight + HERO_GAP + totalH;
+  const originX = WORLD_WIDTH / 2 - totalW / 2;
+  const contentTop = WORLD_HEIGHT / 2 - contentH / 2;
+  const hero = {
+    x: originX,
+    y: contentTop,
+    width: totalW,
+    height: heroHeight,
+  };
+  const originY = contentTop + heroHeight + HERO_GAP;
 
   const placed = new Map<string, CanvasNode>();
 
@@ -174,9 +192,10 @@ export function spreadLayout(nodes: CanvasNode[]): {
     }),
     bounds: {
       x: originX - SPREAD_SECTION_JITTER,
-      y: originY - SPREAD_SECTION_JITTER,
+      y: contentTop - SPREAD_SECTION_JITTER,
       width: totalW + SPREAD_SECTION_JITTER * 2,
-      height: totalH + SPREAD_SECTION_JITTER * 2,
+      height: contentH + SPREAD_SECTION_JITTER * 2,
     },
+    hero,
   };
 }

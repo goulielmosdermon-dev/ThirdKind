@@ -303,3 +303,18 @@ export function pickHoverCaptionScreen(
 
   return best;
 }
+
+/** Whether any part of a world rect is currently on screen. */
+export function isWorldRectVisible(
+  rect: WorldRect,
+  viewport: Viewport,
+  size: ViewportSize,
+): boolean {
+  const screen = worldRectToScreen(rect, viewport);
+  return rectsIntersect(screen, {
+    x: 0,
+    y: 0,
+    width: size.width,
+    height: size.height,
+  });
+}

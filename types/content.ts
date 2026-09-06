@@ -5,7 +5,8 @@
  */
 
 export const WORLD_WIDTH = 4800;
-export const WORLD_HEIGHT = 3000;
+/** Tall enough for the Organized layout's hero band above its sections. */
+export const WORLD_HEIGHT = 4400;
 
 export const TILE_WIDTHS = [96, 128, 176, 224] as const;
 export type TileWidth = (typeof TILE_WIDTHS)[number];

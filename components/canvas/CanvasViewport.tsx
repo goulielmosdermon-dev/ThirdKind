@@ -23,6 +23,7 @@ import { WORLD_HEIGHT, WORLD_WIDTH } from '@/types/content';
 import { normalizeWheelDelta, type Point } from '@/lib/canvas/coords';
 import {
   hoverTileWorldRect,
+  isWorldRectVisible,
   pickAdjacentHoverCaptionScreen,
   tileCenter,
 } from '@/lib/canvas/geometry';
@@ -51,8 +52,8 @@ import {
 } from '@/lib/intro/layout';
 
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
+import { HeroShowcase } from '@/components/canvas/HeroShowcase';
 import { IndexView } from '@/components/canvas/IndexView';
-import { ProjectShowcase } from '@/components/canvas/ProjectShowcase';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
 import { useIntro } from '@/components/intro/IntroContext';
 import { useSheetNav } from '@/components/sheet/SheetNav';
@@ -145,8 +146,6 @@ export function CanvasViewport({
   sizeRef.current = size;
   const introDragRef = useRef<{ lastY: number } | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('matrix2');
-  // The lead-in sits over Organized until the pointer hands off to the canvas.
-  const [showcaseCleared, setShowcaseCleared] = useState(false);
   const indexed = viewMode === 'index';
   const spread = viewMode === 'matrix2';
   const spreadResult = useMemo(() => spreadLayout(nodes), [nodes]);
@@ -471,8 +470,14 @@ export function CanvasViewport({
       return;
     }
     framedSpreadRef.current = true;
-    animateTo(viewportToFitRect(spreadResult.bounds, size));
+    animateTo(viewportToFitRect(spreadResult.hero, size));
   }, [animateTo, size, spreadResult.bounds, viewMode]);
+
+  // The carousel only runs while its band is actually on screen.
+  const heroPaused =
+    !spread ||
+    !size ||
+    !isWorldRectVisible(spreadResult.hero, viewport, size);
 
   const onViewMode = (mode: ViewMode) => {
     if (mode === viewMode) {
@@ -488,7 +493,7 @@ export function CanvasViewport({
     // Matrix 2 is laid out somewhere else in the world, so frame it rather
     // than leaving the viewport pointed at the constellation.
     if (mode === 'matrix2') {
-      animateFitRect(spreadResult.bounds);
+      animateFitRect(spreadResult.hero);
     }
     pageScrollRef.current?.scrollTo({ top: 0 });
     setViewMode(mode);
@@ -542,7 +547,7 @@ export function CanvasViewport({
       ref={frameRef}
       data-intro-complete={complete ? 'true' : undefined}
       className={`relative h-dvh w-dvw overflow-hidden bg-void select-none ${
-        indexed ? 'cursor-default' : 'cursor-none'
+        indexed ? 'cursor-default' : panning ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       style={{ touchAction: indexed ? 'pan-y' : 'none' }}
       onPointerDown={onPointerDown}
@@ -567,6 +572,15 @@ export function CanvasViewport({
                 : 'opacity 0.5s ease',
             }}
           >
+            {spread && complete ? (
+              <HeroShowcase
+                nodes={viewNodes}
+                rect={spreadResult.hero}
+                onOpen={openLeaf}
+                paused={heroPaused}
+              />
+            ) : null}
+
             <EdgeLayer
               nodes={nodes}
               edges={spread ? [] : edges}
@@ -715,14 +729,6 @@ export function CanvasViewport({
           </AnimatePresence>
         </div>
       </div>
-
-      {spread && complete && !showcaseCleared ? (
-        <ProjectShowcase
-          nodes={viewNodes}
-          onOpen={openLeaf}
-          onCleared={() => setShowcaseCleared(true)}
-        />
-      ) : null}
 
       <AnimatePresence>
         {indexed && complete ? (

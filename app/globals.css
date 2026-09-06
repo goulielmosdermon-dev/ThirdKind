@@ -168,21 +168,3 @@ h6 {
     animation: none !important;
   }
 }
-
-/*
- * The hand in CursorHand replaces the system pointer. Utilities like
- * cursor-pointer set the property on individual elements, so the override has
- * to be forced; text fields keep a caret so typing still reads correctly.
- */
-@media (pointer: fine) {
-  body,
-  body * {
-    cursor: none !important;
-  }
-
-  input,
-  textarea,
-  [contenteditable='true'] {
-    cursor: text !important;
-  }
-}

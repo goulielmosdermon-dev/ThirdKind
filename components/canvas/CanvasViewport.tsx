@@ -52,6 +52,7 @@ import {
 
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { IndexView } from '@/components/canvas/IndexView';
+import { ProjectShowcase } from '@/components/canvas/ProjectShowcase';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
 import { useIntro } from '@/components/intro/IntroContext';
 import { useSheetNav } from '@/components/sheet/SheetNav';
@@ -144,6 +145,8 @@ export function CanvasViewport({
   sizeRef.current = size;
   const introDragRef = useRef<{ lastY: number } | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('matrix2');
+  // The lead-in sits over Organized until the pointer hands off to the canvas.
+  const [showcaseCleared, setShowcaseCleared] = useState(false);
   const indexed = viewMode === 'index';
   const spread = viewMode === 'matrix2';
   const spreadResult = useMemo(() => spreadLayout(nodes), [nodes]);
@@ -539,7 +542,7 @@ export function CanvasViewport({
       ref={frameRef}
       data-intro-complete={complete ? 'true' : undefined}
       className={`relative h-dvh w-dvw overflow-hidden bg-void select-none ${
-        indexed ? 'cursor-default' : panning ? 'cursor-grabbing' : 'cursor-grab'
+        indexed ? 'cursor-default' : 'cursor-none'
       }`}
       style={{ touchAction: indexed ? 'pan-y' : 'none' }}
       onPointerDown={onPointerDown}
@@ -712,6 +715,14 @@ export function CanvasViewport({
           </AnimatePresence>
         </div>
       </div>
+
+      {spread && complete && !showcaseCleared ? (
+        <ProjectShowcase
+          nodes={viewNodes}
+          onOpen={openLeaf}
+          onCleared={() => setShowcaseCleared(true)}
+        />
+      ) : null}
 
       <AnimatePresence>
         {indexed && complete ? (

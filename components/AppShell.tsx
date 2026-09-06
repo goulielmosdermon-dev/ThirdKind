@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 
 import { CanvasViewport } from '@/components/canvas/CanvasViewport';
 import { CommandNav } from '@/components/chrome/CommandNav';
+import { CursorHand } from '@/components/chrome/CursorHand';
 import { IntroProvider } from '@/components/intro/IntroContext';
 import { InquiryProvider } from '@/components/inquiry/InquiryProvider';
 import { SheetNavProvider } from '@/components/sheet/SheetNav';
@@ -68,6 +69,7 @@ export function AppShell({
             {sheetOpen ? sheet : null}
             {children}
             <CommandNav nodes={nodes} />
+            <CursorHand />
           </div>
         </IntroProvider>
       </InquiryProvider>

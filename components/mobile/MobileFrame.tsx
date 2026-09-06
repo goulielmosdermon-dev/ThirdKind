@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import type { CSSProperties, ReactNode } from 'react';
 
 import { CommandNav } from '@/components/chrome/CommandNav';
+import { CursorHand } from '@/components/chrome/CursorHand';
 import { IntroProvider } from '@/components/intro/IntroContext';
 import { InquiryProvider } from '@/components/inquiry/InquiryProvider';
 import {
@@ -68,6 +69,7 @@ export function MobileFrame({
                     {/* See AppShell: a stale slot would block the canvas. */}
                     {onHome ? null : sheet}
                     <CommandNav nodes={nodes} embedded />
+                    <CursorHand />
                   </InquiryProvider>
                 </div>
               </div>

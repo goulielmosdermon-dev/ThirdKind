@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
 
 import type { CanvasNode } from '@/types/content';
 
@@ -148,15 +148,22 @@ export function IndexView({
         carries on into the index proper.
       */}
       <section
-        className={
-          phone
-            ? 'flex h-dvh items-center px-5'
-            : 'flex h-dvh items-center px-[clamp(2rem,5.5vw,5.5rem)]'
+        className="flex h-dvh items-center px-(--band-gutter)"
+        style={
+          {
+            '--band-gutter': phone ? '1.25rem' : 'clamp(2rem,5.5vw,5.5rem)',
+          } as CSSProperties
         }
       >
         {/* @container so the overlay can size itself from the band's own
             height, whatever the window does. */}
-        <div className="@container relative mx-auto aspect-[16/9] w-full max-w-[calc((100dvh-12rem)*16/9)] overflow-hidden bg-black">
+        <div
+          // On a narrow screen the band stands upright and nearly fills the
+          // window, held back top and bottom so the hands and the command bar
+          // keep their own air; from md up it goes back to the wide 16/9 crop
+          // the canvas shows.
+          className="@container relative mx-auto h-[calc(100dvh-(var(--band-gutter)*2)-13rem)] w-full overflow-hidden bg-black md:aspect-[16/9] md:h-auto md:max-w-[calc((100dvh-12rem)*16/9)]"
+        >
           <HeroCarousel
             nodes={nodes}
             onOpen={(node) => onOpen(node.href, node.id)}

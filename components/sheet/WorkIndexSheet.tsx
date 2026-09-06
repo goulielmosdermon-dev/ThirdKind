@@ -13,7 +13,9 @@ function FeaturedProject({ project }: { project: Project }) {
   return (
     <AppLink
       href={`/work/${project.slug.current}`}
-      className="group relative block aspect-[16/9] w-full overflow-hidden bg-black"
+      // A 16/9 lead is a thin letterbox on a phone, so the poster stands
+      // upright until the sheet is wide enough to carry the wide crop.
+      className="group relative block aspect-[3/4] w-full overflow-hidden bg-black @md:aspect-[16/9]"
     >
       <span className="tk-loading absolute inset-0" aria-hidden />
       <Image
@@ -26,10 +28,10 @@ function FeaturedProject({ project }: { project: Project }) {
         className="object-cover"
       />
       <span
-        className="absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-black/25"
+        className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25"
         aria-hidden
       />
-      <span className="absolute inset-x-0 top-0 flex flex-col items-start gap-3 p-[4cqi] @md:p-[3cqi]">
+      <span className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-3 p-[4cqi] @md:p-[3cqi]">
         <span className="block">
           <span className="block font-display text-[clamp(1rem,1.9cqi,1.4rem)] leading-tight text-white">
             {project.client}
@@ -48,7 +50,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <li>
       <AppLink href={`/work/${project.slug.current}`} className="group block">
-        <span className="relative block aspect-[4/3] w-full overflow-hidden bg-hairline">
+        <span className="relative block aspect-[16/10] w-full overflow-hidden bg-hairline">
           <span className="tk-loading absolute inset-0" aria-hidden />
           <Image
             src={project.thumbnail.src}
@@ -77,9 +79,12 @@ export function WorkIndexSheet({
   projects: Project[];
   standfirst: string;
 }) {
-  // The featured project leads; everything else, itself included, sits in the
-  // grid so the page still reads as a complete list.
+  // The featured project leads; the grid carries the rest, so nothing shows up
+  // twice on the page.
   const featured = projects.find((project) => project.featured) ?? projects[0];
+  const rest = featured
+    ? projects.filter((project) => project._id !== featured._id)
+    : projects;
 
   return (
     <Sheet title="Work" tone="editorial">
@@ -94,8 +99,8 @@ export function WorkIndexSheet({
           </div>
         ) : null}
 
-        <ul className="mt-[4cqi] grid grid-cols-2 gap-x-[2.5cqi] gap-y-[3.5cqi] px-[5cqi] @md:grid-cols-3 @xl:grid-cols-4">
-          {projects.map((project) => (
+        <ul className="mt-[4cqi] grid grid-cols-1 gap-x-[2.5cqi] gap-y-[3.5cqi] px-[5cqi] @sm:grid-cols-2 @lg:grid-cols-3 @xl:grid-cols-4">
+          {rest.map((project) => (
             <ProjectCard key={project._id} project={project} />
           ))}
         </ul>

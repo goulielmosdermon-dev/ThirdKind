@@ -172,7 +172,12 @@ export function HeroCarousel({
             <span
               // Title and action hold opposite corners of the lower edge.
               className={`absolute inset-x-0 bottom-0 flex items-end justify-between ${
-                screen ? 'gap-[4cqh] p-[5cqh]' : ''
+                screen
+                  ? // Sized from whichever side is shorter, so the overlay
+                    // stays in proportion on a narrow phone band as well as a
+                    // wide desktop one.
+                    'gap-[min(4cqh,4cqi)] p-[min(5cqh,5cqi)]'
+                  : ''
               }`}
               style={
                 screen
@@ -181,17 +186,25 @@ export function HeroCarousel({
               }
             >
               <span
-                className={`font-display block leading-tight text-white ${screen ? 'text-[5.5cqh]' : ''}`}
+                className={`font-display block leading-tight text-white ${
+                  screen ? 'min-w-0 text-[min(5.5cqh,7cqi)] text-balance' : ''
+                }`}
                 style={screen ? undefined : { fontSize: scale * 0.055 }}
               >
                 {node.title}
               </span>
               <span
-                className="shrink-0 origin-bottom-right"
+                className={`shrink-0 origin-bottom-right ${
+                  // PillLabel is fixed px, which reads oversized on a phone
+                  // band; it comes back to full size once there is room.
+                  screen ? 'scale-[0.78] @[26rem]:scale-100' : ''
+                }`}
                 // PillLabel is built in fixed px for the sheets. In world
                 // units it has to be scaled up to sit with this type; on a
                 // page it is already the right size.
-                style={screen ? undefined : { scale: `${(scale * 0.05) / 42.4}` }}
+                style={
+                  screen ? undefined : { scale: `${(scale * 0.05) / 42.4}` }
+                }
               >
                 <PillLabel label="View" tone="paper" />
               </span>

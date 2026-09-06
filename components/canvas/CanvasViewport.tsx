@@ -824,17 +824,32 @@ export function CanvasViewport({
         </div>
       </div>
 
+      {/*
+        The page cross-fades out of the motto rather than appearing after it:
+        opacity follows the intro's own reveal curve, with a transition on top
+        so a fast scroll still resolves as a fade instead of a cut.
+      */}
       <AnimatePresence>
-        {indexed && complete ? (
-          <IndexView
-            key="index"
-            nodes={nodes}
-            onOpen={(href, nodeId) => {
-              markOpenedFromCanvas(nodeId);
-              router.push(href);
+        {indexed && reveal > 0 ? (
+          <motion.div
+            key="index-fade"
+            className="absolute inset-0 z-[8]"
+            style={{
+              opacity: reveal,
+              pointerEvents: complete ? 'auto' : 'none',
+              transition: 'opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            onPrefetch={prefetchSheet}
-          />
+            exit={{ opacity: 0 }}
+          >
+            <IndexView
+              nodes={nodes}
+              onOpen={(href, nodeId) => {
+                markOpenedFromCanvas(nodeId);
+                router.push(href);
+              }}
+              onPrefetch={prefetchSheet}
+            />
+          </motion.div>
         ) : null}
       </AnimatePresence>
 

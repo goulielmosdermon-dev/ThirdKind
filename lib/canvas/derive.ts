@@ -38,6 +38,10 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     thumbnail: project.thumbnail,
     documentId: project._id,
     position: project.canvasPosition,
+    // The published service list doubles as the work's tags.
+    tags: project.credits
+      .map((credit) => credit.role)
+      .filter((role) => role.trim().length > 0),
   }));
 
   const articleLeaves: CanvasNode[] = content.articles.map((article) => ({

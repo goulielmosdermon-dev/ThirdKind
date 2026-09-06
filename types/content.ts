@@ -303,6 +303,8 @@ export type HubCanvasNode = CanvasNodeBase & {
 };
 
 export type LeafCanvasNode = CanvasNodeBase & {
+  /** What the work involved, shown as tags. Empty for non-project leaves. */
+  tags?: string[];
   kind: 'leaf';
   hubKey: HubKey;
   href: string;

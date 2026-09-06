@@ -213,6 +213,20 @@ export function IndexView({
                       <IndexArrow />
                     </span>
                   </p>
+                  {node.tags?.length ? (
+                    <ul
+                      className={`flex flex-wrap gap-1.5 ${phone ? 'mb-3' : 'mb-4'}`}
+                    >
+                      {node.tags.map((tag) => (
+                        <li
+                          key={tag}
+                          className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                        >
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                   <span
                     className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
                   >

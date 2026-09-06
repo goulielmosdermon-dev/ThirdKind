@@ -88,8 +88,15 @@ type ViewMode = 'matrix' | 'matrix2' | 'index';
 const HERO_FIT_PADDING = 116;
 /** Scrolling up only returns to the band from this strip of the screen. */
 const HERO_RETURN_STRIP = 0.18;
-/** Ignore further travel while a move is still running. */
-const TRAVEL_LOCK_MS = 700;
+/**
+ * A stream of wheel events closer together than this counts as one gesture.
+ * Trackpads keep firing through their inertia, so travel listens only to the
+ * first event of a gesture and waits for the wheel to fall quiet before it
+ * will listen again.
+ */
+const GESTURE_GAP_MS = 160;
+/** How long a travel animation owns the wheel, in ms. */
+const TRAVEL_LOCK_MS = 820;
 
 type PanSession = {
   pointerId: number;
@@ -161,7 +168,10 @@ export function CanvasViewport({
   const viewNodes = spread ? spreadResult.nodes : nodes;
   // Organized has two stations: the showcase band, and the sections below it.
   const [heroFocused, setHeroFocused] = useState(true);
+  // When the running transition lands, and when the last wheel event arrived.
   const travelLockRef = useRef(0);
+  const lastWheelRef = useRef(0);
+  const gestureUsedRef = useRef(false);
   const indexedRef = useRef(indexed);
   indexedRef.current = indexed;
   const matrixViewportRef = useRef<Viewport | null>(null);
@@ -230,8 +240,19 @@ export function CanvasViewport({
     }
 
     const onWheel = (event: WheelEvent) => {
+      // Gesture bookkeeping runs for every wheel event, the intro's included:
+      // the scroll that ends the intro must not also count as the scroll that
+      // leaves the showcase band.
+      const now = event.timeStamp;
+      if (now - lastWheelRef.current > GESTURE_GAP_MS) {
+        gestureUsedRef.current = false;
+      }
+      lastWheelRef.current = now;
+
       if (!completeRef.current) {
         event.preventDefault();
+        // This gesture belongs to the intro; travel waits for the next one.
+        gestureUsedRef.current = true;
         const height = sizeRef.current?.height ?? 800;
         const span = Math.max(height * 3.6, 2200);
         advanceRef.current(event.deltaY / span);
@@ -253,24 +274,28 @@ export function CanvasViewport({
       // from the top strip, because a scroll up in the middle of the matrix
       // means zoom out, not navigate.
       if (spread && !event.ctrlKey) {
-        const now = event.timeStamp;
+        const animating = now - travelLockRef.current < TRAVEL_LOCK_MS;
         const height = sizeRef.current?.height ?? 800;
         const inTopStrip = event.clientY <= height * HERO_RETURN_STRIP;
-        const settled = now - travelLockRef.current > TRAVEL_LOCK_MS;
-        if (settled && event.deltaY > 0 && heroFocused) {
+        const armed = !animating && !gestureUsedRef.current;
+
+        if (armed && event.deltaY > 0 && heroFocused) {
+          gestureUsedRef.current = true;
           travelLockRef.current = now;
           setHeroFocused(false);
           animateFitRect(spreadResult.sections);
           return;
         }
-        if (settled && event.deltaY < 0 && !heroFocused && inTopStrip) {
+        if (armed && event.deltaY < 0 && !heroFocused && inTopStrip) {
+          gestureUsedRef.current = true;
           travelLockRef.current = now;
           setHeroFocused(true);
           animateFitRect(spreadResult.hero, HERO_FIT_PADDING);
           return;
         }
-        if (heroFocused) {
-          // Nothing to zoom into while the band is framed.
+        // A transition owns the wheel until it lands, so it cannot be left
+        // stranded between the two stations.
+        if (animating || heroFocused) {
           return;
         }
       }

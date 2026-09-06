@@ -143,7 +143,7 @@ export function HeroCarousel({
                 sized from the band's own height: these are world units, so a
                 fixed px value would be microscopic once drawn. */}
             <span
-              className={`absolute bottom-0 left-0 flex flex-col items-start ${
+              className={`absolute right-0 bottom-0 flex flex-col items-end text-right ${
                 screen ? 'gap-[3.5cqh] p-[5cqh]' : ''
               }`}
               style={
@@ -152,28 +152,14 @@ export function HeroCarousel({
                   : { padding: scale * 0.05, gap: scale * 0.035 }
               }
             >
-              <span className="block">
-                <span
-                  className={`font-display block leading-tight text-white ${screen ? 'text-[5.5cqh]' : ''}`}
-                  style={screen ? undefined : { fontSize: scale * 0.055 }}
-                >
-                  {node.title}
-                </span>
-                {node.hoverDescription ? (
-                  <span
-                    className={`block leading-snug text-white/80 ${screen ? 'mt-[1.4cqh] text-[2.6cqh]' : ''}`}
-                    style={
-                      screen
-                        ? undefined
-                        : { fontSize: scale * 0.026, marginTop: scale * 0.014 }
-                    }
-                  >
-                    {node.hoverDescription}
-                  </span>
-                ) : null}
+              <span
+                className={`font-display block leading-tight text-white ${screen ? 'text-[5.5cqh]' : ''}`}
+                style={screen ? undefined : { fontSize: scale * 0.055 }}
+              >
+                {node.title}
               </span>
               <span
-                className="origin-bottom-left"
+                className="origin-bottom-right"
                 // PillLabel is built in fixed px for the sheets. In world
                 // units it has to be scaled up to sit with this type; on a
                 // page it is already the right size.

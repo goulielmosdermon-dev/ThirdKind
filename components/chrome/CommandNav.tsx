@@ -20,7 +20,7 @@ import type { CanvasNode } from '@/types/content';
 const PAGES = [
   { label: 'Work', href: '/work' },
   { label: 'Thoughts', href: '/thoughts' },
-  { label: 'About', href: '/about/team' },
+  { label: 'Team', href: '/about/team' },
   // Process is hidden for now; restore this entry to bring the section back.
   // { label: 'Process', href: '/about/process' },
   { label: 'Why', href: '/about/why' },

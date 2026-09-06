@@ -5,7 +5,7 @@ import { AppLink } from '@/components/mobile/MobileChrome';
 
 const NAV = [
   { label: 'Work', href: '/' },
-  { label: 'About', href: '/about/team' },
+  { label: 'Team', href: '/about/team' },
   // Process is hidden for now; restore this entry to bring the section back.
   // { label: 'Process', href: '/about/process' },
   { label: 'Why', href: '/about/why' },

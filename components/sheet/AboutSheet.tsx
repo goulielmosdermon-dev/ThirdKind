@@ -99,7 +99,6 @@ function ProcessView({
   return (
     <div className="px-[8cqi] pb-28">
       <header className={`pb-10 ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}>
-        <p className="text-sm text-white/50">About</p>
         <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
           {title}
         </h1>
@@ -238,7 +237,7 @@ function ServicesView({
     <div className="px-[5cqi] pb-28">
       <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
         <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
-          {title}
+          {title}.
         </h1>
       </div>
 
@@ -319,7 +318,6 @@ export function AboutSheet({
                 framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
               }`}
             >
-              <p className="text-sm text-mute">About</p>
               <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
                 {section.title}
               </h1>

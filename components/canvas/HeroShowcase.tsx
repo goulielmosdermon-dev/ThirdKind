@@ -37,6 +37,44 @@ export function HeroShowcase({
   /** Held still while the band is out of view. */
   paused?: boolean;
 }) {
+  return (
+    <div
+      data-hero-showcase
+      className="absolute overflow-hidden bg-black"
+      style={{
+        left: rect.x,
+        top: rect.y,
+        width: rect.width,
+        height: rect.height,
+        zIndex: 1,
+      }}
+    >
+      <HeroCarousel
+        nodes={nodes}
+        onOpen={onOpen}
+        paused={paused}
+        scale={rect.height}
+      />
+    </div>
+  );
+}
+
+/**
+ * The slides themselves. Fills whatever box it is given, and sizes its copy
+ * from `scale` — the box's height — so the overlay holds its proportions
+ * whether it is drawn in world units or on a page.
+ */
+export function HeroCarousel({
+  nodes,
+  onOpen,
+  paused = false,
+  scale,
+}: {
+  nodes: CanvasNode[];
+  onOpen: (node: LeafCanvasNode) => void;
+  paused?: boolean;
+  scale: number;
+}) {
   const featured = HERO_IDS.map((id) =>
     nodes.find(
       (node): node is LeafCanvasNode => node.kind === 'leaf' && node.id === id,
@@ -61,17 +99,7 @@ export function HeroShowcase({
   }
 
   return (
-    <div
-      data-hero-showcase
-      className="absolute overflow-hidden bg-black"
-      style={{
-        left: rect.x,
-        top: rect.y,
-        width: rect.width,
-        height: rect.height,
-        zIndex: 1,
-      }}
-    >
+    <>
       {featured.map((node, position) => {
         // Each slide waits to the right, holds centre, then leaves left.
         const offset = position - index;
@@ -110,14 +138,14 @@ export function HeroShowcase({
             <span
               className="absolute bottom-0 left-0 flex flex-col items-start"
               style={{
-                padding: rect.height * 0.05,
-                gap: rect.height * 0.035,
+                padding: scale * 0.05,
+                gap: scale * 0.035,
               }}
             >
               <span className="block">
                 <span
                   className="font-display block leading-tight text-white"
-                  style={{ fontSize: rect.height * 0.055 }}
+                  style={{ fontSize: scale * 0.055 }}
                 >
                   {node.title}
                 </span>
@@ -125,8 +153,8 @@ export function HeroShowcase({
                   <span
                     className="block leading-snug text-white/80"
                     style={{
-                      fontSize: rect.height * 0.026,
-                      marginTop: rect.height * 0.014,
+                      fontSize: scale * 0.026,
+                      marginTop: scale * 0.014,
                     }}
                   >
                     {node.hoverDescription}
@@ -137,7 +165,7 @@ export function HeroShowcase({
                 className="origin-bottom-left"
                 // PillLabel is built in fixed px for the sheets; its natural
                 // height is 2.65rem, so scale it to sit with this type.
-                style={{ scale: `${(rect.height * 0.05) / 42.4}` }}
+                style={{ scale: `${(scale * 0.05) / 42.4}` }}
               >
                 <PillLabel label="View" tone="paper" />
               </span>
@@ -145,6 +173,6 @@ export function HeroShowcase({
           </button>
         );
       })}
-    </div>
+    </>
   );
 }

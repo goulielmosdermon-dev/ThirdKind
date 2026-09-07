@@ -42,11 +42,26 @@ export function ArticleSheet({
   return (
     <Sheet title={article.title} tone="editorial">
       <article data-surface="light" className="bg-paper">
-        <header className={`px-[8cqi] pb-10 ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}>
+        <header
+          className={`px-[8cqi] pb-10 ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
+        >
           <p className="text-sm text-mute">Idea</p>
           <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(1.5rem,3cqi,2.5rem)] leading-[1.12] text-balance text-ink">
             {article.title}
           </h1>
+          {/* Set like the work's tags, so the two indexes read as one shelf. */}
+          {article.tags?.length ? (
+            <ul className="mt-5 flex flex-wrap gap-1.5">
+              {article.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </header>
 
         <div className="px-[8cqi]">
@@ -90,7 +105,10 @@ export function ArticleSheet({
             <ul className="flex items-end gap-1 overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {moreThoughts.map((item) => (
                 <li key={item._id} className="w-min shrink-0">
-                  <AppLink href={`/thoughts/${item.slug.current}`} className="block">
+                  <AppLink
+                    href={`/thoughts/${item.slug.current}`}
+                    className="block"
+                  >
                     <p className="w-0 min-w-full font-display text-[1.2rem] leading-tight text-ink">
                       {item.title}
                     </p>

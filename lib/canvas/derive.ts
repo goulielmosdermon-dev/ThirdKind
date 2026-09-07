@@ -54,6 +54,8 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     thumbnail: article.coverImage,
     documentId: article._id,
     position: article.canvasPosition,
+    // The subject tags, read in the index the same way the work's are.
+    tags: article.tags ?? [],
   }));
 
   const aboutLeaves: CanvasNode[] = content.aboutSections.map((section) => ({

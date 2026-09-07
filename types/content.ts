@@ -159,6 +159,8 @@ export type Article = {
   coverImage: ImageAsset;
   hoverDescription: string;
   excerpt: string;
+  /** What the piece is about, shown as tags beside the work's own. */
+  tags?: string[];
   body: PortableText;
   /** Pins the piece to the lead slot on the Thoughts index. */
   featured?: boolean;

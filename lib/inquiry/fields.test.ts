@@ -7,8 +7,7 @@ const valid = {
   email: 'ada@brand.com',
   phone: '+30 210 000 0000',
   company: 'Brand',
-  service: 'Brand Strategy',
-  budget: '$1M – $5M',
+  budget: '$1 million – $5 million',
   about: 'A new film or campaign',
   startDate: 'This quarter',
   source: 'A producer',
@@ -18,6 +17,14 @@ describe('parseInquiry', () => {
   it('accepts a complete questionnaire', () => {
     const result = parseInquiry(valid);
     expect(result.ok).toBe(true);
+  });
+
+  it('rejects a budget that is no longer offered', () => {
+    const result = parseInquiry({ ...valid, budget: '$5M – $10M' });
+    expect(result).toEqual({
+      ok: false,
+      error: 'Please select a media budget.',
+    });
   });
 
   it('rejects a missing email', () => {

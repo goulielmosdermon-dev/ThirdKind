@@ -332,9 +332,18 @@ export function AboutSheet({
             </header>
 
             <div
-              className={`mx-auto max-w-[42rem] px-[8cqi] @md:px-0 ${
-                section.key === 'why' ? 'pb-48 @md:pb-56' : 'pb-24 @md:pb-28'
-              }`}
+              className={
+                // Prose is a centred measure. The team grid is not prose: it
+                // reads as part of the page, so it keeps the header's own left
+                // inset instead of floating in the middle of the panel.
+                section.key === 'team'
+                  ? 'max-w-[52rem] px-[8cqi] pb-24 @md:pb-28'
+                  : `mx-auto max-w-[42rem] px-[8cqi] @md:px-0 ${
+                      section.key === 'why'
+                        ? 'pb-48 @md:pb-56'
+                        : 'pb-24 @md:pb-28'
+                    }`
+              }
             >
               {section.key === 'team' ? (
                 <ul className="grid gap-6 @md:grid-cols-2">

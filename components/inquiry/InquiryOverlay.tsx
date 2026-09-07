@@ -71,6 +71,12 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
+  // Kept so the scheduler can be re-opened: Calendly's popup closes on a tap
+  // outside it, and losing it should not mean losing the booking.
+  const [booking, setBooking] = useState<{ name: string; email: string }>({
+    name: '',
+    email: '',
+  });
   useEffect(() => {
     const previous = document.activeElement;
     panelRef.current?.focus();
@@ -131,13 +137,15 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
         return;
       }
       setSent(true);
+      const invitee = {
+        name: String(payload.name ?? ''),
+        email: String(payload.email ?? ''),
+      };
+      setBooking(invitee);
       // Filed first, then the scheduler: the answers are safe whether or not
       // a time is ever picked, and Calendly opens over the confirmation so
       // closing it leaves the reader somewhere sensible.
-      void openCalendly({
-        name: String(payload.name ?? ''),
-        email: String(payload.email ?? ''),
-      });
+      void openCalendly(invitee);
     } catch {
       setError('Could not send the inquiry. Please try again.');
     } finally {
@@ -199,18 +207,36 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
           Book a call
         </h2>
         {sent ? (
-          <div className="flex min-h-[24rem] flex-col justify-center px-1 py-10">
+          <div className="flex flex-col justify-center px-1 py-6">
             <p className="font-display text-[1.65rem] leading-snug text-ink">
               We have it.
             </p>
-            <p className="mt-4 text-[1.05rem] leading-relaxed text-mute">
+            <p className="mt-3 text-[1.05rem] leading-relaxed text-mute">
               {calendlyUrl()
                 ? 'A conversation, not a funnel. Pick a time that suits you — we have the rest.'
                 : 'A conversation, not a funnel. We will write back shortly.'}
             </p>
+            {/*
+              The scheduler closes on a tap outside it, so the way back has to
+              stay on screen: this panel waits underneath with the invitee
+              still to hand.
+            */}
+            {calendlyUrl() ? (
+              <button
+                type="button"
+                className="mt-6 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white"
+                onClick={() => void openCalendly(booking)}
+              >
+                Pick a time
+              </button>
+            ) : null}
             <button
               type="button"
-              className="mt-10 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white"
+              className={
+                calendlyUrl()
+                  ? 'mt-2 w-full rounded-md bg-black/[0.06] py-3 text-center text-[0.95rem] text-ink'
+                  : 'mt-6 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white'
+              }
               onClick={onClose}
             >
               Close

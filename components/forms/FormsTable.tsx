@@ -152,7 +152,13 @@ export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
         email into an ellipsis.
       */}
       <div className="overflow-x-auto">
-        <table className="w-auto border-collapse text-[0.85rem]">
+        {/*
+          w-full with a slack column at the end: the real columns still take
+          the width of what is in them, and the empty one soaks up whatever is
+          left so the rules and the row banding run to the edge of the box
+          rather than stopping mid-way.
+        */}
+        <table className="w-full border-collapse text-[0.85rem]">
           <thead>
             <tr className="bg-white/60 text-left">
               <th className="border-b border-hairline px-3 py-2 font-normal text-mute">
@@ -166,6 +172,7 @@ export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
                   {label}
                 </th>
               ))}
+              <th className="w-full border-b border-hairline" aria-hidden />
             </tr>
           </thead>
           <tbody>
@@ -191,12 +198,13 @@ export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
                     )}
                   </td>
                 ))}
+                <td className="border-b border-hairline" aria-hidden />
               </tr>
             ))}
             {shown.length === 0 ? (
               <tr>
                 <td
-                  colSpan={COLUMNS.length + 1}
+                  colSpan={COLUMNS.length + 2}
                   className="px-3 py-10 text-center text-mute"
                 >
                   {rows.length === 0

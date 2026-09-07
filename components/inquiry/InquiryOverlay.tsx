@@ -10,6 +10,7 @@ import {
   START_DATE_OPTIONS,
 } from '@/lib/inquiry/fields';
 import { MOTION } from '@/lib/motion/tokens';
+import { calendlyUrl, openCalendly } from '@/lib/inquiry/calendly';
 
 function Field({
   label,
@@ -130,6 +131,13 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
         return;
       }
       setSent(true);
+      // Filed first, then the scheduler: the answers are safe whether or not
+      // a time is ever picked, and Calendly opens over the confirmation so
+      // closing it leaves the reader somewhere sensible.
+      void openCalendly({
+        name: String(payload.name ?? ''),
+        email: String(payload.email ?? ''),
+      });
     } catch {
       setError('Could not send the inquiry. Please try again.');
     } finally {
@@ -196,7 +204,9 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
               We have it.
             </p>
             <p className="mt-4 text-[1.05rem] leading-relaxed text-mute">
-              A conversation, not a funnel. We will write back shortly.
+              {calendlyUrl()
+                ? 'A conversation, not a funnel. Pick a time that suits you — we have the rest.'
+                : 'A conversation, not a funnel. We will write back shortly.'}
             </p>
             <button
               type="button"

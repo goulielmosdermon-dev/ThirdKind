@@ -60,3 +60,40 @@ export async function saveInquiry(
     return { ok: false, error: String(error) };
   }
 }
+
+/** One filed inquiry, as the table keeps it. */
+export type StoredInquiry = {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  service: string | null;
+  budget: string | null;
+  about: string | null;
+  start_date: string | null;
+  source: string | null;
+  status: string;
+};
+
+/** Everything filed, newest first. Server-side only — this reads with the key. */
+export async function listInquiries(): Promise<StoredInquiry[]> {
+  const url = process.env.SUPABASE_URL?.trim().replace(/\/+$/, '');
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (!url || !key) {
+    return [];
+  }
+  const response = await fetch(
+    `${url}/rest/v1/inquiries?select=*&order=created_at.desc`,
+    {
+      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      cache: 'no-store',
+    },
+  );
+  if (!response.ok) {
+    console.error('[inquiry] could not be read:', await response.text());
+    return [];
+  }
+  return (await response.json()) as StoredInquiry[];
+}

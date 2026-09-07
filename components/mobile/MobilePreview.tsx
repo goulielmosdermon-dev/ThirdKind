@@ -28,7 +28,7 @@ import {
   storyLineOpacity,
 } from '@/lib/intro/layout';
 import { MOTION } from '@/lib/motion/tokens';
-import type { CanvasNode } from '@/types/content';
+import type { CanvasNode, PortableText } from '@/types/content';
 
 /** CSS viewport of iPhone 15 Pro. */
 export const IPHONE_15_PRO = { width: 393, height: 852 } as const;
@@ -42,7 +42,13 @@ const MOBILE_HANDS = {
   dockBottom: IPHONE_SAFE_BOTTOM + 76,
 } as const;
 
-function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
+function MobileScreen({
+  nodes,
+  manifesto,
+}: {
+  nodes: CanvasNode[];
+  manifesto: PortableText;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const reduced = useReducedMotion();
@@ -57,9 +63,16 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
   const screenRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<number | null>(null);
   const completeRef = useRef(complete);
-  completeRef.current = complete;
   const advanceRef = useRef(advance);
-  advanceRef.current = advance;
+  // Read by the drag handlers, which are registered once; kept in step here
+  // rather than during render.
+  useEffect(() => {
+    completeRef.current = complete;
+    advanceRef.current = advance;
+  });
+  // The showcase is the whole screen here and the black section follows it, so
+  // the hands keep out of the way until the reader is past both.
+  const [openingPassed, setOpeningPassed] = useState(false);
   const [size, setSize] = useState<{ width: number; height: number }>(
     IPHONE_15_PRO,
   );
@@ -150,13 +163,14 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
             width={3354}
             height={2203}
             priority
-            className="tk-hands-in pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+            className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none mix-blend-multiply ${complete ? '' : 'tk-hands-in'}`}
             style={{
               height: hands.alien.height,
               width: hands.alien.height * ALIEN_ASPECT,
               transform: `translate(${hands.alien.x}px, ${hands.alien.y}px)`,
+              opacity: openingPassed || !complete ? 1 : 0,
               transition: complete
-                ? undefined
+                ? 'opacity 0.45s ease'
                 : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
           />
@@ -166,13 +180,14 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
             width={2517}
             height={1819}
             priority
-            className="tk-hands-in pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+            className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none mix-blend-multiply ${complete ? '' : 'tk-hands-in'}`}
             style={{
               height: hands.human.height,
               width: hands.human.height * HUMAN_ASPECT,
               transform: `translate(${hands.human.x}px, ${hands.human.y}px)`,
+              opacity: openingPassed || !complete ? 1 : 0,
               transition: complete
-                ? undefined
+                ? 'opacity 0.45s ease'
                 : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
           />
@@ -180,7 +195,8 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
       ) : null}
 
       <div
-        className="pointer-events-none absolute inset-0 z-30 flex items-center px-6"
+        // Held clear of the parked fingertips either side.
+        className="pointer-events-none absolute inset-0 z-30 flex items-center px-12"
         aria-hidden={progress < 0.02 || progress > 0.55}
       >
         <div className="w-full text-left">
@@ -202,7 +218,7 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
       </div>
 
       <p
-        className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[1.65rem] leading-[0.95] text-ink"
+        className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-12 text-center font-display text-[1.65rem] leading-[0.95] text-ink"
         style={{
           opacity: motto,
           transition: complete ? undefined : 'opacity 0.4s ease',
@@ -246,6 +262,8 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
           <IndexView
             density="phone"
             nodes={nodes}
+            manifesto={manifesto}
+            onOpeningPassed={setOpeningPassed}
             onOpen={(href, nodeId) => {
               markOpenedFromCanvas(nodeId);
               router.push(withMobilePrefix(href, true));
@@ -258,6 +276,12 @@ function MobileScreen({ nodes }: { nodes: CanvasNode[] }) {
   );
 }
 
-export function MobileHome({ nodes }: { nodes: CanvasNode[] }) {
-  return <MobileScreen nodes={nodes} />;
+export function MobileHome({
+  nodes,
+  manifesto,
+}: {
+  nodes: CanvasNode[];
+  manifesto: PortableText;
+}) {
+  return <MobileScreen nodes={nodes} manifesto={manifesto} />;
 }

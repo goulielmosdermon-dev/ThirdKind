@@ -12,6 +12,8 @@ import {
   withMobilePrefix,
 } from '@/components/mobile/MobileChrome';
 import { useSheetNav } from '@/components/sheet/SheetNav';
+import { useNarrow } from '@/lib/chrome/useNarrow';
+import { usePageScroll } from '@/components/chrome/PageScroll';
 import { useSurfaceTone } from '@/lib/chrome/useSurfaceTone';
 import { contentOpacity } from '@/lib/intro/layout';
 import { MOTION } from '@/lib/motion/tokens';
@@ -60,6 +62,11 @@ export function CommandNav({
   const { progress, complete } = useIntro();
   const reveal = contentOpacity(progress);
   const dark = useSurfaceTone(rootRef) === 'dark';
+  // The showcase runs full-bleed on a phone, so the bar keeps off it and rises
+  // into place once the reader is past.
+  const narrow = useNarrow();
+  const { headerPassed } = usePageScroll();
+  const waiting = narrow && !embedded && !headerPassed;
 
   useEffect(() => {
     if (!open) {
@@ -140,11 +147,16 @@ export function CommandNav({
         embedded ? 'absolute' : 'fixed'
       }`}
       style={{
-        opacity: reveal,
-        pointerEvents: complete ? 'auto' : 'none',
-        transition: complete ? undefined : 'opacity 0.5s ease',
+        opacity: waiting ? 0 : reveal,
+        transform: waiting
+          ? 'translate3d(0, calc(100% + 1.25rem), 0)'
+          : undefined,
+        pointerEvents: complete && !waiting ? 'auto' : 'none',
+        transition: complete
+          ? 'opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)'
+          : 'opacity 0.5s ease',
       }}
-      aria-hidden={!complete}
+      aria-hidden={!complete || waiting}
       onPointerDown={(event) => event.stopPropagation()}
     >
       <div

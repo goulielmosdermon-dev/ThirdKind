@@ -11,6 +11,8 @@ export const metadata: Metadata = {
 export default async function MobilePage() {
   const content = await getSiteContent();
   const nodes = deriveCanvasNodes(content);
+  const manifesto =
+    content.aboutSections.find((section) => section.key === 'why')?.body ?? [];
 
-  return <MobileHome nodes={nodes} />;
+  return <MobileHome nodes={nodes} manifesto={manifesto} />;
 }

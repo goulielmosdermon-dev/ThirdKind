@@ -7,16 +7,19 @@ import { ArrowUpRight } from '@/components/chrome/ArrowUpRight';
 export function PillLabel({
   label,
   tone = 'ink',
+  labelClassName = '',
 }: {
   label: string;
   tone?: 'ink' | 'paper';
+  /** Somewhere to hide the word and leave the arrow, where room is tight. */
+  labelClassName?: string;
 }) {
   const block = tone === 'paper' ? 'bg-white text-ink' : 'bg-ink text-white';
 
   return (
     <span className="inline-flex items-stretch gap-px">
       <span
-        className={`flex items-center rounded-md px-5 text-sm tracking-[0.04em] ${block}`}
+        className={`flex items-center rounded-md px-5 text-sm tracking-[0.04em] ${block} ${labelClassName}`}
       >
         {label}
       </span>

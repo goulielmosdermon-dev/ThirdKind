@@ -2,9 +2,13 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, type RefObject } from 'react';
 
-import type { CanvasNode } from '@/types/content';
+import type {
+  CanvasNode,
+  PortableText,
+  PortableTextBlock,
+} from '@/types/content';
 
 import { editorialCopy, editorialLeaves } from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
@@ -57,22 +61,140 @@ const SLOT = [
   },
 ] as const;
 
+/**
+ * The Why copy, read once on the way down from the showcase into the index.
+ * The same text the About sheet carries, minus its heading — the line the
+ * sheet opens on is the sheet's own — set larger here, because these few
+ * paragraphs are the whole of the page at this point.
+ */
+function ManifestoBand({
+  blocks,
+  phone,
+  sectionRef,
+}: {
+  blocks: PortableText;
+  phone: boolean;
+  sectionRef: RefObject<HTMLElement | null>;
+}) {
+  const lines = blocks.filter(
+    (block): block is PortableTextBlock =>
+      block._type === 'block' && block.style !== 'h2',
+  );
+  if (lines.length === 0) {
+    return null;
+  }
+
+  return (
+    // Full-bleed black, and it says so, which is what tells the command bar to
+    // invert while the reader is over it.
+    <section
+      ref={sectionRef}
+      data-surface="dark"
+      className="bg-black text-white"
+    >
+      <div
+        // The gap read from the showcase's own edge, not the section box: the
+        // slab starts below the section's own bottom padding, so its top
+        // padding is the smaller of the two numbers.
+        className={
+          phone
+            ? 'px-5 pt-14 pb-16'
+            : 'mx-auto max-w-[92rem] px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(2rem,4.8vw,4rem)] pb-[clamp(2rem,5vw,4rem)]'
+        }
+      >
+        <div className={phone ? 'space-y-6' : 'max-w-[52rem] space-y-8'}>
+          {lines.map((block) => (
+            <p
+              key={block._key}
+              className={
+                phone
+                  ? 'text-[1.05rem] leading-[1.7]'
+                  : 'text-[clamp(1.15rem,1.65vw,1.55rem)] leading-[1.6]'
+              }
+            >
+              {block.children.map((child) => child.text).join('')}
+            </p>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function IndexView({
   nodes,
+  manifesto = [],
   onOpen,
   onPrefetch,
+  onOpeningPassed,
+  onHeaderPassed,
   density = 'desktop',
 }: {
   nodes: CanvasNode[];
+  /** The Why section's own copy, read the same here as it is in the sheet. */
+  manifesto?: PortableText;
   onOpen: (href: string, nodeId: string) => void;
   /** Warms the sheet route so the panel can slide in without a fetch gap. */
   onPrefetch?: (href: string) => void;
+  /**
+   * Called as the black section clears the top of the screen, which is where
+   * the opening — showcase and manifesto — gives way to the index proper.
+   */
+  onOpeningPassed?: (passed: boolean) => void;
+  /** Called as the showcase itself clears the top of the screen. */
+  onHeaderPassed?: (passed: boolean) => void;
   density?: 'desktop' | 'phone';
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
   const reduced = useReducedMotion() ?? false;
   const scrollRef = useRef<HTMLDivElement>(null);
+  const manifestoRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   useSmoothScroll(scrollRef);
+
+  // Watched rather than measured on every scroll event: the only thing anyone
+  // downstream needs is the moment a section leaves the top edge.
+  useEffect(() => {
+    const watch = (
+      target: HTMLElement | null,
+      notify: ((passed: boolean) => void) | undefined,
+    ) => {
+      if (!notify) {
+        return undefined;
+      }
+      if (!target) {
+        // Nothing to clear — nothing is waiting on it either.
+        notify(true);
+        return undefined;
+      }
+      // In the phone preview the page scrolls inside the device frame, so the
+      // frame is the root; on the site itself the index is the whole screen.
+      const root = target.closest('[data-preview-scroll]');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const edge = entry.rootBounds?.top ?? 0;
+            notify(
+              !entry.isIntersecting && entry.boundingClientRect.bottom <= edge,
+            );
+          }
+        },
+        { root, threshold: 0 },
+      );
+      observer.observe(target);
+      return observer;
+    };
+
+    const watchers = [
+      watch(manifestoRef.current, onOpeningPassed),
+      watch(headerRef.current, onHeaderPassed),
+    ];
+    return () => {
+      for (const observer of watchers) {
+        observer?.disconnect();
+      }
+    };
+  }, [onHeaderPassed, onOpeningPassed]);
 
   // Touch has no hover, so the only reliable warm-up is up front.
   useEffect(() => {
@@ -148,25 +270,29 @@ export function IndexView({
         carries on into the index proper.
       */}
       <section
-        // The parked hands are not symmetric — the alien sits 32px down from
-        // the top, the human docks 112px up from the bottom to clear the
-        // command bar — so the band is placed between them rather than
-        // centred in the window, which is what made the top gap read as too
-        // wide and the bottom one as too tight.
-        className="flex h-dvh items-center px-(--band-gutter) pt-[4.5rem] pb-[9.5rem] md:pt-0 md:pb-0"
-        style={
-          {
-            '--band-gutter': phone ? '1.25rem' : 'clamp(2rem,5.5vw,5.5rem)',
-          } as CSSProperties
+        ref={headerRef}
+        // Horizontally: the same column as everything below it, so the band's
+        // edges line up with the copy and the index as the window changes.
+        // Vertically: even air top and bottom. The lower hand docks 112px up
+        // from the bottom to clear the command bar, but it parks out in the
+        // margin the column leaves it, so the band no longer has to duck under
+        // it the way it did when it ran to the edge of the window.
+        className={
+          phone
+            ? 'flex h-dvh items-center'
+            : 'flex h-dvh items-center md:mx-auto md:max-w-[92rem] md:px-[clamp(5.5rem,12vw,11rem)] md:py-[5rem]'
         }
       >
         {/* @container so the overlay can size itself from the band's own
             height, whatever the window does. */}
         <div
-          // On a narrow screen the band fills the space the section leaves it,
-          // so the air above and below is measured from the hands; from md up
-          // it goes back to the wide 16/9 crop the canvas shows.
-          className="@container relative mx-auto h-full w-full overflow-hidden bg-black md:aspect-[16/9] md:h-auto md:max-w-[calc((100dvh-12rem)*16/9)]"
+          // On a phone the band is the whole screen — no gutters, no air, it
+          // reads as a full slide. From md up it takes the same column as the
+          // sections below, keeping that width at every size and giving way on
+          // height instead: it crops into the still rather than shrinking away
+          // from the margins, which is what made it drift out of line with the
+          // sections below in a short window.
+          className="@container relative h-full w-full overflow-hidden bg-black md:aspect-[16/9] md:h-auto md:max-h-full"
         >
           <HeroCarousel
             nodes={nodes}
@@ -176,6 +302,12 @@ export function IndexView({
           />
         </div>
       </section>
+
+      <ManifestoBand
+        blocks={manifesto}
+        phone={phone}
+        sectionRef={manifestoRef}
+      />
 
       <div
         className={

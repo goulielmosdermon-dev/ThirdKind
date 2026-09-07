@@ -16,7 +16,7 @@ export function ContactSheet({ contact }: { contact: ContactInfo }) {
       >
         <div className="grid w-full items-start gap-16 @md:grid-cols-2 @md:gap-8">
           <h1 className="font-display text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-ink">
-            Contact
+            Contact.
           </h1>
           <div className="text-[1.05rem] leading-snug text-ink">
             <p>{contact.heading}</p>

@@ -37,8 +37,10 @@ export function editorialCopy(node: LeafCanvasNode): {
     };
   }
 
+  // A piece of writing goes in the index under its own title — the same line
+  // the page opens on — rather than the hover précis the canvas uses.
   return {
-    line: node.hoverDescription || node.title,
+    line: node.title || node.hoverDescription,
     name: '',
   };
 }

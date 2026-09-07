@@ -16,6 +16,8 @@ import { clamp01 } from '@/lib/intro/layout';
 type IntroValue = {
   progress: number;
   complete: boolean;
+  /** True while the intro is playing itself out on a phone. */
+  autoplay: boolean;
   advance: (delta: number) => void;
 };
 
@@ -77,6 +79,9 @@ export function IntroProvider({
 }) {
   const reduced = useReducedMotion() === true;
   const [progress, setProgress] = useState(skip ? 1 : 0);
+  // Only known in the browser, so it settles on the first effect rather than
+  // during render; until then the intro is treated as hand-driven.
+  const [autoplay, setAutoplay] = useState(false);
 
   // Adjusting state during render rather than in an effect: once the intro is
   // skipped it stays played out, so returning to the canvas does not rewind it.
@@ -98,6 +103,9 @@ export function IntroProvider({
     let frame = 0;
     let start: number | null = null;
     const tick = (now: number) => {
+      if (start === null) {
+        setAutoplay(true);
+      }
       start ??= now;
       const elapsed = now - start;
       const played = clamp01(autoplayProgress(elapsed));
@@ -105,6 +113,8 @@ export function IntroProvider({
       setProgress((current) => Math.max(current, played));
       if (elapsed < AUTOPLAY_MS) {
         frame = requestAnimationFrame(tick);
+      } else {
+        setAutoplay(false);
       }
     };
     frame = requestAnimationFrame(tick);
@@ -121,9 +131,10 @@ export function IntroProvider({
     () => ({
       progress: resolved,
       complete: resolved >= 0.999,
+      autoplay: autoplay && !skip && !reduced,
       advance,
     }),
-    [advance, resolved],
+    [advance, autoplay, reduced, resolved, skip],
   );
 
   return (

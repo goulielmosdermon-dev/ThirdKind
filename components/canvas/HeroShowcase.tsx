@@ -179,8 +179,10 @@ export function HeroCarousel({
                 screen
                   ? // Sized from whichever side is shorter, so the overlay
                     // stays in proportion on a narrow phone band as well as a
-                    // wide desktop one.
-                    'gap-[min(4cqh,4cqi)] p-[min(5cqh,5cqi)]'
+                    // wide desktop one. On a phone the band runs full-bleed,
+                    // so the copy needs twice the inset off the three edges it
+                    // now touches to stop it reading as cramped.
+                    'gap-[min(4cqh,4cqi)] p-[min(5cqh,5cqi)] max-md:px-[min(10cqh,10cqi)] max-md:pb-[min(10cqh,10cqi)]'
                   : ''
               }`}
               style={
@@ -210,7 +212,12 @@ export function HeroCarousel({
                   screen ? undefined : { scale: `${(scale * 0.05) / 42.4}` }
                 }
               >
-                <PillLabel label="View" tone="paper" />
+                <PillLabel
+                  label="View"
+                  tone="paper"
+                  // No room for the word on a phone; the arrow says it.
+                  labelClassName={screen ? 'max-md:hidden' : ''}
+                />
               </span>
             </span>
           </button>

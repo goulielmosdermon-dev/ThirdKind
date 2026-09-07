@@ -34,7 +34,7 @@ describe('editorialCopy', () => {
     });
   });
 
-  it('uses the hover line for thoughts', () => {
+  it('uses the title for thoughts', () => {
     expect(
       editorialCopy(
         leaf({
@@ -45,7 +45,7 @@ describe('editorialCopy', () => {
         }),
       ),
     ).toEqual({
-      line: 'Messages expire. Stories compound.',
+      line: 'Why Storytelling Wins',
       name: '',
     });
   });

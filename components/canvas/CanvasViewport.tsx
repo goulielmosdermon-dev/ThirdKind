@@ -16,6 +16,7 @@ import type {
   CanvasNode,
   Edge,
   LeafCanvasNode,
+  PortableText,
   Viewport,
 } from '@/types/content';
 import { WORLD_HEIGHT, WORLD_WIDTH } from '@/types/content';
@@ -44,7 +45,9 @@ import { MOTION } from '@/lib/motion/tokens';
 import {
   ALIEN_ASPECT,
   HUMAN_ASPECT,
+  HUMAN_SCALE,
   contentOpacity,
+  largeHandHeight,
   layoutHands,
   mottoOpacity,
   remap,
@@ -56,7 +59,9 @@ import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { HeroShowcase } from '@/components/canvas/HeroShowcase';
 import { IndexView } from '@/components/canvas/IndexView';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
+import { usePageScroll } from '@/components/chrome/PageScroll';
 import { useIntro } from '@/components/intro/IntroContext';
+import { useNarrow } from '@/lib/chrome/useNarrow';
 import { useSheetNav } from '@/components/sheet/SheetNav';
 
 function localPoint(
@@ -120,11 +125,13 @@ type PanSession = {
 export function CanvasViewport({
   nodes,
   edges,
-  wordmarkLeft: _wordmarkLeft,
-  wordmarkRight: _wordmarkRight,
+  manifesto,
+  // wordmarkLeft / wordmarkRight are still handed down for when the wordmarks
+  // come back; nothing draws them today.
 }: {
   nodes: CanvasNode[];
   edges: Edge[];
+  manifesto: PortableText;
   wordmarkLeft: string;
   wordmarkRight: string;
 }) {
@@ -153,16 +160,13 @@ export function CanvasViewport({
     (href: string) => router.prefetch(href),
     [router],
   );
-  const { progress, complete, advance } = useIntro();
+  const { progress, complete, advance, autoplay } = useIntro();
   const reducedMotion = useReducedMotion() === true;
   const reveal = contentOpacity(progress);
   const motto = mottoOpacity(progress);
   const completeRef = useRef(complete);
-  completeRef.current = complete;
   const advanceRef = useRef(advance);
-  advanceRef.current = advance;
   const sizeRef = useRef(size);
-  sizeRef.current = size;
   const introDragRef = useRef<{ lastY: number } | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('index');
   const indexed = viewMode === 'index';
@@ -178,8 +182,16 @@ export function CanvasViewport({
   const lastWheelRef = useRef(0);
   const gestureUsedRef = useRef(false);
   const indexedRef = useRef(indexed);
-  indexedRef.current = indexed;
   const matrixViewportRef = useRef<Viewport | null>(null);
+
+  // The wheel and pointer handlers are registered once and read the latest
+  // values through these; kept in step here rather than during render.
+  useEffect(() => {
+    completeRef.current = complete;
+    advanceRef.current = advance;
+    sizeRef.current = size;
+    indexedRef.current = indexed;
+  });
 
   const {
     viewport,
@@ -294,11 +306,7 @@ export function CanvasViewport({
           gestureUsedRef.current = true;
           travelLockRef.current = now;
           setHeroFocused(false);
-          animateFitRect(
-            spreadResult.sections,
-            undefined,
-            TRAVEL_ANIMATION_MS,
-          );
+          animateFitRect(spreadResult.sections, undefined, TRAVEL_ANIMATION_MS);
           return;
         }
         if (armed && event.deltaY < 0 && !heroFocused && inTopStrip) {
@@ -564,13 +572,11 @@ export function CanvasViewport({
     }
     framedSpreadRef.current = true;
     animateTo(viewportToFitRect(spreadResult.hero, size, HERO_FIT_PADDING));
-  }, [animateTo, size, spreadResult.bounds, viewMode]);
+  }, [animateTo, size, spreadResult.bounds, spreadResult.hero, viewMode]);
 
   // The carousel only runs while its band is actually on screen.
   const heroPaused =
-    !spread ||
-    !size ||
-    !isWorldRectVisible(spreadResult.hero, viewport, size);
+    !spread || !size || !isWorldRectVisible(spreadResult.hero, viewport, size);
 
   const onViewMode = (mode: ViewMode) => {
     if (mode === viewMode) {
@@ -592,6 +598,8 @@ export function CanvasViewport({
     pageScrollRef.current?.scrollTo({ top: 0 });
     setViewMode(mode);
   };
+  // Kept wired up while the view toggle is hidden; see the note by the buttons.
+  void onViewMode;
 
   const hovered =
     hoveredId && !panning
@@ -635,6 +643,29 @@ export function CanvasViewport({
     size && size.width > 0 && size.height > 0
       ? layoutHands(progress, size.width, size.height)
       : null;
+  // The images are laid out once at their opening size and then only
+  // transformed. Animating width/height instead re-lays out and repaints two
+  // large bitmaps on every frame, which is what made the hands part in steps
+  // on a phone.
+  const handBase = size ? largeHandHeight(size.width) : 0;
+  // On a phone the showcase is the whole screen and the black section follows
+  // it, so the hands stay out of the way until the reader is past both.
+  const narrow = useNarrow();
+  const [openingPassed, setOpeningPassed] = useState(false);
+  const handsHidden = complete && narrow && !openingPassed;
+  // The command bar sits outside the scroller, so it is told from here.
+  const { report } = usePageScroll();
+  const onHeaderPassed = useCallback(
+    (passed: boolean) => report({ headerPassed: passed }),
+    [report],
+  );
+  // While the intro plays itself out, progress already arrives once a frame;
+  // a transition on top of that only adds lag. The wheel-driven intro steps
+  // in jumps, so there it stays.
+  const handEase =
+    complete || autoplay
+      ? undefined
+      : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
 
   return (
     <div
@@ -666,41 +697,51 @@ export function CanvasViewport({
                 : 'opacity 0.5s ease',
             }}
           >
-            {spread && complete ? (
-              <HeroShowcase
-                nodes={viewNodes}
-                rect={spreadResult.hero}
-                onOpen={openLeaf}
-                paused={heroPaused}
-              />
-            ) : null}
+            {/*
+              Index mode draws none of this, and the layers are heavy enough
+              that re-rendering them behind an opacity of 0 was what made the
+              intro stutter on a phone — every frame of the play-out re-ran
+              the whole node layer.
+            */}
+            {indexed ? null : (
+              <>
+                {spread && complete ? (
+                  <HeroShowcase
+                    nodes={viewNodes}
+                    rect={spreadResult.hero}
+                    onOpen={openLeaf}
+                    paused={heroPaused}
+                  />
+                ) : null}
 
-            <EdgeLayer
-              nodes={nodes}
-              edges={spread ? [] : edges}
-              scale={viewport.scale}
-              viewport={viewport}
-              size={size}
-              hoveredId={hoveredId}
-              revealEnabled={complete}
-            />
-            {size ? (
-              <NodeLayer
-                nodes={viewNodes}
-                viewport={viewport}
-                size={size}
-                panning={panning}
-                hoveredId={hoveredId}
-                captionScreen={captionOrigin}
-                captionSize={captionSize}
-                revealEnabled={complete}
-                aspects={aspects}
-                onAspect={noteAspect}
-                onHover={setHoveredId}
-                onFocusNode={onFocusNode}
-                onActivateNode={openLeaf}
-              />
-            ) : null}
+                <EdgeLayer
+                  nodes={nodes}
+                  edges={spread ? [] : edges}
+                  scale={viewport.scale}
+                  viewport={viewport}
+                  size={size}
+                  hoveredId={hoveredId}
+                  revealEnabled={complete}
+                />
+                {size ? (
+                  <NodeLayer
+                    nodes={viewNodes}
+                    viewport={viewport}
+                    size={size}
+                    panning={panning}
+                    hoveredId={hoveredId}
+                    captionScreen={captionOrigin}
+                    captionSize={captionSize}
+                    revealEnabled={complete}
+                    aspects={aspects}
+                    onAspect={noteAspect}
+                    onHover={setHoveredId}
+                    onFocusNode={onFocusNode}
+                    onActivateNode={openLeaf}
+                  />
+                ) : null}
+              </>
+            )}
           </div>
 
           {hands ? (
@@ -711,14 +752,15 @@ export function CanvasViewport({
                 width={3354}
                 height={2203}
                 priority
-                className="tk-hands-in pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none mix-blend-multiply ${complete ? '' : 'tk-hands-in'}`}
                 style={{
-                  height: hands.alien.height,
-                  width: hands.alien.height * ALIEN_ASPECT,
-                  transform: `translate(${hands.alien.x}px, ${hands.alien.y}px)`,
-                  transition: complete
-                    ? undefined
-                    : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+                  height: handBase,
+                  width: handBase * ALIEN_ASPECT,
+                  transformOrigin: '0 0',
+                  transform: `translate3d(${hands.alien.x}px, ${hands.alien.y}px, 0) scale(${hands.alien.height / handBase})`,
+                  willChange: complete ? undefined : 'transform',
+                  opacity: handsHidden ? 0 : 1,
+                  transition: complete ? 'opacity 0.45s ease' : handEase,
                 }}
               />
               <Image
@@ -727,22 +769,25 @@ export function CanvasViewport({
                 width={2517}
                 height={1819}
                 priority
-                className="tk-hands-in pointer-events-none absolute top-0 left-0 z-20 max-w-none"
+                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none mix-blend-multiply ${complete ? '' : 'tk-hands-in'}`}
                 style={{
-                  height: hands.human.height,
-                  width: hands.human.height * HUMAN_ASPECT,
-                  transform: `translate(${hands.human.x}px, ${hands.human.y}px)`,
-                  transition: complete
-                    ? undefined
-                    : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+                  height: handBase * HUMAN_SCALE,
+                  width: handBase * HUMAN_SCALE * HUMAN_ASPECT,
+                  transformOrigin: '0 0',
+                  transform: `translate3d(${hands.human.x}px, ${hands.human.y}px, 0) scale(${hands.human.height / (handBase * HUMAN_SCALE)})`,
+                  willChange: complete ? undefined : 'transform',
+                  opacity: handsHidden ? 0 : 1,
+                  transition: complete ? 'opacity 0.45s ease' : handEase,
                 }}
               />
             </>
           ) : null}
 
           <div
-            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6"
-            aria-hidden={progress < 0.02 || progress > 0.55}
+            // On a phone the hands park 32px in from the edges, so the copy
+            // is held further in still, clear of the fingertips either side.
+            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 max-md:px-12"
+            aria-hidden={progress < 0.3 || progress > 0.72}
           >
             <div className="w-full max-w-[40rem] text-left">
               {STORY_LINES.map((line, index) => (
@@ -763,7 +808,7 @@ export function CanvasViewport({
           </div>
 
           <p
-            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] text-ink"
+            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] text-ink max-md:px-12"
             style={{
               opacity: motto,
               transition: complete ? undefined : 'opacity 0.4s ease',
@@ -843,6 +888,9 @@ export function CanvasViewport({
           >
             <IndexView
               nodes={nodes}
+              manifesto={manifesto}
+              onOpeningPassed={setOpeningPassed}
+              onHeaderPassed={onHeaderPassed}
               onOpen={(href, nodeId) => {
                 markOpenedFromCanvas(nodeId);
                 router.push(href);
@@ -853,35 +901,11 @@ export function CanvasViewport({
         ) : null}
       </AnimatePresence>
 
-      <div
-        data-chrome
-        className="absolute bottom-6 left-6 z-30 flex items-center gap-2 px-3 py-1.5 text-sm"
-        style={{
-          opacity: reveal,
-          pointerEvents: complete ? 'auto' : 'none',
-        }}
-      >
-        {(
-          // The constellation view stays in the code — only its button is
-          // hidden — so restoring it is one line.
-          [
-            ['index', 'Index'],
-            ['matrix2', 'Organized'],
-          ] as const
-        ).map(([mode, label]) => (
-          <button
-            key={mode}
-            type="button"
-            aria-pressed={viewMode === mode}
-            className={`rounded-md px-1.5 focus-visible:outline-none ${
-              viewMode === mode ? 'text-ink' : 'text-mute'
-            }`}
-            onClick={() => onViewMode(mode)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {/*
+        The view toggle is hidden while the site stays on Index. Every mode is
+        still wired up, so restoring it is a matter of rendering the buttons
+        again.
+      */}
 
       {!indexed ? (
         <div

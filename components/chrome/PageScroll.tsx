@@ -12,8 +12,6 @@ import {
 type Milestones = {
   /** The showcase has been scrolled fully off the top of the screen. */
   headerPassed: boolean;
-  /** Half of it has — where the motto parked on it gives up its place. */
-  headerHalfPassed: boolean;
   /** The black manifesto section has too — the opening is behind us. */
   openingPassed: boolean;
 };
@@ -32,7 +30,6 @@ const PageScrollContext = createContext<PageScrollValue | null>(null);
 export function PageScrollProvider({ children }: { children: ReactNode }) {
   const [milestones, setMilestones] = useState<Milestones>({
     headerPassed: false,
-    headerHalfPassed: false,
     openingPassed: false,
   });
 
@@ -40,7 +37,6 @@ export function PageScrollProvider({ children }: { children: ReactNode }) {
     setMilestones((current) => {
       const merged = { ...current, ...next };
       return merged.headerPassed === current.headerPassed &&
-        merged.headerHalfPassed === current.headerHalfPassed &&
         merged.openingPassed === current.openingPassed
         ? current
         : merged;
@@ -67,7 +63,6 @@ export function usePageScroll(): PageScrollValue {
   return (
     useContext(PageScrollContext) ?? {
       headerPassed: true,
-      headerHalfPassed: true,
       openingPassed: true,
       report: () => {},
     }

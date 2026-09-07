@@ -173,7 +173,10 @@ export function HeroCarousel({
               // asking for 100vw there is what made it look soft.
               sizes="(max-width: 767px) 250vw, 100vw"
               unoptimized={isUnoptimizedAsset(node.thumbnail)}
-              className="object-cover"
+              // A phone crops the 16/9 still hard. Pulling the frame a quarter
+              // further across keeps the subject in it rather than cutting the
+              // face off at the edge.
+              className={`object-cover ${screen ? 'max-md:object-[75%_center]' : ''}`}
             />
             <span
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"

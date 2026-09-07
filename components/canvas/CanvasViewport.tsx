@@ -98,6 +98,8 @@ type ViewMode = 'matrix' | 'matrix2' | 'index';
  * parked size and scaled to it: 1.125rem / 6.2vw at 390.
  */
 const MOTTO_INTRO_SCALE = 0.74;
+/** How long the ride up takes, after which the showcase carries the line. */
+const MOTTO_RIDE_MS = 800;
 
 /**
  * Air left around the showcase band. 88 is the tightest that still clears the
@@ -663,28 +665,37 @@ export function CanvasViewport({
   const [openingPassed, setOpeningPassed] = useState(false);
   const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
-  const { report, headerPassed } = usePageScroll();
-  // On a phone the motto never fades out with the intro — it parks at the top
-  // of the showcase, holds there while that section is scrolled, and leaves
-  // with the section itself.
+  const { report } = usePageScroll();
+  // On a phone the motto never fades out with the intro — it rides up to the
+  // head of the showcase and is handed to that section, which scrolls it away
+  // in its own time.
   const mottoParked = narrow && complete;
   const mottoOpacityNow = !narrow
     ? motto
     : mottoParked
-      ? headerPassed
-        ? 0
-        : 1
+      ? 1
       : Math.max(motto, remap(progress, INTRO.mottoInStart, INTRO.mottoInEnd));
+  // Once the ride up has landed, the showcase takes the line over and the
+  // overlay lets go of it — from there it scrolls with the section it sits on.
+  const [mottoLanded, setMottoLanded] = useState(false);
+  // Adjusted during render rather than in an effect, so a rewind takes the
+  // line back into the overlay's hands without a frame of neither holding it.
+  if (mottoLanded && !mottoParked) {
+    setMottoLanded(false);
+  }
+  useEffect(() => {
+    if (!mottoParked) {
+      return;
+    }
+    const timer = window.setTimeout(() => setMottoLanded(true), MOTTO_RIDE_MS);
+    return () => window.clearTimeout(timer);
+  }, [mottoParked]);
   // Parked, the line is set to fill the screen's width. It is drawn at that
   // size throughout and scaled down for the intro, so the ride up and the
   // growth are one transform rather than a re-flow every frame.
   const mottoScale = narrow && !mottoParked ? MOTTO_INTRO_SCALE : 1;
   const onHeaderPassed = useCallback(
     (passed: boolean) => report({ headerPassed: passed }),
-    [report],
-  );
-  const onHeaderHalfPassed = useCallback(
-    (passed: boolean) => report({ headerHalfPassed: passed }),
     [report],
   );
   // While the intro plays itself out, progress already arrives once a frame;
@@ -844,6 +855,7 @@ export function CanvasViewport({
           <div
             className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-[10vw]"
             aria-hidden={mottoOpacityNow < 0.05}
+            hidden={mottoLanded}
           >
             <p
               className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] max-md:text-[6.2vw] max-md:whitespace-nowrap ${
@@ -938,7 +950,7 @@ export function CanvasViewport({
               manifesto={manifesto}
               onOpeningPassed={setOpeningPassed}
               onHeaderPassed={onHeaderPassed}
-              onHeaderHalfPassed={onHeaderHalfPassed}
+              mottoLanded={mottoLanded}
               onOpen={(href, nodeId) => {
                 markOpenedFromCanvas(nodeId);
                 router.push(href);

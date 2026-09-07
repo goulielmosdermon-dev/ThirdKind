@@ -128,7 +128,7 @@ export function IndexView({
   onPrefetch,
   onOpeningPassed,
   onHeaderPassed,
-  onHeaderHalfPassed,
+  mottoLanded = false,
   density = 'desktop',
 }: {
   nodes: CanvasNode[];
@@ -144,8 +144,11 @@ export function IndexView({
   onOpeningPassed?: (passed: boolean) => void;
   /** Called as the showcase itself clears the top of the screen. */
   onHeaderPassed?: (passed: boolean) => void;
-  /** Called once half of the showcase has been scrolled away. */
-  onHeaderHalfPassed?: (passed: boolean) => void;
+  /**
+   * The intro has finished handing the motto over. From here it is part of the
+   * showcase and scrolls with it, rather than being held by the overlay above.
+   */
+  mottoLanded?: boolean;
   density?: 'desktop' | 'phone';
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
@@ -188,43 +191,16 @@ export function IndexView({
       return observer;
     };
 
-    // The showcase is watched at half cover as well: the motto parked on it
-    // leaves once the reader is halfway through scrolling it away.
-    const watchHalf = () => {
-      const target = headerRef.current;
-      if (!onHeaderHalfPassed) {
-        return undefined;
-      }
-      if (!target) {
-        onHeaderHalfPassed(true);
-        return undefined;
-      }
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            onHeaderHalfPassed(entry.intersectionRatio < 0.5);
-          }
-        },
-        {
-          root: target.closest('[data-preview-scroll]'),
-          threshold: [0, 0.5, 1],
-        },
-      );
-      observer.observe(target);
-      return observer;
-    };
-
     const watchers = [
       watch(manifestoRef.current, onOpeningPassed),
       watch(headerRef.current, onHeaderPassed),
-      watchHalf(),
     ];
     return () => {
       for (const observer of watchers) {
         observer?.disconnect();
       }
     };
-  }, [onHeaderHalfPassed, onHeaderPassed, onOpeningPassed]);
+  }, [onHeaderPassed, onOpeningPassed]);
 
   // Touch has no hover, so the only reliable warm-up is up front.
   useEffect(() => {
@@ -309,10 +285,20 @@ export function IndexView({
         // it the way it did when it ran to the edge of the window.
         className={
           phone
-            ? 'flex h-dvh items-center'
-            : 'flex h-dvh items-center md:mx-auto md:max-w-[92rem] md:px-[clamp(5.5rem,12vw,11rem)] md:py-[5rem]'
+            ? 'relative flex h-[80dvh] items-center'
+            : 'relative flex h-[80dvh] items-center md:mx-auto md:h-dvh md:max-w-[92rem] md:px-[clamp(5.5rem,12vw,11rem)] md:py-[5rem]'
         }
       >
+        {/*
+          The motto is part of this section once the intro has handed it over,
+          so it scrolls away with the showcase instead of being held on screen
+          by the overlay that carried it here.
+        */}
+        {mottoLanded ? (
+          <p className="pointer-events-none absolute inset-x-0 top-[2.75rem] z-10 px-[10vw] text-center font-display text-[6.2vw] leading-[0.95] whitespace-nowrap text-white md:hidden">
+            MAKE EXTRAORDINARY
+          </p>
+        ) : null}
         {/* @container so the overlay can size itself from the band's own
             height, whatever the window does. */}
         <div

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import { PillLabel } from '@/components/sheet/PillLabel';
+import { useNarrow } from '@/lib/chrome/useNarrow';
 import type { WorldRect } from '@/lib/canvas/geometry';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import type { CanvasNode, LeafCanvasNode } from '@/types/content';
@@ -82,11 +83,16 @@ export function HeroCarousel({
   mode?: 'world' | 'screen';
 }) {
   const screen = mode === 'screen';
-  const featured = HERO_IDS.map((id) =>
+  // On a phone the opening holds on the lead project rather than cycling: the
+  // band is the whole screen there, and a slide out of it reads as the page
+  // moving under the reader.
+  const narrow = useNarrow();
+  const all = HERO_IDS.map((id) =>
     nodes.find(
       (node): node is LeafCanvasNode => node.kind === 'leaf' && node.id === id,
     ),
   ).filter((node): node is LeafCanvasNode => Boolean(node));
+  const featured = screen && narrow ? all.slice(0, 1) : all;
 
   const count = featured.length;
   // The track runs one way only. It carries the list twice, so stepping past

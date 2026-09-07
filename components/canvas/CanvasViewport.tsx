@@ -92,11 +92,12 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
 type ViewMode = 'matrix' | 'matrix2' | 'index';
 
 /**
- * The motto is set to span the screen once it parks (7.7vw fills the line to
- * within a hair of both edges). During the intro it reads at its old size, so
- * it is drawn at the parked size and scaled to that: 1.125rem / 7.7vw at 390.
+ * Parked, the motto fills the line between the same gutters the showcase
+ * caption keeps — 10vw either side — which 6.2vw does to within a couple of
+ * pixels. During the intro it reads at its old size, so it is drawn at the
+ * parked size and scaled to it: 1.125rem / 6.2vw at 390.
  */
-const MOTTO_INTRO_SCALE = 0.6;
+const MOTTO_INTRO_SCALE = 0.74;
 
 /**
  * Air left around the showcase band. 88 is the tightest that still clears the
@@ -662,14 +663,15 @@ export function CanvasViewport({
   const [openingPassed, setOpeningPassed] = useState(false);
   const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
-  const { report, headerHalfPassed } = usePageScroll();
+  const { report, headerPassed } = usePageScroll();
   // On a phone the motto never fades out with the intro — it parks at the top
-  // of the showcase and leaves only when that section is scrolled past.
+  // of the showcase, holds there while that section is scrolled, and leaves
+  // with the section itself.
   const mottoParked = narrow && complete;
   const mottoOpacityNow = !narrow
     ? motto
     : mottoParked
-      ? headerHalfPassed
+      ? headerPassed
         ? 0
         : 1
       : Math.max(motto, remap(progress, INTRO.mottoInStart, INTRO.mottoInEnd));
@@ -840,11 +842,11 @@ export function CanvasViewport({
             Everywhere else it fades out as it always has.
           */}
           <div
-            className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-0"
+            className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-[10vw]"
             aria-hidden={mottoOpacityNow < 0.05}
           >
             <p
-              className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] max-md:text-[7.7vw] max-md:whitespace-nowrap ${
+              className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] max-md:text-[6.2vw] max-md:whitespace-nowrap ${
                 mottoParked ? 'text-white' : 'text-ink'
               }`}
               style={{

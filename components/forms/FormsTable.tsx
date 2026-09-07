@@ -11,7 +11,6 @@ const COLUMNS = [
   ['email', 'Email'],
   ['phone', 'Phone'],
   ['company', 'Company'],
-  ['service', 'Service'],
   ['budget', 'Budget'],
   ['about', 'About'],
   ['start_date', 'Start'],
@@ -54,21 +53,16 @@ function optionsFor(rows: StoredInquiry[], key: keyof StoredInquiry): string[] {
 
 export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
   const [query, setQuery] = useState('');
-  const [service, setService] = useState('');
   const [budget, setBudget] = useState('');
   const [status, setStatus] = useState('');
   const [oldestFirst, setOldestFirst] = useState(false);
 
-  const services = useMemo(() => optionsFor(rows, 'service'), [rows]);
   const budgets = useMemo(() => optionsFor(rows, 'budget'), [rows]);
   const statuses = useMemo(() => optionsFor(rows, 'status'), [rows]);
 
   const shown = useMemo(() => {
     const needle = query.trim().toLowerCase();
     const filtered = rows.filter((row) => {
-      if (service && row.service !== service) {
-        return false;
-      }
       if (budget && row.budget !== budget) {
         return false;
       }
@@ -85,7 +79,7 @@ export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
       );
     });
     return oldestFirst ? [...filtered].reverse() : filtered;
-  }, [budget, oldestFirst, query, rows, service, status]);
+  }, [budget, oldestFirst, query, rows, status]);
 
   const select =
     'rounded-md border border-hairline bg-white px-2 py-1.5 text-[0.85rem] outline-none focus:border-ink';
@@ -101,17 +95,6 @@ export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
           placeholder="Search"
           className={`${select} min-w-[14rem] flex-1`}
         />
-        <select
-          value={service}
-          onChange={(event) => setService(event.target.value)}
-          className={select}
-          aria-label="Filter by service"
-        >
-          <option value="">All services</option>
-          {services.map((item) => (
-            <option key={item}>{item}</option>
-          ))}
-        </select>
         <select
           value={budget}
           onChange={(event) => setBudget(event.target.value)}

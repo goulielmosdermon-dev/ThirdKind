@@ -7,13 +7,11 @@ export function BookCallButton({
   label = 'book a call',
   tone = 'ink',
   variant = 'solid',
-  service,
   className,
 }: {
   label?: string;
   tone?: 'ink' | 'paper';
   variant?: 'solid' | 'quiet';
-  service?: string;
   className?: string;
 }) {
   const { openInquiry } = useInquiry();
@@ -23,7 +21,7 @@ export function BookCallButton({
       <button
         type="button"
         className={`inline-flex w-fit rounded-md bg-black/[0.06] px-4 py-2 text-sm text-ink ${className ?? ''}`}
-        onClick={() => openInquiry({ service })}
+        onClick={() => openInquiry()}
       >
         {label}
       </button>
@@ -36,7 +34,7 @@ export function BookCallButton({
     <button
       type="button"
       className={`inline-flex items-stretch gap-px ${className ?? ''}`}
-      onClick={() => openInquiry({ service })}
+      onClick={() => openInquiry()}
     >
       <span
         className={`flex items-center rounded-md px-5 text-sm lowercase tracking-[0.04em] ${block}`}

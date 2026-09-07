@@ -42,7 +42,6 @@ export async function saveInquiry(
         email: data.email,
         phone: data.phone,
         company: data.company,
-        service: data.service,
         budget: data.budget,
         about: data.about,
         start_date: data.startDate,
@@ -69,7 +68,6 @@ export type StoredInquiry = {
   email: string;
   phone: string | null;
   company: string | null;
-  service: string | null;
   budget: string | null;
   about: string | null;
   start_date: string | null;

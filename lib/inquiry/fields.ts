@@ -1,19 +1,10 @@
-/** The four stages, spelled exactly as the services page labels them. */
-export const SERVICE_OPTIONS = [
-  'Reading the room',
-  'Brand Strategy',
-  'How it feels',
-  'Getting heard',
-  'Worth watching',
-  'Proof it worked',
-  'Steady stream',
-] as const;
-
 export const BUDGET_OPTIONS = [
-  'Under $1 million',
-  '$1M – $5M',
-  '$5M – $10M',
-  '$10M – $20M',
+  'Under $50,000',
+  '$50,000 – $100,000',
+  '$100,000 – $250,000',
+  '$250,000 – $1 million',
+  '$1 million – $5 million',
+  'Over $5 million',
 ] as const;
 
 export const INQUIRY_ABOUT_OPTIONS = [
@@ -35,7 +26,6 @@ export type InquiryPayload = {
   email: string;
   phone: string;
   company: string;
-  service: string;
   budget: string;
   about: string;
   startDate: string;
@@ -68,7 +58,6 @@ export function parseInquiry(
     email: asString(body.email),
     phone: asString(body.phone),
     company: asString(body.company),
-    service: asString(body.service),
     budget: asString(body.budget),
     about: asString(body.about),
     startDate: asString(body.startDate),
@@ -86,12 +75,6 @@ export function parseInquiry(
   }
   if (!data.company) {
     return { ok: false, error: 'Please add your company name.' };
-  }
-  if (!inList(data.service, SERVICE_OPTIONS)) {
-    return {
-      ok: false,
-      error: 'Please select the services you are interested in.',
-    };
   }
   if (!inList(data.budget, BUDGET_OPTIONS)) {
     return { ok: false, error: 'Please select a media budget.' };
@@ -115,7 +98,6 @@ export function formatInquiryEmail(data: InquiryPayload): string {
     `Company email: ${data.email}`,
     `Phone: ${data.phone}`,
     `Company: ${data.company}`,
-    `Services: ${data.service}`,
     `Annual estimated media budget: ${data.budget}`,
     `Inquiring about: ${data.about}`,
     `Ideal start date: ${data.startDate}`,

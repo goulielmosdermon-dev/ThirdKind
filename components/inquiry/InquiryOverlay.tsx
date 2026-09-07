@@ -7,7 +7,6 @@ import { useFramed } from '@/components/mobile/MobileChrome';
 import {
   BUDGET_OPTIONS,
   INQUIRY_ABOUT_OPTIONS,
-  SERVICE_OPTIONS,
   START_DATE_OPTIONS,
 } from '@/lib/inquiry/fields';
 import { MOTION } from '@/lib/motion/tokens';
@@ -63,13 +62,7 @@ function Chevron() {
   );
 }
 
-export function InquiryOverlay({
-  defaultService,
-  onClose,
-}: {
-  defaultService: string;
-  onClose: () => void;
-}) {
+export function InquiryOverlay({ onClose }: { onClose: () => void }) {
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion() ?? false;
@@ -77,12 +70,6 @@ export function InquiryOverlay({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
-  const preset = SERVICE_OPTIONS.includes(
-    defaultService as (typeof SERVICE_OPTIONS)[number],
-  )
-    ? defaultService
-    : '';
-
   useEffect(() => {
     const previous = document.activeElement;
     panelRef.current?.focus();
@@ -267,27 +254,7 @@ export function InquiryOverlay({
                 className={inputClass}
               />
             </Field>
-            <Field index={4} label="What services are you interested in?">
-              <span className="relative block">
-                <select
-                  required
-                  name="service"
-                  defaultValue={preset}
-                  className={selectClass}
-                >
-                  <option value="" disabled>
-                    Please select the services...
-                  </option>
-                  {SERVICE_OPTIONS.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <Chevron />
-              </span>
-            </Field>
-            <Field index={5} label="Annual estimated media budget">
+            <Field index={4} label="Annual estimated media budget">
               <span className="relative block">
                 <select
                   required
@@ -307,7 +274,7 @@ export function InquiryOverlay({
                 <Chevron />
               </span>
             </Field>
-            <Field index={6} label="What are you inquiring about?">
+            <Field index={5} label="What are you inquiring about?">
               <span className="relative block">
                 <select
                   required
@@ -327,7 +294,7 @@ export function InquiryOverlay({
                 <Chevron />
               </span>
             </Field>
-            <Field index={7} label="Ideal start date">
+            <Field index={6} label="Ideal start date">
               <span className="relative block">
                 <select
                   required
@@ -347,7 +314,7 @@ export function InquiryOverlay({
                 <Chevron />
               </span>
             </Field>
-            <Field index={8} label="Where did you hear about us?">
+            <Field index={7} label="Where did you hear about us?">
               <input
                 required
                 name="source"

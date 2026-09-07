@@ -13,7 +13,7 @@ import {
 import { InquiryOverlay } from '@/components/inquiry/InquiryOverlay';
 
 type InquiryContextValue = {
-  openInquiry: (options?: { service?: string }) => void;
+  openInquiry: () => void;
   closeInquiry: () => void;
 };
 
@@ -21,10 +21,8 @@ const InquiryContext = createContext<InquiryContextValue | null>(null);
 
 export function InquiryProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const [service, setService] = useState('');
 
-  const openInquiry = useCallback((options?: { service?: string }) => {
-    setService(options?.service ?? '');
+  const openInquiry = useCallback(() => {
     setOpen(true);
   }, []);
 
@@ -41,13 +39,7 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
     <InquiryContext.Provider value={value}>
       {children}
       <AnimatePresence>
-        {open ? (
-          <InquiryOverlay
-            key="inquiry"
-            defaultService={service}
-            onClose={closeInquiry}
-          />
-        ) : null}
+        {open ? <InquiryOverlay key="inquiry" onClose={closeInquiry} /> : null}
       </AnimatePresence>
     </InquiryContext.Provider>
   );

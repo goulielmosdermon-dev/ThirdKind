@@ -46,6 +46,7 @@ import {
   ALIEN_ASPECT,
   HUMAN_ASPECT,
   HUMAN_SCALE,
+  INTRO,
   contentOpacity,
   largeHandHeight,
   layoutHands,
@@ -654,7 +655,17 @@ export function CanvasViewport({
   const [openingPassed, setOpeningPassed] = useState(false);
   const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
-  const { report } = usePageScroll();
+  const { report, headerPassed } = usePageScroll();
+  // On a phone the motto never fades out with the intro — it parks at the top
+  // of the showcase and leaves only when that section is scrolled past.
+  const mottoParked = narrow && complete;
+  const mottoOpacityNow = !narrow
+    ? motto
+    : mottoParked
+      ? headerPassed
+        ? 0
+        : 1
+      : Math.max(motto, remap(progress, INTRO.mottoInStart, INTRO.mottoInEnd));
   const onHeaderPassed = useCallback(
     (passed: boolean) => report({ headerPassed: passed }),
     [report],
@@ -807,16 +818,33 @@ export function CanvasViewport({
             </div>
           </div>
 
-          <p
-            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] text-ink max-md:px-12"
-            style={{
-              opacity: motto,
-              transition: complete ? undefined : 'opacity 0.4s ease',
-            }}
-            aria-hidden={motto < 0.05}
+          {/*
+            On a phone the motto is not a beat that passes: it holds where it
+            landed, turns white against the showcase behind it and rides up to
+            sit at the head of that section, leaving when the section does.
+            Everywhere else it fades out as it always has.
+          */}
+          <div
+            className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-12"
+            aria-hidden={mottoOpacityNow < 0.05}
           >
-            MAKE EXTRAORDINARY
-          </p>
+            <p
+              className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] ${
+                mottoParked ? 'text-white' : 'text-ink'
+              }`}
+              style={{
+                opacity: mottoOpacityNow,
+                transform: mottoParked
+                  ? 'translateY(2.75rem)'
+                  : 'translateY(calc(50dvh - 50%))',
+                transition: complete
+                  ? 'transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.5s ease, opacity 0.4s ease'
+                  : 'opacity 0.4s ease',
+              }}
+            >
+              MAKE EXTRAORDINARY
+            </p>
+          </div>
 
           {!complete ? (
             <p

@@ -46,7 +46,6 @@ import {
   ALIEN_ASPECT,
   HUMAN_ASPECT,
   HUMAN_SCALE,
-  INTRO,
   contentOpacity,
   largeHandHeight,
   layoutHands,
@@ -90,16 +89,6 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
 }
 
 type ViewMode = 'matrix' | 'matrix2' | 'index';
-
-/**
- * Parked, the motto fills the line between the same gutters the showcase
- * caption keeps — 10vw either side — which 6.2vw does to within a couple of
- * pixels. During the intro it reads at its old size, so it is drawn at the
- * parked size and scaled to it: 1.125rem / 6.2vw at 390.
- */
-const MOTTO_INTRO_SCALE = 0.74;
-/** How long the ride up takes, after which the showcase carries the line. */
-const MOTTO_RIDE_MS = 800;
 
 /**
  * Air left around the showcase band. 88 is the tightest that still clears the
@@ -666,34 +655,6 @@ export function CanvasViewport({
   const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
   const { report } = usePageScroll();
-  // On a phone the motto never fades out with the intro — it rides up to the
-  // head of the showcase and is handed to that section, which scrolls it away
-  // in its own time.
-  const mottoParked = narrow && complete;
-  const mottoOpacityNow = !narrow
-    ? motto
-    : mottoParked
-      ? 1
-      : Math.max(motto, remap(progress, INTRO.mottoInStart, INTRO.mottoInEnd));
-  // Once the ride up has landed, the showcase takes the line over and the
-  // overlay lets go of it — from there it scrolls with the section it sits on.
-  const [mottoLanded, setMottoLanded] = useState(false);
-  // Adjusted during render rather than in an effect, so a rewind takes the
-  // line back into the overlay's hands without a frame of neither holding it.
-  if (mottoLanded && !mottoParked) {
-    setMottoLanded(false);
-  }
-  useEffect(() => {
-    if (!mottoParked) {
-      return;
-    }
-    const timer = window.setTimeout(() => setMottoLanded(true), MOTTO_RIDE_MS);
-    return () => window.clearTimeout(timer);
-  }, [mottoParked]);
-  // Parked, the line is set to fill the screen's width. It is drawn at that
-  // size throughout and scaled down for the intro, so the ride up and the
-  // growth are one transform rather than a re-flow every frame.
-  const mottoScale = narrow && !mottoParked ? MOTTO_INTRO_SCALE : 1;
   const onHeaderPassed = useCallback(
     (passed: boolean) => report({ headerPassed: passed }),
     [report],
@@ -846,36 +807,16 @@ export function CanvasViewport({
             </div>
           </div>
 
-          {/*
-            On a phone the motto is not a beat that passes: it holds where it
-            landed, turns white against the showcase behind it and rides up to
-            sit at the head of that section, leaving when the section does.
-            Everywhere else it fades out as it always has.
-          */}
-          <div
-            className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-[10vw]"
-            aria-hidden={mottoOpacityNow < 0.05}
-            hidden={mottoLanded}
+          <p
+            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] text-ink max-md:px-12"
+            style={{
+              opacity: motto,
+              transition: complete ? undefined : 'opacity 0.4s ease',
+            }}
+            aria-hidden={motto < 0.05}
           >
-            <p
-              className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] max-md:text-[6.2vw] max-md:whitespace-nowrap ${
-                mottoParked ? 'text-white' : 'text-ink'
-              }`}
-              style={{
-                opacity: mottoOpacityNow,
-                transform: `${
-                  mottoParked
-                    ? 'translateY(2.75rem)'
-                    : 'translateY(calc(50dvh - 50%))'
-                } scale(${mottoScale})`,
-                transition: complete
-                  ? 'transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.5s ease, opacity 0.4s ease'
-                  : 'opacity 0.4s ease',
-              }}
-            >
-              MAKE EXTRAORDINARY
-            </p>
-          </div>
+            MAKE EXTRAORDINARY
+          </p>
 
           {!complete ? (
             <p
@@ -950,7 +891,6 @@ export function CanvasViewport({
               manifesto={manifesto}
               onOpeningPassed={setOpeningPassed}
               onHeaderPassed={onHeaderPassed}
-              mottoLanded={mottoLanded}
               onOpen={(href, nodeId) => {
                 markOpenedFromCanvas(nodeId);
                 router.push(href);

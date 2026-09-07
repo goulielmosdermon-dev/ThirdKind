@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { getContact } from '@/lib/content/queries';
 import { formatInquiryEmail, parseInquiry } from '@/lib/inquiry/fields';
+import { isStoreConfigured, saveInquiry } from '@/lib/inquiry/store';
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -17,6 +18,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
     return NextResponse.json({ error: parsed.error }, { status: 400 });
+  }
+
+  // Filed first, and on its own terms: the archive is the record, the mail is
+  // the nudge. A failure here is logged and does not fail the submission —
+  // losing an inquiry to a database hiccup would be the worse outcome.
+  const stored = isStoreConfigured()
+    ? await saveInquiry(parsed.data)
+    : { ok: false as const, error: 'Supabase is not configured.' };
+  if (!stored.ok) {
+    console.error('[inquiry] not filed:', stored.error);
   }
 
   const contact = await getContact();
@@ -67,6 +78,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
+  // No mail configured. That is fine if the inquiry was filed; if it was not,
+  // nothing has kept it, and saying otherwise would lose it silently.
   console.info('[inquiry]', subject, '\n', text);
+  if (!stored.ok) {
+    return NextResponse.json(
+      { error: 'Could not send the inquiry. Please email us directly.' },
+      { status: 502 },
+    );
+  }
   return NextResponse.json({ ok: true });
 }

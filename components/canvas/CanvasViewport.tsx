@@ -92,6 +92,13 @@ function leafIdFromTarget(target: EventTarget | null): string | null {
 type ViewMode = 'matrix' | 'matrix2' | 'index';
 
 /**
+ * The motto is set to span the screen once it parks (7.7vw fills the line to
+ * within a hair of both edges). During the intro it reads at its old size, so
+ * it is drawn at the parked size and scaled to that: 1.125rem / 7.7vw at 390.
+ */
+const MOTTO_INTRO_SCALE = 0.6;
+
+/**
  * Air left around the showcase band. 88 is the tightest that still clears the
  * parked hands and the bottom bar; below it the band runs under the hand in
  * the lower right.
@@ -655,19 +662,27 @@ export function CanvasViewport({
   const [openingPassed, setOpeningPassed] = useState(false);
   const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
-  const { report, headerPassed } = usePageScroll();
+  const { report, headerHalfPassed } = usePageScroll();
   // On a phone the motto never fades out with the intro — it parks at the top
   // of the showcase and leaves only when that section is scrolled past.
   const mottoParked = narrow && complete;
   const mottoOpacityNow = !narrow
     ? motto
     : mottoParked
-      ? headerPassed
+      ? headerHalfPassed
         ? 0
         : 1
       : Math.max(motto, remap(progress, INTRO.mottoInStart, INTRO.mottoInEnd));
+  // Parked, the line is set to fill the screen's width. It is drawn at that
+  // size throughout and scaled down for the intro, so the ride up and the
+  // growth are one transform rather than a re-flow every frame.
+  const mottoScale = narrow && !mottoParked ? MOTTO_INTRO_SCALE : 1;
   const onHeaderPassed = useCallback(
     (passed: boolean) => report({ headerPassed: passed }),
+    [report],
+  );
+  const onHeaderHalfPassed = useCallback(
+    (passed: boolean) => report({ headerHalfPassed: passed }),
     [report],
   );
   // While the intro plays itself out, progress already arrives once a frame;
@@ -825,18 +840,20 @@ export function CanvasViewport({
             Everywhere else it fades out as it always has.
           */}
           <div
-            className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-12"
+            className="pointer-events-none absolute inset-0 z-30 flex justify-center px-6 max-md:px-0"
             aria-hidden={mottoOpacityNow < 0.05}
           >
             <p
-              className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] ${
+              className={`absolute top-0 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] max-md:text-[7.7vw] max-md:whitespace-nowrap ${
                 mottoParked ? 'text-white' : 'text-ink'
               }`}
               style={{
                 opacity: mottoOpacityNow,
-                transform: mottoParked
-                  ? 'translateY(2.75rem)'
-                  : 'translateY(calc(50dvh - 50%))',
+                transform: `${
+                  mottoParked
+                    ? 'translateY(2.75rem)'
+                    : 'translateY(calc(50dvh - 50%))'
+                } scale(${mottoScale})`,
                 transition: complete
                   ? 'transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.5s ease, opacity 0.4s ease'
                   : 'opacity 0.4s ease',
@@ -919,6 +936,7 @@ export function CanvasViewport({
               manifesto={manifesto}
               onOpeningPassed={setOpeningPassed}
               onHeaderPassed={onHeaderPassed}
+              onHeaderHalfPassed={onHeaderHalfPassed}
               onOpen={(href, nodeId) => {
                 markOpenedFromCanvas(nodeId);
                 router.push(href);

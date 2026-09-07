@@ -193,11 +193,7 @@ export function HeroCarousel({
             >
               <span
                 className={`font-display block leading-tight text-white ${
-                  screen
-                    ? // On a phone it is set like the index titles below it —
-                      // same face, same size — so the two read as one voice.
-                      'min-w-0 text-[min(5.5cqh,7cqi)] text-balance max-md:text-[1.05rem] max-md:leading-snug'
-                    : ''
+                  screen ? 'min-w-0 text-[min(5.5cqh,7cqi)] text-balance' : ''
                 }`}
                 style={screen ? undefined : { fontSize: scale * 0.055 }}
               >

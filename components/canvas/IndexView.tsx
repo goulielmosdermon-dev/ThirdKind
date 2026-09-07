@@ -128,6 +128,7 @@ export function IndexView({
   onPrefetch,
   onOpeningPassed,
   onHeaderPassed,
+  onHeaderHalfPassed,
   density = 'desktop',
 }: {
   nodes: CanvasNode[];
@@ -143,6 +144,8 @@ export function IndexView({
   onOpeningPassed?: (passed: boolean) => void;
   /** Called as the showcase itself clears the top of the screen. */
   onHeaderPassed?: (passed: boolean) => void;
+  /** Called once half of the showcase has been scrolled away. */
+  onHeaderHalfPassed?: (passed: boolean) => void;
   density?: 'desktop' | 'phone';
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
@@ -185,16 +188,43 @@ export function IndexView({
       return observer;
     };
 
+    // The showcase is watched at half cover as well: the motto parked on it
+    // leaves once the reader is halfway through scrolling it away.
+    const watchHalf = () => {
+      const target = headerRef.current;
+      if (!onHeaderHalfPassed) {
+        return undefined;
+      }
+      if (!target) {
+        onHeaderHalfPassed(true);
+        return undefined;
+      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            onHeaderHalfPassed(entry.intersectionRatio < 0.5);
+          }
+        },
+        {
+          root: target.closest('[data-preview-scroll]'),
+          threshold: [0, 0.5, 1],
+        },
+      );
+      observer.observe(target);
+      return observer;
+    };
+
     const watchers = [
       watch(manifestoRef.current, onOpeningPassed),
       watch(headerRef.current, onHeaderPassed),
+      watchHalf(),
     ];
     return () => {
       for (const observer of watchers) {
         observer?.disconnect();
       }
     };
-  }, [onHeaderPassed, onOpeningPassed]);
+  }, [onHeaderHalfPassed, onHeaderPassed, onOpeningPassed]);
 
   // Touch has no hover, so the only reliable warm-up is up front.
   useEffect(() => {
@@ -354,7 +384,9 @@ export function IndexView({
                     className={`font-display leading-snug ${
                       phone
                         ? 'mb-3 text-[1.05rem]'
-                        : 'mb-4 max-w-[36rem] text-[clamp(1.05rem,1.55vw,1.4rem)]'
+                        : // On a phone it is set at the size the manifesto
+                          // body is read at, so the page keeps one measure.
+                          'mb-4 max-w-[36rem] text-[clamp(1.05rem,1.55vw,1.4rem)] max-md:text-[1.15rem]'
                     }`}
                   >
                     {lead}

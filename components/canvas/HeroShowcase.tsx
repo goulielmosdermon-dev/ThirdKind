@@ -202,7 +202,13 @@ export function HeroCarousel({
             >
               <span
                 className={`font-display block leading-tight text-white ${
-                  screen ? 'min-w-0 text-[min(5.5cqh,7cqi)] text-balance' : ''
+                  screen
+                    ? // The @container is inline-size only, so cqh falls back
+                      // to the viewport's height: without a ceiling the title
+                      // kept growing with a tall display while the band itself
+                      // stopped at its 92rem measure, and the line broke.
+                      'min-w-0 text-[min(5.5cqh,7cqi,3rem)] text-balance'
+                    : ''
                 }`}
                 style={screen ? undefined : { fontSize: scale * 0.055 }}
               >

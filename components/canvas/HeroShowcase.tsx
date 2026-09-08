@@ -16,6 +16,15 @@ export const HERO_IDS = [
   'project-up-hellas',
 ] as const;
 
+/**
+ * What the lead project shows on a phone instead of its own thumbnail. The
+ * desktop still is a wide 16/9 that a portrait band has to crop hard; this
+ * one is framed to survive the crop with its subject centred.
+ */
+const NARROW_STILLS: Record<string, string> = {
+  'project-scytales-2': '/work/scytales-2/gmb-3.jpg',
+};
+
 /** How long a project holds before it gives way, in ms. */
 export const HERO_HOLD_MS = 10000;
 /** How long the outgoing slide takes, in ms. */
@@ -152,6 +161,8 @@ export function HeroCarousel({
     >
       {slides.map((node, position) => {
         const duplicate = position >= count;
+        const narrowStill =
+          screen && narrow ? NARROW_STILLS[node.id] : undefined;
         return (
           <button
             key={`${node.id}-${position}`}
@@ -163,7 +174,7 @@ export function HeroCarousel({
             style={{ width: `${100 / slides.length}%` }}
           >
             <Image
-              src={node.thumbnail.src}
+              src={narrowStill ?? node.thumbnail.src}
               alt=""
               fill
               priority={position === 0}
@@ -172,11 +183,16 @@ export function HeroCarousel({
               // roughly two and a half screens wide before it covers the box;
               // asking for 100vw there is what made it look soft.
               sizes="(max-width: 767px) 250vw, 100vw"
-              unoptimized={isUnoptimizedAsset(node.thumbnail)}
-              // A phone crops the 16/9 still hard. Pulling the frame a quarter
-              // further across keeps the subject in it rather than cutting the
-              // face off at the edge.
-              className={`object-cover ${screen ? 'max-md:object-[75%_center]' : ''}`}
+              unoptimized={
+                narrowStill ? false : isUnoptimizedAsset(node.thumbnail)
+              }
+              // The phone still is framed for the crop, so it sits centred. The
+              // desktop one is pulled a quarter further across instead, which
+              // keeps its subject in frame rather than cutting the face off at
+              // the edge.
+              className={`object-cover ${
+                screen && !narrowStill ? 'max-md:object-[75%_center]' : ''
+              }`}
             />
             <span
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"

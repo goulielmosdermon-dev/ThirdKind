@@ -820,7 +820,9 @@ export function CanvasViewport({
 
           {!complete ? (
             <p
-              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center text-ink"
+              // Held back on a phone: the drifting arrow reads as an
+              // instruction to scroll up, which is the wrong way.
+              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center text-ink max-md:hidden"
               style={{ opacity: 1 - remap(progress, 0.9, 1) }}
               aria-label="Scroll to continue"
               aria-hidden={progress > 0.95}

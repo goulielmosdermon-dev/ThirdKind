@@ -23,7 +23,6 @@ import {
   HUMAN_ASPECT,
   layoutHands,
   mottoOpacity,
-  remap,
   STORY_LINES,
   storyLineOpacity,
 } from '@/lib/intro/layout';
@@ -227,31 +226,6 @@ function MobileScreen({
       >
         MAKE EXTRAORDINARY
       </p>
-
-      {!complete ? (
-        <p
-          className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center text-ink"
-          style={{ opacity: 1 - remap(progress, 0.9, 1) }}
-          aria-label="Scroll to continue"
-          aria-hidden={progress > 0.95}
-        >
-          <svg
-            className="tk-scroll-arrow"
-            width="14"
-            height="21"
-            viewBox="0 0 16 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.25"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M8 21V4" />
-            <path d="M2.5 9.5 8 4l5.5 5.5" />
-          </svg>
-        </p>
-      ) : null}
 
       {complete ? (
         <div

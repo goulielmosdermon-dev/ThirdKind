@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { AppLink } from '@/components/mobile/MobileChrome';
+import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { PillLabel } from '@/components/sheet/PillLabel';
 import { Sheet } from '@/components/sheet/Sheet';
@@ -89,6 +89,7 @@ function ArticleCard({ article }: { article: Article }) {
 }
 
 export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
+  const framed = useFramed();
   // A pinned piece leads when one is marked; otherwise allArticles() has
   // already sorted newest first, so the latest takes the slot.
   const featured = articles.find((article) => article.featured) ?? articles[0];
@@ -97,7 +98,13 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
   return (
     <Sheet title="Thoughts" tone="editorial">
       <div data-surface="light" className="bg-paper pb-24">
-        <div className="px-[5cqi] pt-[7cqi] pb-[3cqi] @md:pt-[5cqi]">
+        <div
+          // Clear of the close button, which floats over this corner. The
+          // about sheets stand their headings off by the same amount.
+          className={`px-[5cqi] pb-[3cqi] ${
+            framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
+          }`}
+        >
           <IndexHeading name="Thoughts" />
         </div>
 

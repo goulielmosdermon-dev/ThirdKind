@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { AppLink } from '@/components/mobile/MobileChrome';
+import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { PillLabel } from '@/components/sheet/PillLabel';
 import { Sheet } from '@/components/sheet/Sheet';
@@ -82,6 +82,7 @@ export function WorkIndexSheet({
   projects: Project[];
   standfirst: string;
 }) {
+  const framed = useFramed();
   // The featured project leads; the grid carries the rest, so nothing shows up
   // twice on the page.
   const featured = projects.find((project) => project.featured) ?? projects[0];
@@ -92,7 +93,13 @@ export function WorkIndexSheet({
   return (
     <Sheet title="Work" tone="editorial">
       <div data-surface="light" className="bg-paper pb-24">
-        <div className="px-[5cqi] pt-[7cqi] pb-[3cqi] @md:pt-[5cqi]">
+        <div
+          // Clear of the close button, which floats over this corner. The
+          // about sheets stand their headings off by the same amount.
+          className={`px-[5cqi] pb-[3cqi] ${
+            framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
+          }`}
+        >
           <IndexHeading name="Work" standfirst={standfirst} />
         </div>
 

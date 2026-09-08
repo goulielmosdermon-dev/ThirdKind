@@ -16,6 +16,21 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    // The Last Sunny Day site moved off this domain; old Webflow links still circulate.
+    return [
+      {
+        source: '/last-sunny-day',
+        destination: 'https://lastsunnyday.com',
+        permanent: true,
+      },
+      {
+        source: '/last-sunny-day/:path*',
+        destination: 'https://lastsunnyday.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

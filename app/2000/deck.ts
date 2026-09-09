@@ -254,7 +254,7 @@ export const chapters: Chapter[] = [
       {
         kind: 'text',
         lines: [
-          'One of their latest project together is __Roses & Cigarettes__',
+          'One of their latest project together is __Roses & Cigarettes|https://www.youtube.com/watch?v=nd75XUhVU_Q&t=116s__',
         ],
       },
     ],

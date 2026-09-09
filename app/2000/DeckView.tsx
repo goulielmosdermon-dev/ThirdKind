@@ -181,7 +181,9 @@ function groupBlocks(blocks: Block[]): Group[] {
  * without one the deck reads as the unbranded original.
  */
 export function Deck({ brand }: { brand?: Brand }) {
-  const entries = chapters.map((c) => ({ id: c.id, title: c.title }));
+  const entries = chapters
+    .filter((c) => !c.unlisted)
+    .map((c) => ({ id: c.id, title: c.title }));
 
   return (
     <div className="bg-paper text-ink">

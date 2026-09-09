@@ -27,9 +27,11 @@ export type Block =
   | { kind: 'credits'; image: Plate };
 
 export type Chapter = {
-  /** Index number shown in the rail — the "01" in 01 / Opening. */
+  /** Anchor id for the section; the rail links to it. */
   id: string;
   title: string;
+  /** Off the index — the section still renders, it just isn't listed. */
+  unlisted?: boolean;
   blocks: Block[];
 };
 
@@ -262,6 +264,7 @@ export const chapters: Chapter[] = [
   {
     id: '06',
     title: 'Credits',
+    unlisted: true,
     blocks: [
       // 30
       {

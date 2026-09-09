@@ -168,3 +168,51 @@ h6 {
     animation: none !important;
   }
 }
+
+/* The 2000 deck: masked line reveal. Reveal.tsx groups words into .ln masks
+   after layout; a mover waits below its mask, slides home, and leaves through
+   the top of it, so a pinned run reads as one text replacing another. 110%
+   rather than 100% keeps descenders clear of the mask edge at rest. */
+[data-reveal] .ln {
+  display: block;
+  overflow: hidden;
+}
+
+[data-reveal] .ln__i {
+  display: block;
+  transition:
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal='below'] .ln__i {
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+[data-reveal='above'] .ln__i {
+  transform: translateY(-110%);
+  opacity: 0;
+}
+
+[data-reveal] .w {
+  display: inline-block;
+}
+
+/* Plates resolve into view. */
+[data-fade] {
+  transition:
+    opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-fade='out'] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-fade] {
+    transition: none;
+  }
+}

@@ -180,21 +180,29 @@ function BlockView({
         </Column>
       );
 
-    /* A film, in the same player the work pages use. */
+    /* A film, in the same player the work pages use.
+
+       It holds the screen the way a table does: the frame sticks for a
+       viewport of scroll, so the film is not passed over before there is any
+       chance to start it. */
     case 'film':
       return (
-        <Column>
-          <FadeIn>
-            <figure>
-              {block.caption ? (
-                <figcaption className={`mb-[6vh] ${TEXT}`}>
-                  {block.caption}
-                </figcaption>
-              ) : null}
-              <FilmPlayer vimeoId={block.vimeoId} title={block.title} />
-            </figure>
-          </FadeIn>
-        </Column>
+        <div className="h-[220svh]">
+          <div className="sticky top-0 flex h-svh items-center">
+            <Column>
+              <FadeIn>
+                <figure>
+                  {block.caption ? (
+                    <figcaption className={`mb-[4vh] ${TEXT}`}>
+                      {block.caption}
+                    </figcaption>
+                  ) : null}
+                  <FilmPlayer vimeoId={block.vimeoId} title={block.title} />
+                </figure>
+              </FadeIn>
+            </Column>
+          </div>
+        </div>
       );
 
     /* A priced breakdown. Same measure and same voice as the deck — the only

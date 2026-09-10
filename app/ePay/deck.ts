@@ -219,13 +219,10 @@ export const chapters: Chapter[] = [
     title: 'Similar work',
     blocks: [
       {
-        kind: 'text',
-        lines: ['Similar work from ThirdKind.'],
-      },
-      {
         kind: 'film',
         vimeoId: '1212308055',
         title: 'ThirdKind Creative — selected work',
+        caption: 'Similar work from ThirdKind.',
       },
     ],
   },

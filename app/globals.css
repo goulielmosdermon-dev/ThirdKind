@@ -184,10 +184,18 @@ body {
 [data-reveal] .ln {
   display: block;
   overflow: hidden;
+  /* Slack on the right, pulled straight back: a line that measures a hair
+     wider than its box is not worth clipping a glyph for. */
+  padding-right: 0.6em;
+  margin-right: -0.6em;
 }
 
 [data-reveal] .ln__i {
   display: block;
+  /* A group is one measured line by construction, so it must not re-flow:
+     sub-pixel rounding was pushing the last word of a line onto a second one
+     inside the same mask, which read as a broken line. */
+  white-space: nowrap;
   transition:
     transform 1.15s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1);

@@ -16,16 +16,27 @@ export const HUMAN_NUDGE_Y = 5;
 export const INTRO = {
   handsEnd: 0.3,
   storyInStart: 0.34,
-  storyOutStart: 0.52,
+  storyOutStart: 0.48,
   storyStagger: 0.1,
   storyLineWindow: 0.08,
   mottoInStart: 0.72,
   mottoInEnd: 0.8,
-  mottoOutStart: 0.86,
-  mottoOutEnd: 0.93,
-  contentStart: 0.9,
+  mottoOutStart: 0.94,
+  mottoOutEnd: 0.99,
+  contentStart: 0.97,
   contentEnd: 1,
 } as const;
+
+/**
+ * The motto arrives a line at a time, and the screen is left empty either
+ * side of it: the story clears at 0.66 and nothing follows for a beat, then
+ * "Extraordinary", a hold, "in a world of ordinary", a longer hold, and only
+ * then the header.
+ */
+export const MOTTO_LINES = [
+  { start: 0.74, end: 0.79 },
+  { start: 0.83, end: 0.88 },
+] as const;
 
 export const STORY_LINES = [
   'You already know the difference.',
@@ -81,6 +92,13 @@ export function storyLineOpacity(
       INTRO.storyOutStart + offset + INTRO.storyLineWindow,
     );
   return Math.min(fadeIn, fadeOut);
+}
+
+/** Opacity of one motto line as the intro plays out. */
+export function mottoLineOpacity(progress: number, index: number): number {
+  const line =
+    MOTTO_LINES[Math.min(Math.max(index, 0), MOTTO_LINES.length - 1)];
+  return line ? remap(progress, line.start, line.end) : 0;
 }
 
 export function contentOpacity(progress: number): number {

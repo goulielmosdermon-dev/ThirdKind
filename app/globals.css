@@ -11,7 +11,7 @@
 
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-plantin), 'Palatino Linotype', Palatino, Georgia, serif;
+    var(--font-nib), 'Palatino Linotype', Palatino, Georgia, serif;
   --font-mono: var(--font-plex), ui-monospace, Menlo, monospace;
 
   --text-caption: 0.6875rem;
@@ -65,6 +65,9 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
+  /* Nib Pro's SemiBold is the header cut; the Regular is for everything set
+     smaller than a heading. */
+  font-weight: 600;
 }
 
 @keyframes tk-pulse {

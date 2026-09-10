@@ -2,20 +2,27 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 
 import type {
   CanvasNode,
+  LeafCanvasNode,
   PortableText,
   PortableTextBlock,
 } from '@/types/content';
 
-import { editorialCopy, editorialLeaves } from '@/lib/canvas/editorial';
+import {
+  editorialCopy,
+  editorialLeaves,
+  editorialThoughts,
+} from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 import { MOTION } from '@/lib/motion/tokens';
+import { DISPLAY_BALANCE } from '@/lib/type/display';
 import { HeroCarousel } from '@/components/canvas/HeroShowcase';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
+import { PillLabel } from '@/components/sheet/PillLabel';
 
 function IndexArrow() {
   return (
@@ -121,6 +128,202 @@ function ManifestoBand({
   );
 }
 
+/** One piece of writing: label, title, and the button, top-aligned. */
+function ThoughtRow({
+  node,
+  phone,
+  onOpen,
+  onPrefetch,
+}: {
+  node: LeafCanvasNode;
+  phone: boolean;
+  onOpen: (href: string, nodeId: string) => void;
+  onPrefetch?: (href: string) => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+  // Where the still sits, in the row's own box, so it rides the pointer
+  // across the line the way the reference does.
+  const [point, setPoint] = useState({ x: 0, y: 0 });
+  const rowRef = useRef<HTMLLIElement>(null);
+  const label = node.tags?.[0] ?? 'Article';
+
+  return (
+    <li
+      ref={rowRef}
+      className="relative border-t border-hairline last:border-b"
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'touch') {
+          return;
+        }
+        setHovered(true);
+      }}
+      onPointerLeave={() => setHovered(false)}
+      onPointerMove={(event) => {
+        const box = rowRef.current?.getBoundingClientRect();
+        if (!box) {
+          return;
+        }
+        setPoint({ x: event.clientX - box.left, y: event.clientY - box.top });
+      }}
+    >
+      <button
+        type="button"
+        className="group flex w-full cursor-pointer items-start gap-4 border-0 bg-transparent px-0 py-5 text-left text-ink md:gap-8 md:py-6"
+        onClick={() => onOpen(node.href, node.id)}
+        onPointerEnter={() => onPrefetch?.(node.href)}
+        onFocus={() => onPrefetch?.(node.href)}
+      >
+        <span className="hidden w-[9rem] shrink-0 pt-[0.15em] text-[0.9rem] leading-snug text-ink md:block">
+          {label}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[0.78rem] text-mute md:hidden">
+            {label}
+          </span>
+          {/* Title in the sans, précis in Plantin — the two voices the
+              reference sets the line in. */}
+          <span className="mt-1 block text-[1.05rem] leading-snug font-semibold md:mt-0 md:text-[clamp(1.05rem,1.5vw,1.35rem)]">
+            {node.title}
+            {node.hoverDescription ? (
+              // Kept on the shared display balance, so the two faces read at
+              // the same optical size along the line.
+              <span
+                className="font-display font-normal text-mute"
+                style={{ fontSize: DISPLAY_BALANCE }}
+              >
+                {' '}
+                {node.hoverDescription}
+              </span>
+            ) : null}
+          </span>
+        </span>
+        <span className="shrink-0 self-start">
+          <PillLabel
+            label="Read now"
+            // No room for the word on a phone; the arrow says it.
+            labelClassName="max-md:hidden"
+            open={hovered}
+          />
+        </span>
+      </button>
+
+      {!phone ? (
+        <span
+          className="pointer-events-none absolute z-20 block w-[14rem] overflow-hidden"
+          style={{
+            left: point.x,
+            top: point.y,
+            transform: `translate(-50%, -50%) scale(${hovered ? 1 : 0.86})`,
+            opacity: hovered ? 1 : 0,
+            transition:
+              'opacity 260ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1)',
+          }}
+          aria-hidden
+        >
+          <span className="relative block aspect-[16/10] w-full bg-black">
+            <Image
+              src={node.thumbnail.src}
+              alt=""
+              fill
+              sizes="224px"
+              unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
+              className="object-cover"
+            />
+          </span>
+        </span>
+      ) : null}
+    </li>
+  );
+}
+
+/**
+ * The writing, under the work: one line of type at full volume, read a word
+ * at a time out of its own mask, then the pieces as a plain ruled list rather
+ * than another run of pictures competing with the index above it.
+ */
+function ThoughtsRun({
+  items,
+  phone,
+  onOpen,
+  onPrefetch,
+}: {
+  items: LeafCanvasNode[];
+  phone: boolean;
+  onOpen: (href: string, nodeId: string) => void;
+  onPrefetch?: (href: string) => void;
+}) {
+  const reduced = useReducedMotion() ?? false;
+
+  if (items.length === 0) {
+    return null;
+  }
+
+  const words = ['Because', 'it\u2019s', 'so', 'much', 'fun'];
+
+  return (
+    <section className={phone ? 'mt-16' : 'mt-[clamp(4rem,9vw,8rem)]'}>
+      <motion.h2
+        initial="hidden"
+        whileInView="shown"
+        viewport={{ once: true, amount: 0.4 }}
+        variants={{
+          hidden: {},
+          shown: { transition: { staggerChildren: reduced ? 0 : 0.075 } },
+        }}
+        className={`font-display leading-[0.92] tracking-[-0.02em] text-ink ${
+          phone
+            ? 'text-[clamp(2.4rem,13vw,3.6rem)]'
+            : 'text-[clamp(3rem,9.5vw,9rem)]'
+        }`}
+      >
+        {words
+          .map((word) => (
+            // The mask is the word's own box; the word rises into it.
+            <span
+              key={word}
+              // The mask is the word's own box, opened up below the baseline and
+              // pulled back by the same amount: descenders and the comma-tail of
+              // the type clear it without the line taking any more room.
+              className="inline-block overflow-hidden pt-[0.12em] pb-[0.26em] -mt-[0.12em] -mb-[0.26em] align-bottom"
+            >
+              <motion.span
+                className="inline-block"
+                variants={{
+                  hidden: { y: reduced ? 0 : '110%' },
+                  shown: {
+                    y: 0,
+                    transition: {
+                      duration: reduced ? MOTION.reduced : 0.85,
+                      ease: MOTION.easeOut,
+                    },
+                  },
+                }}
+              >
+                {word}
+              </motion.span>
+            </span>
+          ))
+          .reduce<React.ReactNode[]>(
+            (out, node, index) => (index === 0 ? [node] : [...out, ' ', node]),
+            [],
+          )}
+      </motion.h2>
+
+      <ul className={phone ? 'mt-10' : 'mt-[clamp(2.5rem,5vw,4.5rem)]'}>
+        {items.map((node) => (
+          <ThoughtRow
+            key={node.id}
+            node={node}
+            phone={phone}
+            onOpen={onOpen}
+            onPrefetch={onPrefetch}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export function IndexView({
   nodes,
   manifesto = [],
@@ -128,6 +331,7 @@ export function IndexView({
   onPrefetch,
   onOpeningPassed,
   onHeaderPassed,
+  onHeaderOffset,
   density = 'desktop',
 }: {
   nodes: CanvasNode[];
@@ -143,14 +347,50 @@ export function IndexView({
   onOpeningPassed?: (passed: boolean) => void;
   /** Called as the showcase itself clears the top of the screen. */
   onHeaderPassed?: (passed: boolean) => void;
+  /** The showcase's live distance from the top of the screen, in px. */
+  onHeaderOffset?: (top: number) => void;
   density?: 'desktop' | 'phone';
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
+  const thoughts = useMemo(() => editorialThoughts(nodes), [nodes]);
   const reduced = useReducedMotion() ?? false;
   const scrollRef = useRef<HTMLDivElement>(null);
   const manifestoRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   useSmoothScroll(scrollRef);
+
+  // The motto is drawn above this view, so that it can be the same element
+  // the intro lands on. For it to scroll with the band rather than hang over
+  // the page, it is told where the band currently is.
+  useEffect(() => {
+    if (!onHeaderOffset) {
+      return;
+    }
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const box = headerRef.current?.getBoundingClientRect();
+      onHeaderOffset(box ? box.top : 0);
+    };
+    const ping = () => {
+      if (frame === 0) {
+        frame = requestAnimationFrame(read);
+      }
+    };
+    ping();
+    const scroller = scrollRef.current;
+    scroller?.addEventListener('scroll', ping, { passive: true });
+    window.addEventListener('scroll', ping, { passive: true });
+    window.addEventListener('resize', ping);
+    return () => {
+      if (frame !== 0) {
+        cancelAnimationFrame(frame);
+      }
+      scroller?.removeEventListener('scroll', ping);
+      window.removeEventListener('scroll', ping);
+      window.removeEventListener('resize', ping);
+    };
+  }, [onHeaderOffset]);
 
   // Watched rather than measured on every scroll event: the only thing anyone
   // downstream needs is the moment a section leaves the top edge.
@@ -201,10 +441,10 @@ export function IndexView({
     if (!onPrefetch) {
       return;
     }
-    for (const item of items) {
+    for (const item of [...items, ...thoughts]) {
       onPrefetch(item.href);
     }
-  }, [items, onPrefetch]);
+  }, [items, onPrefetch, thoughts]);
 
   const sheet = {
     hidden: { opacity: 0 },
@@ -271,34 +511,35 @@ export function IndexView({
       */}
       <section
         ref={headerRef}
-        // Horizontally: the same column as everything below it, so the band's
-        // edges line up with the copy and the index as the window changes.
-        // Vertically: even air top and bottom. The lower hand docks 112px up
-        // from the bottom to clear the command bar, but it parks out in the
-        // margin the column leaves it, so the band no longer has to duck under
-        // it the way it did when it ran to the edge of the window.
+        // The band is the whole screen, edge to edge, on a phone and on a
+        // desktop alike: it is the page's opening frame, and the headline the
+        // intro lands on carries on over it.
         className={
           phone
             ? 'relative flex h-[80dvh] items-center'
-            : 'relative flex h-[80dvh] items-center md:mx-auto md:h-dvh md:max-w-[92rem] md:px-[clamp(5.5rem,12vw,11rem)] md:py-[5rem]'
+            : 'relative h-dvh w-full'
         }
       >
         {/* @container so the overlay can size itself from the band's own
             height, whatever the window does. */}
         <div
-          // On a phone the band is the whole screen — no gutters, no air, it
-          // reads as a full slide. From md up it takes the same column as the
-          // sections below, keeping that width at every size and giving way on
-          // height instead: it crops into the still rather than shrinking away
-          // from the margins, which is what made it drift out of line with the
-          // sections below in a short window.
-          className="@container relative h-full w-full overflow-hidden bg-black md:aspect-[16/9] md:h-auto md:max-h-full"
+          // The cursor is drawn above every layer of the page, so it finds the
+          // band by this marker rather than being nested inside it.
+          data-hero-band
+          // Declared dark from the moment it is on screen, so the command bar
+          // is already in its dark state when the header arrives rather than
+          // catching up after a scroll.
+          data-surface="dark"
+          className="@container relative h-full w-full overflow-hidden bg-black"
         >
           <HeroCarousel
             nodes={nodes}
             onOpen={(node) => onOpen(node.href, node.id)}
             scale={0}
             mode="screen"
+            // On a phone the band keeps its own title and View pill; on the
+            // desktop header the headline speaks for it.
+            chrome={phone}
           />
         </div>
       </section>
@@ -406,6 +647,13 @@ export function IndexView({
             );
           })}
         </ul>
+
+        <ThoughtsRun
+          items={thoughts}
+          phone={phone}
+          onOpen={onOpen}
+          onPrefetch={onPrefetch}
+        />
       </div>
       <SiteFooter compact={phone} />
     </motion.div>

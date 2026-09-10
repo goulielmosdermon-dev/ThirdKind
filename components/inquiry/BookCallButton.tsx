@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight } from '@/components/chrome/ArrowUpRight';
+import { PillLabel } from '@/components/sheet/PillLabel';
 import { useInquiry } from '@/components/inquiry/InquiryProvider';
 
 export function BookCallButton({
@@ -28,24 +28,13 @@ export function BookCallButton({
     );
   }
 
-  const block = tone === 'paper' ? 'bg-white text-ink' : 'bg-ink text-white';
-
   return (
     <button
       type="button"
-      className={`inline-flex items-stretch gap-px ${className ?? ''}`}
+      className={`inline-flex transition-opacity duration-300 hover:opacity-85 ${className ?? ''}`}
       onClick={() => openInquiry()}
     >
-      <span
-        className={`flex items-center rounded-md px-5 text-sm lowercase tracking-[0.04em] ${block}`}
-      >
-        {label}
-      </span>
-      <span
-        className={`flex aspect-square w-[2.65rem] items-center justify-center rounded-md ${block}`}
-      >
-        <ArrowUpRight />
-      </span>
+      <PillLabel label={label} tone={tone} labelClassName="lowercase" />
     </button>
   );
 }

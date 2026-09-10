@@ -49,7 +49,7 @@ import {
   contentOpacity,
   largeHandHeight,
   layoutHands,
-  mottoOpacity,
+  mottoLineOpacity,
   remap,
   STORY_LINES,
   storyLineOpacity,
@@ -58,6 +58,8 @@ import {
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { HeroShowcase } from '@/components/canvas/HeroShowcase';
 import { IndexView } from '@/components/canvas/IndexView';
+import { ExploreCursor } from '@/components/canvas/ExploreCursor';
+import { HeroMotto } from '@/components/canvas/HeroMotto';
 import { NodeLayer, shouldCenterOnFocus } from '@/components/canvas/NodeLayer';
 import { usePageScroll } from '@/components/chrome/PageScroll';
 import { useIntro } from '@/components/intro/IntroContext';
@@ -163,7 +165,6 @@ export function CanvasViewport({
   const { progress, complete, advance, autoplay } = useIntro();
   const reducedMotion = useReducedMotion() === true;
   const reveal = contentOpacity(progress);
-  const motto = mottoOpacity(progress);
   const completeRef = useRef(complete);
   const advanceRef = useRef(advance);
   const sizeRef = useRef(size);
@@ -655,10 +656,36 @@ export function CanvasViewport({
   const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
   const { report } = usePageScroll();
+  const [headerPassed, setHeaderPassed] = useState(false);
+  // Where the header band currently sits, so the motto can ride down with it
+  // instead of hanging over the page below.
+  const [headerTop, setHeaderTop] = useState(0);
   const onHeaderPassed = useCallback(
-    (passed: boolean) => report({ headerPassed: passed }),
+    (passed: boolean) => {
+      setHeaderPassed(passed);
+      report({ headerPassed: passed });
+    },
     [report],
   );
+  // The hands are drawn black, which is what the light canvas wants. Over the
+  // showcase they would disappear into it, so they invert to white for as
+  // long as the header band is behind them and come back once the index —
+  // light again — has scrolled up under them.
+  const handsWhite = complete && !headerPassed;
+  // The motto fades in on the intro's own curve and then simply stays, rather
+  // than fading out into the page the way mottoOpacity has it: it is the
+  // header's headline too, and it travels up out of view with the band.
+  const mottoHold = headerPassed ? 0 : 1;
+  // Each line carries its own fade on the way in, so they land one after the
+  // other; once the page is up they are simply both there.
+  const mottoLines: readonly [number, number] = complete
+    ? [1, 1]
+    : [mottoLineOpacity(progress, 0), mottoLineOpacity(progress, 1)];
+  const handTone = {
+    filter: handsWhite ? 'invert(1)' : undefined,
+    mixBlendMode: handsWhite ? ('normal' as const) : ('multiply' as const),
+    transition: 'filter 0.35s ease',
+  };
   // While the intro plays itself out, progress already arrives once a frame;
   // a transition on top of that only adds lag. The wheel-driven intro steps
   // in jumps, so there it stays.
@@ -752,15 +779,21 @@ export function CanvasViewport({
                 width={3354}
                 height={2203}
                 priority
-                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none mix-blend-multiply ${complete ? '' : 'tk-hands-in'}`}
+                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none ${complete ? '' : 'tk-hands-in'}`}
                 style={{
+                  ...handTone,
                   height: handBase,
                   width: handBase * ALIEN_ASPECT,
                   transformOrigin: '0 0',
                   transform: `translate3d(${hands.alien.x}px, ${hands.alien.y}px, 0) scale(${hands.alien.height / handBase})`,
                   willChange: complete ? undefined : 'transform',
                   opacity: handsHidden ? 0 : 1,
-                  transition: complete ? 'opacity 0.45s ease' : handEase,
+                  transition: [
+                    complete ? 'opacity 0.45s ease' : handEase,
+                    'filter 0.35s ease',
+                  ]
+                    .filter(Boolean)
+                    .join(', '),
                 }}
               />
               <Image
@@ -769,15 +802,21 @@ export function CanvasViewport({
                 width={2517}
                 height={1819}
                 priority
-                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none mix-blend-multiply ${complete ? '' : 'tk-hands-in'}`}
+                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none ${complete ? '' : 'tk-hands-in'}`}
                 style={{
+                  ...handTone,
                   height: handBase * HUMAN_SCALE,
                   width: handBase * HUMAN_SCALE * HUMAN_ASPECT,
                   transformOrigin: '0 0',
                   transform: `translate3d(${hands.human.x}px, ${hands.human.y}px, 0) scale(${hands.human.height / (handBase * HUMAN_SCALE)})`,
                   willChange: complete ? undefined : 'transform',
                   opacity: handsHidden ? 0 : 1,
-                  transition: complete ? 'opacity 0.45s ease' : handEase,
+                  transition: [
+                    complete ? 'opacity 0.45s ease' : handEase,
+                    'filter 0.35s ease',
+                  ]
+                    .filter(Boolean)
+                    .join(', '),
                 }}
               />
             </>
@@ -806,17 +845,6 @@ export function CanvasViewport({
               ))}
             </div>
           </div>
-
-          <p
-            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 text-center font-display text-[clamp(1.125rem,3.5vw,2.875rem)] leading-[0.95] text-ink max-md:px-12"
-            style={{
-              opacity: motto,
-              transition: complete ? undefined : 'opacity 0.4s ease',
-            }}
-            aria-hidden={motto < 0.05}
-          >
-            MAKE EXTRAORDINARY
-          </p>
 
           {!complete ? (
             <p
@@ -893,6 +921,7 @@ export function CanvasViewport({
               manifesto={manifesto}
               onOpeningPassed={setOpeningPassed}
               onHeaderPassed={onHeaderPassed}
+              onHeaderOffset={setHeaderTop}
               onOpen={(href, nodeId) => {
                 markOpenedFromCanvas(nodeId);
                 router.push(href);
@@ -902,6 +931,36 @@ export function CanvasViewport({
           </motion.div>
         ) : null}
       </AnimatePresence>
+
+      {/*
+        One motto, start to finish: it fades in over the intro, holds its place
+        while the header band is on screen — changing colour rather than being
+        swapped for a second copy — and leaves once the index has scrolled up
+        under it.
+      */}
+      {indexed ? (
+        <div
+          className="pointer-events-none absolute inset-0 z-[9]"
+          style={{
+            opacity: mottoHold,
+            // Before the page comes up there is no band to follow, so it sits
+            // where the intro puts it; afterwards it is pinned to the band.
+            transform: complete
+              ? `translate3d(0, ${headerTop}px, 0)`
+              : undefined,
+            transition: complete ? 'opacity 0.5s ease' : 'opacity 0.4s ease',
+          }}
+          aria-hidden={mottoHold < 0.05}
+        >
+          <HeroMotto
+            tone={complete && !headerPassed ? 'paper' : 'ink'}
+            action={complete && !headerPassed}
+            lines={mottoLines}
+          />
+        </div>
+      ) : null}
+
+      {indexed && complete && !narrow ? <ExploreCursor /> : null}
 
       {/*
         The view toggle is hidden while the site stays on Index. Every mode is

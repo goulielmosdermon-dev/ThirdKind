@@ -11,18 +11,23 @@ const INDEX_WORK_ORDER = [
   '/work/rap-therapy',
 ] as const;
 
+/**
+ * The index proper is the work, and only the work. The writing follows it in
+ * a list of its own — see editorialThoughts — rather than carrying on in the
+ * same run of pictures.
+ */
 export function editorialLeaves(nodes: CanvasNode[]): LeafCanvasNode[] {
-  const leaves = leafReadingOrder(nodes).filter(
-    (node) => node.hubKey === 'work' || node.hubKey === 'thoughts',
-  );
-  const work = leaves.filter((node) => node.hubKey === 'work');
-  const thoughts = leaves.filter((node) => node.hubKey === 'thoughts');
-  const ranked = [...work].sort((a, b) => {
+  const work = leafReadingOrder(nodes).filter((node) => node.hubKey === 'work');
+  return [...work].sort((a, b) => {
     const aRank = INDEX_WORK_ORDER.findIndex((href) => href === a.href);
     const bRank = INDEX_WORK_ORDER.findIndex((href) => href === b.href);
     return (aRank === -1 ? 99 : aRank) - (bRank === -1 ? 99 : bRank);
   });
-  return [...ranked, ...thoughts];
+}
+
+/** The writing, in reading order, for the list under the work. */
+export function editorialThoughts(nodes: CanvasNode[]): LeafCanvasNode[] {
+  return leafReadingOrder(nodes).filter((node) => node.hubKey === 'thoughts');
 }
 
 export function editorialCopy(node: LeafCanvasNode): {

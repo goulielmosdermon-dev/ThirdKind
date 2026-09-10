@@ -84,12 +84,18 @@ export function HeroCarousel({
   paused = false,
   scale,
   mode = 'world',
+  chrome = true,
 }: {
   nodes: CanvasNode[];
   onOpen: (node: LeafCanvasNode) => void;
   paused?: boolean;
   scale: number;
   mode?: 'world' | 'screen';
+  /**
+   * Title and View pill. The header band runs full bleed under a headline of
+   * its own, so it drops them and shows the picture alone.
+   */
+  chrome?: boolean;
 }) {
   const screen = mode === 'screen';
   // On a phone the opening holds on the lead project rather than cycling: the
@@ -198,59 +204,61 @@ export function HeroCarousel({
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
               aria-hidden
             />
-            <span
-              // Title and action hold opposite corners of the lower edge.
-              className={`absolute inset-x-0 bottom-0 flex items-end justify-between ${
-                screen
-                  ? // Sized from whichever side is shorter, so the overlay
-                    // stays in proportion on a narrow phone band as well as a
-                    // wide desktop one. On a phone the band runs full-bleed,
-                    // so the copy needs twice the inset off the three edges it
-                    // now touches to stop it reading as cramped.
-                    'gap-[min(4cqh,4cqi)] p-[min(5cqh,5cqi)] max-md:px-[min(10cqh,10cqi)] max-md:pb-[min(10cqh,10cqi)]'
-                  : ''
-              }`}
-              style={
-                screen
-                  ? undefined
-                  : { padding: scale * 0.05, gap: scale * 0.035 }
-              }
-            >
+            {chrome ? (
               <span
-                className={`font-display block leading-tight text-white ${
+                // Title and action hold opposite corners of the lower edge.
+                className={`absolute inset-x-0 bottom-0 flex items-end justify-between ${
                   screen
-                    ? // The @container is inline-size only, so cqh falls back
-                      // to the viewport's height: without a ceiling the title
-                      // kept growing with a tall display while the band itself
-                      // stopped at its 92rem measure, and the line broke.
-                      'min-w-0 text-[min(5.5cqh,7cqi,3rem)] text-balance'
+                    ? // Sized from whichever side is shorter, so the overlay
+                      // stays in proportion on a narrow phone band as well as a
+                      // wide desktop one. On a phone the band runs full-bleed,
+                      // so the copy needs twice the inset off the three edges it
+                      // now touches to stop it reading as cramped.
+                      'gap-[min(4cqh,4cqi)] p-[min(5cqh,5cqi)] max-md:px-[min(10cqh,10cqi)] max-md:pb-[min(10cqh,10cqi)]'
                     : ''
                 }`}
-                style={screen ? undefined : { fontSize: scale * 0.055 }}
-              >
-                {node.title}
-              </span>
-              <span
-                className={`shrink-0 origin-bottom-right ${
-                  // PillLabel is fixed px, which reads oversized on a phone
-                  // band; it comes back to full size once there is room.
-                  screen ? 'scale-[0.78] @[26rem]:scale-100' : ''
-                }`}
-                // PillLabel is built in fixed px for the sheets. In world
-                // units it has to be scaled up to sit with this type; on a
-                // page it is already the right size.
                 style={
-                  screen ? undefined : { scale: `${(scale * 0.05) / 42.4}` }
+                  screen
+                    ? undefined
+                    : { padding: scale * 0.05, gap: scale * 0.035 }
                 }
               >
-                <PillLabel
-                  label="View"
-                  tone="paper"
-                  // No room for the word on a phone; the arrow says it.
-                  labelClassName={screen ? 'max-md:hidden' : ''}
-                />
+                <span
+                  className={`font-display block leading-tight text-white ${
+                    screen
+                      ? // The @container is inline-size only, so cqh falls back
+                        // to the viewport's height: without a ceiling the title
+                        // kept growing with a tall display while the band itself
+                        // stopped at its 92rem measure, and the line broke.
+                        'min-w-0 text-[min(5.5cqh,7cqi,3rem)] text-balance'
+                      : ''
+                  }`}
+                  style={screen ? undefined : { fontSize: scale * 0.055 }}
+                >
+                  {node.title}
+                </span>
+                <span
+                  className={`shrink-0 origin-bottom-right ${
+                    // PillLabel is fixed px, which reads oversized on a phone
+                    // band; it comes back to full size once there is room.
+                    screen ? 'scale-[0.78] @[26rem]:scale-100' : ''
+                  }`}
+                  // PillLabel is built in fixed px for the sheets. In world
+                  // units it has to be scaled up to sit with this type; on a
+                  // page it is already the right size.
+                  style={
+                    screen ? undefined : { scale: `${(scale * 0.05) / 42.4}` }
+                  }
+                >
+                  <PillLabel
+                    label="View"
+                    tone="paper"
+                    // No room for the word on a phone; the arrow says it.
+                    labelClassName={screen ? 'max-md:hidden' : ''}
+                  />
+                </span>
               </span>
-            </span>
+            ) : null}
           </button>
         );
       })}

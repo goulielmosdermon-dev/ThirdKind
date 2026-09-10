@@ -11,9 +11,15 @@ const figtree = Figtree({
   display: 'swap',
 });
 
-const plantin = localFont({
-  src: './fonts/PlantinInfantMTStd-Regular.otf',
-  variable: '--font-plantin',
+// Nib Pro carries the display voice: Regular for the smaller settings — index
+// lines, précis, sheet copy — and SemiBold for the headers proper, which is
+// what `font-semibold` reaches for.
+const nib = localFont({
+  src: [
+    { path: './fonts/NibPro-Regular.ttf', weight: '400', style: 'normal' },
+    { path: './fonts/NibPro-SemiBold.ttf', weight: '600', style: 'normal' },
+  ],
+  variable: '--font-nib',
   display: 'swap',
 });
 
@@ -38,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${figtree.variable} ${plantin.variable} ${plex.variable}`}
+      className={`${figtree.variable} ${nib.variable} ${plex.variable}`}
     >
       <body className="bg-void font-sans text-ink antialiased">{children}</body>
     </html>

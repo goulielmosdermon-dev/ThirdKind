@@ -224,7 +224,7 @@ function MobileScreen({
         }}
         aria-hidden={motto < 0.05}
       >
-        MAKE EXTRAORDINARY
+        Extraordinary in a world of ordinary
       </p>
 
       {complete ? (

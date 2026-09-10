@@ -2,7 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import type { LeafCanvasNode } from '@/types/content';
 
-import { editorialCopy, editorialLeaves } from '@/lib/canvas/editorial';
+import {
+  editorialCopy,
+  editorialLeaves,
+  editorialThoughts,
+} from '@/lib/canvas/editorial';
 
 const leaf = (
   overrides: Partial<LeafCanvasNode> &
@@ -52,13 +56,14 @@ describe('editorialCopy', () => {
 });
 
 describe('editorialLeaves', () => {
-  it('keeps only work and thoughts', () => {
-    const leaves = editorialLeaves([
+  it('keeps only work — the writing runs in a list of its own', () => {
+    const nodes = [
       leaf({ id: 'w1', hubKey: 'work', title: 'W' }),
       leaf({ id: 'a1', hubKey: 'about', title: 'About' }),
       leaf({ id: 't1', hubKey: 'thoughts', title: 'T' }),
-    ]);
-    expect(leaves.map((node) => node.id)).toEqual(['w1', 't1']);
+    ];
+    expect(editorialLeaves(nodes).map((node) => node.id)).toEqual(['w1']);
+    expect(editorialThoughts(nodes).map((node) => node.id)).toEqual(['t1']);
   });
 
   it('orders featured work for the index', () => {
@@ -120,7 +125,6 @@ describe('editorialLeaves', () => {
       'ilana',
       'rap',
       'noir',
-      'idea',
     ]);
   });
 });

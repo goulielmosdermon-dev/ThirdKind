@@ -43,12 +43,11 @@ function IndexArrow() {
   );
 }
 
-const SALES_HREF = '/work/scytales';
-const SALES_SLOT = {
-  wrap: 'ml-auto w-full max-w-[42rem] md:mt-16 md:w-[42%]',
-  aspect: 'aspect-[11/6]',
-} as const;
-
+/**
+ * One slot per project, in the order the index reads them. The third runs the
+ * full measure — it is the piece the page is built around — and the two
+ * either side of it hold their own halves.
+ */
 const SLOT = [
   {
     wrap: 'w-full max-w-[40rem] md:max-w-none md:w-[58%]',
@@ -59,12 +58,14 @@ const SLOT = [
     aspect: 'aspect-[4/5]',
   },
   {
-    wrap: 'w-full max-w-[38rem] md:mt-16 md:w-[50%]',
-    aspect: 'aspect-[3/2]',
+    wrap: 'w-full md:mt-24 md:w-full',
+    // A third taller than the band it started as: at the full measure a
+    // narrow letterbox reads as a strip rather than a picture.
+    aspect: 'aspect-[5/4] md:aspect-[16/9]',
   },
   {
-    wrap: 'ml-auto w-full max-w-[32rem] md:mt-[-6vw] md:w-[44%]',
-    aspect: 'aspect-square',
+    wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[46%]',
+    aspect: 'aspect-[4/5]',
   },
 ] as const;
 
@@ -467,21 +468,37 @@ export function IndexView({
     },
   };
 
-  const entry = {
-    hidden: { opacity: 0, y: reduced ? 0 : 32 },
+  // Each part of an index item arrives in turn: the line rises out of its
+  // mask, the tags come one after another, and the picture wipes open.
+  const mask = {
+    hidden: { y: reduced ? 0 : '110%' },
+    shown: {
+      y: 0,
+      transition: {
+        duration: reduced ? MOTION.reduced : 0.85,
+        ease: MOTION.easeOut,
+      },
+    },
+  };
+
+  const tagIn = {
+    hidden: { opacity: 0, y: reduced ? 0 : 6 },
     shown: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: reduced ? MOTION.reduced : MOTION.sheetIn,
+        duration: reduced ? MOTION.reduced : 0.5,
         ease: MOTION.easeOut,
       },
     },
-    gone: {
-      opacity: 0,
-      y: reduced ? 0 : 12,
+  };
+
+  const wipe = {
+    hidden: { clipPath: 'inset(100% 0% 0% 0%)' },
+    shown: {
+      clipPath: 'inset(0% 0% 0% 0%)',
       transition: {
-        duration: reduced ? MOTION.reduced : MOTION.zoom,
+        duration: reduced ? MOTION.reduced : 1.05,
         ease: MOTION.easeOut,
       },
     },
@@ -559,17 +576,10 @@ export function IndexView({
       >
         <ul className={`flex flex-col ${phone ? 'gap-12' : 'gap-16 md:gap-0'}`}>
           {items.map((node, index) => {
+            const shape = SLOT[index % SLOT.length] ?? SLOT[0];
             const slot = phone
-              ? node.href === SALES_HREF
-                ? { wrap: 'w-full', aspect: 'aspect-[11/6]' }
-                : {
-                    wrap: 'w-full',
-                    aspect:
-                      SLOT[index % SLOT.length]?.aspect ?? 'aspect-[16/10]',
-                  }
-              : node.href === SALES_HREF
-                ? SALES_SLOT
-                : (SLOT[index % SLOT.length] ?? SLOT[0]);
+              ? { wrap: 'w-full', aspect: shape.aspect }
+              : shape;
             const { line, name } = editorialCopy(node);
             // The arrow stays welded to the last word so it never wraps alone.
             const cut = line.lastIndexOf(' ');
@@ -583,7 +593,22 @@ export function IndexView({
               tail = line.slice(cut + 1);
             }
             return (
-              <motion.li key={node.id} variants={entry} className={slot.wrap}>
+              <motion.li
+                key={node.id}
+                className={slot.wrap}
+                initial="hidden"
+                whileInView="shown"
+                // Read as the piece comes up, once. A quarter of it in view is
+                // enough — waiting for half means the tall slots never fire on
+                // a short window.
+                viewport={{ once: true, amount: 0.25 }}
+                variants={{
+                  hidden: {},
+                  shown: {
+                    transition: { staggerChildren: reduced ? 0 : 0.08 },
+                  },
+                }}
+              >
                 <button
                   type="button"
                   className="group w-full cursor-pointer border-0 bg-transparent p-0 text-left text-ink"
@@ -591,36 +616,63 @@ export function IndexView({
                   onPointerEnter={() => onPrefetch?.(node.href)}
                   onFocus={() => onPrefetch?.(node.href)}
                 >
-                  <p
-                    className={`font-display leading-snug ${
+                  {/* The line rises out of its own box — the same mask the
+                      writing's heading is read through. */}
+                  <span
+                    className={`block overflow-hidden pt-[0.12em] pb-[0.26em] ${
                       phone
-                        ? 'mb-3 text-[1.05rem]'
-                        : // On a phone it is set at the size the manifesto
-                          // body is read at, so the page keeps one measure.
-                          'mb-4 max-w-[36rem] text-[clamp(1.05rem,1.55vw,1.4rem)] max-md:text-[1.15rem]'
+                        ? '-mt-[0.12em] mb-[calc(0.75rem-0.26em)]'
+                        : '-mt-[0.12em] mb-[calc(1rem-0.26em)] max-w-[36rem]'
                     }`}
                   >
-                    {lead}
-                    <span className="whitespace-nowrap">
-                      {name ? <span className="text-mute">{name}</span> : tail}
-                      <IndexArrow />
-                    </span>
-                  </p>
+                    <motion.p
+                      variants={mask}
+                      className={`font-display leading-snug ${
+                        phone
+                          ? 'text-[1.05rem]'
+                          : // On a phone it is set at the size the manifesto
+                            // body is read at, so the page keeps one measure.
+                            'text-[clamp(1.05rem,1.55vw,1.4rem)] max-md:text-[1.15rem]'
+                      }`}
+                    >
+                      {lead}
+                      <span className="whitespace-nowrap">
+                        {name ? (
+                          <span className="text-mute">{name}</span>
+                        ) : (
+                          tail
+                        )}
+                        <IndexArrow />
+                      </span>
+                    </motion.p>
+                  </span>
                   {node.tags?.length ? (
-                    <ul
+                    // The tags arrive one after the other, after the line and
+                    // before the picture.
+                    <motion.ul
+                      variants={{
+                        hidden: {},
+                        shown: {
+                          transition: {
+                            staggerChildren: reduced ? 0 : 0.07,
+                          },
+                        },
+                      }}
                       className={`flex flex-wrap gap-1.5 ${phone ? 'mb-3' : 'mb-4'}`}
                     >
                       {node.tags.map((tag) => (
-                        <li
+                        <motion.li
                           key={tag}
+                          variants={tagIn}
                           className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
                         >
                           {tag}
-                        </li>
+                        </motion.li>
                       ))}
-                    </ul>
+                    </motion.ul>
                   ) : null}
-                  <span
+                  <motion.span
+                    variants={wipe}
                     className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
                   >
                     {node.swatch ? (
@@ -641,7 +693,7 @@ export function IndexView({
                         className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
                       />
                     )}
-                  </span>
+                  </motion.span>
                 </button>
               </motion.li>
             );

@@ -34,10 +34,10 @@ export function HeroMotto({
     // On a phone the block runs to the gutter rather than sitting centred:
     // the button is nearly the width of the screen, so a centred block leaves
     // it almost no margin on the left.
-    <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-start px-5 md:justify-center md:px-6">
+    <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-start px-[clamp(5.5rem,12vw,11rem)] md:justify-center md:px-6">
       <div className="w-full md:w-fit">
         <p
-          className={`text-[clamp(1.75rem,4.8vw,4.5rem)] leading-[1.02] tracking-[-0.015em] transition-colors duration-500 ${
+          className={`text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.02] tracking-[-0.015em] transition-colors duration-500 ${
             tone === 'paper' ? 'text-white' : 'text-ink'
           }`}
         >

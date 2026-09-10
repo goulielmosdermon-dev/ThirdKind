@@ -62,10 +62,13 @@ export function ExploreCursor() {
         event.clientX <= box.right &&
         event.clientY >= box.top &&
         event.clientY <= box.bottom;
-      // The button answers for itself, so the cursor gets out of its way.
+      // The button and the command bar answer for themselves, so the cursor
+      // gets out of the way rather than sitting on top of them.
       const overAction =
         event.target instanceof Element &&
-        event.target.closest('[data-hero-action]');
+        event.target.closest(
+          '[data-hero-action], [data-command-nav], [data-chrome]',
+        );
 
       if (!inside || overAction) {
         setShown(false);

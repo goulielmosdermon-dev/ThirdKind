@@ -43,8 +43,8 @@ export function PillLabel({
     const wrapperMotion = controlled
       ? undefined
       : side === 'left'
-        ? 'w-0 group-hover/pill:w-[2.7rem]'
-        : 'w-[2.7rem] group-hover/pill:w-0';
+        ? 'w-0 group-hover/pill:w-[var(--pill-slot)]'
+        : 'w-[var(--pill-slot)] group-hover/pill:w-0';
     const arrowMotion = controlled
       ? undefined
       : side === 'left'
@@ -55,13 +55,13 @@ export function PillLabel({
       <span
         className={`flex items-stretch overflow-hidden ${slack} ${wrapperMotion ?? ''}`}
         style={{
-          width: controlled ? (shown ? '2.7rem' : '0rem') : undefined,
+          width: controlled ? (shown ? 'var(--pill-slot)' : '0rem') : undefined,
           transition: `width 420ms ${EASE}`,
         }}
         aria-hidden
       >
         <span
-          className={`flex aspect-square w-[2.65rem] shrink-0 items-center justify-center rounded-md ${origin} ${block} ${arrowMotion ?? ''}`}
+          className={`flex aspect-square w-[var(--pill-arrow)] shrink-0 items-center justify-center rounded-md ${origin} ${block} ${arrowMotion ?? ''}`}
           style={{
             transform: controlled ? `scale(${shown ? 1 : 0.5})` : undefined,
             opacity: controlled ? (shown ? 1 : 0) : undefined,
@@ -75,10 +75,15 @@ export function PillLabel({
   };
 
   return (
-    <span className="group/pill inline-flex items-stretch">
+    <span
+      // The button comes back a size on a phone, where it would otherwise run
+      // most of the width of the screen. The slot is the arrow plus the
+      // hairline gap that sits between it and the label.
+      className="group/pill inline-flex items-stretch [--pill-arrow:2.1rem] [--pill-slot:2.15rem] md:[--pill-arrow:2.65rem] md:[--pill-slot:2.7rem]"
+    >
       {arrow('left')}
       <span
-        className={`flex items-center rounded-md px-5 text-sm whitespace-nowrap tracking-[0.04em] ${block} ${labelClassName}`}
+        className={`flex items-center rounded-md px-3.5 text-[0.8rem] whitespace-nowrap tracking-[0.04em] md:px-5 md:text-sm ${block} ${labelClassName}`}
       >
         {label}
       </span>

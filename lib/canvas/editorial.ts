@@ -2,12 +2,14 @@ import type { CanvasNode, LeafCanvasNode } from '@/types/content';
 
 import { leafReadingOrder } from '@/lib/canvas/readingOrder';
 
+/**
+ * The four the index carries, in order. The rest of the work is still on the
+ * canvas and in the Work sheet; this is the run the page reads.
+ */
 const INDEX_WORK_ORDER = [
   '/work/scania',
   '/work/up-hellas',
   '/work/scytales-2',
-  '/work/scytales',
-  '/work/ilana',
   '/work/rap-therapy',
 ] as const;
 
@@ -18,11 +20,9 @@ const INDEX_WORK_ORDER = [
  */
 export function editorialLeaves(nodes: CanvasNode[]): LeafCanvasNode[] {
   const work = leafReadingOrder(nodes).filter((node) => node.hubKey === 'work');
-  return [...work].sort((a, b) => {
-    const aRank = INDEX_WORK_ORDER.findIndex((href) => href === a.href);
-    const bRank = INDEX_WORK_ORDER.findIndex((href) => href === b.href);
-    return (aRank === -1 ? 99 : aRank) - (bRank === -1 ? 99 : bRank);
-  });
+  return INDEX_WORK_ORDER.map((href) =>
+    work.find((node) => node.href === href),
+  ).filter((node): node is LeafCanvasNode => Boolean(node));
 }
 
 /** The writing, in reading order, for the list under the work. */

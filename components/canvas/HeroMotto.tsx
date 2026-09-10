@@ -31,8 +31,11 @@ export function HeroMotto({
   const { openInquiry } = useInquiry();
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6">
-      <div className="w-fit">
+    // On a phone the block runs to the gutter rather than sitting centred:
+    // the button is nearly the width of the screen, so a centred block leaves
+    // it almost no margin on the left.
+    <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-start px-5 md:justify-center md:px-6">
+      <div className="w-full md:w-fit">
         <p
           className={`text-[clamp(1.75rem,4.8vw,4.5rem)] leading-[1.02] tracking-[-0.015em] transition-colors duration-500 ${
             tone === 'paper' ? 'text-white' : 'text-ink'
@@ -49,7 +52,9 @@ export function HeroMotto({
             Extraordinary
           </span>
           <span
-            className="block pl-[4.2em] font-medium"
+            // The step to the right is a desktop shape; on a phone there is
+            // no room for it and the line stacks flush under the first.
+            className="block font-medium md:pl-[4.2em]"
             style={{ opacity: lines[1], transition: 'opacity 0.5s ease' }}
           >
             in a world of ordinary

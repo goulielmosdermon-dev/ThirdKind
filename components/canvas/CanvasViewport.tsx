@@ -649,11 +649,8 @@ export function CanvasViewport({
   // large bitmaps on every frame, which is what made the hands part in steps
   // on a phone.
   const handBase = size ? largeHandHeight(size.width) : 0;
-  // On a phone the showcase is the whole screen and the black section follows
-  // it, so the hands stay out of the way until the reader is past both.
   const narrow = useNarrow();
   const [openingPassed, setOpeningPassed] = useState(false);
-  const handsHidden = complete && narrow && !openingPassed;
   // The command bar sits outside the scroller, so it is told from here.
   const { report } = usePageScroll();
   const [headerPassed, setHeaderPassed] = useState(false);
@@ -667,11 +664,11 @@ export function CanvasViewport({
     },
     [report],
   );
-  // The hands are drawn black, which is what the light canvas wants. Over the
-  // showcase they would disappear into it, so they invert to white for as
-  // long as the header band is behind them and come back once the index —
-  // light again — has scrolled up under them.
-  const handsWhite = complete && !headerPassed;
+  // The hands are drawn black, which is what the light canvas wants. The
+  // opening is dark throughout — the showcase, then the black band under it —
+  // so they invert to white for the whole of it and come back to black once
+  // the index, light again, has scrolled up under them.
+  const handsWhite = complete && !openingPassed;
   // The motto fades in on the intro's own curve and then simply stays, rather
   // than fading out into the page the way mottoOpacity has it: it is the
   // header's headline too, and it travels up out of view with the band.
@@ -787,7 +784,6 @@ export function CanvasViewport({
                   transformOrigin: '0 0',
                   transform: `translate3d(${hands.alien.x}px, ${hands.alien.y}px, 0) scale(${hands.alien.height / handBase})`,
                   willChange: complete ? undefined : 'transform',
-                  opacity: handsHidden ? 0 : 1,
                   transition: [
                     complete ? 'opacity 0.45s ease' : handEase,
                     'filter 0.35s ease',
@@ -810,7 +806,6 @@ export function CanvasViewport({
                   transformOrigin: '0 0',
                   transform: `translate3d(${hands.human.x}px, ${hands.human.y}px, 0) scale(${hands.human.height / (handBase * HUMAN_SCALE)})`,
                   willChange: complete ? undefined : 'transform',
-                  opacity: handsHidden ? 0 : 1,
                   transition: [
                     complete ? 'opacity 0.45s ease' : handEase,
                     'filter 0.35s ease',

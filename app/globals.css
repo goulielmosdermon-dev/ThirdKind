@@ -58,16 +58,21 @@ body {
   outline-offset: 2px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
-  /* Nib Pro's SemiBold is the header cut; the Regular is for everything set
-     smaller than a heading. */
-  font-weight: 600;
+/* In the base layer, so a utility on the element itself still wins — a
+   heading set in the sans asks for it by class. Unlayered, this rule would
+   beat every Tailwind utility. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    /* Nib Pro's SemiBold is the header cut; the Regular is for everything set
+       smaller than a heading. */
+    font-weight: 600;
+  }
 }
 
 @keyframes tk-pulse {

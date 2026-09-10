@@ -107,7 +107,7 @@ function ManifestoBand({
         className={
           phone
             ? 'px-5 pt-14 pb-16'
-            : 'mx-auto max-w-[92rem] px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(2rem,4.8vw,4rem)] pb-[clamp(2rem,5vw,4rem)]'
+            : 'mx-auto max-w-[92rem] px-5 md:px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(2rem,4.8vw,4rem)] pb-[clamp(2rem,5vw,4rem)]'
         }
       >
         <div className={phone ? 'space-y-6' : 'max-w-[52rem] space-y-8'}>
@@ -571,7 +571,7 @@ export function IndexView({
         className={
           phone
             ? 'px-5 pt-4 pb-16'
-            : 'mx-auto min-h-full max-w-[92rem] px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(3rem,7vw,6rem)] pb-20'
+            : 'mx-auto min-h-full max-w-[92rem] px-5 md:px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(3rem,7vw,6rem)] pb-20'
         }
       >
         <ul className={`flex flex-col ${phone ? 'gap-12' : 'gap-16 md:gap-0'}`}>

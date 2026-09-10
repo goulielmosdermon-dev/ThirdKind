@@ -6,9 +6,12 @@ import { useEffect, useRef } from 'react';
 export function FadeIn({
   children,
   className,
+  delay = 0,
 }: {
   children: React.ReactNode;
   className?: string;
+  /** Seconds behind the rest, so a run of them cascades rather than lands. */
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,11 @@ export function FadeIn({
   }, []);
 
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={ref}
+      className={className}
+      style={delay ? { transitionDelay: `${delay}s` } : undefined}
+    >
       {children}
     </div>
   );

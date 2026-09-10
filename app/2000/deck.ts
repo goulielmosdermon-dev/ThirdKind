@@ -18,13 +18,40 @@ export type Plate = {
   alt: string;
 };
 
+export type Row = readonly [label: string, value: string];
+
 export type Block =
   | { kind: 'full'; image: Plate; caption?: string }
   | { kind: 'pair'; images: [Plate, Plate]; caption?: string }
   | { kind: 'plate'; image: Plate }
   /** Its own full-height section. `__word__` marks an underlined run. */
   | { kind: 'text'; lines: string[] }
+  /**
+   * The opening of a deck, centred, which fades out instead of moving away.
+   * A word, or the recipient's mark set the same way.
+   */
+  | { kind: 'lead'; text: string; image?: undefined }
+  | { kind: 'lead'; image: Plate; text?: undefined }
+  /** A standfirst over an itemised run — what a text slide cannot hold. */
+  | { kind: 'list'; title?: string; items: string[] }
+  /** A film, in the site's own player. */
+  | { kind: 'film'; vimeoId: string; title: string; caption?: string }
+  /** A priced breakdown: rows, then the total set apart. */
+  | {
+      kind: 'table';
+      title: string;
+      caption?: string;
+      rows: Row[];
+      total: Row;
+    }
   | { kind: 'credits'; image: Plate };
+
+export type Credit = {
+  name: string;
+  role: string;
+  url: string;
+  href: string;
+};
 
 export type Chapter = {
   /** Anchor id for the section; the rail links to it. */
@@ -275,7 +302,7 @@ export const chapters: Chapter[] = [
   },
 ];
 
-export const credits = [
+export const credits: Credit[] = [
   {
     name: 'Chris Hudson',
     role: 'Cinematographer',

@@ -2,10 +2,20 @@ import Image from 'next/image';
 
 import { DeckIndex } from './Index';
 import { FadeIn } from './FadeIn';
+import { Lead } from './Lead';
+import { SmoothPage } from './SmoothPage';
 import { PinnedRun } from './PinnedRun';
 import { Reveal } from './Reveal';
+import { FilmPlayer } from '@/components/sheet/FilmPlayer';
 import { type Brand } from './brands';
-import { chapters, credits, type Block, type Plate } from './deck';
+import {
+  chapters as deck2000,
+  credits as credits2000,
+  type Block,
+  type Chapter,
+  type Credit,
+  type Plate,
+} from './deck';
 
 /** One font, one size — everything on the page uses this and nothing else. */
 const TEXT = 'font-display text-[1.375rem] leading-[1.3]';
@@ -54,9 +64,11 @@ function Frame({
 function BlockView({
   block,
   first,
+  credits,
 }: {
   block: Exclude<Block, { kind: 'text' }>;
   first: boolean;
+  credits: Credit[];
 }) {
   switch (block.kind) {
     case 'full':
@@ -119,6 +131,123 @@ function BlockView({
         </figure>
       );
 
+    case 'lead':
+      return (
+        <Lead
+          text={block.text}
+          image={block.image}
+          className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}
+        />
+      );
+
+    /* An itemised run — a scope, a set of deliverables. The heading holds
+       the left of the section while the items scroll past it, and the section
+       lets go once the last one is through. */
+    case 'list':
+      return (
+        <Column>
+          <div className="grid grid-cols-1 gap-[6vh] md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:gap-16">
+            {block.title ? (
+              // The column stretches to the row — that is the box the
+              // heading sticks inside — and the heading itself is the short
+              // element that travels down it. Sticking the stretched item
+              // instead pins nothing, and giving it a screen's height lets go
+              // a whole viewport early.
+              <div className="md:h-full">
+                <div className="md:sticky md:top-[22vh]">
+                  <Reveal className={TEXT} lines={[block.title]} />
+                </div>
+              </div>
+            ) : (
+              <div aria-hidden />
+            )}
+            {/* The first item starts level with the heading; the tail gives
+                the last one room to clear before the section releases. */}
+            <ul className={`flex flex-col md:pb-[12vh] ${TEXT}`}>
+              {block.items.map((item) => (
+                <li key={item}>
+                  <FadeIn delay={0.04}>
+                    {/* The rule is the list's only ornament: it reads as a
+                        schedule of work, not as bullets. */}
+                    <span className="block border-t border-hairline py-[0.9em] md:py-[2.6em]">
+                      {item}
+                    </span>
+                  </FadeIn>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Column>
+      );
+
+    /* A film, in the same player the work pages use. */
+    case 'film':
+      return (
+        <Column>
+          <FadeIn>
+            <figure>
+              {block.caption ? (
+                <figcaption className={`mb-[6vh] ${TEXT}`}>
+                  {block.caption}
+                </figcaption>
+              ) : null}
+              <FilmPlayer vimeoId={block.vimeoId} title={block.title} />
+            </figure>
+          </FadeIn>
+        </Column>
+      );
+
+    /* A priced breakdown. Same measure and same voice as the deck — the only
+       thing that separates the total from the rows is a heavier rule.
+
+       It holds the screen for a beat rather than passing through: the frame
+       sticks for a viewport of scroll, so a table is read rather than
+       scrolled over, and the page moves on once it lets go. */
+    case 'table':
+      return (
+        <div className="h-[200svh]">
+          <div className="sticky top-0 flex h-svh items-center">
+            <Column>
+              <FadeIn>
+                <figure className="max-w-[46rem]">
+                  <figcaption className={`mb-[5vh] ${TEXT}`}>
+                    {block.title}
+                  </figcaption>
+                  {/* Each line resolves as it arrives, a beat behind the one
+                      above it, so the breakdown reads down rather than
+                      landing. */}
+                  <dl className={TEXT}>
+                    {block.rows.map(([label, value], i) => (
+                      <FadeIn key={label} delay={i * 0.09}>
+                        <div className="flex items-baseline justify-between gap-8 border-t border-hairline py-[0.85em]">
+                          <dt className="min-w-0">{label}</dt>
+                          <dd className="shrink-0 tabular-nums text-mute">
+                            {value}
+                          </dd>
+                        </div>
+                      </FadeIn>
+                    ))}
+                    <FadeIn delay={block.rows.length * 0.09}>
+                      <div className="flex items-baseline justify-between gap-8 border-t-2 border-ink py-[0.85em]">
+                        <dt className="min-w-0">{block.total[0]}</dt>
+                        <dd className="shrink-0 tabular-nums">
+                          {block.total[1]}
+                        </dd>
+                      </div>
+                    </FadeIn>
+                  </dl>
+                  {block.caption ? (
+                    <p className={`mt-[3vh] max-w-[44ch] ${TEXT} text-mute`}>
+                      {block.caption}
+                    </p>
+                  ) : null}
+                </figure>
+              </FadeIn>
+            </Column>
+          </div>
+        </div>
+      );
+
     /* Slide 30: the plate on the left, the two names stacked down the right. */
     case 'credits':
       return (
@@ -179,18 +308,31 @@ function groupBlocks(blocks: Block[]): Group[] {
 /**
  * The deck. `brand` adds the recipient's mark ahead of the opening plate;
  * without one the deck reads as the unbranded original.
+ *
+ * The slides arrive as data, so a second deck is a second `chapters` list
+ * rather than a second copy of this file — every rule of the page, the index,
+ * the pinned runs and the reveals, is shared.
  */
-export function Deck({ brand }: { brand?: Brand }) {
+export function Deck({
+  brand,
+  chapters = deck2000,
+  credits = credits2000,
+}: {
+  brand?: Brand;
+  chapters?: Chapter[];
+  credits?: Credit[];
+}) {
   const entries = chapters
     .filter((c) => !c.unlisted)
     .map((c) => ({ id: c.id, title: c.title }));
 
   return (
     <div className="bg-paper text-ink">
+      <SmoothPage />
       <DeckIndex entries={entries} textClass={NAV} />
 
       <main className="flex flex-col gap-[16vh] py-[12vh] lg:pl-44">
-        {brand ? (
+        {brand?.logo ? (
           <Column>
             <FadeIn>
               <Image
@@ -223,6 +365,7 @@ export function Deck({ brand }: { brand?: Brand }) {
                   key={gi}
                   block={group.block}
                   first={ci === 0 && gi === 0}
+                  credits={credits}
                 />
               ),
             )}

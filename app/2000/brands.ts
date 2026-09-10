@@ -1,9 +1,10 @@
 /**
- * Brand editions of the 2000 deck.
+ * The gated decks.
  *
- * The deck is sent to one brand at a time, so each edition is this registry
- * entry plus a route that renders `<Deck brand={…} />` — the slides, images
- * and behaviour are shared, never copied.
+ * A deck goes out to one recipient at a time, so an edition is this registry
+ * entry plus a route that renders `<Deck brand={…} />` — the page's rules and
+ * behaviour are shared, never copied. Some editions carry the 2000 slides;
+ * others, like the epay proposal, bring their own.
  *
  * `password` gates the edition. It is a soft gate for a private link shared
  * with a client, not a secret: the point is that the deck is not readable by
@@ -14,7 +15,8 @@
 export type Brand = {
   slug: string;
   name: string;
-  logo: { src: string; w: number; h: number };
+  /** The recipient's mark, ahead of the first slide. Optional until it lands. */
+  logo?: { src: string; w: number; h: number };
   password: string;
 };
 
@@ -24,6 +26,11 @@ export const brands: Record<string, Brand> = {
     name: 'Zara',
     logo: { src: '/2000/logos/zara.webp', w: 1024, h: 538 },
     password: process.env.DECK_PASSWORD_ZARA2000 ?? 'ZARA2000',
+  },
+  ePay: {
+    slug: 'ePay',
+    name: 'epay',
+    password: process.env.DECK_PASSWORD_EPAY ?? 'EPAY2026',
   },
 };
 

@@ -28,5 +28,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/ZARA2000/:path*', '/ZARA2000'],
+  matcher: ['/ZARA2000/:path*', '/ZARA2000', '/ePay/:path*', '/ePay'],
 };

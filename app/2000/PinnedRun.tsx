@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Reveal, type RevealState } from './Reveal';
 
+/** How long an arriving text waits for the one it replaces to leave. */
+const LAG = 0.7;
+
 /**
  * A run of consecutive text slides, pinned.
  *
@@ -15,6 +18,10 @@ import { Reveal, type RevealState } from './Reveal';
  * State is derived from scroll position rather than played as a one-shot, so
  * scrolling back up runs the sequence backwards: a text that left upward
  * comes back down into place.
+ *
+ * The arrival is held back by LAG so the screen is clear of the outgoing text
+ * before the next one starts to rise. Leaving is never delayed, which is what
+ * keeps the gap the same in both directions.
  */
 export function PinnedRun({
   texts,
@@ -70,7 +77,17 @@ export function PinnedRun({
           {/* Stacked in one grid cell so every text occupies the same spot. */}
           <div className="grid">
             {texts.map((lines, i) => (
-              <div key={i} className="col-start-1 row-start-1">
+              <div
+                key={i}
+                className="col-start-1 row-start-1"
+                /* Only a text that follows another has to wait: the first one
+                   in a run has nothing to clear. */
+                style={
+                  i > 0
+                    ? ({ '--reveal-lag': `${LAG}s` } as React.CSSProperties)
+                    : undefined
+                }
+              >
                 <Reveal
                   lines={lines}
                   className={`${className} max-w-[44ch]`}

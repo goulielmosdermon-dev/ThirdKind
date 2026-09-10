@@ -38,7 +38,15 @@ function tokenize(line: string) {
   });
 }
 
-/** Groups a paragraph's `.w` words into masked lines. */
+/**
+ * Groups a paragraph's `.w` words into masked lines.
+ *
+ * Break points come from each word's own box rather than `offsetTop`: that is
+ * measured against whichever ancestor happens to be positioned, and it read
+ * every word of a paragraph as one line whenever that ancestor was not the
+ * one the text is laid out in — which is how a whole block ended up inside a
+ * single mask instead of one per line.
+ */
 function group(p: HTMLElement, from: number) {
   const words = Array.from(p.querySelectorAll<HTMLElement>('.w'));
   if (words.length === 0) return from;
@@ -48,8 +56,10 @@ function group(p: HTMLElement, from: number) {
   let lastTop: number | null = null;
 
   for (const word of words) {
-    const top = word.offsetTop;
-    if (lastTop !== null && top > lastTop) {
+    const top = word.getBoundingClientRect().top;
+    // A word is on a new line once its box clears the last one by more than
+    // a rounding error; sub-pixel layout puts words on a line a hair apart.
+    if (lastTop !== null && top > lastTop + 1) {
       lines.push(current);
       current = [];
     }
@@ -64,7 +74,9 @@ function group(p: HTMLElement, from: number) {
     mask.className = 'ln';
     const mover = document.createElement('span');
     mover.className = 'ln__i';
-    mover.style.transitionDelay = `${(from + i) * STAGGER}s`;
+    /* The stagger down the block, held in a variable so the state rule can
+       add the run's own lag on top of it without overwriting it. */
+    mover.style.setProperty('--ln-delay', `${(from + i) * STAGGER}s`);
     line.forEach((word, j) => {
       if (j > 0) mover.appendChild(document.createTextNode(' '));
       mover.appendChild(word);
@@ -111,6 +123,10 @@ export function Reveal({
     split();
     el.dataset.reveal = 'below';
 
+    // Web fonts change where the lines break, and they can land after this
+    // first pass.
+    document.fonts?.ready.then(split).catch(() => {});
+
     let observer: IntersectionObserver | undefined;
     if (!controlled) {
       observer = new IntersectionObserver(
@@ -125,21 +141,25 @@ export function Reveal({
       observer.observe(el);
     }
 
+    /* The element's own width is the only thing that can change where the
+       lines break, so it is watched directly rather than the window's — a
+       column can be re-measured without the window ever changing size, and
+       mobile browsers fire resize when the URL bar hides. Splitting changes
+       the height, so height changes are ignored or this would never settle. */
     let timer: ReturnType<typeof setTimeout>;
-    let width = window.innerWidth;
-    const onResize = () => {
-      /* Mobile browsers fire resize when the URL bar hides; width is the only
-         thing that can change where the lines break. */
-      if (window.innerWidth === width) return;
-      width = window.innerWidth;
+    let width = el.getBoundingClientRect().width;
+    const size = new ResizeObserver(() => {
+      const next = el.getBoundingClientRect().width;
+      if (Math.abs(next - width) < 1) return;
+      width = next;
       clearTimeout(timer);
       timer = setTimeout(split, 180);
-    };
-    window.addEventListener('resize', onResize);
+    });
+    size.observe(el);
 
     return () => {
       observer?.disconnect();
-      window.removeEventListener('resize', onResize);
+      size.disconnect();
       clearTimeout(timer);
     };
   }, [html, controlled]);

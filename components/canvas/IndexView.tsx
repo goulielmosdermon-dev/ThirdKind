@@ -129,15 +129,25 @@ function ManifestoBand({
   );
 }
 
+/** How many pieces of writing the index opens with, and how many each
+    "Show more" adds after that. */
+const OPENS_WITH = 5;
+const STEP = 2;
+
 /** One piece of writing: label, title, and the button, top-aligned. */
 function ThoughtRow({
   node,
   phone,
+  fresh = false,
+  reduced = false,
   onOpen,
   onPrefetch,
 }: {
   node: LeafCanvasNode;
   phone: boolean;
+  /** Brought in by "Show more", so it arrives rather than being there. */
+  fresh?: boolean;
+  reduced?: boolean;
   onOpen: (href: string, nodeId: string) => void;
   onPrefetch?: (href: string) => void;
 }) {
@@ -149,8 +159,14 @@ function ThoughtRow({
   const label = node.tags?.[0] ?? 'Article';
 
   return (
-    <li
+    <motion.li
       ref={rowRef}
+      initial={fresh ? { opacity: 0 } : false}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: reduced ? MOTION.reduced : 0.55,
+        ease: MOTION.easeOut,
+      }}
       className="relative border-t border-hairline last:border-b"
       onPointerEnter={(event) => {
         if (event.pointerType === 'touch') {
@@ -233,7 +249,7 @@ function ThoughtRow({
           </span>
         </span>
       ) : null}
-    </li>
+    </motion.li>
   );
 }
 
@@ -254,6 +270,11 @@ function ThoughtsRun({
   onPrefetch?: (href: string) => void;
 }) {
   const reduced = useReducedMotion() ?? false;
+  // Five to begin with, then two at a time. The rest of the writing is a
+  // click away rather than a page of scrolling nobody asked for.
+  const [shown, setShown] = useState(OPENS_WITH);
+  const visible = items.slice(0, shown);
+  const more = items.length - visible.length;
 
   if (items.length === 0) {
     return null;
@@ -311,16 +332,30 @@ function ThoughtsRun({
       </motion.h2>
 
       <ul className={phone ? 'mt-10' : 'mt-[clamp(2.5rem,5vw,4.5rem)]'}>
-        {items.map((node) => (
+        {visible.map((node, index) => (
           <ThoughtRow
             key={node.id}
             node={node}
             phone={phone}
+            // Only the rows this click brought in fade; the ones already
+            // read stay put rather than flickering under the new ones.
+            fresh={index >= OPENS_WITH}
+            reduced={reduced}
             onOpen={onOpen}
             onPrefetch={onPrefetch}
           />
         ))}
       </ul>
+
+      {more > 0 ? (
+        <button
+          type="button"
+          onClick={() => setShown((count) => count + STEP)}
+          className="mt-8 cursor-pointer border-0 bg-transparent p-0 text-[0.9rem] text-mute underline-offset-4 transition-colors duration-300 hover:text-ink hover:underline"
+        >
+          Show more
+        </button>
+      ) : null}
     </section>
   );
 }

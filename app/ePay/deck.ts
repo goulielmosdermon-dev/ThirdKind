@@ -243,7 +243,7 @@ export const chapters: Chapter[] = [
         ],
         total: ['Total', '€7,500 + VAT'],
         caption:
-          'Production and post-production for one testimonial at one location.',
+          'Production and post-production for one testimonial at one location. Actor fees are not included in this quote.',
       },
     ],
   },
@@ -262,7 +262,7 @@ export const chapters: Chapter[] = [
         ],
         total: ['Total', '€32,500 + VAT'],
         caption:
-          'Production and post-production for all six testimonials across six separate locations. The six-film package is a campaign rate, based on the efficiencies of producing the projects as one coordinated production.',
+          'Production and post-production for all six testimonials across six separate locations. The six-film package is a campaign rate, based on the efficiencies of producing the projects as one coordinated production. Actor fees are not included in this quote.',
       },
     ],
   },
@@ -308,11 +308,7 @@ export const chapters: Chapter[] = [
     blocks: [
       {
         kind: 'text',
-        lines: [
-          'ThirdKind Creative',
-          'Creative Director / Producer',
-          '__thirdkindcreative.com|https://thirdkindcreative.com__',
-        ],
+        lines: ['__thirdkindcreative.com|https://thirdkindcreative.com__'],
       },
     ],
   },

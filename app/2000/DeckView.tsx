@@ -6,8 +6,7 @@ import { Lead } from './Lead';
 import { SmoothPage } from './SmoothPage';
 import { SoundBar } from './SoundBar';
 import { PinnedRun } from './PinnedRun';
-import { PlainRun } from './PlainRun';
-import { MaskIn } from './MaskIn';
+import { SwapRun, type Slide } from './SwapRun';
 import { Reveal } from './Reveal';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
 import { type Brand } from './brands';
@@ -65,26 +64,75 @@ function Frame({
   );
 }
 
-/** A plate resolves as it arrives: masked on a plain deck, faded otherwise. */
-function Resolve({
-  plain,
-  delay,
-  className,
-  children,
-}: {
-  plain: boolean;
-  delay?: number;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  if (plain) {
-    return <MaskIn className={className}>{children}</MaskIn>;
+/**
+ * A block with no frame of its own: no full-height box, no fade, no sticky.
+ * The run it sits in owns all of that — this is only what the slide shows.
+ */
+function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
+  switch (block.kind) {
+    case 'lead':
+      return block.image ? (
+        <Image
+          src={block.image.src}
+          alt={block.image.alt}
+          width={block.image.w}
+          height={block.image.h}
+          priority
+          unoptimized
+          /* The mark arrives on a white box; multiply drops it into the paper
+             without needing a cut-out. */
+          className="mx-auto h-auto w-[min(30rem,72vw)] mix-blend-multiply"
+        />
+      ) : (
+        <p className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}>
+          {block.text}
+        </p>
+      );
+
+    case 'sound':
+      return <SoundBar src={block.src} title={block.title} className={TEXT} />;
+
+    case 'full':
+      return (
+        <figure>
+          {block.caption ? (
+            <figcaption className={`mb-[4vh] ${TEXT}`}>
+              {block.caption}
+            </figcaption>
+          ) : null}
+          <Frame
+            plate={block.image}
+            sizes="(min-width: 1180px) 1180px, 100vw"
+          />
+        </figure>
+      );
+
+    case 'pair':
+      return (
+        <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-10">
+          <Frame
+            plate={block.images[0]}
+            sizes="(min-width: 768px) 46vw, 100vw"
+          />
+          <Frame
+            plate={block.images[1]}
+            sizes="(min-width: 768px) 46vw, 100vw"
+          />
+        </div>
+      );
+
+    case 'plate':
+      return (
+        <figure className="flex w-full justify-center">
+          <div className="w-[min(320px,60vw)]">
+            <Frame plate={block.image} sizes="320px" />
+          </div>
+        </figure>
+      );
+
+    default:
+      return null;
   }
-  return (
-    <FadeIn className={className} delay={delay}>
-      {children}
-    </FadeIn>
-  );
 }
 
 /** Everything that is not a pinned text run. */
@@ -92,19 +140,16 @@ function BlockView({
   block,
   first,
   credits,
-  plain,
 }: {
   block: Exclude<Block, { kind: 'text' }>;
   first: boolean;
   credits: Credit[];
-  /** The deck reads without anything sticking: see Deck's `motion`. */
-  plain: boolean;
 }) {
   switch (block.kind) {
     case 'full':
       return (
         <Column>
-          <Resolve plain={plain}>
+          <FadeIn>
             <figure>
               {block.caption ? (
                 <figcaption className={`mb-[6vh] ${TEXT}`}>
@@ -117,7 +162,7 @@ function BlockView({
                 priority={first}
               />
             </figure>
-          </Resolve>
+          </FadeIn>
         </Column>
       );
 
@@ -127,7 +172,7 @@ function BlockView({
       return (
         <Column>
           <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 md:gap-10">
-            <Resolve plain={plain} className="md:pt-[4vw]">
+            <FadeIn className="md:pt-[4vw]">
               <figure>
                 {block.caption ? (
                   <figcaption className={`mb-[6vh] ${TEXT}`}>
@@ -139,15 +184,15 @@ function BlockView({
                   sizes="(min-width: 768px) 46vw, 100vw"
                 />
               </figure>
-            </Resolve>
-            <Resolve plain={plain} className="md:pt-[14vw]">
+            </FadeIn>
+            <FadeIn className="md:pt-[14vw]">
               <figure>
                 <Frame
                   plate={block.images[1]}
                   sizes="(min-width: 768px) 46vw, 100vw"
                 />
               </figure>
-            </Resolve>
+            </FadeIn>
           </div>
         </Column>
       );
@@ -155,9 +200,9 @@ function BlockView({
     case 'plate':
       return (
         <figure className="flex w-full justify-center">
-          <Resolve plain={plain} className="w-[min(320px,60vw)]">
+          <FadeIn className="w-[min(320px,60vw)]">
             <Frame plate={block.image} sizes="320px" />
-          </Resolve>
+          </FadeIn>
         </figure>
       );
 
@@ -166,7 +211,6 @@ function BlockView({
         <Lead
           text={block.text}
           image={block.image}
-          plain={plain}
           className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}
         />
       );
@@ -242,12 +286,7 @@ function BlockView({
       return (
         <Column>
           <FadeIn>
-            <SoundBar
-              src={block.src}
-              title={block.title}
-              artist={block.artist}
-              className={TEXT}
-            />
+            <SoundBar src={block.src} title={block.title} className={TEXT} />
           </FadeIn>
         </Column>
       );
@@ -369,15 +408,13 @@ type Group =
   | { run: true; texts: string[][] }
   | { run: false; block: Exclude<Block, { kind: 'text' }> };
 
-function groupBlocks(blocks: Block[], plain: boolean): Group[] {
+function groupBlocks(blocks: Block[]): Group[] {
   const groups: Group[] = [];
 
   for (const block of blocks) {
     if (block.kind === 'text') {
       const last = groups.at(-1);
-      // A plain deck never gathers texts into a run: each one takes its own
-      // screen and the page keeps moving through them.
-      if (!plain && last?.run) last.texts.push(block.lines);
+      if (last?.run) last.texts.push(block.lines);
       else groups.push({ run: true, texts: [block.lines] });
     } else {
       groups.push({ run: false, block });
@@ -405,14 +442,27 @@ export function Deck({
   chapters?: Chapter[];
   credits?: Credit[];
   /**
-   * How the deck carries the reader. `pinned` holds the page still and swaps
-   * one text for the next in place; `plain` lets the page scroll and works
-   * the masks instead — everything resolves as it arrives and leaves as it
-   * goes, and nothing sticks.
+   * How the deck carries the reader. `pinned` holds a run of texts still and
+   * swaps them in place, with the plates scrolling past between the runs;
+   * `swap` does that to the whole deck — every slide, plates included, is
+   * replaced on the spot and nothing ever travels up the screen.
    */
-  motion?: 'pinned' | 'plain';
+  motion?: 'pinned' | 'swap';
 }) {
-  const plain = motion === 'plain';
+  const swap = motion === 'swap';
+
+  /* One slide per block, in order, with the first of each chapter carrying
+     the id the rail links to. */
+  const slides: Slide[] = swap
+    ? chapters.flatMap((chapter) =>
+        chapter.blocks.map((block, index) => ({
+          chapter: index === 0 ? chapter.id : undefined,
+          ...(block.kind === 'text'
+            ? { lines: block.lines }
+            : { node: <SlideBody block={block} /> }),
+        })),
+      )
+    : [];
   const entries = chapters
     .filter((c) => !c.unlisted)
     .map((c) => ({ id: c.id, title: c.title }));
@@ -422,12 +472,9 @@ export function Deck({
       <SmoothPage />
       <DeckIndex entries={entries} textClass={NAV} />
 
-      {/* A plain deck stacks its slides flush, each exactly one screen: the
-          air between them would push every slide off the middle of the screen,
-          and the middle is where the rail sits and where the reading is. */}
       <main
         className={`flex flex-col lg:pl-44 ${
-          plain ? '' : 'gap-[16vh] py-[12vh]'
+          swap ? '' : 'gap-[16vh] py-[12vh]'
         }`}
       >
         {brand?.logo ? (
@@ -448,32 +495,40 @@ export function Deck({
           </Column>
         ) : null}
 
-        {chapters.map((chapter, ci) => (
-          <section
-            key={chapter.id}
-            id={`ch-${chapter.id}`}
-            className={`flex flex-col ${plain ? '' : 'gap-[12vh]'}`}
-          >
-            <h2 className="sr-only">{chapter.title}</h2>
-            {groupBlocks(chapter.blocks, plain).map((group, gi) =>
-              group.run ? (
-                plain ? (
-                  <PlainRun key={gi} lines={group.texts[0]!} className={TEXT} />
-                ) : (
+        {swap ? (
+          <>
+            {/* Named for the reader of a screen reader, who gets the run as a
+                list of chapters rather than as a stack of slides. */}
+            {chapters.map((chapter) => (
+              <h2 key={chapter.id} className="sr-only">
+                {chapter.title}
+              </h2>
+            ))}
+            <SwapRun slides={slides} className={TEXT} />
+          </>
+        ) : (
+          chapters.map((chapter, ci) => (
+            <section
+              key={chapter.id}
+              id={`ch-${chapter.id}`}
+              className="flex flex-col gap-[12vh]"
+            >
+              <h2 className="sr-only">{chapter.title}</h2>
+              {groupBlocks(chapter.blocks).map((group, gi) =>
+                group.run ? (
                   <PinnedRun key={gi} texts={group.texts} className={TEXT} />
-                )
-              ) : (
-                <BlockView
-                  key={gi}
-                  block={group.block}
-                  first={ci === 0 && gi === 0}
-                  credits={credits}
-                  plain={plain}
-                />
-              ),
-            )}
-          </section>
-        ))}
+                ) : (
+                  <BlockView
+                    key={gi}
+                    block={group.block}
+                    first={ci === 0 && gi === 0}
+                    credits={credits}
+                  />
+                ),
+              )}
+            </section>
+          ))
+        )}
       </main>
     </div>
   );

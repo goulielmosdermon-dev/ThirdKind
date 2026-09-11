@@ -16,9 +16,9 @@ export default function Page() {
       brand={brands.Ford}
       chapters={chapters}
       credits={credits}
-      // Nothing sticks and nothing is held back: the slides simply resolve as
-      // they arrive and leave as they go.
-      motion="plain"
+      // The frame stays put and the slides are replaced on the spot, rather
+      // than the page travelling past them.
+      motion="swap"
     />
   );
 }

@@ -41,13 +41,11 @@ export type Block =
    * to say about it, so the run sets them out as terms instead.
    */
   | { kind: 'list'; title?: string; items: ListItem[] }
-  /** A piece of music, named and playable. */
-  | {
-      kind: 'sound';
-      src: string;
-      title: string;
-      artist: string;
-    }
+  /**
+   * A piece of music, as one button. The title is not shown — it names the
+   * control for anyone who cannot see it.
+   */
+  | { kind: 'sound'; src: string; title: string }
   /** A film, in the site's own player. */
   | { kind: 'film'; vimeoId: string; title: string; caption?: string }
   /** A priced breakdown: rows, then the total set apart. */

@@ -26,7 +26,6 @@ export const chapters: Chapter[] = [
         kind: 'sound',
         src: '/Ford/soundtrack.mp3',
         title: 'What a Diff’rence a Day Makes',
-        artist: 'Dinah Washington',
       },
     ],
   },

@@ -294,17 +294,21 @@ function ThoughtsRun({
           it: the line arrives out of its masks as the section comes up, and
           runs backwards as the reader leaves it for the writing below. */}
       <section
+        // The index around it runs the width of the screen; this band keeps
+        // the measure the page was drawn at. It backs out of the column's
+        // gutter and sets its own, which is the one the whole page used
+        // before the index was let off its cap.
         className={
           phone
             ? 'pt-44 pb-36'
-            : 'pt-[clamp(14rem,28vw,26rem)] pb-[clamp(11rem,22vw,20rem)]'
+            : 'pt-[clamp(14rem,28vw,26rem)] pb-[clamp(11rem,22vw,20rem)] md:-mx-[12vw]'
         }
       >
         <h2
           className={`font-display leading-[0.92] tracking-[-0.02em] text-ink ${
             phone
               ? 'text-[clamp(2.4rem,13vw,3.6rem)]'
-              : 'text-[clamp(3rem,9.5vw,9rem)]'
+              : 'text-[clamp(3rem,9.5vw,9rem)] md:mx-auto md:max-w-[92rem] md:px-[clamp(5.5rem,12vw,11rem)]'
           }`}
         >
           <MaskedWords

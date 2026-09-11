@@ -43,7 +43,13 @@ export function useSmoothPage(): void {
     let target = scroller.scrollTop;
     let raf = 0;
     let last = 0;
-    let driving = false;
+    /*
+      The last position this loop wrote. A scroll event is dispatched at the
+      next paint rather than when scrollTop is assigned, so a flag set around
+      the assignment is already false again by the time the event arrives and
+      cannot tell our own scrolling from anyone else's. The position can.
+    */
+    let written = -1;
 
     const step = (now: number) => {
       const previous = last || now;
@@ -53,16 +59,15 @@ export function useSmoothPage(): void {
 
       const current = scroller.scrollTop;
       const next = current + (target - current) * (1 - Math.exp(-dt / TAU_MS));
-      driving = true;
       if (Math.abs(target - next) < SETTLE_PX) {
         scroller.scrollTop = target;
-        driving = false;
+        written = scroller.scrollTop;
         raf = 0;
         last = 0;
         return;
       }
       scroller.scrollTop = next;
-      driving = false;
+      written = scroller.scrollTop;
       raf = requestAnimationFrame(step);
     };
 
@@ -82,6 +87,7 @@ export function useSmoothPage(): void {
         DELTA_CLAMP,
       );
       target = Math.min(limit, Math.max(0, target + delta));
+      written = scroller.scrollTop;
       if (raf === 0) {
         last = 0;
         raf = requestAnimationFrame(step);
@@ -89,9 +95,22 @@ export function useSmoothPage(): void {
     };
 
     const onScroll = () => {
-      if (!driving && raf === 0) {
-        target = scroller.scrollTop;
+      const now = scroller.scrollTop;
+      if (Math.abs(now - written) <= 1) {
+        return;
       }
+      /*
+        Something else moved the page — an anchor from the index, a key, the
+        scrollbar — so the glide is abandoned rather than left to finish.
+        Leaving it to run is what made a link clicked mid-glide drag the
+        reader back to wherever the wheel had been heading.
+      */
+      if (raf !== 0) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        last = 0;
+      }
+      target = now;
     };
 
     window.addEventListener('wheel', onWheel, { passive: false });

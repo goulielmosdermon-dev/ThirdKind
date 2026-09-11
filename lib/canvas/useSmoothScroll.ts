@@ -38,7 +38,13 @@ export function useSmoothScroll(ref: RefObject<HTMLElement | null>): void {
     let target = element.scrollTop;
     let raf = 0;
     let last = 0;
-    let driving = false;
+    /*
+      The last position this loop wrote. A scroll event is dispatched at the
+      next paint rather than when scrollTop is assigned, so a flag set around
+      the assignment is already false again by the time the event arrives and
+      cannot tell our own scrolling from anyone else's. The position can.
+    */
+    let written = -1;
 
     const step = (now: number) => {
       const previous = last || now;
@@ -49,16 +55,14 @@ export function useSmoothScroll(ref: RefObject<HTMLElement | null>): void {
       const current = element.scrollTop;
       const next = current + (target - current) * (1 - Math.exp(-dt / TAU_MS));
       if (Math.abs(target - next) < SETTLE_PX) {
-        driving = true;
         element.scrollTop = target;
-        driving = false;
+        written = element.scrollTop;
         raf = 0;
         last = 0;
         return;
       }
-      driving = true;
       element.scrollTop = next;
-      driving = false;
+      written = element.scrollTop;
       raf = requestAnimationFrame(step);
     };
 
@@ -79,6 +83,7 @@ export function useSmoothScroll(ref: RefObject<HTMLElement | null>): void {
         DELTA_CLAMP,
       );
       target = Math.min(limit, Math.max(0, target + delta));
+      written = element.scrollTop;
       if (raf === 0) {
         last = 0;
         raf = requestAnimationFrame(step);
@@ -86,11 +91,20 @@ export function useSmoothScroll(ref: RefObject<HTMLElement | null>): void {
     };
 
     // Anything that scrolls the element without going through the loop —
-    // a scrollbar drag, a keypress, an anchor — becomes the new target.
+    // a scrollbar drag, a keypress, an anchor — takes it over: the glide is
+    // abandoned there and then, rather than left to finish and pull the
+    // reader back to where the wheel had been heading.
     const onScroll = () => {
-      if (!driving && raf === 0) {
-        target = element.scrollTop;
+      const now = element.scrollTop;
+      if (Math.abs(now - written) <= 1) {
+        return;
       }
+      if (raf !== 0) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        last = 0;
+      }
+      target = now;
     };
 
     element.addEventListener('wheel', onWheel, { passive: false });

@@ -75,10 +75,9 @@ function faultIn(step: Step, value: string): string {
  * The way in, at the foot of the page: one question at a time rather than a
  * form to be waded through, answered in the page instead of in an overlay.
  *
- * It posts to the same endpoint the overlay does. The archive keeps one name
- * and one free-text field, so the two names are joined and the role is filed
- * with the note — nothing is dropped, and separating them again is a column
- * away if it is ever worth it.
+ * It posts to the same endpoint the overlay does, and is filed in the same
+ * table: the two names are joined into the one the archive keeps, and the
+ * role and the note have columns of their own.
  */
 export function InquirySection({ phone }: { phone: boolean }) {
   const reduced = useReducedMotion() ?? false;
@@ -115,13 +114,17 @@ export function InquirySection({ phone }: { phone: boolean }) {
       const response = await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        // Sent as asked. The server files one name from the two halves, and
+        // the note doubles as `about` so a row reads the same whichever way
+        // in it came.
         body: JSON.stringify({
-          name: `${answers.firstName ?? ''} ${answers.lastName ?? ''}`.trim(),
-          email: answers.email ?? '',
+          firstName: answers.firstName ?? '',
+          lastName: answers.lastName ?? '',
           company: answers.company ?? '',
-          about: answers.jobTitle
-            ? `${answers.jobTitle}\n\n${answers.message ?? ''}`
-            : (answers.message ?? ''),
+          jobTitle: answers.jobTitle ?? '',
+          email: answers.email ?? '',
+          message: answers.message ?? '',
+          about: answers.message ?? '',
         }),
       });
       const result = (await response.json()) as { error?: string };

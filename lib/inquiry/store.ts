@@ -27,8 +27,31 @@ export async function saveInquiry(
     return { ok: false, error: 'Supabase is not configured.' };
   }
 
-  try {
-    const response = await fetch(`${url}/rest/v1/inquiries`, {
+  /*
+    The columns the page's own form fills. They are written when the table has
+    them and dropped when it does not, so an inquiry is never lost to a table
+    that has not been migrated yet — see supabase/add-inquiry-columns.sql.
+  */
+  const added = {
+    first_name: data.firstName,
+    last_name: data.lastName,
+    job_title: data.jobTitle,
+    message: data.message,
+  };
+
+  const legacy = {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    company: data.company,
+    budget: data.budget,
+    about: data.about,
+    start_date: data.startDate,
+    source: data.source,
+  };
+
+  const send = async (row: Record<string, string>) =>
+    fetch(`${url}/rest/v1/inquiries`, {
       method: 'POST',
       headers: {
         apikey: key,
@@ -37,23 +60,29 @@ export async function saveInquiry(
         // Nothing is read back, so ask for the smallest possible reply.
         Prefer: 'return=minimal',
       },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        company: data.company,
-        budget: data.budget,
-        about: data.about,
-        start_date: data.startDate,
-        source: data.source,
-      }),
+      body: JSON.stringify(row),
     });
+
+  try {
+    let response = await send({ ...legacy, ...added });
+
     if (!response.ok) {
-      return {
-        ok: false,
-        error: `${response.status} ${await response.text()}`,
-      };
+      const reason = await response.text();
+      // PGRST204: the table has no such column. Everything the added fields
+      // carry is also in `name` and `about`, so the row still stands up.
+      if (!reason.includes('PGRST204')) {
+        return { ok: false, error: `${response.status} ${reason}` };
+      }
+      console.warn('[inquiry] filed without the added columns:', reason);
+      response = await send(legacy);
+      if (!response.ok) {
+        return {
+          ok: false,
+          error: `${response.status} ${await response.text()}`,
+        };
+      }
     }
+
     return { ok: true };
   } catch (error) {
     return { ok: false, error: String(error) };
@@ -73,6 +102,11 @@ export type StoredInquiry = {
   start_date: string | null;
   source: string | null;
   status: string;
+  /* Null on a row filed before the columns existed, or by the overlay. */
+  first_name?: string | null;
+  last_name?: string | null;
+  job_title?: string | null;
+  message?: string | null;
 };
 
 /** Everything filed, newest first. Server-side only — this reads with the key. */

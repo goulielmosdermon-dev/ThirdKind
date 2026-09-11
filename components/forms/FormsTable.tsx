@@ -8,9 +8,11 @@ import type { StoredInquiry } from '@/lib/inquiry/store';
 const COLUMNS = [
   ['created_at', 'Received'],
   ['name', 'Name'],
+  ['job_title', 'Job title'],
   ['email', 'Email'],
   ['phone', 'Phone'],
   ['company', 'Company'],
+  ['message', 'Message'],
   ['budget', 'Budget'],
   ['about', 'About'],
   ['start_date', 'Start'],
@@ -167,7 +169,15 @@ export function FormsTable({ rows }: { rows: StoredInquiry[] }) {
                 {COLUMNS.map(([key]) => (
                   <td
                     key={key}
-                    className="border-b border-l border-hairline px-3 py-2 whitespace-nowrap"
+                    // A note runs to a paragraph, so it is held to a column
+                    // width and cut, with the whole of it on the title —
+                    // everything else takes the width of what is in it.
+                    className={`border-b border-l border-hairline px-3 py-2 ${
+                      key === 'message'
+                        ? 'max-w-[26rem] truncate'
+                        : 'whitespace-nowrap'
+                    }`}
+                    title={key === 'message' ? (row.message ?? '') : undefined}
                   >
                     {key === 'email' ? (
                       <a

@@ -31,8 +31,25 @@ describe('parseInquiry', () => {
     const result = parseInquiry({ ...valid, email: 'not-an-email' });
     expect(result).toEqual({
       ok: false,
-      error: 'Please add a company email.',
+      error: 'Please add a work email.',
     });
+  });
+
+  it('files one name from a form that asks for the two halves', () => {
+    const result = parseInquiry({
+      firstName: 'Ada',
+      lastName: 'Lovelace',
+      company: 'Brand',
+      jobTitle: 'Head of Brand',
+      email: 'ada@brand.com',
+      message: 'Six films, please.',
+    });
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.data.name).toBe('Ada Lovelace');
+      expect(result.data.jobTitle).toBe('Head of Brand');
+      expect(result.data.message).toBe('Six films, please.');
+    }
   });
 
   it('silently drops honeypot spam', () => {
@@ -41,6 +58,13 @@ describe('parseInquiry', () => {
   });
 
   it('formats a readable email body', () => {
-    expect(formatInquiryEmail(valid)).toContain('Company email: ada@brand.com');
+    const parsed = parseInquiry(valid);
+    expect(parsed.ok).toBe(true);
+    if (parsed.ok) {
+      const body = formatInquiryEmail(parsed.data);
+      expect(body).toContain('Work email: ada@brand.com');
+      // Only what was asked: a run of empty labels reads as a broken form.
+      expect(body).not.toContain('Message:');
+    }
   });
 });

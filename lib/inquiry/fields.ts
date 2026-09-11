@@ -30,6 +30,11 @@ export type InquiryPayload = {
   about: string;
   startDate: string;
   source: string;
+  /* Asked by the page's own form, which the overlay does not ask for. */
+  firstName: string;
+  lastName: string;
+  jobTitle: string;
+  message: string;
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,8 +58,13 @@ export function parseInquiry(
     return { ok: false, error: 'spam' };
   }
 
+  const first = asString(body.firstName);
+  const last = asString(body.lastName);
+
   const data: InquiryPayload = {
-    name: asString(body.name),
+    // A form that asks for the two halves separately still files one name,
+    // so every row reads the same way however it arrived.
+    name: asString(body.name) || [first, last].filter(Boolean).join(' '),
     email: asString(body.email),
     phone: asString(body.phone),
     company: asString(body.company),
@@ -62,6 +72,10 @@ export function parseInquiry(
     about: asString(body.about),
     startDate: asString(body.startDate),
     source: asString(body.source),
+    firstName: first,
+    lastName: last,
+    jobTitle: asString(body.jobTitle),
+    message: asString(body.message),
   };
 
   /*
@@ -97,6 +111,7 @@ export function formatInquiryEmail(data: InquiryPayload): string {
   return (
     [
       ['Name', data.name],
+      ['Job title', data.jobTitle],
       ['Work email', data.email],
       ['Phone', data.phone],
       ['Company', data.company],
@@ -104,6 +119,7 @@ export function formatInquiryEmail(data: InquiryPayload): string {
       ['Inquiring about', data.about],
       ['Ideal start date', data.startDate],
       ['Where they heard about us', data.source],
+      ['Message', data.message],
     ] as const
   )
     .filter(([, value]) => value)

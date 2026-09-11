@@ -69,7 +69,9 @@ const SLOT = [
     // Half again the width it closed on, and the cap comes off with it or the
     // share of the column it is given stops meaning anything past 36rem.
     wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[69%] md:max-w-none',
-    aspect: 'aspect-[4/5]',
+    // Half the height it stood at, so the frame is read across rather than
+    // cropped to a portrait of the middle of it.
+    aspect: 'aspect-[4/5] md:aspect-[8/5]',
   },
 ] as const;
 
@@ -108,13 +110,19 @@ function ManifestoBand({
         // The gap read from the showcase's own edge, not the section box: the
         // slab starts below the section's own bottom padding, so its top
         // padding is the smaller of the two numbers.
+        // Three caps used to stack here — the column at 92rem, the gutter
+        // stopping at 11rem, and the prose at 52rem — and the prose was
+        // reached first, so the band read as the same narrow ribbon at every
+        // size and only drifted further into the middle as the screen grew.
+        // It takes the index's rule instead: a gutter that is a share of the
+        // screen, and nothing else in the way.
         className={
           phone
             ? 'px-5 pt-14 pb-16'
-            : 'mx-auto max-w-[92rem] px-5 md:px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(2rem,4.8vw,4rem)] pb-[clamp(2rem,5vw,4rem)]'
+            : 'px-5 md:px-[12vw] pt-[clamp(2rem,4.8vw,4rem)] pb-[clamp(2rem,5vw,4rem)]'
         }
       >
-        <div className={phone ? 'space-y-6' : 'max-w-[52rem] space-y-8'}>
+        <div className={phone ? 'space-y-6' : 'space-y-8'}>
           {lines.map((block) => (
             <p
               key={block._key}

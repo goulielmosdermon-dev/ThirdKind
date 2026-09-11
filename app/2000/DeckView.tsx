@@ -90,7 +90,14 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
       );
 
     case 'sound':
-      return <SoundBar src={block.src} title={block.title} className={TEXT} />;
+      return (
+        <SoundBar
+          src={block.src}
+          title={block.title}
+          artist={block.artist}
+          className={TEXT}
+        />
+      );
 
     case 'full':
       return (
@@ -286,7 +293,12 @@ function BlockView({
       return (
         <Column>
           <FadeIn>
-            <SoundBar src={block.src} title={block.title} className={TEXT} />
+            <SoundBar
+              src={block.src}
+              title={block.title}
+              artist={block.artist}
+              className={TEXT}
+            />
           </FadeIn>
         </Column>
       );

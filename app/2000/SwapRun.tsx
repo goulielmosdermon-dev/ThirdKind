@@ -14,6 +14,9 @@ import { Reveal, type RevealState } from './Reveal';
  */
 export const SlideState = createContext<RevealState | null>(null);
 
+/** How long an arriving slide waits for the one it replaces to leave. */
+const LAG = 0.7;
+
 export type Slide = {
   /** Set on the first slide of a chapter, so the rail can reach it. */
   chapter?: string;
@@ -117,19 +120,29 @@ export function SwapRun({
       <div className="sticky top-0 flex h-svh items-center">
         <div className="mx-auto w-full max-w-[1180px] px-5 md:px-10">
           {/* Stacked in one grid cell, so every slide occupies the same spot
-              and the one before it is replaced rather than pushed. */}
-          <div className="grid">
+              and the one before it is replaced rather than pushed. Centred in
+              the row as well as on the screen: the cell is as tall as the
+              longest slide, and without this the short ones sit at the top of
+              it and read high. */}
+          <div className="grid items-center">
             {slides.map((slide, i) => {
               const state = stateOf(i);
               return (
                 <div
                   key={i}
                   className="col-start-1 row-start-1"
-                  // Every slide sits in the same cell, so the ones that are
-                  // not being read are still lying over the one that is. They
-                  // are deaf to the pointer until it is their turn, or the
-                  // last slide in the deck quietly swallows every click.
-                  style={{ pointerEvents: state === 'in' ? 'auto' : 'none' }}
+                  style={{
+                    // Every slide sits in the same cell, so the ones that are
+                    // not being read are still lying over the one that is.
+                    // They are deaf to the pointer until it is their turn, or
+                    // the last slide quietly swallows every click.
+                    pointerEvents: state === 'in' ? 'auto' : 'none',
+                    // And the one arriving waits for the one it replaces to
+                    // finish leaving, or the two read on top of each other.
+                    ...(i > 0
+                      ? ({ '--reveal-lag': `${LAG}s` } as React.CSSProperties)
+                      : {}),
+                  }}
                   aria-hidden={state !== 'in'}
                 >
                   {slide.lines ? (
@@ -152,6 +165,8 @@ export function SwapRun({
                               : 'translateY(6%)',
                         transition:
                           'opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 1.15s cubic-bezier(0.22, 1, 0.36, 1)',
+                        transitionDelay:
+                          state === 'in' && i > 0 ? `${LAG}s` : '0s',
                       }}
                     >
                       <SlideState.Provider value={state}>

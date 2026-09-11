@@ -237,13 +237,14 @@ export const chapters: Chapter[] = [
           ['Creative & pre-production', '€600'],
           // Director, cinematography, lighting, 1st AC and sound, read as the
           // one line they are on the day.
-          ['Production', '€4,600'],
+          ['Production', '€4,100'],
           ['Equipment', '€800'],
           ['Post-production', '€1,500'],
+          ['Travel & logistics', '€500'],
         ],
         total: ['Total', '€7,500 + VAT'],
         caption:
-          'Production and post-production for one testimonial at one location. Actor fees are not included in this quote.',
+          'Production and post-production for one testimonial at one location. Should the full campaign be confirmed within 90 days, this fee is credited in full against it. Actor fees are not included in this quote.',
       },
     ],
   },
@@ -255,14 +256,30 @@ export const chapters: Chapter[] = [
         kind: 'table',
         title: 'Six testimonials',
         rows: [
-          ['Creative & pre-production', '€2,500'],
-          ['Production', '€21,600'],
-          ['Equipment', '€2,500'],
-          ['Post-production', '€5,900'],
+          // The saving sits where it is actually made — one brief, one crew,
+          // one continuous hire. Post is six times the single-film figure
+          // exactly: an edit, a grade and a mix do not get cheaper by the
+          // half-dozen, and saying so is what makes the rest of it credible.
+          ['Creative & pre-production', '€3,500'],
+          ['Production', '€19,500'],
+          ['Equipment', '€3,500'],
+          ['Post-production', '€9,000'],
+          ['Travel & logistics', '€2,500'],
         ],
-        total: ['Total', '€32,500 + VAT'],
+        total: ['Total', '€38,000 + VAT'],
         caption:
           'Production and post-production for all six testimonials across six separate locations. The six-film package is a campaign rate, based on the efficiencies of producing the projects as one coordinated production. Actor fees are not included in this quote.',
+      },
+      {
+        kind: 'list',
+        title: 'Not included',
+        items: [
+          'Actor fees',
+          'Location permits and fees',
+          'Music licensing',
+          'Subtitling and language versions beyond the delivered cut',
+          'Revisions beyond two rounds per film',
+        ],
       },
     ],
   },

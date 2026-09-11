@@ -132,8 +132,17 @@ function hydrateAboutSection(section: AboutSection): AboutSection {
   return section;
 }
 
-/** Stills we ship ourselves, kept at native size and served uncompressed. */
+/**
+ * Stills served untouched, at their own size.
+ *
+ * Everything else goes through the optimiser, which re-encodes it — fine for
+ * a thumbnail, visible on a header. A still listed here is passed straight to
+ * the browser instead, so the only compression it carries is the one it
+ * arrived with.
+ */
 const LOCAL_STILL: Record<string, { width: number; height: number }> = {
+  'https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/69d13ffb069cb974023ae6ff_thumb.jpg':
+    { width: 1562, height: 1066 },
   '/work/scytales-2/gmb-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
@@ -432,7 +441,7 @@ const projects: Project[] = [
     slug: { current: 'augustine-jewels' },
     order: 6,
     thumbnail: image('Augustine Jewels Nordic Collection'),
-    hoverDescription: 'Light, metal, and the quiet of a northern room.',
+    hoverDescription: 'Green stones, green sky, one long northern night.',
     heroVideoUrl: 'https://vimeo.com/935002942',
     posterImage: image('Augustine Jewels poster'),
     body: copy('Placeholder body for Nordic Collection.'),
@@ -509,7 +518,7 @@ const projects: Project[] = [
     slug: { current: 'noirgaze' },
     order: 10,
     thumbnail: image('Noir Gaze New Product Launch'),
-    hoverDescription: 'A launch film that treats product like character.',
+    hoverDescription: 'A beach film that lets the light sell it.',
     heroVideoUrl: 'https://vimeo.com/956762066',
     posterImage: image('Noir Gaze poster'),
     body: copy('Placeholder body for Noir Gaze New Product Launch.'),
@@ -867,18 +876,6 @@ const aboutSections: AboutSection[] = [
         description:
           'Most ads get skipped because they earned it. We make the ones people sit through, and now and then send to a mate, which is the only share worth counting.',
       },
-      {
-        title: 'Proof it worked',
-        slug: { current: 'proof-it-worked' },
-        description:
-          'You should not have to take our word for it. We agree what we are watching before the work goes out, take a reading, take another one after, and show you both.',
-      },
-      {
-        title: 'Steady stream',
-        slug: { current: 'steady-stream' },
-        description:
-          'One big film a year stopped carrying a brand a while ago. We set you up to keep making things: quick where it can be quick, careful where it counts, without spending the whole budget on the small stuff.',
-      },
     ],
     faqs: [
       {
@@ -899,12 +896,12 @@ const aboutSections: AboutSection[] = [
       {
         question: 'What does a project cost?',
         answer:
-          'It is scoped per film. A two-day shoot and a multi-country campaign are not the same animal. What stays fixed is how the number is built: every line is something you can see on screen.',
+          'Per project, or on a term. It depends on what the communication needs. A two-day shoot and a multi-country campaign are not the same animal, and a brand that has to keep talking all year is a different question again, so we sign annual and half-year agreements where that serves the strategy better than quoting film by film. What stays fixed is how the number is built: every line is something you can see on screen.',
       },
       {
         question: 'Do you only make commercials?',
         answer:
-          'No. Commercials, brand films, branded documentaries, internal films, and music films all pass through the same process. The format changes; the belief that someone has to actually want to finish watching does not.',
+          'We do not really think of them as commercials. Brand films, branded documentaries, internal films, music films: it is one job, communication that reaches a person somewhere they feel it rather than somewhere they file it. The format changes. The requirement that someone wants to finish watching does not.',
       },
       {
         question: 'Can you work with a script or treatment we already have?',
@@ -914,7 +911,7 @@ const aboutSections: AboutSection[] = [
       {
         question: 'How do you use AI?',
         answer:
-          'For speed in concepting, stills, and motion tests, where a machine is genuinely faster than a mood board. It never gets the last cut. Taste, casting, performance, and the final edit stay with people, because that is the part an audience can feel.',
+          'We use it in places. Concepting, stills, motion tests, where a machine is faster than a mood board. It never gets the last cut. As more of what people watch is made by machine, the work that stands out will be the work that was made by people: real casting, real performance, real light, real decisions. That is what we hold on to, and it is the part an audience can feel.',
       },
       {
         question: 'Do you shoot globally?',
@@ -924,7 +921,7 @@ const aboutSections: AboutSection[] = [
       {
         question: 'What do we get at the end?',
         answer:
-          'Masters in the formats you actually need — broadcast, social, and archive — plus the cutdowns and versions agreed at the start. Edit, sound, and colour are treated as one argument, so the fifteen-second version still holds the film together instead of looking like an offcut.',
+          'Masters in the formats you need: broadcast, social, and archive, plus the cutdowns and versions agreed at the start. Edit, sound, and colour are treated as one argument, so the fifteen-second version still holds the film together instead of looking like an offcut.',
       },
     ],
   },

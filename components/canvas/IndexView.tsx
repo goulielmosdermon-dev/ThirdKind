@@ -14,6 +14,7 @@ import type {
 import {
   editorialCopy,
   editorialLeaves,
+  editorialMore,
   editorialThoughts,
 } from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
@@ -142,6 +143,122 @@ function ManifestoBand({
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+/**
+ * Three more pieces, in a row, after the index has been read.
+ *
+ * The card is the index's own — the line and its arrow, then what the work
+ * involved, then the picture — so a piece reads the same wherever it appears.
+ * The row is deliberately uneven: each slot takes a different crop and hangs
+ * at a different height, which is what keeps three cards side by side from
+ * reading as a grid of boxes.
+ */
+const MORE_SLOT = [
+  { wrap: '', aspect: 'aspect-[16/10]' },
+  { wrap: 'md:mt-[6vw]', aspect: 'aspect-square' },
+  { wrap: 'md:mt-[2vw]', aspect: 'aspect-[4/3]' },
+] as const;
+
+function MoreWork({
+  items,
+  phone,
+  reduced,
+  onOpen,
+  onPrefetch,
+}: {
+  items: LeafCanvasNode[];
+  phone: boolean;
+  reduced: boolean;
+  onOpen: (href: string, nodeId: string) => void;
+  onPrefetch?: (href: string) => void;
+}) {
+  if (items.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className={phone ? 'mt-20' : 'mt-[clamp(6rem,12vw,14rem)]'}>
+      <ul
+        className={`grid grid-cols-1 items-start ${
+          phone ? 'gap-14' : 'gap-10 md:grid-cols-3 md:gap-[4%]'
+        }`}
+      >
+        {items.map((node, index) => {
+          const slot = MORE_SLOT[index % MORE_SLOT.length] ?? MORE_SLOT[0];
+          const { line, name } = editorialCopy(node);
+          // The arrow stays welded to the last word so it never wraps alone.
+          const cut = line.lastIndexOf(' ');
+          let lead = '';
+          let tail = line;
+          if (name) {
+            lead = `${line} `;
+            tail = '';
+          } else if (cut > 0) {
+            lead = line.slice(0, cut + 1);
+            tail = line.slice(cut + 1);
+          }
+
+          return (
+            <motion.li
+              key={node.id}
+              className={phone ? '' : slot.wrap}
+              initial={reduced ? false : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: reduced ? MOTION.reduced : 0.6,
+                delay: reduced ? 0 : index * 0.08,
+                ease: MOTION.easeOut,
+              }}
+            >
+              <button
+                type="button"
+                className="group w-full cursor-pointer border-0 bg-transparent p-0 text-left text-ink"
+                onClick={() => onOpen(node.href, node.id)}
+                onPointerEnter={() => onPrefetch?.(node.href)}
+                onFocus={() => onPrefetch?.(node.href)}
+              >
+                <p className="font-display mb-3 text-[1.05rem] leading-snug">
+                  {lead}
+                  <span className="whitespace-nowrap">
+                    {name ? <span className="text-mute">{name}</span> : tail}
+                    <IndexArrow />
+                  </span>
+                </p>
+
+                {node.tags?.length ? (
+                  <ul className="mb-4 flex flex-wrap gap-1.5">
+                    {node.tags.map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+
+                <span
+                  className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
+                >
+                  <Image
+                    src={node.thumbnail.src}
+                    alt={node.thumbnail.alt}
+                    fill
+                    sizes={phone ? '393px' : '(min-width: 768px) 30vw, 92vw'}
+                    unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
+                    className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
+                  />
+                </span>
+              </button>
+            </motion.li>
+          );
+        })}
+      </ul>
     </section>
   );
 }
@@ -397,6 +514,7 @@ export function IndexView({
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
   const thoughts = useMemo(() => editorialThoughts(nodes), [nodes]);
+  const more = useMemo(() => editorialMore(nodes), [nodes]);
   const reduced = useReducedMotion() ?? false;
   const scrollRef = useRef<HTMLDivElement>(null);
   const manifestoRef = useRef<HTMLElement>(null);
@@ -485,10 +603,10 @@ export function IndexView({
     if (!onPrefetch) {
       return;
     }
-    for (const item of [...items, ...thoughts]) {
+    for (const item of [...items, ...more, ...thoughts]) {
       onPrefetch(item.href);
     }
-  }, [items, onPrefetch, thoughts]);
+  }, [items, more, onPrefetch, thoughts]);
 
   const sheet = {
     hidden: { opacity: 0 },
@@ -753,6 +871,14 @@ export function IndexView({
         <ThoughtsRun
           items={thoughts}
           phone={phone}
+          onOpen={onOpen}
+          onPrefetch={onPrefetch}
+        />
+
+        <MoreWork
+          items={more}
+          phone={phone}
+          reduced={reduced}
           onOpen={onOpen}
           onPrefetch={onPrefetch}
         />

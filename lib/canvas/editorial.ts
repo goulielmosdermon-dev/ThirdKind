@@ -25,6 +25,23 @@ export function editorialLeaves(nodes: CanvasNode[]): LeafCanvasNode[] {
   ).filter((node): node is LeafCanvasNode => Boolean(node));
 }
 
+/**
+ * Three more pieces, shown after the index and before the way in. Anything
+ * already in the index above is not repeated here.
+ */
+const MORE_WORK_ORDER = [
+  '/work/noirgaze',
+  '/work/ilana',
+  '/work/augustine-jewels',
+] as const;
+
+export function editorialMore(nodes: CanvasNode[]): LeafCanvasNode[] {
+  const work = leafReadingOrder(nodes).filter((node) => node.hubKey === 'work');
+  return MORE_WORK_ORDER.map((href) =>
+    work.find((node) => node.href === href),
+  ).filter((node): node is LeafCanvasNode => Boolean(node));
+}
+
 /** The writing, in reading order, for the list under the work. */
 export function editorialThoughts(nodes: CanvasNode[]): LeafCanvasNode[] {
   return leafReadingOrder(nodes).filter((node) => node.hubKey === 'thoughts');

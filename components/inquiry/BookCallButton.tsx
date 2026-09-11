@@ -4,7 +4,7 @@ import { PillLabel } from '@/components/sheet/PillLabel';
 import { useInquiry } from '@/components/inquiry/InquiryProvider';
 
 export function BookCallButton({
-  label = 'reach out',
+  label = 'Reach Out',
   tone = 'ink',
   variant = 'solid',
   className,
@@ -34,7 +34,7 @@ export function BookCallButton({
       className={`inline-flex transition-opacity duration-300 hover:opacity-85 ${className ?? ''}`}
       onClick={() => openInquiry()}
     >
-      <PillLabel label={label} tone={tone} labelClassName="lowercase" />
+      <PillLabel label={label} tone={tone} />
     </button>
   );
 }

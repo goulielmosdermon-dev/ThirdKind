@@ -204,7 +204,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <h2 id={titleId} className="font-display sr-only">
-          Reach out
+          Reach Out
         </h2>
         {sent ? (
           <div className="flex flex-col justify-center px-1 py-6">

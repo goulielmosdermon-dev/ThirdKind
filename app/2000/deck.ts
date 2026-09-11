@@ -41,6 +41,15 @@ export type Block =
    * to say about it, so the run sets them out as terms instead.
    */
   | { kind: 'list'; title?: string; items: ListItem[] }
+  /** A piece of music, named and playable. */
+  | {
+      kind: 'sound';
+      src: string;
+      title: string;
+      artist: string;
+    }
+  /** A line held on a colour of its own — the last word of a deck. */
+  | { kind: 'statement'; lines: string[] }
   /** A film, in the site's own player. */
   | { kind: 'film'; vimeoId: string; title: string; caption?: string }
   /** A priced breakdown: rows, then the total set apart. */

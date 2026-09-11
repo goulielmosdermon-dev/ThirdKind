@@ -32,6 +32,11 @@ export const brands: Record<string, Brand> = {
     name: 'epay',
     password: process.env.DECK_PASSWORD_EPAY ?? 'EPAY2026',
   },
+  Ford: {
+    slug: 'Ford',
+    name: 'Ford',
+    password: process.env.DECK_PASSWORD_FORD ?? 'FORD2026',
+  },
 };
 
 export const cookieName = (slug: string) => `deck_${slug}`;

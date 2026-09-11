@@ -4,6 +4,7 @@ import { DeckIndex } from './Index';
 import { FadeIn } from './FadeIn';
 import { Lead } from './Lead';
 import { SmoothPage } from './SmoothPage';
+import { SoundBar } from './SoundBar';
 import { PinnedRun } from './PinnedRun';
 import { Reveal } from './Reveal';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
@@ -208,6 +209,43 @@ function BlockView({
         </Column>
       );
     }
+
+    case 'sound':
+      return (
+        <Column>
+          <FadeIn>
+            <SoundBar
+              src={block.src}
+              title={block.title}
+              artist={block.artist}
+              className={TEXT}
+            />
+          </FadeIn>
+        </Column>
+      );
+
+    /* The last word, on a ground of its own: full bleed, and set in the
+       recipient's own face rather than the deck's. */
+    case 'statement':
+      return (
+        <section
+          // Pale, whatever the colour: the bar reads it and stays as it is.
+          data-surface="light"
+          className="-mx-5 bg-[#eaf3ff] px-5 py-[18vh] md:-mx-10 md:px-10 lg:-ml-44"
+        >
+          <Column>
+            <FadeIn>
+              <p className="font-ford text-[clamp(2.5rem,7.5vw,7rem)] leading-[0.95] tracking-[0.01em] text-[#066fef] uppercase">
+                {block.lines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </p>
+            </FadeIn>
+          </Column>
+        </section>
+      );
 
     /* A film, in the same player the work pages use.
 

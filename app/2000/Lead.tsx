@@ -17,18 +17,24 @@ export function Lead({
   text,
   image,
   className,
+  plain = false,
 }: {
   text?: string;
   /** A mark instead of a word, held to the same centre and the same fade. */
   image?: Plate;
   className: string;
+  /**
+   * No sticky frame and no scroll-driven fade: one screen, and the opening
+   * simply resolves and goes the way everything else on the page does.
+   */
+  plain?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || plain) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let frame = 0;
@@ -58,7 +64,7 @@ export function Lead({
       window.removeEventListener('resize', onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [plain]);
 
   return (
     // The opening is the one slide that ignores the page's frame: it pulls
@@ -67,10 +73,14 @@ export function Lead({
     // left over.
     <div
       ref={ref}
-      className="-mt-[12vh] lg:-ml-44"
-      style={{ height: '180svh' }}
+      className={`lg:-ml-44 ${plain ? '' : '-mt-[12vh]'}`}
+      style={{ height: plain ? '100svh' : '180svh' }}
     >
-      <div className="sticky top-0 flex h-svh items-center justify-center px-5">
+      <div
+        className={`flex h-svh items-center justify-center px-5 ${
+          plain ? '' : 'sticky top-0'
+        }`}
+      >
         {image ? (
           <Image
             src={image.src}

@@ -48,8 +48,6 @@ export type Block =
       title: string;
       artist: string;
     }
-  /** A line held on a colour of its own — the last word of a deck. */
-  | { kind: 'statement'; lines: string[] }
   /** A film, in the site's own player. */
   | { kind: 'film'; vimeoId: string; title: string; caption?: string }
   /** A priced breakdown: rows, then the total set apart. */

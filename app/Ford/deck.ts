@@ -37,18 +37,7 @@ export const chapters: Chapter[] = [
       {
         kind: 'text',
         lines: [
-          '1970s, rural America. A young couple buys a small house at the edge of open land. From the bedroom window, the sunset stretches wide and endless. Orange bleeding into pink.',
-        ],
-      },
-      {
-        kind: 'text',
-        lines: [
-          'That room fills with life. The first time they make love, the light slips away as they pull the curtains halfway.',
-        ],
-      },
-      {
-        kind: 'text',
-        lines: [
+          '1970s, rural America. A young couple buys a small house at the edge of open land. From the bedroom window, the sunset stretches wide and endless. Orange bleeding into pink. That room fills with life. The first time they make love, the light slips away as they pull the curtains halfway.',
           'A couple of years later, they lie in the same bed with their newborn son between them, quiet, watching the sun sink through the glass, breathing in sync.',
         ],
       },
@@ -61,25 +50,13 @@ export const chapters: Chapter[] = [
       {
         kind: 'text',
         lines: [
-          'The 90s. They stand by the window, older now, hands folded. Their son drives off for college, shrinking down the road, his car framed perfectly in the window as the sun dips behind him.',
+          'The 90s. They stand by the window, older now, hands folded. Their son drives off for college, shrinking down the road, his car framed perfectly in the window as the sun dips behind him. In the far distance, metal beams begin to rise. Construction. Something changing.',
         ],
       },
       {
         kind: 'text',
         lines: [
-          'In the far distance, metal beams begin to rise. Construction. Something changing.',
-        ],
-      },
-      {
-        kind: 'text',
-        lines: [
-          'The 2000s. A mall grows, steel and concrete inching higher, stealing the horizon piece by piece. The son returns and brings a girl. In the yard, he drops to one knee, his father’s Ford behind them.',
-        ],
-      },
-      {
-        kind: 'text',
-        lines: [
-          'From the window, the mother watches, smiling softly. She looks up. The sunset is still there, but thinner now, squeezed between buildings.',
+          'The 2000s. A mall grows, steel and concrete inching higher, stealing the horizon piece by piece. The son returns and brings a girl. In the yard, he drops to one knee, dad’s Ford behind them. From the window, the mother watches, smiling softly. She looks up. The sunset is still there, but thinner now, squeezed between buildings.',
         ],
       },
       {
@@ -91,25 +68,13 @@ export const chapters: Chapter[] = [
       {
         kind: 'text',
         lines: [
-          'The 2020s. She is sick, old, and weak, elevated in bed so she can try to see outside. But the building blocks everything. No sky. No colour.',
+          'The 2020s. She is sick, old, and weak, elevated in bed so she can try to see outside. But the building blocks everything. No sky. No color.',
         ],
       },
       {
         kind: 'text',
         lines: [
-          'The house suddenly trembles. She grips the sheets. Outside, her old husband strains in the 70s Ford, a rope tied tight around the house. The engine growls. The house barely shifts.',
-        ],
-      },
-      {
-        kind: 'text',
-        lines: [
-          'Then another engine roars. A brand-new Ford pulls alongside. Together they pull. Wood groans. The ground cracks. The house slides a single foot.',
-        ],
-      },
-      {
-        kind: 'text',
-        lines: [
-          'Inside, the room floods with light. The sunset returns. She exhales. A tear rolls down her cheek.',
+          'The house suddenly trembles. She grips the sheets. Outside, her old husband strains in the 70s Ford, a rope tied tight around the house. The engine growls. The house barely shifts. Then another engine roars. A brand-new Ford pulls alongside. Together they pull. Wood groans. The ground cracks. The house slides a single foot. Inside, the room floods with light. The sunset returns. She exhales. A tear rolls down her cheek.',
         ],
       },
     ],
@@ -118,10 +83,7 @@ export const chapters: Chapter[] = [
     id: '04',
     title: 'Why Ford',
     blocks: [
-      {
-        kind: 'statement',
-        lines: ['History, power, family,', 'time, horizon'],
-      },
+      { kind: 'text', lines: ['History, power, family, time, horizon.'] },
     ],
   },
   {

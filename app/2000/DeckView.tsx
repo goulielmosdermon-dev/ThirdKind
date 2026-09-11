@@ -6,6 +6,8 @@ import { Lead } from './Lead';
 import { SmoothPage } from './SmoothPage';
 import { SoundBar } from './SoundBar';
 import { PinnedRun } from './PinnedRun';
+import { PlainRun } from './PlainRun';
+import { MaskIn } from './MaskIn';
 import { Reveal } from './Reveal';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
 import { type Brand } from './brands';
@@ -63,21 +65,46 @@ function Frame({
   );
 }
 
+/** A plate resolves as it arrives: masked on a plain deck, faded otherwise. */
+function Resolve({
+  plain,
+  delay,
+  className,
+  children,
+}: {
+  plain: boolean;
+  delay?: number;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (plain) {
+    return <MaskIn className={className}>{children}</MaskIn>;
+  }
+  return (
+    <FadeIn className={className} delay={delay}>
+      {children}
+    </FadeIn>
+  );
+}
+
 /** Everything that is not a pinned text run. */
 function BlockView({
   block,
   first,
   credits,
+  plain,
 }: {
   block: Exclude<Block, { kind: 'text' }>;
   first: boolean;
   credits: Credit[];
+  /** The deck reads without anything sticking: see Deck's `motion`. */
+  plain: boolean;
 }) {
   switch (block.kind) {
     case 'full':
       return (
         <Column>
-          <FadeIn>
+          <Resolve plain={plain}>
             <figure>
               {block.caption ? (
                 <figcaption className={`mb-[6vh] ${TEXT}`}>
@@ -90,7 +117,7 @@ function BlockView({
                 priority={first}
               />
             </figure>
-          </FadeIn>
+          </Resolve>
         </Column>
       );
 
@@ -100,7 +127,7 @@ function BlockView({
       return (
         <Column>
           <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 md:gap-10">
-            <FadeIn className="md:pt-[4vw]">
+            <Resolve plain={plain} className="md:pt-[4vw]">
               <figure>
                 {block.caption ? (
                   <figcaption className={`mb-[6vh] ${TEXT}`}>
@@ -112,15 +139,15 @@ function BlockView({
                   sizes="(min-width: 768px) 46vw, 100vw"
                 />
               </figure>
-            </FadeIn>
-            <FadeIn className="md:pt-[14vw]">
+            </Resolve>
+            <Resolve plain={plain} className="md:pt-[14vw]">
               <figure>
                 <Frame
                   plate={block.images[1]}
                   sizes="(min-width: 768px) 46vw, 100vw"
                 />
               </figure>
-            </FadeIn>
+            </Resolve>
           </div>
         </Column>
       );
@@ -128,9 +155,9 @@ function BlockView({
     case 'plate':
       return (
         <figure className="flex w-full justify-center">
-          <FadeIn className="w-[min(320px,60vw)]">
+          <Resolve plain={plain} className="w-[min(320px,60vw)]">
             <Frame plate={block.image} sizes="320px" />
-          </FadeIn>
+          </Resolve>
         </figure>
       );
 
@@ -139,6 +166,7 @@ function BlockView({
         <Lead
           text={block.text}
           image={block.image}
+          plain={plain}
           className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}
         />
       );
@@ -222,29 +250,6 @@ function BlockView({
             />
           </FadeIn>
         </Column>
-      );
-
-    /* The last word, on a ground of its own: full bleed, and set in the
-       recipient's own face rather than the deck's. */
-    case 'statement':
-      return (
-        <section
-          // Pale, whatever the colour: the bar reads it and stays as it is.
-          data-surface="light"
-          className="-mx-5 bg-[#eaf3ff] px-5 py-[18vh] md:-mx-10 md:px-10 lg:-ml-44"
-        >
-          <Column>
-            <FadeIn>
-              <p className="font-ford text-[clamp(2.5rem,7.5vw,7rem)] leading-[0.95] tracking-[0.01em] text-[#066fef] uppercase">
-                {block.lines.map((line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ))}
-              </p>
-            </FadeIn>
-          </Column>
-        </section>
       );
 
     /* A film, in the same player the work pages use.
@@ -364,13 +369,15 @@ type Group =
   | { run: true; texts: string[][] }
   | { run: false; block: Exclude<Block, { kind: 'text' }> };
 
-function groupBlocks(blocks: Block[]): Group[] {
+function groupBlocks(blocks: Block[], plain: boolean): Group[] {
   const groups: Group[] = [];
 
   for (const block of blocks) {
     if (block.kind === 'text') {
       const last = groups.at(-1);
-      if (last?.run) last.texts.push(block.lines);
+      // A plain deck never gathers texts into a run: each one takes its own
+      // screen and the page keeps moving through them.
+      if (!plain && last?.run) last.texts.push(block.lines);
       else groups.push({ run: true, texts: [block.lines] });
     } else {
       groups.push({ run: false, block });
@@ -392,11 +399,20 @@ export function Deck({
   brand,
   chapters = deck2000,
   credits = credits2000,
+  motion = 'pinned',
 }: {
   brand?: Brand;
   chapters?: Chapter[];
   credits?: Credit[];
+  /**
+   * How the deck carries the reader. `pinned` holds the page still and swaps
+   * one text for the next in place; `plain` lets the page scroll and works
+   * the masks instead — everything resolves as it arrives and leaves as it
+   * goes, and nothing sticks.
+   */
+  motion?: 'pinned' | 'plain';
 }) {
+  const plain = motion === 'plain';
   const entries = chapters
     .filter((c) => !c.unlisted)
     .map((c) => ({ id: c.id, title: c.title }));
@@ -406,7 +422,14 @@ export function Deck({
       <SmoothPage />
       <DeckIndex entries={entries} textClass={NAV} />
 
-      <main className="flex flex-col gap-[16vh] py-[12vh] lg:pl-44">
+      {/* A plain deck stacks its slides flush, each exactly one screen: the
+          air between them would push every slide off the middle of the screen,
+          and the middle is where the rail sits and where the reading is. */}
+      <main
+        className={`flex flex-col lg:pl-44 ${
+          plain ? '' : 'gap-[16vh] py-[12vh]'
+        }`}
+      >
         {brand?.logo ? (
           <Column>
             <FadeIn>
@@ -429,18 +452,23 @@ export function Deck({
           <section
             key={chapter.id}
             id={`ch-${chapter.id}`}
-            className="flex flex-col gap-[12vh]"
+            className={`flex flex-col ${plain ? '' : 'gap-[12vh]'}`}
           >
             <h2 className="sr-only">{chapter.title}</h2>
-            {groupBlocks(chapter.blocks).map((group, gi) =>
+            {groupBlocks(chapter.blocks, plain).map((group, gi) =>
               group.run ? (
-                <PinnedRun key={gi} texts={group.texts} className={TEXT} />
+                plain ? (
+                  <PlainRun key={gi} lines={group.texts[0]!} className={TEXT} />
+                ) : (
+                  <PinnedRun key={gi} texts={group.texts} className={TEXT} />
+                )
               ) : (
                 <BlockView
                   key={gi}
                   block={group.block}
                   first={ci === 0 && gi === 0}
                   credits={credits}
+                  plain={plain}
                 />
               ),
             )}

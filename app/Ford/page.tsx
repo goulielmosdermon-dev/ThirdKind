@@ -11,5 +11,14 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <Deck brand={brands.Ford} chapters={chapters} credits={credits} />;
+  return (
+    <Deck
+      brand={brands.Ford}
+      chapters={chapters}
+      credits={credits}
+      // Nothing sticks and nothing is held back: the slides simply resolve as
+      // they arrive and leave as they go.
+      motion="plain"
+    />
+  );
 }

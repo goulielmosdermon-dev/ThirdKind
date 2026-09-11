@@ -23,14 +23,6 @@ const nib = localFont({
   display: 'swap',
 });
 
-// Ford's own condensed ultra, used on the Ford deck's closing line and
-// nowhere else.
-const ford = localFont({
-  src: './fonts/FranklinCondITCPro-Ultra.otf',
-  variable: '--font-ford-face',
-  display: 'swap',
-});
-
 const plex = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
@@ -52,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${figtree.variable} ${nib.variable} ${ford.variable} ${plex.variable}`}
+      className={`${figtree.variable} ${nib.variable} ${plex.variable}`}
     >
       <body className="bg-void font-sans text-ink antialiased">{children}</body>
     </html>

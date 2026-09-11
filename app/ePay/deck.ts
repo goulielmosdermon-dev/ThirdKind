@@ -193,12 +193,16 @@ export const chapters: Chapter[] = [
       {
         kind: 'list',
         title: 'Deliverables',
-        items: ['6 × finished customer testimonial films'],
-      },
-      {
-        kind: 'text',
-        lines: [
-          'Final specifications and durations to be agreed prior to production.',
+        items: [
+          [
+            '6 × finished customer testimonial films',
+            'Approximately 3–5 minutes each, delivered in 16:9.',
+          ],
+          [
+            '6 × vertical social cut-downs',
+            'One cut-down per testimonial, delivered in 9:16.',
+          ],
+          ['Final delivery', '4K master files in agreed formats.'],
         ],
       },
       {

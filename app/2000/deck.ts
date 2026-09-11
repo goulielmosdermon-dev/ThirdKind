@@ -20,6 +20,8 @@ export type Plate = {
 
 export type Row = readonly [label: string, value: string];
 
+export type ListItem = string | readonly [term: string, note: string];
+
 export type Block =
   | { kind: 'full'; image: Plate; caption?: string }
   | { kind: 'pair'; images: [Plate, Plate]; caption?: string }
@@ -32,8 +34,13 @@ export type Block =
    */
   | { kind: 'lead'; text: string; image?: undefined }
   | { kind: 'lead'; image: Plate; text?: undefined }
-  /** A standfirst over an itemised run — what a text slide cannot hold. */
-  | { kind: 'list'; title?: string; items: string[] }
+  /**
+   * A standfirst over an itemised run — what a text slide cannot hold.
+   *
+   * A plain item flows as a tag. One given a note is a thing with something
+   * to say about it, so the run sets them out as terms instead.
+   */
+  | { kind: 'list'; title?: string; items: ListItem[] }
   /** A film, in the site's own player. */
   | { kind: 'film'; vimeoId: string; title: string; caption?: string }
   /** A priced breakdown: rows, then the total set apart. */

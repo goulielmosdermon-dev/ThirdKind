@@ -143,10 +143,15 @@ function BlockView({
       );
 
     /* An itemised run — a scope, a set of deliverables. The heading holds
-       the left of the section while the items sit beside it as tags: flowed
-       rather than stacked, so the rows break where the words do and the block
-       reads loose instead of like a checklist. */
-    case 'list':
+       the left of the section while the items sit beside it.
+
+       Plain ones flow as tags: wrapped rather than stacked, so the rows break
+       where the words do and the block reads loose instead of like a
+       checklist. Ones carrying a note are set out as terms down the column,
+       because a tag has nowhere to put the second line. */
+    case 'list': {
+      const termed = block.items.some((item) => Array.isArray(item));
+
       return (
         <Column>
           <div className="grid grid-cols-1 gap-[6vh] md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:gap-16">
@@ -162,23 +167,47 @@ function BlockView({
             ) : (
               <div aria-hidden />
             )}
-            {/* Set below the deck's reading size: at full size each tag takes
-                a line of its own and the block reads as a list again, which is
-                the one thing it is not. */}
-            <ul className="flex flex-wrap gap-2">
-              {block.items.map((item, i) => (
-                <li key={item}>
-                  <FadeIn delay={i * 0.05}>
-                    <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
-                      {item}
-                    </span>
-                  </FadeIn>
-                </li>
-              ))}
-            </ul>
+
+            {termed ? (
+              <dl className="flex flex-col gap-[5vh]">
+                {block.items.map((item, i) => {
+                  const [term, note] = Array.isArray(item)
+                    ? item
+                    : [item as string, ''];
+                  return (
+                    <FadeIn key={term} delay={i * 0.06}>
+                      <dt className={TEXT}>{term}</dt>
+                      {note ? (
+                        <dd
+                          className={`mt-[0.4em] max-w-[38ch] ${TEXT} text-mute`}
+                        >
+                          {note}
+                        </dd>
+                      ) : null}
+                    </FadeIn>
+                  );
+                })}
+              </dl>
+            ) : (
+              /* Set below the deck's reading size: at full size each tag takes
+                 a line of its own and the block reads as a list again, which
+                 is the one thing it is not. */
+              <ul className="flex flex-wrap gap-2">
+                {block.items.map((item, i) => (
+                  <li key={String(item)}>
+                    <FadeIn delay={i * 0.05}>
+                      <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
+                        {String(item)}
+                      </span>
+                    </FadeIn>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </Column>
       );
+    }
 
     /* A film, in the same player the work pages use.
 

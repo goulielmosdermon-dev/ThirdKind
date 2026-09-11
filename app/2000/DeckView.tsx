@@ -21,8 +21,10 @@ import {
 const TEXT = 'font-display text-[1.375rem] leading-[1.3]';
 
 /** The index sits at half the deck's size, in the site sans — it labels, it
-    doesn't speak, so it stays out of the deck's voice. */
-const NAV = 'font-sans text-[0.6875rem] leading-[1.3]';
+    doesn't speak, so it stays out of the deck's voice. Set in caps, with the
+    tracking that small caps need to stay legible rather than bunch up. */
+const NAV =
+  'font-sans text-[0.6875rem] leading-[1.3] uppercase tracking-[0.09em]';
 
 /** Every block shares one spine: text sits on the same left edge as the plates. */
 function Column({ children }: { children: React.ReactNode }) {

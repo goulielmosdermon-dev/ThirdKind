@@ -209,110 +209,118 @@ export function InquirySection({ phone }: { phone: boolean }) {
               />
             </div>
 
-            {/* The question and its answer swap in place, so nothing below
+            {/* The question and everything under it steps in from the note
+                rather than starting level with it, which is what leaves the
+                ground below the note clear. A set distance, about half the
+                note's own width: at the measure the page is read at, that
+                lands the field roughly the width of the note and running to
+                the edge of the column. */}
+            <div className="md:ml-[10rem]">
+              {/* The question and its answer swap in place, so nothing below
                 them moves as the flow runs down. */}
-            <div
-              // No reserved height: the controls sit under whichever field is
-              // showing. Every question but the last is the same one-line
-              // input, so nothing moves until the note arrives at the end.
-              className={phone ? 'mt-6' : 'mt-[6vh]'}
-            >
-              <motion.div
-                key={step.key}
-                initial={reduced ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: reduced ? MOTION.reduced : 0.45,
-                  ease: MOTION.easeOut,
-                }}
+              <div
+                // No reserved height: the controls sit under whichever field is
+                // showing. Every question but the last is the same one-line
+                // input, so nothing moves until the note arrives at the end.
+                className={phone ? 'mt-6' : 'mt-[6vh]'}
               >
-                {/* The placeholder asks it, so the label is for screen
+                <motion.div
+                  key={step.key}
+                  initial={reduced ? false : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: reduced ? MOTION.reduced : 0.45,
+                    ease: MOTION.easeOut,
+                  }}
+                >
+                  {/* The placeholder asks it, so the label is for screen
                     readers alone — set above the field it would only say the
                     same thing twice. */}
-                <label htmlFor={`ask-${step.key}`} className="sr-only">
-                  {step.question}
-                </label>
+                  <label htmlFor={`ask-${step.key}`} className="sr-only">
+                    {step.question}
+                  </label>
 
-                {step.long ? (
-                  <textarea
-                    id={`ask-${step.key}`}
-                    rows={3}
-                    placeholder={step.placeholder}
-                    value={value}
-                    onChange={(event) => set(event.target.value)}
-                    className="w-full resize-none border-b border-hairline bg-transparent pb-3 text-[1.05rem] leading-relaxed text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
-                  />
-                ) : (
-                  <input
-                    id={`ask-${step.key}`}
-                    type={step.type ?? 'text'}
-                    autoComplete={step.autoComplete}
-                    placeholder={step.placeholder}
-                    value={value}
-                    onChange={(event) => set(event.target.value)}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter') {
-                        event.preventDefault();
-                        void advance();
-                      }
-                    }}
-                    className="w-full border-b border-hairline bg-transparent pb-3 text-[1.05rem] text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
-                  />
-                )}
-
-                <p
-                  className="mt-3 text-[0.8rem] text-signal"
-                  role={fault ? 'alert' : undefined}
-                  style={{ opacity: fault ? 1 : 0 }}
-                >
-                  {fault || ' '}
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Where the reader is, and the way on — held to opposite ends of
-                the column, the arrow on the outer edge. */}
-            <div
-              className={`flex items-center justify-between gap-6 ${
-                phone ? 'mt-5' : 'mt-[3vh]'
-              }`}
-            >
-              <ul className="flex items-center gap-2">
-                {STEPS.map((one, index) => (
-                  <li key={one.key}>
-                    <button
-                      type="button"
-                      tabIndex={-1}
-                      aria-label={one.question}
-                      disabled={index > at}
-                      onClick={() => setAt(index)}
-                      className={`block h-1.5 w-1.5 rounded-full transition-colors duration-300 ${
-                        index === at
-                          ? 'bg-ink'
-                          : index < at
-                            ? 'cursor-pointer bg-ink/35 hover:bg-ink'
-                            : 'bg-hairline'
-                      }`}
+                  {step.long ? (
+                    <textarea
+                      id={`ask-${step.key}`}
+                      rows={3}
+                      placeholder={step.placeholder}
+                      value={value}
+                      onChange={(event) => set(event.target.value)}
+                      className="w-full resize-none border-b border-hairline bg-transparent pb-3 text-[1.05rem] leading-relaxed text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
                     />
-                  </li>
-                ))}
-              </ul>
+                  ) : (
+                    <input
+                      id={`ask-${step.key}`}
+                      type={step.type ?? 'text'}
+                      autoComplete={step.autoComplete}
+                      placeholder={step.placeholder}
+                      value={value}
+                      onChange={(event) => set(event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          event.preventDefault();
+                          void advance();
+                        }
+                      }}
+                      className="w-full border-b border-hairline bg-transparent pb-3 text-[1.05rem] text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
+                    />
+                  )}
 
-              <button
-                type="button"
-                disabled={pending}
-                onClick={() => void advance()}
-                aria-label={last ? 'Send' : 'Next question'}
-                className="cursor-pointer border-0 bg-transparent p-0 transition-opacity duration-300 hover:opacity-85 disabled:opacity-50"
+                  <p
+                    className="mt-3 text-[0.8rem] text-signal"
+                    role={fault ? 'alert' : undefined}
+                    style={{ opacity: fault ? 1 : 0 }}
+                  >
+                    {fault || ' '}
+                  </p>
+                </motion.div>
+              </div>
+
+              {/* Where the reader is, and the way on — held to opposite ends of
+                the column, the arrow on the outer edge. */}
+              <div
+                className={`flex items-center justify-between gap-6 ${
+                  phone ? 'mt-5' : 'mt-[3vh]'
+                }`}
               >
-                {last ? (
-                  <PillLabel label={pending ? 'Sending' : 'Reach Out'} />
-                ) : (
-                  <span className="flex aspect-square w-[2.65rem] items-center justify-center rounded-md bg-ink text-white">
-                    <ArrowUpRight />
-                  </span>
-                )}
-              </button>
+                <ul className="flex items-center gap-2">
+                  {STEPS.map((one, index) => (
+                    <li key={one.key}>
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        aria-label={one.question}
+                        disabled={index > at}
+                        onClick={() => setAt(index)}
+                        className={`block h-1.5 w-1.5 rounded-full transition-colors duration-300 ${
+                          index === at
+                            ? 'bg-ink'
+                            : index < at
+                              ? 'cursor-pointer bg-ink/35 hover:bg-ink'
+                              : 'bg-hairline'
+                        }`}
+                      />
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  type="button"
+                  disabled={pending}
+                  onClick={() => void advance()}
+                  aria-label={last ? 'Send' : 'Next question'}
+                  className="cursor-pointer border-0 bg-transparent p-0 transition-opacity duration-300 hover:opacity-85 disabled:opacity-50"
+                >
+                  {last ? (
+                    <PillLabel label={pending ? 'Sending' : 'Reach Out'} />
+                  ) : (
+                    <span className="flex aspect-square w-[2.65rem] items-center justify-center rounded-md bg-ink text-white">
+                      <ArrowUpRight />
+                    </span>
+                  )}
+                </button>
+              </div>
             </div>
           </>
         )}

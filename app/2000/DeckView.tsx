@@ -143,18 +143,17 @@ function BlockView({
       );
 
     /* An itemised run — a scope, a set of deliverables. The heading holds
-       the left of the section while the items scroll past it, and the section
-       lets go once the last one is through. */
+       the left of the section while the items sit beside it as tags: flowed
+       rather than stacked, so the rows break where the words do and the block
+       reads loose instead of like a checklist. */
     case 'list':
       return (
         <Column>
           <div className="grid grid-cols-1 gap-[6vh] md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:gap-16">
             {block.title ? (
-              // The column stretches to the row — that is the box the
-              // heading sticks inside — and the heading itself is the short
-              // element that travels down it. Sticking the stretched item
-              // instead pins nothing, and giving it a screen's height lets go
-              // a whole viewport early.
+              // The column stretches to the row — that is the box the heading
+              // sticks inside — and the heading itself is the short element
+              // that travels down it.
               <div className="md:h-full">
                 <div className="md:sticky md:top-[22vh]">
                   <Reveal className={TEXT} lines={[block.title]} />
@@ -163,15 +162,14 @@ function BlockView({
             ) : (
               <div aria-hidden />
             )}
-            {/* The first item starts level with the heading; the tail gives
-                the last one room to clear before the section releases. */}
-            <ul className={`flex flex-col md:pb-[12vh] ${TEXT}`}>
-              {block.items.map((item) => (
+            {/* Set below the deck's reading size: at full size each tag takes
+                a line of its own and the block reads as a list again, which is
+                the one thing it is not. */}
+            <ul className="flex flex-wrap gap-2">
+              {block.items.map((item, i) => (
                 <li key={item}>
-                  <FadeIn delay={0.04}>
-                    {/* The rule is the list's only ornament: it reads as a
-                        schedule of work, not as bullets. */}
-                    <span className="block border-t border-hairline py-[0.9em] md:py-[2.6em]">
+                  <FadeIn delay={i * 0.05}>
+                    <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
                       {item}
                     </span>
                   </FadeIn>

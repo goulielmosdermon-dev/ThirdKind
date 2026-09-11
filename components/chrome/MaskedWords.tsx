@@ -18,11 +18,14 @@ export type MaskedWord = {
  * pulled back by the same amount: ascenders and descenders clear it without
  * the line taking any more room than it would set plain.
  *
- * Left to `once`, it plays when the line arrives and stays. Set `once` false
- * and the line leaves the way it came in — rising on out through the top of
- * its masks as the reader carries on past, and dropping back down into place
- * on the way back — which is what lets a heading close itself rather than
- * simply being scrolled off.
+ * Left to `once`, it plays when the line arrives and stays.
+ *
+ * Set `once` false and the line closes itself: it rises on out through the
+ * top of its masks as the reader carries on, and drops back down into place
+ * when they turn around. The crossing is watched against a band across the
+ * middle of the screen rather than the whole of it, so the line is still well
+ * in front of the reader as it goes — waiting for it to clear the viewport
+ * means the move happens where nobody can see it.
  */
 export function MaskedWords({
   words,
@@ -62,9 +65,26 @@ export function MaskedWords({
           }
           return;
         }
-        setState(entry.boundingClientRect.top < 0 ? 'above' : 'below');
+        /*
+          Which way it went, read from where the line sits against the middle
+          of the screen rather than against its top edge: it leaves the band
+          well before it leaves the viewport, so at that moment its top is
+          still a positive number and would read as below.
+        */
+        const box = entry.boundingClientRect;
+        const middle = window.innerHeight / 2;
+        setState(box.top + box.height / 2 < middle ? 'above' : 'below');
       },
-      { threshold: amount },
+      /*
+        A line that closes itself is held to the middle of the screen: it
+        arrives as it reaches the band and leaves as it climbs out of the top
+        of it, both in plain sight. One that only ever arrives keeps the whole
+        viewport, so it is not waiting on the reader to scroll it into the
+        middle before it will start.
+      */
+      once
+        ? { threshold: amount }
+        : { threshold: 0, rootMargin: '-45% 0px -22% 0px' },
     );
     observer.observe(element);
     return () => observer.disconnect();

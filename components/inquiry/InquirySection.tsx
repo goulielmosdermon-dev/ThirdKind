@@ -189,8 +189,9 @@ export function InquirySection({ phone }: { phone: boolean }) {
                 A few quick questions, one at a time, so the right person can
                 get back to you.
               </p>
-              {/* Sat just off the corner, the way the tail of a message is:
-                  it grows into place as the note is reached. */}
+              {/* Held clear of the corner rather than against it — it hovers
+                  below and off to the side, the way the tail of a message
+                  does — and grows into place as the note is reached. */}
               <motion.span
                 aria-hidden
                 initial={reduced ? false : { scale: 0 }}
@@ -201,7 +202,7 @@ export function InquirySection({ phone }: { phone: boolean }) {
                   delay: reduced ? 0 : 0.18,
                   ease: [0.34, 1.4, 0.64, 1],
                 }}
-                className="absolute -right-[2px] -bottom-[2px] block h-3.5 w-3.5 rounded-full bg-ink"
+                className="absolute -right-4 -bottom-4 block h-3 w-3 rounded-full bg-ink"
               />
             </div>
 

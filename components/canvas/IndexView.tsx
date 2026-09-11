@@ -221,7 +221,15 @@ function MoreWork({
                 onPointerEnter={() => onPrefetch?.(node.href)}
                 onFocus={() => onPrefetch?.(node.href)}
               >
-                <p className="font-display mb-3 text-[1.05rem] leading-snug">
+                <p
+                  // The index's own size, and the arrow with it: IndexArrow is
+                  // set in em, so it follows the line it is welded to.
+                  className={`font-display leading-snug ${
+                    phone
+                      ? 'mb-3 text-[1.05rem]'
+                      : 'mb-4 text-[clamp(1.05rem,1.55vw,1.4rem)] max-md:text-[1.15rem]'
+                  }`}
+                >
                   {lead}
                   <span className="whitespace-nowrap">
                     {name ? <span className="text-mute">{name}</span> : tail}
@@ -230,7 +238,9 @@ function MoreWork({
                 </p>
 
                 {node.tags?.length ? (
-                  <ul className="mb-4 flex flex-wrap gap-1.5">
+                  <ul
+                    className={`flex flex-wrap gap-1.5 ${phone ? 'mb-3' : 'mb-4'}`}
+                  >
                     {node.tags.map((tag) => (
                       <li
                         key={tag}

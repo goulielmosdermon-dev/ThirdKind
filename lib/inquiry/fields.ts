@@ -64,43 +64,49 @@ export function parseInquiry(
     source: asString(body.source),
   };
 
+  /*
+    Who is asking, where to answer them, and who they are asking for: the
+    three the inquiry is worthless without. The rest depends on which way in
+    was used — the overlay asks its own set and marks them required in the
+    browser; the page asks a shorter one — so they are checked only when they
+    are there, rather than demanding fields a given form never offers.
+  */
   if (!data.name) {
     return { ok: false, error: 'Please add your name.' };
   }
   if (!EMAIL_PATTERN.test(data.email)) {
-    return { ok: false, error: 'Please add a company email.' };
-  }
-  if (!data.phone) {
-    return { ok: false, error: 'Please add a phone number.' };
+    return { ok: false, error: 'Please add a work email.' };
   }
   if (!data.company) {
     return { ok: false, error: 'Please add your company name.' };
   }
-  if (!inList(data.budget, BUDGET_OPTIONS)) {
+  if (data.budget && !inList(data.budget, BUDGET_OPTIONS)) {
     return { ok: false, error: 'Please select a media budget.' };
   }
-  if (!inList(data.about, INQUIRY_ABOUT_OPTIONS)) {
-    return { ok: false, error: 'Please select what you are inquiring about.' };
-  }
-  if (!inList(data.startDate, START_DATE_OPTIONS)) {
+  if (data.startDate && !inList(data.startDate, START_DATE_OPTIONS)) {
     return { ok: false, error: 'Please select an ideal start date.' };
-  }
-  if (!data.source) {
-    return { ok: false, error: 'Please tell us where you heard about us.' };
   }
 
   return { ok: true, data };
 }
 
 export function formatInquiryEmail(data: InquiryPayload): string {
-  return [
-    `Name: ${data.name}`,
-    `Company email: ${data.email}`,
-    `Phone: ${data.phone}`,
-    `Company: ${data.company}`,
-    `Annual estimated media budget: ${data.budget}`,
-    `Inquiring about: ${data.about}`,
-    `Ideal start date: ${data.startDate}`,
-    `Where they heard about us: ${data.source}`,
-  ].join('\n');
+  // Only what was actually asked: the two forms ask different things, and a
+  // run of empty labels reads as a fault in the form rather than a short
+  // answer.
+  return (
+    [
+      ['Name', data.name],
+      ['Work email', data.email],
+      ['Phone', data.phone],
+      ['Company', data.company],
+      ['Annual estimated media budget', data.budget],
+      ['Inquiring about', data.about],
+      ['Ideal start date', data.startDate],
+      ['Where they heard about us', data.source],
+    ] as const
+  )
+    .filter(([, value]) => value)
+    .map(([label, value]) => `${label}: ${value}`)
+    .join('\n');
 }

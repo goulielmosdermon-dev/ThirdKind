@@ -5,87 +5,66 @@ import { useState } from 'react';
 
 import { ArrowUpRight } from '@/components/chrome/ArrowUpRight';
 import { PillLabel } from '@/components/sheet/PillLabel';
-import {
-  BUDGET_OPTIONS,
-  INQUIRY_ABOUT_OPTIONS,
-  START_DATE_OPTIONS,
-} from '@/lib/inquiry/fields';
 import { MOTION } from '@/lib/motion/tokens';
-import { DISPLAY_BALANCE } from '@/lib/type/display';
 
 type Step = {
-  name: string;
-  /** Asked as a question, one at a time, rather than labelled as a field. */
+  key: string;
   question: string;
-  placeholder?: string;
+  placeholder: string;
   type?: string;
   autoComplete?: string;
-  options?: readonly string[];
+  /** The last one is a note rather than a line, so it gets room to be one. */
+  long?: boolean;
 };
 
-/**
- * Every field the inquiry needs, in the order it is asked. The server requires
- * all eight, so none of them is optional here either — the flow simply refuses
- * to advance until the answer is one it can send.
- */
 const STEPS: Step[] = [
   {
-    name: 'name',
-    question: 'Who are we speaking to?',
-    placeholder: 'Your name',
-    autoComplete: 'name',
+    key: 'firstName',
+    question: 'First name',
+    placeholder: 'First name',
+    autoComplete: 'given-name',
   },
   {
-    name: 'email',
-    question: 'Where do we reach you?',
-    placeholder: 'Company email',
-    type: 'email',
-    autoComplete: 'email',
+    key: 'lastName',
+    question: 'Last name',
+    placeholder: 'Last name',
+    autoComplete: 'family-name',
   },
   {
-    name: 'phone',
-    question: 'And a number, if it comes to that?',
-    placeholder: 'Phone number',
-    type: 'tel',
-    autoComplete: 'tel',
-  },
-  {
-    name: 'company',
-    question: 'Who do you work for?',
+    key: 'company',
+    question: 'Company',
     placeholder: 'Company name',
     autoComplete: 'organization',
   },
   {
-    name: 'budget',
-    question: 'What is the annual media budget?',
-    options: BUDGET_OPTIONS,
+    key: 'jobTitle',
+    question: 'Job title',
+    placeholder: 'Your role',
+    autoComplete: 'organization-title',
   },
   {
-    name: 'about',
-    question: 'What is this about?',
-    options: INQUIRY_ABOUT_OPTIONS,
+    key: 'email',
+    question: 'Work email',
+    placeholder: 'you@company.com',
+    type: 'email',
+    autoComplete: 'email',
   },
   {
-    name: 'startDate',
-    question: 'When would you want to start?',
-    options: START_DATE_OPTIONS,
-  },
-  {
-    name: 'source',
-    question: 'How did you find us?',
-    placeholder: 'Where, who, how',
+    key: 'message',
+    question: 'How can we help you?',
+    placeholder: 'Tell us what you have in mind',
+    long: true,
   },
 ];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** What is wrong with this answer, if anything. */
 function faultIn(step: Step, value: string): string {
   const answer = value.trim();
   if (!answer) {
-    return step.options ? 'Pick one to carry on.' : 'This one we do need.';
+    return 'This one we do need.';
   }
-  if (step.name === 'email' && !EMAIL.test(answer)) {
+  if (step.key === 'email' && !EMAIL.test(answer)) {
     return 'That address does not look right.';
   }
   return '';
@@ -95,8 +74,10 @@ function faultIn(step: Step, value: string): string {
  * The way in, at the foot of the page: one question at a time rather than a
  * form to be waded through, answered in the page instead of in an overlay.
  *
- * It posts to the same endpoint the overlay does, so an inquiry that arrives
- * this way is filed exactly like any other.
+ * It posts to the same endpoint the overlay does. The archive keeps one name
+ * and one free-text field, so the two names are joined and the role is filed
+ * with the note — nothing is dropped, and separating them again is a column
+ * away if it is ever worth it.
  */
 export function InquirySection({ phone }: { phone: boolean }) {
   const reduced = useReducedMotion() ?? false;
@@ -107,11 +88,11 @@ export function InquirySection({ phone }: { phone: boolean }) {
   const [sent, setSent] = useState(false);
 
   const step = STEPS[at]!;
-  const value = answers[step.name] ?? '';
+  const value = answers[step.key] ?? '';
   const last = at === STEPS.length - 1;
 
   const set = (next: string) => {
-    setAnswers((current) => ({ ...current, [step.name]: next }));
+    setAnswers((current) => ({ ...current, [step.key]: next }));
     if (fault) {
       setFault('');
     }
@@ -133,7 +114,14 @@ export function InquirySection({ phone }: { phone: boolean }) {
       const response = await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(answers),
+        body: JSON.stringify({
+          name: `${answers.firstName ?? ''} ${answers.lastName ?? ''}`.trim(),
+          email: answers.email ?? '',
+          company: answers.company ?? '',
+          about: answers.jobTitle
+            ? `${answers.jobTitle}\n\n${answers.message ?? ''}`
+            : (answers.message ?? ''),
+        }),
       });
       const result = (await response.json()) as { error?: string };
       if (!response.ok) {
@@ -148,27 +136,28 @@ export function InquirySection({ phone }: { phone: boolean }) {
     }
   }
 
+  const heading = phone
+    ? 'text-[clamp(2rem,10vw,2.75rem)]'
+    : 'text-[clamp(2.25rem,5vw,4.25rem)]';
+
   return (
     <section
+      // Air on every side of it: this is the last thing on the page and the
+      // one thing on it being asked of the reader, so it is given the room a
+      // question deserves rather than the rhythm of the index above it.
       className={
         phone
-          ? 'mt-20'
-          : 'mt-[clamp(5rem,11vw,10rem)] grid grid-cols-1 gap-[6vh] md:grid-cols-2 md:gap-16'
+          ? 'mt-24 pb-10'
+          : 'mt-[clamp(7rem,16vw,15rem)] grid grid-cols-1 gap-[10vh] pb-[6vh] md:grid-cols-2 md:gap-[8%]'
       }
     >
       <h2
-        className={`font-display leading-[0.95] tracking-[-0.02em] text-ink ${
-          phone
-            ? 'text-[clamp(2rem,11vw,3rem)]'
-            : 'text-[clamp(2.25rem,5.5vw,5rem)]'
-        }`}
+        className={`font-sans leading-[1.02] font-semibold tracking-[-0.02em] text-balance text-ink ${heading}`}
       >
-        Let&rsquo;s make
-        <br />
-        something extraordinary.
+        Let&rsquo;s make extraordinary.
       </h2>
 
-      <div className={phone ? 'mt-10' : 'md:pt-[1vh]'}>
+      <div className={phone ? 'mt-14' : ''}>
         {sent ? (
           <motion.div
             initial={reduced ? false : { opacity: 0, y: 10 }}
@@ -178,28 +167,29 @@ export function InquirySection({ phone }: { phone: boolean }) {
               ease: MOTION.easeOut,
             }}
           >
-            <p
-              className="font-display text-[1.4rem] leading-snug text-ink"
-              style={{ fontSize: DISPLAY_BALANCE }}
-            >
+            <p className="font-display text-[1.5rem] leading-snug text-ink">
               We have it.
             </p>
-            <p className="mt-3 max-w-[34ch] text-[1rem] leading-relaxed text-mute">
+            <p className="mt-4 max-w-[34ch] text-[1rem] leading-relaxed text-mute">
               Someone will come back to you shortly — usually the same day.
             </p>
           </motion.div>
         ) : (
           <>
-            <p className="max-w-[34ch] text-[0.95rem] leading-relaxed text-mute">
-              A few questions, one at a time, so we know who is asking and what
-              it is for.
+            <p className="max-w-[32ch] text-[0.95rem] leading-relaxed text-mute">
+              A few quick questions, one at a time, so the right person can get
+              back to you.
             </p>
 
-            {/* The question and its answer swap in place, so the block does
-                not jump as the flow moves down it. */}
-            <div className="mt-9 min-h-[8.5rem]">
+            {/* The question and its answer swap in place, so nothing below
+                them moves as the flow runs down. */}
+            <div
+              className={
+                phone ? 'mt-12 min-h-[11rem]' : 'mt-[12vh] min-h-[12rem]'
+              }
+            >
               <motion.div
-                key={step.name}
+                key={step.key}
                 initial={reduced ? false : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -208,38 +198,24 @@ export function InquirySection({ phone }: { phone: boolean }) {
                 }}
               >
                 <label
-                  htmlFor={`ask-${step.name}`}
-                  className="font-display block text-[1.25rem] leading-snug text-ink"
-                  style={{ fontSize: DISPLAY_BALANCE }}
+                  htmlFor={`ask-${step.key}`}
+                  className="font-display block text-[1.15rem] leading-snug text-ink"
                 >
                   {step.question}
                 </label>
 
-                {step.options ? (
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {step.options.map((option) => {
-                      const picked = value === option;
-                      return (
-                        <li key={option}>
-                          <button
-                            type="button"
-                            aria-pressed={picked}
-                            onClick={() => set(option)}
-                            className={`cursor-pointer rounded-full border px-4 py-2 text-[0.85rem] leading-none transition-colors duration-300 ${
-                              picked
-                                ? 'border-ink bg-ink text-white'
-                                : 'border-hairline text-mute hover:border-ink hover:text-ink'
-                            }`}
-                          >
-                            {option}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                {step.long ? (
+                  <textarea
+                    id={`ask-${step.key}`}
+                    rows={3}
+                    placeholder={step.placeholder}
+                    value={value}
+                    onChange={(event) => set(event.target.value)}
+                    className="mt-6 w-full resize-none border-b border-hairline bg-transparent pb-3 text-[1.05rem] leading-relaxed text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
+                  />
                 ) : (
                   <input
-                    id={`ask-${step.name}`}
+                    id={`ask-${step.key}`}
                     type={step.type ?? 'text'}
                     autoComplete={step.autoComplete}
                     placeholder={step.placeholder}
@@ -251,12 +227,12 @@ export function InquirySection({ phone }: { phone: boolean }) {
                         void advance();
                       }
                     }}
-                    className="mt-5 w-full max-w-[26rem] border-b border-hairline bg-transparent pb-2 text-[1.05rem] text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
+                    className="mt-6 w-full border-b border-hairline bg-transparent pb-3 text-[1.05rem] text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
                   />
                 )}
 
                 <p
-                  className="mt-3 text-[0.8rem] text-signal"
+                  className="mt-4 text-[0.8rem] text-signal"
                   role={fault ? 'alert' : undefined}
                   style={{ opacity: fault ? 1 : 0 }}
                 >
@@ -265,14 +241,20 @@ export function InquirySection({ phone }: { phone: boolean }) {
               </motion.div>
             </div>
 
-            <div className="mt-6 flex items-center gap-5">
-              {/* Where the reader is in the run, and the way back. */}
-              <ul className="flex items-center gap-1.5" aria-hidden>
+            {/* Where the reader is, and the way on — held to opposite ends of
+                the column, the arrow on the outer edge. */}
+            <div
+              className={`flex items-center justify-between gap-6 ${
+                phone ? 'mt-10' : 'mt-[6vh]'
+              }`}
+            >
+              <ul className="flex items-center gap-2">
                 {STEPS.map((one, index) => (
-                  <li key={one.name}>
+                  <li key={one.key}>
                     <button
                       type="button"
                       tabIndex={-1}
+                      aria-label={one.question}
                       disabled={index > at}
                       onClick={() => setAt(index)}
                       className={`block h-1.5 w-1.5 rounded-full transition-colors duration-300 ${

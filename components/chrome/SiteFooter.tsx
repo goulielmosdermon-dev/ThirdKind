@@ -1,6 +1,5 @@
 'use client';
 
-import { BookCallButton } from '@/components/inquiry/BookCallButton';
 import { AppLink } from '@/components/mobile/MobileChrome';
 
 const NAV = [
@@ -85,7 +84,8 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
               : 'flex flex-col gap-8 md:items-end'
           }
         >
-          <BookCallButton tone="paper" />
+          {/* The page now ends on the inquiry itself, so the footer does not
+              offer a second way into the same thing a screen below it. */}
           <ul
             className={
               compact

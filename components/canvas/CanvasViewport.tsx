@@ -966,6 +966,7 @@ export function CanvasViewport({
       {!indexed ? (
         <div
           data-chrome
+          data-overlay
           className="absolute right-6 bottom-6 z-30 flex items-center gap-1 text-ink"
           style={{
             opacity: reveal,

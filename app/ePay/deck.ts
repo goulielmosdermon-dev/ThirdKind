@@ -65,7 +65,7 @@ export const chapters: Chapter[] = [
       {
         kind: 'text',
         lines: [
-          'The aim is to create a cohesive set of films that feel credible, human and visually consistent, while giving epay a library of additional B-roll material that can be used across its communications.',
+          'The aim is a cohesive set of films that feel credible, human and visually consistent — six finished pieces that work on their own and together as one campaign.',
         ],
       },
       { kind: 'full', image: img(3, 'Open water, arms wide on deck') },
@@ -128,7 +128,7 @@ export const chapters: Chapter[] = [
       {
         kind: 'text',
         lines: [
-          'We capture additional footage around the customer — their environment, their people, their work — to give each film visual depth and to leave epay a reusable B-roll library.',
+          'We film around the customer — their environment, their people, their work — and cut it through the interview, so each story is carried as much by what is seen as by what is said.',
         ],
       },
       { kind: 'full', image: img(21, 'A card, a terminal, a coffee') },
@@ -193,10 +193,7 @@ export const chapters: Chapter[] = [
       {
         kind: 'list',
         title: 'Deliverables',
-        items: [
-          '6 × finished customer testimonial films',
-          'B-roll footage from all six locations',
-        ],
+        items: ['6 × finished customer testimonial films'],
       },
       {
         kind: 'text',

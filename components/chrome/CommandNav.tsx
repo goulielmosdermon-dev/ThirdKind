@@ -142,6 +142,8 @@ export function CommandNav({
     <div
       ref={rootRef}
       data-command-nav
+      // Floats over the page, so the surface probe looks straight past it.
+      data-overlay
       data-chrome
       className={`pointer-events-auto inset-x-0 bottom-5 z-50 mx-auto w-[min(92%,20rem)] ${
         embedded ? 'absolute' : 'fixed'

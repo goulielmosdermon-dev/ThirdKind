@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
 import { ArrowUpRight } from '@/components/chrome/ArrowUpRight';
+import { MaskedWords } from '@/components/chrome/MaskedWords';
 import { PillLabel } from '@/components/sheet/PillLabel';
 import { MOTION } from '@/lib/motion/tokens';
 
@@ -152,9 +153,16 @@ export function InquirySection({ phone }: { phone: boolean }) {
       }
     >
       <h2
-        className={`font-sans leading-[1.02] font-semibold tracking-[-0.02em] text-balance text-ink ${heading}`}
+        className={`font-sans leading-[1.02] font-semibold tracking-[-0.02em] text-ink ${heading}`}
       >
-        Let&rsquo;s make extraordinary.
+        <MaskedWords
+          words={[
+            { text: 'Let\u2019s' },
+            { text: 'make' },
+            // The word the whole page turns on, in the display face.
+            { text: 'extraordinary.', className: 'font-display' },
+          ]}
+        />
       </h2>
 
       <div className={phone ? 'mt-14' : ''}>
@@ -176,7 +184,7 @@ export function InquirySection({ phone }: { phone: boolean }) {
           </motion.div>
         ) : (
           <>
-            <p className="max-w-[32ch] text-[0.95rem] leading-relaxed text-mute">
+            <p className="max-w-[34ch] rounded-2xl bg-ink px-6 py-5 text-[0.95rem] leading-relaxed text-white">
               A few quick questions, one at a time, so the right person can get
               back to you.
             </p>
@@ -184,9 +192,10 @@ export function InquirySection({ phone }: { phone: boolean }) {
             {/* The question and its answer swap in place, so nothing below
                 them moves as the flow runs down. */}
             <div
-              className={
-                phone ? 'mt-12 min-h-[11rem]' : 'mt-[12vh] min-h-[12rem]'
-              }
+              // No reserved height: the controls sit under whichever field is
+              // showing. Every question but the last is the same one-line
+              // input, so nothing moves until the note arrives at the end.
+              className={phone ? 'mt-12' : 'mt-[12vh]'}
             >
               <motion.div
                 key={step.key}
@@ -197,10 +206,10 @@ export function InquirySection({ phone }: { phone: boolean }) {
                   ease: MOTION.easeOut,
                 }}
               >
-                <label
-                  htmlFor={`ask-${step.key}`}
-                  className="font-display block text-[1.15rem] leading-snug text-ink"
-                >
+                {/* The placeholder asks it, so the label is for screen
+                    readers alone — set above the field it would only say the
+                    same thing twice. */}
+                <label htmlFor={`ask-${step.key}`} className="sr-only">
                   {step.question}
                 </label>
 
@@ -211,7 +220,7 @@ export function InquirySection({ phone }: { phone: boolean }) {
                     placeholder={step.placeholder}
                     value={value}
                     onChange={(event) => set(event.target.value)}
-                    className="mt-6 w-full resize-none border-b border-hairline bg-transparent pb-3 text-[1.05rem] leading-relaxed text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
+                    className="w-full resize-none border-b border-hairline bg-transparent pb-3 text-[1.05rem] leading-relaxed text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
                   />
                 ) : (
                   <input
@@ -227,12 +236,12 @@ export function InquirySection({ phone }: { phone: boolean }) {
                         void advance();
                       }
                     }}
-                    className="mt-6 w-full border-b border-hairline bg-transparent pb-3 text-[1.05rem] text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
+                    className="w-full border-b border-hairline bg-transparent pb-3 text-[1.05rem] text-ink outline-none transition-colors duration-300 placeholder:text-mute/70 focus:border-ink"
                   />
                 )}
 
                 <p
-                  className="mt-4 text-[0.8rem] text-signal"
+                  className="mt-3 text-[0.8rem] text-signal"
                   role={fault ? 'alert' : undefined}
                   style={{ opacity: fault ? 1 : 0 }}
                 >
@@ -245,7 +254,7 @@ export function InquirySection({ phone }: { phone: boolean }) {
                 the column, the arrow on the outer edge. */}
             <div
               className={`flex items-center justify-between gap-6 ${
-                phone ? 'mt-10' : 'mt-[6vh]'
+                phone ? 'mt-5' : 'mt-[3vh]'
               }`}
             >
               <ul className="flex items-center gap-2">

@@ -134,6 +134,7 @@ function hydrateAboutSection(section: AboutSection): AboutSection {
 
 /** Stills we ship ourselves, kept at native size and served uncompressed. */
 const LOCAL_STILL: Record<string, { width: number; height: number }> = {
+  '/work/scytales-2/gmb-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/sc-2.jpg': { width: 5504, height: 3072 },

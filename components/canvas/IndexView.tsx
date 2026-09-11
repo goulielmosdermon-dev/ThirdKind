@@ -18,6 +18,7 @@ import {
 } from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
+import { MaskedWords } from '@/components/chrome/MaskedWords';
 import { MOTION } from '@/lib/motion/tokens';
 import { DISPLAY_BALANCE } from '@/lib/type/display';
 import { HeroCarousel } from '@/components/canvas/HeroShowcase';
@@ -117,8 +118,8 @@ function ManifestoBand({
               key={block._key}
               className={
                 phone
-                  ? 'text-[1.05rem] leading-[1.7]'
-                  : 'text-[clamp(1.15rem,1.65vw,1.55rem)] leading-[1.6]'
+                  ? 'text-[1.45rem] leading-[1.6]'
+                  : 'text-[clamp(1.6rem,2.3vw,2.15rem)] leading-[1.5]'
               }
             >
               {block.children.map((child) => child.text).join('')}
@@ -281,83 +282,66 @@ function ThoughtsRun({
     return null;
   }
 
-  const words = ['Because', 'it\u2019s', 'so', 'much', 'fun'];
-
   return (
-    <section className={phone ? 'mt-16' : 'mt-[clamp(4rem,9vw,8rem)]'}>
-      <motion.h2
-        initial="hidden"
-        whileInView="shown"
-        viewport={{ once: true, amount: 0.4 }}
-        variants={{
-          hidden: {},
-          shown: { transition: { staggerChildren: reduced ? 0 : 0.075 } },
-        }}
-        className={`font-display leading-[0.92] tracking-[-0.02em] text-ink ${
+    <>
+      {/* Its own band, with room either side of it rather than a screen of
+          it: the line arrives out of its masks as the section comes up, and
+          runs backwards as the reader leaves it for the writing below. */}
+      <section
+        className={
           phone
-            ? 'text-[clamp(2.4rem,13vw,3.6rem)]'
-            : 'text-[clamp(3rem,9.5vw,9rem)]'
-        }`}
+            ? 'pt-24 pb-16'
+            : 'pt-[clamp(7rem,15vw,13rem)] pb-[clamp(4rem,9vw,8rem)]'
+        }
       >
-        {words
-          .map((word) => (
-            // The mask is the word's own box; the word rises into it.
-            <span
-              key={word}
-              // The mask is the word's own box, opened up below the baseline and
-              // pulled back by the same amount: descenders and the comma-tail of
-              // the type clear it without the line taking any more room.
-              className="inline-block overflow-hidden pt-[0.12em] pb-[0.26em] -mt-[0.12em] -mb-[0.26em] align-bottom"
-            >
-              <motion.span
-                className="inline-block"
-                variants={{
-                  hidden: { y: reduced ? 0 : '110%' },
-                  shown: {
-                    y: 0,
-                    transition: {
-                      duration: reduced ? MOTION.reduced : 0.85,
-                      ease: MOTION.easeOut,
-                    },
-                  },
-                }}
-              >
-                {word}
-              </motion.span>
-            </span>
-          ))
-          .reduce<React.ReactNode[]>(
-            (out, node, index) => (index === 0 ? [node] : [...out, ' ', node]),
-            [],
-          )}
-      </motion.h2>
-
-      <ul className={phone ? 'mt-10' : 'mt-[clamp(2.5rem,5vw,4.5rem)]'}>
-        {visible.map((node, index) => (
-          <ThoughtRow
-            key={node.id}
-            node={node}
-            phone={phone}
-            // Only the rows this click brought in fade; the ones already
-            // read stay put rather than flickering under the new ones.
-            fresh={index >= OPENS_WITH}
-            reduced={reduced}
-            onOpen={onOpen}
-            onPrefetch={onPrefetch}
-          />
-        ))}
-      </ul>
-
-      {more > 0 ? (
-        <button
-          type="button"
-          onClick={() => setShown((count) => count + STEP)}
-          className="mt-8 cursor-pointer border-0 bg-transparent p-0 text-[0.9rem] text-mute underline-offset-4 transition-colors duration-300 hover:text-ink hover:underline"
+        <h2
+          className={`font-display leading-[0.92] tracking-[-0.02em] text-ink ${
+            phone
+              ? 'text-[clamp(2.4rem,13vw,3.6rem)]'
+              : 'text-[clamp(3rem,9.5vw,9rem)]'
+          }`}
         >
-          Show more
-        </button>
-      ) : null}
-    </section>
+          <MaskedWords
+            once={false}
+            words={[
+              { text: 'Because' },
+              { text: 'it\u2019s' },
+              { text: 'so' },
+              { text: 'much' },
+              { text: 'fun' },
+            ]}
+          />
+        </h2>
+      </section>
+
+      <section>
+        <ul>
+          {visible.map((node, index) => (
+            <ThoughtRow
+              key={node.id}
+              node={node}
+              phone={phone}
+              // Only the rows this click brought in fade; the ones already
+              // read stay put rather than flickering under the new ones.
+              fresh={index >= OPENS_WITH}
+              reduced={reduced}
+              onOpen={onOpen}
+              onPrefetch={onPrefetch}
+            />
+          ))}
+        </ul>
+
+        {more > 0 ? (
+          <button
+            type="button"
+            onClick={() => setShown((count) => count + STEP)}
+            className="mt-8 cursor-pointer border-0 bg-transparent p-0 text-[0.9rem] text-mute underline-offset-4 transition-colors duration-300 hover:text-ink hover:underline"
+          >
+            Show more
+          </button>
+        ) : null}
+      </section>
+    </>
   );
 }
 

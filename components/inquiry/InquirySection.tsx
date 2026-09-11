@@ -184,10 +184,26 @@ export function InquirySection({ phone }: { phone: boolean }) {
           </motion.div>
         ) : (
           <>
-            <p className="max-w-[34ch] rounded-2xl bg-ink px-6 py-5 text-[0.95rem] leading-relaxed text-white">
-              A few quick questions, one at a time, so the right person can get
-              back to you.
-            </p>
+            <div className="relative w-fit">
+              <p className="max-w-[34ch] rounded-2xl bg-ink px-6 py-5 text-[0.95rem] leading-relaxed text-white">
+                A few quick questions, one at a time, so the right person can
+                get back to you.
+              </p>
+              {/* Sat just off the corner, the way the tail of a message is:
+                  it grows into place as the note is reached. */}
+              <motion.span
+                aria-hidden
+                initial={reduced ? false : { scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{
+                  duration: reduced ? MOTION.reduced : 0.55,
+                  delay: reduced ? 0 : 0.18,
+                  ease: [0.34, 1.4, 0.64, 1],
+                }}
+                className="absolute -right-[2px] -bottom-[2px] block h-3.5 w-3.5 rounded-full bg-ink"
+              />
+            </div>
 
             {/* The question and its answer swap in place, so nothing below
                 them moves as the flow runs down. */}
@@ -195,7 +211,7 @@ export function InquirySection({ phone }: { phone: boolean }) {
               // No reserved height: the controls sit under whichever field is
               // showing. Every question but the last is the same one-line
               // input, so nothing moves until the note arrives at the end.
-              className={phone ? 'mt-12' : 'mt-[12vh]'}
+              className={phone ? 'mt-6' : 'mt-[6vh]'}
             >
               <motion.div
                 key={step.key}

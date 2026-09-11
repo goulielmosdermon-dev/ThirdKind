@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Fragment, useRef } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { MOTION } from '@/lib/motion/tokens';
 
@@ -19,8 +19,10 @@ export type MaskedWord = {
  * the line taking any more room than it would set plain.
  *
  * Left to `once`, it plays when the line arrives and stays. Set `once` false
- * and it runs backwards on the way out, which is what lets a heading close
- * itself as the reader leaves the section it belongs to.
+ * and the line leaves the way it came in — rising on out through the top of
+ * its masks as the reader carries on past, and dropping back down into place
+ * on the way back — which is what lets a heading close itself rather than
+ * simply being scrolled off.
  */
 export function MaskedWords({
   words,
@@ -35,22 +37,48 @@ export function MaskedWords({
 }) {
   const reduced = useReducedMotion() ?? false;
   const ref = useRef<HTMLSpanElement>(null);
+  const [state, setState] = useState<'below' | 'shown' | 'above'>('below');
+
   /*
-    Watched, and the state written from what it says, rather than left to
-    whileInView: that only plays the line in. Falling back out of it on the
-    way past depends on there being no `animate` to return to, which is a
-    quiet rule to build a section's closing move on.
+    Watched here rather than through whileInView, which only plays a line in:
+    leaving needs to know which edge the line went out by, so that it rises on
+    through the top when the reader carries on and comes back down when they
+    turn around.
   */
-  const inView = useInView(ref, { amount, once });
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) {
+          return;
+        }
+        if (entry.isIntersecting) {
+          setState('shown');
+          if (once) {
+            observer.disconnect();
+          }
+          return;
+        }
+        setState(entry.boundingClientRect.top < 0 ? 'above' : 'below');
+      },
+      { threshold: amount },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [amount, once]);
 
   return (
     <motion.span
       ref={ref}
-      initial="hidden"
-      animate={inView ? 'shown' : 'hidden'}
+      initial="below"
+      animate={state}
       variants={{
-        hidden: {},
+        below: { transition: { staggerChildren: reduced ? 0 : 0.075 } },
         shown: { transition: { staggerChildren: reduced ? 0 : 0.075 } },
+        above: { transition: { staggerChildren: reduced ? 0 : 0.05 } },
       }}
       className={className}
     >
@@ -61,11 +89,18 @@ export function MaskedWords({
             <motion.span
               className={`inline-block ${word.className ?? ''}`}
               variants={{
-                hidden: { y: reduced ? 0 : '110%' },
+                below: { y: reduced ? 0 : '110%' },
                 shown: {
                   y: 0,
                   transition: {
                     duration: reduced ? MOTION.reduced : 0.85,
+                    ease: MOTION.easeOut,
+                  },
+                },
+                above: {
+                  y: reduced ? 0 : '-110%',
+                  transition: {
+                    duration: reduced ? MOTION.reduced : 0.7,
                     ease: MOTION.easeOut,
                   },
                 },

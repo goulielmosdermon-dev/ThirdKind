@@ -140,15 +140,15 @@ const STEP = 2;
 function ThoughtRow({
   node,
   phone,
-  fresh = false,
+  index,
   reduced = false,
   onOpen,
   onPrefetch,
 }: {
   node: LeafCanvasNode;
   phone: boolean;
-  /** Brought in by "Show more", so it arrives rather than being there. */
-  fresh?: boolean;
+  /** Its place in the run, which is how far behind the one above it lands. */
+  index: number;
   reduced?: boolean;
   onOpen: (href: string, nodeId: string) => void;
   onPrefetch?: (href: string) => void;
@@ -163,10 +163,16 @@ function ThoughtRow({
   return (
     <motion.li
       ref={rowRef}
-      initial={fresh ? { opacity: 0 } : false}
-      animate={{ opacity: 1 }}
+      // Each row resolves as it arrives. The ones on screen together trickle
+      // down a beat apart; the ones further along simply come in as they are
+      // reached. A row brought in by "Show more" is already in view, so it
+      // fades on the spot.
+      initial={reduced ? false : { opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.35 }}
       transition={{
-        duration: reduced ? MOTION.reduced : 0.55,
+        duration: reduced ? MOTION.reduced : 0.6,
+        delay: reduced ? 0 : Math.min(index, 5) * 0.08,
         ease: MOTION.easeOut,
       }}
       className="relative border-t border-hairline last:border-b"
@@ -290,8 +296,8 @@ function ThoughtsRun({
       <section
         className={
           phone
-            ? 'pt-24 pb-16'
-            : 'pt-[clamp(7rem,15vw,13rem)] pb-[clamp(4rem,9vw,8rem)]'
+            ? 'pt-44 pb-36'
+            : 'pt-[clamp(14rem,28vw,26rem)] pb-[clamp(11rem,22vw,20rem)]'
         }
       >
         <h2
@@ -321,9 +327,7 @@ function ThoughtsRun({
               key={node.id}
               node={node}
               phone={phone}
-              // Only the rows this click brought in fade; the ones already
-              // read stay put rather than flickering under the new ones.
-              fresh={index >= OPENS_WITH}
+              index={index}
               reduced={reduced}
               onOpen={onOpen}
               onPrefetch={onPrefetch}

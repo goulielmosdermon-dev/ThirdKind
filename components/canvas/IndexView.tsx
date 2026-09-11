@@ -595,7 +595,14 @@ export function IndexView({
         className={
           phone
             ? 'px-5 pt-4 pb-16'
-            : 'mx-auto min-h-full max-w-[92rem] px-5 md:px-[clamp(5.5rem,12vw,11rem)] pt-[clamp(3rem,7vw,6rem)] pb-20'
+            : // No cap on the measure from here down, and a gutter that is a
+              // share of the screen rather than a number that stops growing:
+              // held to 92rem the index sat in a strip down the middle of a
+              // large display with the better part of it left empty either
+              // side. 12vw is what the old clamp already resolved to at the
+              // width the page was drawn for, so nothing moves until there is
+              // more screen than that.
+              'min-h-full px-5 md:px-[12vw] pt-[clamp(3rem,7vw,6rem)] pb-20'
         }
       >
         <ul className={`flex flex-col ${phone ? 'gap-12' : 'gap-16 md:gap-0'}`}>

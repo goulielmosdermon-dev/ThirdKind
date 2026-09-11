@@ -66,7 +66,9 @@ const SLOT = [
     aspect: 'aspect-[5/4] md:aspect-[16/9]',
   },
   {
-    wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[46%]',
+    // Half again the width it closed on, and the cap comes off with it or the
+    // share of the column it is given stops meaning anything past 36rem.
+    wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[69%] md:max-w-none',
     aspect: 'aspect-[4/5]',
   },
 ] as const;

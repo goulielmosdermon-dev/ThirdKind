@@ -21,6 +21,16 @@ export function ContactSheet({ contact }: { contact: ContactInfo }) {
           <div className="text-[1.05rem] leading-snug text-ink">
             <p>{contact.heading}</p>
             <p className="mt-2">{contact.newBusinessName}</p>
+            {/* Read from the contact record rather than written in, so the
+                address the page shows is the one the form answers to. */}
+            {contact.email ? (
+              <a
+                href={`mailto:${contact.email}`}
+                className="mt-2 inline-block underline underline-offset-4 transition-opacity duration-300 hover:opacity-70"
+              >
+                {contact.email}
+              </a>
+            ) : null}
             <div className="mt-8">
               <BookCallButton />
             </div>

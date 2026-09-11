@@ -244,7 +244,7 @@ export const chapters: Chapter[] = [
         ],
         total: ['Total', '€7,500 + VAT'],
         caption:
-          'Production and post-production for one testimonial at one location. Should the full campaign be confirmed within 90 days, this fee is credited in full against it. Actor fees are not included in this quote.',
+          'Production and post-production for one testimonial at one location. Actor fees are not included in this quote.',
       },
     ],
   },
@@ -275,8 +275,6 @@ export const chapters: Chapter[] = [
         title: 'Not included',
         items: [
           'Actor fees',
-          'Location permits and fees',
-          'Music licensing',
           'Subtitling and language versions beyond the delivered cut',
           'Revisions beyond two rounds per film',
         ],

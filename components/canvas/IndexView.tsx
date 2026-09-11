@@ -22,6 +22,7 @@ import { MOTION } from '@/lib/motion/tokens';
 import { DISPLAY_BALANCE } from '@/lib/type/display';
 import { HeroCarousel } from '@/components/canvas/HeroShowcase';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
+import { InquirySection } from '@/components/inquiry/InquirySection';
 import { PillLabel } from '@/components/sheet/PillLabel';
 
 function IndexArrow() {
@@ -741,6 +742,8 @@ export function IndexView({
           onOpen={onOpen}
           onPrefetch={onPrefetch}
         />
+
+        <InquirySection phone={phone} />
       </div>
       <SiteFooter compact={phone} />
     </motion.div>

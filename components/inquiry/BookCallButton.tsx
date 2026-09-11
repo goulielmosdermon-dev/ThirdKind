@@ -4,7 +4,7 @@ import { PillLabel } from '@/components/sheet/PillLabel';
 import { useInquiry } from '@/components/inquiry/InquiryProvider';
 
 export function BookCallButton({
-  label = 'book a call',
+  label = 'reach out',
   tone = 'ink',
   variant = 'solid',
   className,

@@ -204,7 +204,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         <h2 id={titleId} className="font-display sr-only">
-          Book a call
+          Reach out
         </h2>
         {sent ? (
           <div className="flex flex-col justify-center px-1 py-6">
@@ -373,7 +373,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
               }}
               className="mt-3 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white disabled:opacity-60"
             >
-              {pending ? 'Sending…' : 'Book a Call'}
+              {pending ? 'Sending…' : 'Reach Out'}
             </motion.button>
           </form>
         )}

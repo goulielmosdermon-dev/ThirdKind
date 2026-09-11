@@ -41,7 +41,7 @@ export const legalPages: Record<LegalSlug, LegalPage> = {
       ],
       ['What we collect', 'h2'],
       [
-        'When you use Book a Call or Find out more, we collect the details you type: name, company email, phone number, company name, the service you are interested in, an estimated media budget, what you are inquiring about, an ideal start date, and where you heard about us.',
+        'When you use Reach Out or Find out more, we collect the details you type: name, company email, phone number, company name, the service you are interested in, an estimated media budget, what you are inquiring about, an ideal start date, and where you heard about us.',
       ],
       [
         'We do not ask for payment details on this site. We do not scrape your contacts. We do not buy lists.',
@@ -113,7 +113,7 @@ export const legalPages: Record<LegalSlug, LegalPage> = {
       ],
       ['Inquiries are not a contract', 'h2'],
       [
-        'Sending the Book a Call form is a request for a conversation. It does not book a crew, reserve a date, or set a fee. A project starts when both sides agree in writing.',
+        'Sending the Reach Out form is a request for a conversation. It does not book a crew, reserve a date, or set a fee. A project starts when both sides agree in writing.',
       ],
       ['Accuracy', 'h2'],
       [

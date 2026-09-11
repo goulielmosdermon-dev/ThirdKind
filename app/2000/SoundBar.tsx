@@ -23,8 +23,8 @@ function PauseGlyph({ className }: { className: string }) {
 }
 
 /**
- * A piece of music: the mark, the track, whose it is, and a line under it
- * that fills as it runs and can be taken hold of to move through it.
+ * A piece of music: the mark, the track, and whose it is, held to the middle
+ * of the slide.
  *
  * Nothing is loaded until it is asked for — a deck is read, not listened to,
  * and a track that fetches itself on arrival is a download nobody asked for.
@@ -46,9 +46,7 @@ export function SoundBar({
 }) {
   const ref = useRef<HTMLAudioElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [past, setPast] = useState(false);
 
   /*
@@ -64,19 +62,9 @@ export function SoundBar({
     if (!audio) {
       return;
     }
-    const onTime = () => {
-      setProgress(audio.duration ? audio.currentTime / audio.duration : 0);
-    };
-    const onEnd = () => {
-      setPlaying(false);
-      setProgress(0);
-    };
-    audio.addEventListener('timeupdate', onTime);
+    const onEnd = () => setPlaying(false);
     audio.addEventListener('ended', onEnd);
-    return () => {
-      audio.removeEventListener('timeupdate', onTime);
-      audio.removeEventListener('ended', onEnd);
-    };
+    return () => audio.removeEventListener('ended', onEnd);
   }, []);
 
   /* Followed only once it is behind them: a control in the corner while the
@@ -117,27 +105,15 @@ export function SoundBar({
     }
   }
 
-  function seekTo(clientX: number) {
-    const audio = ref.current;
-    const track = trackRef.current;
-    if (!audio || !track || !audio.duration) {
-      return;
-    }
-    const box = track.getBoundingClientRect();
-    const ratio = Math.min(1, Math.max(0, (clientX - box.left) / box.width));
-    audio.currentTime = ratio * audio.duration;
-    setProgress(ratio);
-  }
-
   return (
-    <div ref={barRef} className={`max-w-[34rem] ${className}`}>
+    <div ref={barRef} className={`text-center ${className}`}>
       <audio ref={ref} src={src} preload="none" />
 
       <button
         type="button"
         onClick={() => void toggle()}
         aria-label={playing ? `Pause ${title}` : `Play ${title}`}
-        className="flex cursor-pointer items-center gap-[0.7em] border-0 bg-transparent p-0 text-left text-ink transition-opacity duration-300 hover:opacity-70"
+        className="mx-auto flex cursor-pointer items-center gap-[0.7em] border-0 bg-transparent p-0 text-ink transition-opacity duration-300 hover:opacity-70"
       >
         {playing ? (
           <PauseGlyph className="h-[0.8em] w-auto" />
@@ -148,30 +124,6 @@ export function SoundBar({
       </button>
 
       <p className="mt-[0.5em] text-mute">{artist}</p>
-
-      {/* The line under it, which fills as the track runs and can be taken
-          hold of to move through it. */}
-      <div
-        ref={trackRef}
-        role="presentation"
-        onPointerDown={(event) => {
-          event.currentTarget.setPointerCapture(event.pointerId);
-          seekTo(event.clientX);
-        }}
-        onPointerMove={(event) => {
-          if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-            seekTo(event.clientX);
-          }
-        }}
-        className="mt-[1.2em] h-4 cursor-pointer"
-      >
-        <div className="relative h-px w-full bg-hairline">
-          <div
-            className="absolute inset-y-0 left-0 bg-ink"
-            style={{ width: `${progress * 100}%` }}
-          />
-        </div>
-      </div>
 
       {/* The same control, kept to the corner once the track is behind the
           reader — whether or not it was ever started, since starting it is

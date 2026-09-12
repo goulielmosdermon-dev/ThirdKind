@@ -279,14 +279,14 @@ export function AboutSheet({
   } else if (section.key === 'why') {
     intro = '';
   }
-  // The full stop is the heading's, not the section's, and Why answers itself
-  // rather than naming itself — both only here. The tab, the nav and the
+  // The full stop is the heading's, not the section's. Why carries no heading
+  // at all: the page opens on the argument itself. The tab, the nav and the
   // canvas still read the plain title.
   const heading =
     section.key === 'team'
       ? `${section.title}.`
       : section.key === 'why'
-        ? 'Because it\u2019s so much fun!'
+        ? ''
         : section.title;
   const process = section.key === 'process';
   const poemPage = section.key === 'poem';
@@ -327,9 +327,11 @@ export function AboutSheet({
                 framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
               }`}
             >
-              <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
-                {heading}
-              </h1>
+              {heading ? (
+                <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
+                  {heading}
+                </h1>
+              ) : null}
               {intro ? (
                 <p className="mt-6 max-w-[36rem] text-[1.05rem] leading-snug text-mute">
                   {intro}

@@ -39,6 +39,13 @@ function columnsFor(width: number): number {
   return 5;
 }
 
+/** The first runs of the archive are what load. */
+const FIRST_RUNS = 2;
+/** A ceiling, so a reader who holds scroll does not grow the page forever. */
+const MAX_RUNS = 40;
+/** How close to the bottom the reader gets before the next run is dealt. */
+const REACH = 1600;
+
 function ArticleCard({
   article,
   aspect,
@@ -84,6 +91,7 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
   const framed = useFramed();
   const gridRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(3);
+  const [runs, setRuns] = useState(FIRST_RUNS);
 
   // Column count is worked out here rather than in CSS because the cards are
   // dealt into the columns one by one: the grid has to know how many there
@@ -100,10 +108,46 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
     return () => observer.disconnect();
   }, []);
 
+  // The wall has no end: as the reader comes within a screen or so of the
+  // bottom another run of the archive is dealt on behind them. The sheet
+  // scrolls in its own box, so the reach is measured against that box rather
+  // than the window.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) {
+      return;
+    }
+    let scroller: HTMLElement | null = grid.parentElement;
+    while (scroller) {
+      const overflow = getComputedStyle(scroller).overflowY;
+      if (overflow === 'auto' || overflow === 'scroll') {
+        break;
+      }
+      scroller = scroller.parentElement;
+    }
+    if (!scroller) {
+      return;
+    }
+    const box = scroller;
+    const onScroll = () => {
+      const left = box.scrollHeight - box.scrollTop - box.clientHeight;
+      if (left < REACH) {
+        setRuns((current) => Math.min(current + 1, MAX_RUNS));
+      }
+    };
+    box.addEventListener('scroll', onScroll, { passive: true });
+    return () => box.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // One long deal of cards — the archive, over and over — dropped into the
+  // columns in turn, so the columns stay level however tall each card is.
+  const cards = Array.from({ length: runs * articles.length }, (_, index) => ({
+    key: index,
+    article: articles[index % articles.length]!,
+    aspect: ASPECTS[index % ASPECTS.length]!,
+  }));
   const lanes = Array.from({ length: columns }, (_, lane) =>
-    articles
-      .map((article, index) => ({ article, index }))
-      .filter((card) => card.index % columns === lane),
+    cards.filter((card) => card.key % columns === lane),
   );
 
   return (
@@ -131,10 +175,10 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
             >
               {lane.map((card) => (
                 <ArticleCard
-                  key={card.article._id}
+                  key={card.key}
                   article={card.article}
-                  aspect={ASPECTS[card.index % ASPECTS.length]!}
-                  eager={card.index < columns * 2}
+                  aspect={card.aspect}
+                  eager={card.key < columns * 2}
                 />
               ))}
             </div>

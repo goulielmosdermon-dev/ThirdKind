@@ -513,7 +513,7 @@ const projects: Project[] = [
   {
     _id: 'project-noirgaze',
     _type: 'project',
-    title: 'New Product Launch',
+    title: '4 Beach Films',
     client: 'Noir Gaze',
     slug: { current: 'noirgaze' },
     order: 10,

@@ -191,7 +191,7 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
       return (
         <Quadrant
           block={block}
-          className="mx-auto w-full max-w-[31rem] text-[clamp(0.53rem,1.05vw,0.85rem)]"
+          className="mx-auto w-full max-w-[41.5rem] text-[clamp(0.71rem,1.4vw,1.13rem)]"
         />
       );
 
@@ -423,7 +423,7 @@ function BlockView({
           <FadeIn>
             <Quadrant
               block={block}
-              className="mx-auto w-full max-w-[31rem] text-[clamp(0.5rem,0.95vw,0.8rem)]"
+              className="mx-auto w-full max-w-[41.5rem] text-[clamp(0.67rem,1.27vw,1.07rem)]"
             />
           </FadeIn>
         </Column>

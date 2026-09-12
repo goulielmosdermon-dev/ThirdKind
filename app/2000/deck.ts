@@ -41,6 +41,15 @@ export type Block =
    * to say about it, so the run sets them out as terms instead.
    */
   | { kind: 'list'; title?: string; items: ListItem[] }
+  /**
+   * A board of stills, read as one image rather than as several.
+   *
+   * A pair sets two plates against each other and means the comparison; a
+   * mosaic means the opposite — that no single frame is the point and the
+   * spread is. Reference and moodboards go here, at the size they actually
+   * are, instead of being dealt out two to a slide.
+   */
+  | { kind: 'mosaic'; images: Plate[]; caption?: string }
   /** A piece of music, named and playable. */
   | { kind: 'sound'; src: string; title: string; artist: string }
   /** A film, in the site's own player. */

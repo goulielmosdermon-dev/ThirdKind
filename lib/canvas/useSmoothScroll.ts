@@ -3,13 +3,10 @@
 import { useEffect, type RefObject } from 'react';
 
 import { normalizeWheelDelta } from '@/lib/canvas/coords';
+import { SETTLE_PX, TAU_MS } from '@/lib/chrome/wheelEase';
 
-/** Time constant of the approach, in ms. Larger is looser. */
-const TAU_MS = 105;
 /** A single wheel event may not ask for more than this much travel. */
 const DELTA_CLAMP = 220;
-/** Below this distance the glide is over. */
-const SETTLE_PX = 0.4;
 
 /**
  * Eases the wheel instead of jumping with it.

@@ -45,10 +45,17 @@ function Frame({
   plate,
   sizes,
   priority = false,
+  className = 'h-auto w-full',
 }: {
   plate: Plate;
   sizes: string;
   priority?: boolean;
+  /**
+   * How the plate fills its box. The flowing page gives a plate all the height
+   * it asks for, so the default is the full width at natural height; a slide
+   * has only the screen, and overrides this to fit inside it.
+   */
+  className?: string;
 }) {
   return (
     <Image
@@ -59,7 +66,7 @@ function Frame({
       sizes={sizes}
       priority={priority}
       unoptimized
-      className="h-auto w-full"
+      className={className}
     />
   );
 }
@@ -99,17 +106,26 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
         />
       );
 
+    /* The plates are bounded here in a way the flowing page never needed. A
+       slide has exactly the screen: a tall plate given its natural height
+       runs off the bottom of a frame that cannot scroll, and a caption above
+       it takes room the plate then has to give back. `object-contain` inside
+       a capped box keeps the whole image on screen at whatever shape it
+       happens to be. */
     case 'full':
       return (
         <figure>
           {block.caption ? (
-            <figcaption className={`mb-[4vh] ${TEXT}`}>
+            <figcaption className={`mb-[4vh] max-w-[44ch] ${TEXT}`}>
               {block.caption}
             </figcaption>
           ) : null}
           <Frame
             plate={block.image}
             sizes="(min-width: 1180px) 1180px, 100vw"
+            className={`mx-auto w-auto object-contain ${
+              block.caption ? 'max-h-[46svh]' : 'max-h-[74svh]'
+            }`}
           />
         </figure>
       );
@@ -120,10 +136,12 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
           <Frame
             plate={block.images[0]}
             sizes="(min-width: 768px) 46vw, 100vw"
+            className="mx-auto max-h-[64svh] w-auto object-contain md:max-h-[70svh]"
           />
           <Frame
             plate={block.images[1]}
             sizes="(min-width: 768px) 46vw, 100vw"
+            className="mx-auto max-h-[64svh] w-auto object-contain md:max-h-[70svh]"
           />
         </div>
       );
@@ -137,6 +155,87 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
         </figure>
       );
 
+    /* Set by height rather than into a grid: every still keeps its own shape
+       and nothing is cropped to make the rows line up. The board wraps into
+       two or three rows and reads as one spread, which is the whole reason it
+       is not a run of pairs. */
+    case 'mosaic':
+      return (
+        <figure>
+          {block.caption ? (
+            <figcaption className={`mb-[4vh] max-w-[44ch] ${TEXT}`}>
+              {block.caption}
+            </figcaption>
+          ) : null}
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+            {block.images.map((plate) => (
+              <Frame
+                key={plate.src}
+                plate={plate}
+                sizes="(min-width: 768px) 30vw, 45vw"
+                className="h-[13svh] w-auto object-contain md:h-[17svh]"
+              />
+            ))}
+          </div>
+        </figure>
+      );
+
+    /* A list is a slide in its own right here. It carries none of the page
+       version's furniture — no Column, no FadeIn, and above all no sticky
+       heading, which has nothing to stick to inside a frame that does not
+       scroll. The heading simply holds the left of the slide. */
+    case 'list': {
+      const termed = block.items.some((item) => Array.isArray(item));
+
+      return (
+        <div className="grid grid-cols-1 gap-[4vh] md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-16">
+          {block.title ? (
+            <p className={TEXT}>{block.title}</p>
+          ) : (
+            <div aria-hidden />
+          )}
+
+          {termed ? (
+            <dl className="flex flex-col gap-[3.5vh]">
+              {block.items.map((item) => {
+                const [term, note] = Array.isArray(item)
+                  ? item
+                  : [item as string, ''];
+                return (
+                  <div key={term}>
+                    <dt className={TEXT}>{term}</dt>
+                    {note ? (
+                      <dd
+                        className={`mt-[0.4em] max-w-[38ch] ${TEXT} text-mute`}
+                      >
+                        {note}
+                      </dd>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </dl>
+          ) : (
+            <ul className="flex flex-wrap gap-2">
+              {block.items.map((item) => (
+                <li key={String(item)}>
+                  <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
+                    {String(item)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      );
+    }
+
+    /*
+      Still unwritten for a swapping deck: `table`, `film` and `credits`. They
+      fall through to nothing rather than to a broken slide — but a blank
+      slide is what a deck using them in `swap` would get, so write the case
+      before reaching for the kind, not after.
+    */
     default:
       return null;
   }
@@ -299,6 +398,31 @@ function BlockView({
               artist={block.artist}
               className={TEXT}
             />
+          </FadeIn>
+        </Column>
+      );
+
+    case 'mosaic':
+      return (
+        <Column>
+          <FadeIn>
+            <figure>
+              {block.caption ? (
+                <figcaption className={`mb-[6vh] ${TEXT}`}>
+                  {block.caption}
+                </figcaption>
+              ) : null}
+              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+                {block.images.map((plate) => (
+                  <Frame
+                    key={plate.src}
+                    plate={plate}
+                    sizes="(min-width: 768px) 30vw, 45vw"
+                    className="h-[16vh] w-auto object-contain md:h-[22vh]"
+                  />
+                ))}
+              </div>
+            </figure>
           </FadeIn>
         </Column>
       );

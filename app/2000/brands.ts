@@ -37,6 +37,11 @@ export const brands: Record<string, Brand> = {
     name: 'Ford',
     password: process.env.DECK_PASSWORD_FORD ?? 'FORD2026',
   },
+  mindthehack: {
+    slug: 'mindthehack',
+    name: 'Mind The Hack',
+    password: process.env.DECK_PASSWORD_MINDTHEHACK ?? 'MTH2026',
+  },
 };
 
 export const cookieName = (slug: string) => `deck_${slug}`;

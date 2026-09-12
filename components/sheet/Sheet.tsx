@@ -17,6 +17,7 @@ import { useMobileChrome, useFramed } from '@/components/mobile/MobileChrome';
 import { useSheetNav } from '@/components/sheet/SheetNav';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
 import { MOTION } from '@/lib/motion/tokens';
+import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 
 const SWIPE_PX = 120;
 const SWIPE_VELOCITY = 0.55;
@@ -51,6 +52,11 @@ export function Sheet({
   const panelRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
+  // The sheet is the site's reading surface, so it is eased on the same terms
+  // as the canvas index and the decks rather than scrolling natively beside
+  // them. Coarse pointers keep their own inertia; the hook stands aside.
+  useSmoothScroll(bodyRef);
+
   const closedRef = useRef(false);
   const dragRef = useRef<{ y: number; time: number } | null>(null);
   const [dragY, setDragY] = useState(0);

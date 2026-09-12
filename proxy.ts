@@ -35,5 +35,7 @@ export const config = {
     '/ePay',
     '/Ford/:path*',
     '/Ford',
+    '/mindthehack/:path*',
+    '/mindthehack',
   ],
 };

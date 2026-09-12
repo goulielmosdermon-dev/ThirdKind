@@ -869,7 +869,7 @@ const aboutSections: AboutSection[] = [
           "Your customers belonged to something before they belonged to you. A sport, a scene, a group chat. We go and look at what those worlds actually care about this year, and find you a way in that doesn't make everyone wince.",
       },
       {
-        title: 'Brand Strategy',
+        title: 'Brand strategy',
         slug: { current: 'brand-strategy' },
         description:
           'Before anyone writes a word, the room has to agree on what you stand for and who you are for. We get that onto one page in plain language, so every decision after it has something to point at.',

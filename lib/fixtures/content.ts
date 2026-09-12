@@ -871,6 +871,12 @@ const aboutSections: AboutSection[] = [
           'A good film nobody sees is an expensive hobby. We work out where the work goes, in what order, and what each piece is there to do, so the whole run adds up to something.',
       },
       {
+        title: 'Steady stream',
+        slug: { current: 'steady-stream' },
+        description:
+          'One big film a year stopped carrying a brand a while ago. We set you up to keep making things: quick where it can be quick, careful where it counts, without spending the whole budget on the small stuff.',
+      },
+      {
         title: 'Worth watching',
         slug: { current: 'worth-watching' },
         description:

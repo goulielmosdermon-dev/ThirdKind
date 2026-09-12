@@ -16,13 +16,13 @@ import type { Project } from '@/types/content';
  */
 
 /** The block's grid, in px. Cards are laid on it by row span. */
-const COL_W = 460;
-const ROW_H = 190;
-const GAP = 34;
+const COL_W = 316;
+const ROW_H = 132;
+const GAP = 24;
 /** Room under each still for the client and the title. */
-const CAPTION_H = 62;
-const COLS = 5;
-const ROWS = 12;
+const CAPTION_H = 54;
+const COLS = 12;
+const ROWS = 18;
 const TILE_W = COLS * COL_W;
 const TILE_H = ROWS * ROW_H;
 
@@ -31,11 +31,12 @@ const TILE_H = ROWS * ROW_H;
  * is what lets the block tile against itself without a seam.
  */
 const SPANS: number[][] = [
-  [3, 4, 2, 3],
-  [4, 2, 3, 3],
-  [2, 3, 4, 3],
-  [3, 3, 2, 4],
-  [4, 3, 3, 2],
+  [4, 3, 5, 3, 3],
+  [3, 5, 3, 4, 3],
+  [5, 3, 3, 3, 4],
+  [3, 4, 3, 5, 3],
+  [4, 3, 3, 5, 3],
+  [3, 3, 4, 3, 5],
 ];
 
 /** The drift, in px per second. Slow enough to read against. */
@@ -59,25 +60,68 @@ function wrap(value: number, span: number): number {
   return ((value % span) + span) % span;
 }
 
+/**
+ * The catalogue is short and the block is wide, so which project goes where is
+ * chosen rather than counted out: a card never repeats the one above it or any
+ * card it stands beside, including across the seam where the block meets its
+ * own copy. Counting through the list put whole columns in step with each
+ * other, which is what read as duplicates.
+ */
+function pick(column: number, step: number): number {
+  const seed = column * 2654435761 + step * 40503;
+  return (seed ^ (seed >>> 13)) >>> 0;
+}
+
 function layout(projects: Project[]): Card[] {
-  const cards: Card[] = [];
-  let index = 0;
+  const count = projects.length;
+  const slots: { column: number; step: number; top: number; span: number }[] =
+    [];
   for (let column = 0; column < COLS; column += 1) {
     const spans = SPANS[column % SPANS.length]!;
     let row = 0;
     for (let step = 0; step < spans.length; step += 1) {
       const span = spans[step]!;
-      cards.push({
-        key: `${column}-${step}`,
-        project: projects[index % projects.length]!,
-        x: column * COL_W,
-        y: row * ROW_H,
-        width: COL_W - GAP,
-        height: span * ROW_H - GAP,
-      });
+      slots.push({ column, step, top: row, span });
       row += span;
-      index += 1;
     }
+  }
+
+  const chosen = new Map<string, number>();
+  const at = (column: number, top: number, span: number) =>
+    slots
+      .filter(
+        (slot) =>
+          slot.column === ((column % COLS) + COLS) % COLS &&
+          slot.top < top + span &&
+          slot.top + slot.span > top,
+      )
+      .map((slot) => chosen.get(`${slot.column}-${slot.step}`))
+      .filter((index): index is number => index !== undefined);
+
+  const cards: Card[] = [];
+  for (const slot of slots) {
+    // Everything this card touches: the column to its left, the column to its
+    // right where that is the block wrapping round, and its own neighbours up
+    // and down the column.
+    const taken = new Set([
+      ...at(slot.column - 1, slot.top, slot.span),
+      ...(slot.column === COLS - 1 ? at(0, slot.top, slot.span) : []),
+      ...at(slot.column, slot.top - 1, 1),
+      ...at(slot.column, slot.top + slot.span, 1),
+    ]);
+    let index = pick(slot.column, slot.step) % count;
+    for (let tries = 0; tries < count && taken.has(index); tries += 1) {
+      index = (index + 1) % count;
+    }
+    chosen.set(`${slot.column}-${slot.step}`, index);
+    cards.push({
+      key: `${slot.column}-${slot.step}`,
+      project: projects[index]!,
+      x: slot.column * COL_W,
+      y: slot.top * ROW_H,
+      width: COL_W - GAP,
+      height: slot.span * ROW_H - GAP,
+    });
   }
   return cards;
 }
@@ -107,7 +151,11 @@ function Card({ card, eager }: { card: Card; eager: boolean }) {
           draggable={false}
           priority={eager}
           loading={eager ? undefined : 'lazy'}
-          sizes="480px"
+          // Twice the card's own width, so a retina screen is served a
+          // source it does not have to stretch, and at a quality that leaves
+          // the grain alone.
+          sizes="420px"
+          quality={95}
           unoptimized={isUnoptimizedAsset(project.thumbnail)}
           className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
         />
@@ -279,13 +327,10 @@ export function WorkIndexSheet({ projects }: { projects: Project[] }) {
   }
 
   const cards = layout(projects);
-  const tiles = Array.from(
-    { length: (copies.x + 1) * (copies.y + 1) },
-    (_, i) => ({
-      column: i % (copies.x + 1),
-      row: Math.floor(i / (copies.x + 1)),
-    }),
-  );
+  const tiles = Array.from({ length: copies.x * copies.y }, (_, i) => ({
+    column: i % copies.x,
+    row: Math.floor(i / copies.x),
+  }));
 
   return (
     <Sheet title="Work" tone="editorial" scrollerClassName="overflow-hidden">

@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
   images: {
     // The showcase band is full-bleed on a phone, where 75 shows its edges.
-    qualities: [75, 90],
+    qualities: [75, 90, 95],
     remotePatterns: [
       {
         protocol: 'https',

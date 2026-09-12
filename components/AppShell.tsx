@@ -71,7 +71,15 @@ export function AppShell({
               invisible backdrop swallows every click on the canvas. The path
               is the source of truth for whether a sheet exists.
             */}
-              {sheetOpen ? sheet : null}
+              {/*
+                An intercepted sheet is drawn over the page it was opened
+                from — the work field stays where it was underneath — so the
+                slot has to win the stacking order against children, which
+                come after it in the DOM.
+              */}
+              {sheetOpen ? (
+                <div className="relative z-[45]">{sheet}</div>
+              ) : null}
               {children}
               <CommandNav nodes={nodes} />
             </div>

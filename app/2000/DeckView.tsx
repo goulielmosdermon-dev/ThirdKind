@@ -6,6 +6,7 @@ import { Lead } from './Lead';
 import { SmoothPage } from './SmoothPage';
 import { SoundBar } from './SoundBar';
 import { PinnedRun } from './PinnedRun';
+import { Quadrant } from './Quadrant';
 import { SwapRun, type Slide } from './SwapRun';
 import { Reveal } from './Reveal';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
@@ -86,9 +87,12 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
           height={block.image.h}
           priority
           unoptimized
-          /* The mark arrives on a white box; multiply drops it into the paper
-             without needing a cut-out. */
-          className="mx-auto h-auto w-[min(30rem,72vw)] mix-blend-multiply"
+          /* A raster mark arrives on a white box, and multiply drops it into
+             the paper without needing a cut-out of every logo. A vector one is
+             already cut out, and multiplying would only dirty its colour. */
+          className={`mx-auto h-auto w-[min(34rem,78vw)] ${
+            block.image.src.endsWith('.svg') ? '' : 'mix-blend-multiply'
+          }`}
         />
       ) : (
         <p className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}>
@@ -178,6 +182,17 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
             ))}
           </div>
         </figure>
+      );
+
+    /* Sized off the slide rather than the page: one font size drives the
+       dots, the gaps and every label, so the plot fills the frame without
+       being redrawn for it. */
+    case 'quadrant':
+      return (
+        <Quadrant
+          block={block}
+          className="mx-auto w-full max-w-[62rem] text-[clamp(1.05rem,2.1vw,1.7rem)]"
+        />
       );
 
     /* A list is a slide in its own right here. It carries none of the page
@@ -402,6 +417,18 @@ function BlockView({
         </Column>
       );
 
+    case 'quadrant':
+      return (
+        <Column>
+          <FadeIn>
+            <Quadrant
+              block={block}
+              className="mx-auto w-full max-w-[62rem] text-[clamp(1rem,1.9vw,1.6rem)]"
+            />
+          </FadeIn>
+        </Column>
+      );
+
     case 'mosaic':
       return (
         <Column>
@@ -605,7 +632,10 @@ export function Deck({
 
   return (
     <div className="bg-paper text-ink">
-      <SmoothPage />
+      {/* A stepping deck owns the wheel itself — a gesture is one slide, not a
+          distance — so the page easing would only be a second hand on the same
+          control, fighting each step as it lands. */}
+      {swap ? null : <SmoothPage />}
       <DeckIndex entries={entries} textClass={NAV} />
 
       <main

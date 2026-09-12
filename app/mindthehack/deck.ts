@@ -41,7 +41,15 @@ export const chapters: Chapter[] = [
     id: '01',
     title: 'Mind The Hack',
     blocks: [
-      { kind: 'lead', text: 'Mind The Hack' },
+      {
+        kind: 'lead',
+        image: {
+          src: '/mindthehack/logo.svg',
+          w: 1912,
+          h: 345,
+          alt: 'Mind The Hack',
+        },
+      },
       {
         kind: 'text',
         lines: [
@@ -80,7 +88,8 @@ export const chapters: Chapter[] = [
     blocks: [
       {
         kind: 'list',
-        title: 'Regulation is a forced buying moment.',
+        title:
+          'Regulation is a first buying moment. Now is the best time to act.',
         items: [
           [
             'NIS2',
@@ -103,28 +112,41 @@ export const chapters: Chapter[] = [
     title: 'The competition',
     blocks: [
       {
-        kind: 'text',
-        lines: [
-          'Geographically, the category is owned by the heavily funded: Pentera, Cymulate, XM Cyber and Horizon3 out of the US and Israel, with Picus on the line between.',
-          'Europe and the Gulf are thinly held — Cytomate out of Qatar, and Mind The Hack as the regional challenger.',
+        kind: 'quadrant',
+        title: 'The competition — geographically',
+        axes: {
+          top: 'Global · heavily funded',
+          bottom: 'Regional challenger',
+          left: 'US / Israel',
+          right: 'Europe & Gulf',
+        },
+        points: [
+          { label: 'Cymulate', x: -0.384, y: 0.828 },
+          { label: 'Pentera', x: -0.726, y: 0.75 },
+          { label: 'Horizon3', x: -0.279, y: 0.451 },
+          { label: 'XM Cyber', x: -0.648, y: 0.376, side: 'left' },
+          { label: 'Picus', x: 0.03, y: 0.098 },
+          { label: 'Cytomate (Qatar)', x: 0.692, y: -0.23, side: 'left' },
+          { label: 'Mind The Hack', x: 0.34, y: -0.756, mark: true },
         ],
       },
       {
-        kind: 'list',
-        title: 'As it communicates',
-        items: [
-          [
-            'Product-led, strong craft',
-            'Pentera and Horizon3 make the work well and talk only about the product.',
-          ],
-          [
-            'Generic, low craft',
-            'Cymulate, Picus, XM Cyber and Cytomate — the bulk of the field, saying the same thing the same way.',
-          ],
-          [
-            'Story-led, strong craft',
-            'Empty. This is the corner Mind The Hack can take.',
-          ],
+        kind: 'quadrant',
+        title: 'The competition — as it communicates',
+        axes: {
+          top: 'Strong craft',
+          bottom: 'Generic / low craft',
+          left: 'Product-led',
+          right: 'Story-led',
+        },
+        points: [
+          { label: 'Pentera', x: -0.729, y: 0.751 },
+          { label: 'Mind The Hack', x: 0.317, y: 0.739, mark: true },
+          { label: 'Horizon3', x: -0.315, y: 0.475 },
+          { label: 'Cymulate', x: -0.139, y: -0.122 },
+          { label: 'Picus', x: -0.579, y: -0.223, side: 'left' },
+          { label: 'XM Cyber', x: -0.7, y: -0.623 },
+          { label: 'Cytomate', x: -0.348, y: -0.823 },
         ],
       },
     ],
@@ -238,7 +260,7 @@ export const chapters: Chapter[] = [
   },
   {
     id: '13',
-    title: 'The idea',
+    title: 'Hero film',
     blocks: [
       {
         kind: 'text',
@@ -307,7 +329,7 @@ export const chapters: Chapter[] = [
         kind: 'full',
         image: img(12, 'A product, shown on screen'),
         caption:
-          'Each service can be translated into a creative. This helps sales conversions and acts as an additional creative asset in the communication strategy of the company. Quality and originality are kept at the highest standard.',
+          'Each service can be translated into a creative, and becomes an asset in the communication of the company. Quality and originality are kept at the highest standard.',
       },
       {
         kind: 'full',

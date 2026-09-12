@@ -50,6 +50,29 @@ export type Block =
    * are, instead of being dealt out two to a slide.
    */
   | { kind: 'mosaic'; images: Plate[]; caption?: string }
+  /**
+   * A positioning plot: two axes, a field of competitors, and us.
+   *
+   * Drawn rather than shown as a picture, so the type is the deck's own and
+   * the thing stays sharp and readable at any size. Coordinates run -1 to 1
+   * from the crossing of the axes — x to the right, y upward — which is how
+   * the plot is read, and keeps the numbers meaningful if the box changes
+   * shape.
+   */
+  | {
+      kind: 'quadrant';
+      title: string;
+      axes: { top: string; right: string; bottom: string; left: string };
+      points: {
+        label: string;
+        x: number;
+        y: number;
+        /** Which side of the dot the name sits on. Defaults to the right. */
+        side?: 'left' | 'right';
+        /** Us. Larger, in the deck's own voice, and in the accent. */
+        mark?: boolean;
+      }[];
+    }
   /** A piece of music, named and playable. */
   | { kind: 'sound'; src: string; title: string; artist: string }
   /** A film, in the site's own player. */

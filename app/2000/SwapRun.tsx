@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Reveal, type RevealState } from './Reveal';
 
@@ -17,6 +17,18 @@ export const SlideState = createContext<RevealState | null>(null);
 /** How long an arriving slide waits for the one it replaces to leave. */
 const LAG = 0.7;
 
+/**
+ * How long a step is left alone to land before another is accepted.
+ *
+ * The deck moves a slide at a time, and a trackpad sends a flick as a long
+ * run of wheel events. Without a lock, one gesture would spend the whole run
+ * and travel four or five slides — which is the thing being fixed.
+ */
+const STEP_LOCK_MS = 620;
+
+/** Below this, a wheel event is noise rather than a gesture. */
+const WHEEL_THRESHOLD = 6;
+
 export type Slide = {
   /** Set on the first slide of a chapter, so the rail can reach it. */
   chapter?: string;
@@ -29,14 +41,18 @@ export type Slide = {
 /**
  * The whole deck in one place.
  *
- * The frame sticks and never moves: scrolling swaps one slide for the next
+ * The frame sticks and never moves: moving on swaps one slide for the next
  * rather than carrying the page past it. Each slide leaves the way it came —
  * text through its line masks, everything else clipped from the same edge —
  * so the deck reads as slides replacing each other on the spot instead of a
  * long page travelling upward.
  *
- * State is derived from scroll position rather than played as a one-shot, so
- * scrolling back up runs the sequence backwards.
+ * The deck is stepped, not scrolled. A wheel gesture, an arrow key or the
+ * buttons move it exactly one slide and then hold, so nothing is skimmed past
+ * by accident; the page's own scroll position is still what says which slide
+ * is up, which is what keeps the index rail, the anchors and the back button
+ * working. Touch keeps its native scrolling, because a thumb has no notion of
+ * a discrete step.
  */
 export function SwapRun({
   slides,
@@ -47,6 +63,40 @@ export function SwapRun({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
+  const lockedUntil = useRef(0);
+
+  /** The scroll position that reads as slide `i`: the middle of its band. */
+  const offsetOf = useCallback(
+    (i: number) => {
+      const el = ref.current;
+      if (!el) {
+        return 0;
+      }
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      const travel = el.offsetHeight - window.innerHeight;
+      if (travel <= 0) {
+        return top;
+      }
+      const band = travel / slides.length;
+      return top + Math.min(travel, band * (i + 0.5));
+    },
+    [slides.length],
+  );
+
+  const go = useCallback(
+    (i: number) => {
+      const next = Math.min(Math.max(i, 0), slides.length - 1);
+      if (next === activeRef.current && Date.now() < lockedUntil.current) {
+        return;
+      }
+      lockedUntil.current = Date.now() + STEP_LOCK_MS;
+      activeRef.current = next;
+      setActive(next);
+      window.scrollTo({ top: offsetOf(next), behavior: 'smooth' });
+    },
+    [offsetOf, slides.length],
+  );
 
   useEffect(() => {
     const el = ref.current;
@@ -57,6 +107,11 @@ export function SwapRun({
     let frame = 0;
     const measure = () => {
       frame = 0;
+      // While a step is landing the position is mid-flight and would read as
+      // whatever it is passing over. The step already said where it is going.
+      if (Date.now() < lockedUntil.current) {
+        return;
+      }
       const travel = el.offsetHeight - window.innerHeight;
       if (travel <= 0) {
         return;
@@ -65,8 +120,12 @@ export function SwapRun({
         Math.max(-el.getBoundingClientRect().top, 0),
         travel,
       );
-      const index = Math.floor((scrolled / travel) * slides.length);
-      setActive(Math.min(index, slides.length - 1));
+      const index = Math.min(
+        Math.floor((scrolled / travel) * slides.length),
+        slides.length - 1,
+      );
+      activeRef.current = index;
+      setActive(index);
     };
 
     const onScroll = () => {
@@ -76,17 +135,73 @@ export function SwapRun({
       frame = requestAnimationFrame(measure);
     };
 
+    const onWheel = (event: WheelEvent) => {
+      if (event.ctrlKey) {
+        return;
+      }
+      // The deck owns the wheel: a gesture is a step, never a distance.
+      event.preventDefault();
+      if (Date.now() < lockedUntil.current) {
+        return;
+      }
+      if (Math.abs(event.deltaY) < WHEEL_THRESHOLD) {
+        return;
+      }
+      go(activeRef.current + (event.deltaY > 0 ? 1 : -1));
+    };
+
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) {
+        return;
+      }
+      switch (event.key) {
+        case 'ArrowDown':
+        case 'ArrowRight':
+        case 'PageDown':
+        case ' ':
+          event.preventDefault();
+          go(activeRef.current + 1);
+          break;
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'PageUp':
+          event.preventDefault();
+          go(activeRef.current - 1);
+          break;
+        case 'Home':
+          event.preventDefault();
+          go(0);
+          break;
+        case 'End':
+          event.preventDefault();
+          go(slides.length - 1);
+          break;
+        default:
+          break;
+      }
+    };
+
     measure();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    // Only a fine pointer is taken over. A thumb scrolls the way it always
+    // did, and the position it lands on still says which slide is up.
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    if (fine) {
+      window.addEventListener('wheel', onWheel, { passive: false });
+    }
+    window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('keydown', onKey);
       if (frame) {
         cancelAnimationFrame(frame);
       }
     };
-  }, [slides.length]);
+  }, [go, slides.length]);
 
   const stateOf = (i: number): RevealState =>
     i === active ? 'in' : i < active ? 'above' : 'below';
@@ -180,6 +295,83 @@ export function SwapRun({
           </div>
         </div>
       </div>
+
+      {/* The controls ride with the viewport, not with the run: they are the
+          one part of the deck that is always in the same place. */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30">
+        <div className="pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-between gap-6 px-5 pb-5 md:px-10 md:pb-7">
+          <p className="font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute uppercase tabular-nums">
+            {String(active + 1).padStart(2, '0')} /{' '}
+            {String(slides.length).padStart(2, '0')}
+          </p>
+
+          <div className="flex items-center gap-2">
+            <StepButton
+              label="Previous slide"
+              disabled={active === 0}
+              onClick={() => go(active - 1)}
+              d="M15 5 8 12l7 7"
+            />
+            <StepButton
+              label="Next slide"
+              disabled={active === slides.length - 1}
+              onClick={() => go(active + 1)}
+              d="M9 5l7 7-7 7"
+            />
+          </div>
+        </div>
+
+        {/* How far through the deck you are, across the foot of the page. */}
+        <div
+          aria-hidden
+          className="h-px w-full"
+          style={{
+            background:
+              'color-mix(in srgb, var(--color-hairline) 70%, transparent)',
+          }}
+        >
+          <div
+            className="h-full bg-ink transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{ width: `${((active + 1) / slides.length) * 100}%` }}
+          />
+        </div>
+      </div>
     </div>
+  );
+}
+
+/** One of the two steps, drawn as a chevron so it needs no font. */
+function StepButton({
+  label,
+  disabled,
+  onClick,
+  d,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+  d: string;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink transition-opacity duration-200 disabled:pointer-events-none disabled:opacity-25"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d={d} />
+      </svg>
+    </button>
   );
 }

@@ -629,19 +629,19 @@ const articles: Article[] = [
   {
     _id: 'article-ten-ad-tactics',
     _type: 'article',
-    title:
-      'Ten Ad Tactics That Will Still Work When Everyone Else Gets Ignored',
+    title: 'Ten Ways to Hold Attention When Everything Else Gets Skipped',
     slug: { current: '10-ways-to-craft-commercials-that-sell-in-2025' },
     publishedAt: '2024-09-04T00:00:00.000Z',
-    coverImage: image('Ten Ad Tactics'),
+    coverImage: image(
+      'Ten Ways to Hold Attention When Everything Else Gets Skipped',
+    ),
     hoverDescription: 'Ten moves that still cut through when the feed is full.',
     tags: ['Media', 'Creative'],
     excerpt: 'Tactics for commercials that sell without shouting.',
     body: copy('Placeholder article body for ten ad tactics.'),
     canvasPosition: { x: 3440, y: 1180, tileWidth: 128, rotation: -6 },
     seo: {
-      title:
-        'Ten Ad Tactics That Will Still Work When Everyone Else Gets Ignored',
+      title: 'Ten Ways to Hold Attention When Everything Else Gets Skipped',
     },
   },
   {

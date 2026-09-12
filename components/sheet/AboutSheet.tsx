@@ -247,7 +247,7 @@ function ServicesView({
         width={1600}
         height={1558}
         sizes="(min-width: 900px) 90vw, 100vw"
-        className="mt-[3cqi] w-full"
+        className="mt-[3cqi] w-full rounded-md"
       />
 
       {offer ? (
@@ -355,7 +355,7 @@ export function AboutSheet({
                 <ul className="grid gap-6 @md:grid-cols-2">
                   {section.teamMembers.map((member) => (
                     <li key={member.name} className="flex flex-col gap-3">
-                      <div className="relative aspect-square overflow-hidden bg-paper">
+                      <div className="relative aspect-square overflow-hidden rounded-md bg-paper">
                         <Image
                           src={member.portrait.src}
                           alt={member.portrait.alt}

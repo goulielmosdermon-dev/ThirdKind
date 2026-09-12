@@ -96,9 +96,15 @@ export function ProjectSheet({
 
         {moreWork.length > 0 ? (
           <section data-surface="dark" className="bg-black pt-20 pb-28">
-            <ul className="flex items-end gap-1.5 overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {/* Every card is the same width with the same crop, so the runs
+                between them read as one rhythm rather than a gap that changes
+                with each still. */}
+            <ul className="flex items-start gap-[2cqi] overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 max-md:gap-6 max-md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {moreWork.map((item) => (
-                <li key={item._id} className="shrink-0">
+                <li
+                  key={item._id}
+                  className="w-[min(70cqi,24rem)] shrink-0 max-md:w-[min(78cqi,20rem)]"
+                >
                   <AppLink
                     href={`/work/${item.slug.current}`}
                     className="block"
@@ -106,18 +112,20 @@ export function ProjectSheet({
                     <p className="font-display text-[1.2rem] leading-tight text-white">
                       {item.client}
                     </p>
-                    <p className="mt-1 max-w-[16rem] text-sm leading-snug text-white/70">
+                    <p className="mt-1 text-sm leading-snug text-white/70">
                       {item.hoverDescription}
                     </p>
-                    <Image
-                      src={item.thumbnail.src}
-                      alt=""
-                      width={item.thumbnail.width}
-                      height={item.thumbnail.height}
-                      sizes="40vw"
-                      unoptimized={isUnoptimizedSrc(item.thumbnail.src)}
-                      className="mt-3 h-auto w-auto max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)] rounded-md"
-                    />
+                    <span className="relative mt-3 block aspect-[16/10] w-full overflow-hidden rounded-md bg-white/10">
+                      <Image
+                        src={item.thumbnail.src}
+                        alt=""
+                        fill
+                        sizes="(max-width: 767px) 78vw, 40vw"
+                        quality={95}
+                        unoptimized={isUnoptimizedSrc(item.thumbnail.src)}
+                        className="object-cover"
+                      />
+                    </span>
                   </AppLink>
                 </li>
               ))}

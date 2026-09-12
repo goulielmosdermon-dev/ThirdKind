@@ -102,28 +102,34 @@ export function ArticleSheet({
 
         {moreThoughts.length > 0 ? (
           <section className="bg-paper pt-20 pb-28">
-            <ul className="flex items-end gap-1 overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {/* Same width, same crop, same run between them. */}
+            <ul className="flex items-start gap-[2cqi] overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 max-md:gap-6 max-md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {moreThoughts.map((item) => (
-                <li key={item._id} className="w-min shrink-0">
+                <li
+                  key={item._id}
+                  className="w-[min(70cqi,24rem)] shrink-0 max-md:w-[min(78cqi,20rem)]"
+                >
                   <AppLink
                     href={`/thoughts/${item.slug.current}`}
                     className="block"
                   >
-                    <p className="w-0 min-w-full font-display text-[1.2rem] leading-tight text-ink">
+                    <p className="font-display text-[1.2rem] leading-tight text-ink">
                       {item.title}
                     </p>
-                    <p className="mt-1 w-0 min-w-full text-sm leading-snug text-mute">
+                    <p className="mt-1 text-sm leading-snug text-mute">
                       {item.hoverDescription}
                     </p>
-                    <Image
-                      src={item.coverImage.src}
-                      alt=""
-                      width={item.coverImage.width}
-                      height={item.coverImage.height}
-                      sizes="40vw"
-                      unoptimized={isUnoptimizedSrc(item.coverImage.src)}
-                      className="mt-2 block h-auto w-auto min-w-[16rem] max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)] rounded-md"
-                    />
+                    <span className="relative mt-3 block aspect-[16/10] w-full overflow-hidden rounded-md bg-hairline">
+                      <Image
+                        src={item.coverImage.src}
+                        alt=""
+                        fill
+                        sizes="(max-width: 767px) 78vw, 40vw"
+                        quality={95}
+                        unoptimized={isUnoptimizedSrc(item.coverImage.src)}
+                        className="object-cover"
+                      />
+                    </span>
                   </AppLink>
                 </li>
               ))}

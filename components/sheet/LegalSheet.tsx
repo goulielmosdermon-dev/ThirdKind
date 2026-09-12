@@ -18,7 +18,7 @@ export function LegalSheet({ page }: { page: LegalPage }) {
             {page.title}
           </h1>
         </header>
-        <div className="mx-auto max-w-[42rem] px-[8cqi] pb-24 @md:px-0 @md:pb-28">
+        <div className="mx-auto max-w-[42rem] px-12 pb-24 @md:px-0 @md:pb-28">
           <PortableBody value={page.body} density="editorial" />
         </div>
       </article>

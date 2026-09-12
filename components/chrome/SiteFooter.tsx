@@ -36,7 +36,7 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
       data-surface="dark"
       className={
         compact
-          ? 'bg-black px-5 pt-12 pb-40 text-white'
+          ? 'bg-black px-12 pt-12 pb-40 text-white'
           : 'bg-black px-[8vw] pt-16 pb-32 text-white'
       }
     >

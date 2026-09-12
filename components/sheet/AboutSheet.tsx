@@ -44,7 +44,7 @@ function PoemReveal({ lines, framed }: { lines: string[]; framed: boolean }) {
 
   return (
     <div
-      className={`flex min-h-[var(--frame-h,calc(100dvh-5rem))] items-center px-[8cqi] pb-24 ${
+      className={`flex min-h-[var(--frame-h,calc(100dvh-5rem))] items-center px-12 @md:px-[8cqi] pb-24 ${
         framed ? 'pt-[6.5rem]' : 'pt-20'
       }`}
     >
@@ -97,7 +97,7 @@ function ProcessView({
   const ordered = steps.slice().sort((a, b) => a.step - b.step);
 
   return (
-    <div className="px-[8cqi] pb-28">
+    <div className="px-12 pb-28 @md:px-[8cqi]">
       <header className={`pb-10 ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}>
         <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
           {title}
@@ -234,7 +234,7 @@ function ServicesView({
   // Same shape as the Work index: one left-aligned column inset by the page
   // gutter, with the image filling the width between those gutters.
   return (
-    <div className="px-[5cqi] pb-28">
+    <div className="px-12 pb-28 @md:px-[5cqi]">
       <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
         <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
           {title}.
@@ -343,8 +343,8 @@ export function AboutSheet({
                 // reads as part of the page, so it keeps the header's own left
                 // inset instead of floating in the middle of the panel.
                 section.key === 'team'
-                  ? 'max-w-[52rem] px-[8cqi] pb-24 @md:pb-28'
-                  : `mx-auto max-w-[42rem] px-[8cqi] @md:px-0 ${
+                  ? 'max-w-[52rem] px-12 pb-24 @md:px-[8cqi] @md:pb-28'
+                  : `mx-auto max-w-[42rem] px-12 @md:px-0 ${
                       section.key === 'why'
                         ? 'pb-48 @md:pb-56'
                         : 'pb-24 @md:pb-28'

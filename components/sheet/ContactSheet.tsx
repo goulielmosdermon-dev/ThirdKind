@@ -10,7 +10,7 @@ export function ContactSheet({ contact }: { contact: ContactInfo }) {
   return (
     <Sheet title="Contact" tone="editorial">
       <article
-        className={`flex min-h-[var(--frame-h,100dvh)] items-center bg-paper px-[8cqi] pb-28 ${
+        className={`flex min-h-[var(--frame-h,100dvh)] items-center bg-paper px-12 pb-28 @md:px-[8cqi] ${
           framed ? 'pt-[6.5rem]' : 'pt-16'
         }`}
       >

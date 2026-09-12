@@ -101,7 +101,7 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
         <div
           // Clear of the close button, which floats over this corner. The
           // about sheets stand their headings off by the same amount.
-          className={`px-[5cqi] pb-[3cqi] ${
+          className={`px-12 pb-[3cqi] @md:px-[5cqi] ${
             framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
           }`}
         >
@@ -109,13 +109,13 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
         </div>
 
         {featured ? (
-          <div className="px-[5cqi]">
+          <div className="px-12 @md:px-[5cqi]">
             <FeaturedArticle article={featured} />
           </div>
         ) : null}
 
         {rest.length > 0 ? (
-          <ul className="mt-[5cqi] grid grid-cols-1 gap-x-[2.5cqi] gap-y-[3.5cqi] px-[5cqi] @sm:grid-cols-2 @lg:grid-cols-3 @xl:grid-cols-4">
+          <ul className="mt-[5cqi] grid grid-cols-1 gap-x-[2.5cqi] gap-y-[3.5cqi] px-12 @md:px-[5cqi] @sm:grid-cols-2 @lg:grid-cols-3 @xl:grid-cols-4">
             {rest.map((article) => (
               <ArticleCard key={article._id} article={article} />
             ))}

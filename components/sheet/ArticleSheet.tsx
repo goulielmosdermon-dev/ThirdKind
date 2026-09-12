@@ -43,7 +43,7 @@ export function ArticleSheet({
     <Sheet title={article.title} tone="editorial">
       <article data-surface="light" className="bg-paper">
         <header
-          className={`px-[8cqi] pb-10 ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
+          className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
           <p className="text-sm text-mute">Idea</p>
           <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(1.5rem,3cqi,2.5rem)] leading-[1.12] text-balance text-ink">
@@ -64,7 +64,7 @@ export function ArticleSheet({
           ) : null}
         </header>
 
-        <div className="px-[8cqi]">
+        <div className="px-12 @md:px-[8cqi]">
           <Image
             src={article.coverImage.src}
             alt={article.coverImage.alt}
@@ -77,11 +77,11 @@ export function ArticleSheet({
           />
         </div>
 
-        <div className="mx-auto max-w-[42rem] px-[8cqi] pt-16 pb-8 @md:px-0 @md:pt-20">
+        <div className="mx-auto max-w-[42rem] px-12 pt-16 pb-8 @md:px-0 @md:pt-20">
           <PortableBody value={article.body} density="editorial" />
         </div>
 
-        <footer className="mx-auto max-w-[42rem] px-[8cqi] pt-8 pb-16 @md:px-0 @md:pb-20">
+        <footer className="mx-auto max-w-[42rem] px-12 pt-8 pb-16 @md:px-0 @md:pb-20">
           <div className="border-t border-hairline pt-10">
             <p className="text-sm text-ink">Written by</p>
             <p className="mt-1 text-sm text-ink">{byline.name}</p>

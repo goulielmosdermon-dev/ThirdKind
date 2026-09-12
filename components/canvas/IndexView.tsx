@@ -119,13 +119,13 @@ function ManifestoBand({
         // screen, and nothing else in the way.
         className={
           phone
-            ? 'px-5 pt-14 pb-16'
+            ? 'px-12 pt-14 pb-16'
             : // The band ran nearly the width of the screen with 4rem of air
               // above and below it, which read as a strip rather than a page.
               // The gutter is a larger share of the screen and keeps growing
               // with it; the air is set from the same measure, so a wide
               // screen gets a deeper band rather than a longer line.
-              'px-5 pt-14 pb-16 md:px-[14vw] md:pt-[clamp(6rem,11vw,22rem)] md:pb-[clamp(6rem,11vw,22rem)]'
+              'px-12 pt-14 pb-16 md:px-[14vw] md:pt-[clamp(6rem,11vw,22rem)] md:pb-[clamp(6rem,11vw,22rem)]'
         }
       >
         <div className={phone ? 'space-y-6' : 'space-y-8'}>
@@ -733,7 +733,7 @@ export function IndexView({
       <div
         className={
           phone
-            ? 'px-5 pt-4 pb-16'
+            ? 'px-12 pt-4 pb-16'
             : // No cap on the measure from here down, and a gutter that is a
               // share of the screen rather than a number that stops growing:
               // held to 92rem the index sat in a strip down the middle of a
@@ -741,7 +741,7 @@ export function IndexView({
               // side. 12vw is what the old clamp already resolved to at the
               // width the page was drawn for, so nothing moves until there is
               // more screen than that.
-              'min-h-full px-5 pt-12 pb-16 md:px-[12vw] md:pt-[clamp(7rem,12vw,24rem)] md:pb-[clamp(6rem,10vw,20rem)]'
+              'min-h-full px-12 pt-12 pb-16 md:px-[12vw] md:pt-[clamp(7rem,12vw,24rem)] md:pb-[clamp(6rem,10vw,20rem)]'
         }
       >
         <ul className={`flex flex-col ${phone ? 'gap-12' : 'gap-16 md:gap-0'}`}>

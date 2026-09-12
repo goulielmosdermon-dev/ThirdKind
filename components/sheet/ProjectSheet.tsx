@@ -42,7 +42,7 @@ export function ProjectSheet({
             className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
             aria-hidden
           />
-          <div className="absolute inset-x-0 bottom-0 px-[6cqi] pb-28 @md:px-[8cqi] @md:pb-20">
+          <div className="absolute inset-x-0 bottom-0 px-12 pb-28 @md:px-[8cqi] @md:pb-20">
             <h1 className="font-display max-w-[18ch] text-[clamp(1.75rem,3.5cqi,3.15rem)] leading-[1.05] text-white">
               {project.title}
             </h1>
@@ -54,7 +54,7 @@ export function ProjectSheet({
 
         <div
           data-surface="light"
-          className="bg-paper px-[6cqi] pt-16 pb-24 @md:px-[8cqi] @md:pt-24"
+          className="bg-paper px-12 pt-16 pb-24 @md:px-[8cqi] @md:pt-24"
         >
           <div className="mx-auto flex max-w-[1100px] flex-col gap-14 @md:gap-16">
             {vimeoId ? (

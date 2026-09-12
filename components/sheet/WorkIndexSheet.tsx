@@ -161,7 +161,7 @@ export function WorkIndexSheet({ projects }: { projects: Project[] }) {
       <div data-surface="light" className="bg-paper">
         <div
           ref={gridRef}
-          className="flex items-start gap-[1.6cqi] px-[3cqi] pt-24 pb-[6cqi] max-md:gap-5 max-md:px-5 max-md:pt-20"
+          className="flex items-start gap-[1.6cqi] px-[3cqi] pt-24 pb-[6cqi] max-md:gap-5 max-md:px-12 max-md:pt-20"
         >
           {lanes.map((lane, index) => (
             <div

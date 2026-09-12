@@ -237,6 +237,7 @@ export const chapters: Chapter[] = [
         lines: [
           'Think like a storyteller.',
           'You cannot bore people into buying.',
+          'You can only educate, entertain or challenge.',
         ],
       },
     ],

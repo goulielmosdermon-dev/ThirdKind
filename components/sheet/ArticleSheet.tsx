@@ -73,7 +73,7 @@ export function ArticleSheet({
             priority
             sizes="(min-width: 1024px) 84vw, 84vw"
             unoptimized={isUnoptimizedSrc(article.coverImage.src)}
-            className="h-auto w-full"
+            className="h-auto w-full rounded-md"
           />
         </div>
 
@@ -122,7 +122,7 @@ export function ArticleSheet({
                       height={item.coverImage.height}
                       sizes="40vw"
                       unoptimized={isUnoptimizedSrc(item.coverImage.src)}
-                      className="mt-2 block h-auto w-auto min-w-[16rem] max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)]"
+                      className="mt-2 block h-auto w-auto min-w-[16rem] max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)] rounded-md"
                     />
                   </AppLink>
                 </li>

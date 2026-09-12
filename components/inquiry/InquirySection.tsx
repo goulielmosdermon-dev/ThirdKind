@@ -188,7 +188,7 @@ export function InquirySection({ phone }: { phone: boolean }) {
         ) : (
           <>
             <div className="relative w-fit">
-              <p className="max-w-[34ch] rounded-2xl bg-ink px-6 py-5 text-[0.95rem] leading-relaxed text-white">
+              <p className="max-w-[34ch] rounded-md bg-ink px-6 py-5 text-[0.95rem] leading-relaxed text-white">
                 A few quick questions, one at a time, so the right person can
                 get back to you.
               </p>

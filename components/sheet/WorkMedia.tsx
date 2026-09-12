@@ -24,7 +24,7 @@ function SilentLoop({ vimeoId }: { vimeoId: string }) {
   return (
     <div
       data-surface="dark"
-      className="relative aspect-video overflow-hidden bg-black"
+      className="relative aspect-video overflow-hidden rounded-md bg-black"
     >
       <iframe
         title="Silent film loop"
@@ -52,7 +52,7 @@ function Still({ image }: { image: ImageAsset }) {
         height={image.height}
         sizes="(min-width: 1100px) 1100px, 88vw"
         unoptimized={isUnoptimizedAsset(image)}
-        className="h-auto w-full"
+        className="h-auto w-full rounded-md"
         style={{ aspectRatio: 'auto' }}
       />
     </figure>
@@ -66,7 +66,7 @@ function ReelCell({ vimeoId }: { vimeoId: string }) {
   return (
     <li
       data-surface="dark"
-      className="relative aspect-[9/16] overflow-hidden bg-black"
+      className="relative aspect-[9/16] overflow-hidden rounded-md bg-black"
     >
       {fileSrc ? (
         <video

@@ -26,7 +26,7 @@ function FeaturedArticle({ article }: { article: Article }) {
     <div className="grid gap-[3cqi] @lg:grid-cols-[1.75fr_1fr]">
       <AppLink
         href={`/thoughts/${article.slug.current}`}
-        className="group relative block aspect-[16/10] w-full overflow-hidden bg-hairline"
+        className="group relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-hairline"
       >
         <span className="tk-loading absolute inset-0" aria-hidden />
         <Image
@@ -66,7 +66,7 @@ function ArticleCard({ article }: { article: Article }) {
         href={`/thoughts/${article.slug.current}`}
         className="group block"
       >
-        <span className="relative block aspect-[16/10] w-full overflow-hidden bg-hairline">
+        <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-hairline">
           <span className="tk-loading absolute inset-0" aria-hidden />
           <Image
             src={article.coverImage.src}

@@ -253,7 +253,7 @@ function MoreWork({
                 ) : null}
 
                 <span
-                  className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
+                  className={`relative block w-full overflow-hidden rounded-md bg-paper ${slot.aspect}`}
                 >
                   <Image
                     src={node.thumbnail.src}
@@ -387,7 +387,7 @@ function ThoughtRow({
           }}
           aria-hidden
         >
-          <span className="relative block aspect-[16/10] w-full bg-black">
+          <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-black">
             <Image
               src={node.thumbnail.src}
               alt=""
@@ -843,7 +843,7 @@ export function IndexView({
                   ) : null}
                   <motion.span
                     variants={wipe}
-                    className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
+                    className={`relative block w-full overflow-hidden rounded-md bg-paper ${slot.aspect}`}
                   >
                     {node.swatch ? (
                       <span

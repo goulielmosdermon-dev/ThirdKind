@@ -116,7 +116,7 @@ export function ProjectSheet({
                       height={item.thumbnail.height}
                       sizes="40vw"
                       unoptimized={isUnoptimizedSrc(item.thumbnail.src)}
-                      className="mt-3 h-auto w-auto max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)]"
+                      className="mt-3 h-auto w-auto max-h-[min(52cqh,28rem)] max-w-[min(70cqi,28rem)] rounded-md"
                     />
                   </AppLink>
                 </li>

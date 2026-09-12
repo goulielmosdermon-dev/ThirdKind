@@ -38,7 +38,7 @@ export function PortableBody({
                 height={block.image.height}
                 sizes="768px"
                 unoptimized={isUnoptimizedSrc(block.image.src)}
-                className="h-auto w-full"
+                className="h-auto w-full rounded-md"
               />
             </div>
           );

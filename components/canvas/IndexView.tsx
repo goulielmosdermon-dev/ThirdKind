@@ -22,7 +22,7 @@ import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 import { MaskedWords } from '@/components/chrome/MaskedWords';
 import { MOTION } from '@/lib/motion/tokens';
 import { DISPLAY_BALANCE } from '@/lib/type/display';
-import { HeroCarousel } from '@/components/canvas/HeroShowcase';
+import { HeroReel } from '@/components/canvas/HeroReel';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
 import { InquirySection } from '@/components/inquiry/InquirySection';
 import { PillLabel } from '@/components/sheet/PillLabel';
@@ -720,15 +720,7 @@ export function IndexView({
           data-surface="dark"
           className="@container relative h-full w-full overflow-hidden bg-black"
         >
-          <HeroCarousel
-            nodes={nodes}
-            onOpen={(node) => onOpen(node.href, node.id)}
-            scale={0}
-            mode="screen"
-            // On a phone the band keeps its own title and View pill; on the
-            // desktop header the headline speaks for it.
-            chrome={phone}
-          />
+          <HeroReel onOpen={() => onOpen('/work', '')} />
         </div>
       </section>
 

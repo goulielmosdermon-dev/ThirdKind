@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import { AppLink } from '@/components/mobile/MobileChrome';
+import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
+import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import type { Project } from '@/types/content';
@@ -86,7 +87,14 @@ function ProjectCard({
   );
 }
 
-export function WorkIndexSheet({ projects }: { projects: Project[] }) {
+export function WorkIndexSheet({
+  projects,
+  standfirst,
+}: {
+  projects: Project[];
+  standfirst?: string;
+}) {
+  const framed = useFramed();
   const gridRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(3);
   const [runs, setRuns] = useState(FIRST_RUNS);
@@ -160,8 +168,17 @@ export function WorkIndexSheet({ projects }: { projects: Project[] }) {
     <Sheet title="Work" tone="editorial">
       <div data-surface="light" className="bg-paper">
         <div
+          // Clear of the close button, which floats over this corner.
+          className={`px-[3cqi] pb-[3cqi] max-md:px-12 ${
+            framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
+          }`}
+        >
+          <IndexHeading name="Work" standfirst={standfirst} />
+        </div>
+
+        <div
           ref={gridRef}
-          className="flex items-start gap-[1.6cqi] px-[3cqi] pt-24 pb-[6cqi] max-md:gap-5 max-md:px-12 max-md:pt-20"
+          className="flex items-start gap-[1.6cqi] px-[3cqi] pt-[3cqi] pb-[6cqi] max-md:gap-5 max-md:px-12"
         >
           {lanes.map((lane, index) => (
             <div

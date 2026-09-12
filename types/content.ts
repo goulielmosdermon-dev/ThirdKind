@@ -220,6 +220,11 @@ export type AboutProcessSection = AboutSectionBase & {
 
 export type AboutWhySection = AboutSectionBase & {
   key: 'why';
+  /**
+   * What the Why page itself says. The section's body is the landing page's
+   * manifesto band, and the two had been reading the same words.
+   */
+  pageBody?: PortableText;
 };
 
 export type AboutServicesSection = AboutSectionBase & {

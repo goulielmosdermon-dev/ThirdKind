@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
-import { PillLabel } from '@/components/sheet/PillLabel';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import type { Article } from '@/types/content';
@@ -21,106 +21,125 @@ function published(value: string): string {
   });
 }
 
-function FeaturedArticle({ article }: { article: Article }) {
+/**
+ * The crops the grid cycles through, so a column reads as a run of different
+ * pictures rather than a stack of identical boxes. Same wall as the work.
+ */
+const ASPECTS = ['16/10', '3/4', '16/9', '1/1', '4/5', '3/2'] as const;
+
+/** Column widths, close to even but never quite. */
+const WEIGHTS = [1, 0.88, 1.16, 0.94, 1.08] as const;
+
+/** How many columns fit at a given width. */
+function columnsFor(width: number): number {
+  if (width < 560) return 1;
+  if (width < 860) return 2;
+  if (width < 1180) return 3;
+  if (width < 1500) return 4;
+  return 5;
+}
+
+function ArticleCard({
+  article,
+  aspect,
+  eager,
+}: {
+  article: Article;
+  aspect: string;
+  eager: boolean;
+}) {
   return (
-    <div className="grid gap-[3cqi] @lg:grid-cols-[1.75fr_1fr]">
-      <AppLink
-        href={`/thoughts/${article.slug.current}`}
-        className="group relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-hairline"
+    <AppLink
+      href={`/thoughts/${article.slug.current}`}
+      className="group block w-full"
+    >
+      <span
+        className="relative block w-full overflow-hidden rounded-md bg-hairline"
+        style={{ aspectRatio: aspect }}
       >
         <span className="tk-loading absolute inset-0" aria-hidden />
         <Image
           src={article.coverImage.src}
           alt=""
           fill
-          priority
-          sizes="(min-width: 900px) 64vw, 100vw"
+          priority={eager}
+          loading={eager ? undefined : 'lazy'}
+          sizes="560px"
+          quality={95}
           unoptimized={isUnoptimizedAsset(article.coverImage)}
-          className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
         />
-      </AppLink>
-
-      {/* Title, standfirst and action stack down the right-hand column. */}
-      <div className="flex flex-col items-start">
-        <h2 className="font-display text-[clamp(1.3rem,2.4cqi,1.95rem)] leading-[1.12] text-ink">
-          {article.title}
-        </h2>
-        <p className="mt-4 max-w-[34ch] text-[1rem] leading-snug text-mute">
-          {article.excerpt}
-        </p>
-        <AppLink
-          href={`/thoughts/${article.slug.current}`}
-          className="mt-6 transition-opacity duration-300 hover:opacity-85"
-        >
-          <PillLabel label="Read Story" />
-        </AppLink>
-      </div>
-    </div>
-  );
-}
-
-function ArticleCard({ article }: { article: Article }) {
-  return (
-    <li>
-      <AppLink
-        href={`/thoughts/${article.slug.current}`}
-        className="group block"
-      >
-        <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-hairline">
-          <span className="tk-loading absolute inset-0" aria-hidden />
-          <Image
-            src={article.coverImage.src}
-            alt=""
-            fill
-            sizes="(min-width: 1100px) 30vw, (min-width: 700px) 45vw, 90vw"
-            unoptimized={isUnoptimizedAsset(article.coverImage)}
-            className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-          />
-        </span>
-        <span className="mt-3 block text-[0.78rem] tracking-[0.08em] text-mute">
-          {published(article.publishedAt)}
-        </span>
-        <span className="mt-1.5 block font-display text-[1.05rem] leading-tight text-ink">
-          {article.title}
-        </span>
-      </AppLink>
-    </li>
+      </span>
+      <span className="mt-3 block text-[0.82rem] leading-tight text-mute">
+        {published(article.publishedAt)}
+      </span>
+      <span className="font-display mt-1 block text-[1.05rem] leading-tight text-ink">
+        {article.title}
+      </span>
+    </AppLink>
   );
 }
 
 export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
   const framed = useFramed();
-  // A pinned piece leads when one is marked; otherwise allArticles() has
-  // already sorted newest first, so the latest takes the slot.
-  const featured = articles.find((article) => article.featured) ?? articles[0];
-  const rest = articles.filter((article) => article !== featured);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [columns, setColumns] = useState(3);
+
+  // Column count is worked out here rather than in CSS because the cards are
+  // dealt into the columns one by one: the grid has to know how many there
+  // are before it can share them out.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) {
+      return;
+    }
+    const measure = () => setColumns(columnsFor(grid.clientWidth));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, []);
+
+  const lanes = Array.from({ length: columns }, (_, lane) =>
+    articles
+      .map((article, index) => ({ article, index }))
+      .filter((card) => card.index % columns === lane),
+  );
 
   return (
     <Sheet title="Thoughts" tone="editorial">
-      <div data-surface="light" className="bg-paper pb-24">
+      <div data-surface="light" className="bg-paper">
         <div
           // Clear of the close button, which floats over this corner. The
           // about sheets stand their headings off by the same amount.
-          className={`px-12 pb-[3cqi] @md:px-[5cqi] ${
+          className={`px-[3cqi] pb-[3cqi] max-md:px-12 ${
             framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
           }`}
         >
           <IndexHeading name="Thoughts" />
         </div>
 
-        {featured ? (
-          <div className="px-12 @md:px-[5cqi]">
-            <FeaturedArticle article={featured} />
-          </div>
-        ) : null}
-
-        {rest.length > 0 ? (
-          <ul className="mt-[5cqi] grid grid-cols-1 gap-x-[2.5cqi] gap-y-[3.5cqi] px-12 @md:px-[5cqi] @sm:grid-cols-2 @lg:grid-cols-3 @xl:grid-cols-4">
-            {rest.map((article) => (
-              <ArticleCard key={article._id} article={article} />
-            ))}
-          </ul>
-        ) : null}
+        <div
+          ref={gridRef}
+          className="flex items-start gap-[1.6cqi] px-[3cqi] pt-[3cqi] pb-[6cqi] max-md:gap-5 max-md:px-12"
+        >
+          {lanes.map((lane, index) => (
+            <div
+              key={index}
+              className="flex min-w-0 flex-col gap-[4cqi] max-md:gap-10"
+              style={{ flex: `${WEIGHTS[index % WEIGHTS.length]} 1 0%` }}
+            >
+              {lane.map((card) => (
+                <ArticleCard
+                  key={card.article._id}
+                  article={card.article}
+                  aspect={ASPECTS[card.index % ASPECTS.length]!}
+                  eager={card.index < columns * 2}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </Sheet>
   );

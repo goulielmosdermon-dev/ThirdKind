@@ -815,6 +815,22 @@ const aboutSections: AboutSection[] = [
         'A close encounter of the third kind, in Hynek’s classification — popularised by Close Encounters of the Third Kind (1977) — is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.',
       ),
     ],
+    pageBody: [
+      block(
+        'Companies need to rethink how they approach communication altogether.',
+        'h2',
+      ),
+      block(
+        'The agency market is oversaturated with thousands of agencies promising fast, predictable results. We are not another one of those.',
+      ),
+      block(
+        'We believe in steady growth, and in the heart and soul of communication as a tool to reach people. Revenue growth is the long term effect of that aspiration.',
+      ),
+      block(
+        'There is so much content online. We are here to take a breath, see the full picture, and create from first principles.',
+      ),
+      block('We are ThirdKind.'),
+    ],
     canvasPosition: { x: 2040, y: 1800, tileWidth: 176, rotation: 4 },
   },
   {

@@ -373,7 +373,10 @@ export function AboutSheet({
               ) : null}
 
               {section.key === 'why' ? (
-                <PortableBody value={section.body} density="editorial" />
+                <PortableBody
+                  value={section.pageBody ?? section.body}
+                  density="editorial"
+                />
               ) : null}
             </div>
           </>

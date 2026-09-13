@@ -843,6 +843,10 @@ export function IndexView({
                   ) : null}
                   <motion.span
                     variants={wipe}
+                    // The still claims the header's cursor: over it, the same
+                    // round "Explore" grows out of nothing and follows the
+                    // pointer, and shrinks away again on the way out.
+                    data-explore
                     className={`relative block w-full overflow-hidden rounded-md bg-paper ${slot.aspect}`}
                   >
                     {node.swatch ? (

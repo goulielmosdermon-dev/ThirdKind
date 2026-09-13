@@ -8,15 +8,20 @@ const ELASTIC = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
 const FOLLOW = 0.14;
 
 /**
- * The header's own cursor. While the pointer is over the showcase a small
- * round "Explore" trails along behind it — over the headline as well, which is
- * why the pointer is tracked on the window rather than on a layer of the
- * band's own. It steps aside for the button, which has an action of its own,
- * and scrolling shrinks it away.
+ * The page's own cursor. While the pointer is over something that opens, a
+ * small round "Explore" trails along behind it, growing out of nothing when it
+ * arrives and shrinking back into nothing when it leaves. It steps aside for
+ * anything with an action of its own, and scrolling shrinks it away.
  *
- * The band itself is one big button, so clicking through the cursor opens
- * whichever project is on screen without this having to do anything. It is
- * drawn above the headline so nothing can cover it.
+ * Two things claim it. The header band is matched by its box rather than by
+ * what the pointer is actually over, because the headline is drawn above the
+ * band rather than inside it, and a pointer over the headline is still a
+ * pointer over the band. Everything else — the index's project stills — simply
+ * marks itself `data-explore` and is matched by containment.
+ *
+ * Both are already one big button, so clicking through the cursor opens
+ * whatever is under it without this having to do anything. It is drawn above
+ * the page so nothing can cover it.
  */
 export function ExploreCursor() {
   const [shown, setShown] = useState(false);
@@ -55,13 +60,19 @@ export function ExploreCursor() {
       }
       const band = document.querySelector('[data-hero-band]');
       const box = band?.getBoundingClientRect();
-      const inside =
+      const overBand =
         box &&
         box.width > 0 &&
         event.clientX >= box.left &&
         event.clientX <= box.right &&
         event.clientY >= box.top &&
         event.clientY <= box.bottom;
+      // Anything else that opens says so for itself, and nothing is drawn over
+      // those, so what the pointer is on is answer enough.
+      const overExplore =
+        event.target instanceof Element &&
+        event.target.closest('[data-explore]');
+      const inside = overBand || overExplore;
       // The button and the command bar answer for themselves, so the cursor
       // gets out of the way rather than sitting on top of them.
       const overAction =

@@ -845,9 +845,8 @@ export function CanvasViewport({
             <p
               // Held back on a phone: the drifting arrow reads as an
               // instruction to scroll up, which is the wrong way.
-              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center text-ink max-md:hidden"
+              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex flex-col items-center gap-2 text-ink max-md:hidden"
               style={{ opacity: 1 - remap(progress, 0.9, 1) }}
-              aria-label="Scroll to continue"
               aria-hidden={progress > 0.95}
             >
               <svg
@@ -865,6 +864,12 @@ export function CanvasViewport({
                 <path d="M8 21V4" />
                 <path d="M2.5 9.5 8 4l5.5 5.5" />
               </svg>
+              {/* The arrow alone was read as decoration. The word says what to
+                  do; it holds still while the arrow drifts, so the movement
+                  stays the thing that catches the eye. */}
+              <span className="font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute uppercase">
+                Scroll
+              </span>
             </p>
           ) : null}
 

@@ -460,7 +460,9 @@ function ThoughtsRun({
               { text: 'it\u2019s' },
               { text: 'so' },
               { text: 'much' },
-              { text: 'fun' },
+              // The mark rides on the word rather than being a word of its
+              // own, so it can never be masked in on a line by itself.
+              { text: 'fun!' },
             ]}
           />
         </h2>

@@ -57,7 +57,7 @@ export function HeroMotto({
             className="block font-medium md:pl-[4.2em]"
             style={{ opacity: lines[1], transition: 'opacity 0.5s ease' }}
           >
-            in a world of ordinary
+            in a world of ordinary!
           </span>
         </p>
 

@@ -442,8 +442,11 @@ function ThoughtsRun({
         // before the index was let off its cap.
         className={
           phone
-            ? 'pt-44 pb-36'
-            : 'pt-[clamp(14rem,28vw,26rem)] pb-[clamp(11rem,22vw,20rem)] md:-mx-[12vw]'
+            ? 'pt-[7.7rem] pb-[6.3rem]'
+            : // Every figure is the one above it less 30%, floor, preferred
+              // and ceiling alike, so the band keeps the same behaviour as it
+              // grows and simply holds less air around the line.
+              'pt-[clamp(9.8rem,19.6vw,18.2rem)] pb-[clamp(7.7rem,15.4vw,14rem)] md:-mx-[12vw]'
         }
       >
         <h2

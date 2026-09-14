@@ -99,7 +99,7 @@ export function ProjectSheet({
             {/* Every card is the same width with the same crop, so the runs
                 between them read as one rhythm rather than a gap that changes
                 with each still. */}
-            <ul className="flex items-start gap-[2cqi] overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 max-md:gap-6 max-md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <ul className="flex items-end gap-[2cqi] overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 max-md:gap-6 max-md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {moreWork.map((item) => (
                 <li
                   key={item._id}
@@ -109,8 +109,9 @@ export function ProjectSheet({
                     href={`/work/${item.slug.current}`}
                     className="block"
                   >
-                    {/* Held to a height, so every still starts on the same
-                        line however long the line above it ran. */}
+                    {/* Held to a height, so the gap above each still is the
+                        same however long the line above it ran. The row
+                        itself hangs off the foot. */}
                     <div className="min-h-[4.75rem]">
                       <p className="font-display text-[1.2rem] leading-tight text-white">
                         {item.client}

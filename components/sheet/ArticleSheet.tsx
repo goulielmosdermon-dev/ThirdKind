@@ -103,7 +103,7 @@ export function ArticleSheet({
         {moreThoughts.length > 0 ? (
           <section className="bg-paper pt-20 pb-28">
             {/* Same width, same crop, same run between them. */}
-            <ul className="flex items-start gap-[2cqi] overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 max-md:gap-6 max-md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <ul className="flex items-end gap-[2cqi] overflow-x-auto overscroll-x-contain px-[6cqi] pb-2 max-md:gap-6 max-md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {moreThoughts.map((item) => (
                 <li
                   key={item._id}
@@ -113,11 +113,11 @@ export function ArticleSheet({
                     href={`/thoughts/${item.slug.current}`}
                     className="block"
                   >
-                    {/* The words are held to a fixed height so every still
-                        in the row starts on the same line. A title that runs
-                        to two lines used to push its own picture down, and a
-                        row of tops at two different heights reads as a
-                        mistake rather than as a rhythm. */}
+                    {/* The row hangs off the foot: every still ends on the
+                        same line and a tall one grows upward, so the pictures
+                        stand on a shelf rather than dangling from a rail. The
+                        words are held to a height so the gap above each still
+                        is the same whether its title ran to one line or two. */}
                     <div className="min-h-[4.75rem]">
                       <p className="font-display text-[1.2rem] leading-tight text-ink">
                         {item.title}

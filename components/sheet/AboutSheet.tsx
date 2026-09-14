@@ -21,6 +21,29 @@ import type {
 
 const PROCESS_INTRO = 'From brief to delivery, with the numbers kept honest.';
 
+/**
+ * Where each portrait sits in the five-column field.
+ *
+ * The point of the run is the cells nobody is in. A team of five laid out
+ * left to right fills one row and starts a second, which reads as a list that
+ * ran out; set into a wider field with the gaps chosen, the same five read as
+ * an arrangement. They step across the row and then back between their own
+ * gaps, so no column is empty twice and no portrait sits directly under
+ * another.
+ *
+ * Written out rather than computed: these are class names, and a name a build
+ * cannot see in the source is a name it does not ship. A sixth member and
+ * beyond falls through to ordinary placement, which is the right answer until
+ * someone chooses their cells too.
+ */
+const CELL = [
+  '@md:col-start-1 @md:row-start-1',
+  '@md:col-start-3 @md:row-start-1',
+  '@md:col-start-5 @md:row-start-1',
+  '@md:col-start-2 @md:row-start-2',
+  '@md:col-start-4 @md:row-start-2',
+];
+
 const TEAM_INTRO =
   'From slightly elsewhere. Different backgrounds, one stubborn standard for the work.';
 
@@ -345,11 +368,11 @@ export function AboutSheet({
                 // reads as part of the page, so it keeps the header's own left
                 // inset instead of floating in the middle of the panel.
                 section.key === 'team'
-                  ? // Wider than the prose measure, and wider than the two-up
-                    // it replaced: three portraits across need the room, and
-                    // at this width each is served at very close to the size
-                    // the files actually are.
-                    'max-w-[76rem] px-12 pb-24 @md:px-[8cqi] @md:pb-28'
+                  ? // No measure at all: the run is a field of portraits across
+                    // the panel, not prose, and it is the empty cells in it
+                    // that do the work. Capped, there was not enough width for
+                    // the gaps to read as anything but leftovers.
+                    'px-12 pb-24 @md:px-[8cqi] @md:pb-28'
                   : `mx-auto max-w-[42rem] px-12 @md:px-0 ${
                       section.key === 'why'
                         ? 'pb-48 @md:pb-56'
@@ -358,24 +381,22 @@ export function AboutSheet({
               }
             >
               {section.key === 'team' ? (
-                /*
-                  Wrapped rather than laid into grid tracks, so a row that
-                  cannot be filled is centred instead of left hanging. The team
-                  is five, and five into three leaves two: in a grid those two
-                  sit left with a column-wide hole beside them, which reads as
-                  someone missing. Centred, the shape is deliberate.
-                */
-                <ul className="flex flex-wrap justify-center gap-x-6 gap-y-10">
-                  {section.teamMembers.map((member) => (
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-12 @md:grid-cols-5">
+                  {section.teamMembers.map((member, index) => (
                     <li
                       key={member.name}
-                      className="flex basis-[calc((100%-1.5rem)/2)] flex-col @md:basis-[calc((100%-3rem)/3)]"
+                      className={`flex flex-col ${CELL[index] ?? ''}`}
                     >
                       {/* The portraits are shot 4:5. Held square they were
                           cropped top and bottom — a head trimmed to fit a box
                           it was never framed for — so the frame is the one the
-                          photograph already has. */}
-                      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-paper">
+                          photograph already has.
+
+                          A rounder corner than the site's 6px: at this size
+                          six pixels is a corner you have to look for, and the
+                          field of portraits wants the softness to be part of
+                          how it reads rather than a detail. */}
+                      <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-paper">
                         <Image
                           src={member.portrait.src}
                           alt={member.portrait.alt}
@@ -388,7 +409,9 @@ export function AboutSheet({
                       <p className="mt-4 font-display text-lede leading-tight">
                         {member.name}
                       </p>
-                      <p className="mt-1 text-sm text-mute">{member.role}</p>
+                      <p className="mt-1 font-display text-sm text-mute">
+                        {member.role}
+                      </p>
                     </li>
                   ))}
                 </ul>

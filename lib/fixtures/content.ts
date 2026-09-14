@@ -904,7 +904,7 @@ const aboutSections: AboutSection[] = [
         title: 'Earning the minute',
         slug: { current: 'earning-the-minute' },
         description:
-          'Nobody owes you their attention, and the skip button is right there. So the question is never whether the work is on brand; it is whether someone free to leave at any second stays. That gets decided twice — in the first ten seconds, and again somewhere around the middle — and we cut for those two moments before we cut for anything else.',
+          'Nobody owes you their attention, and the skip button is right there. So the question is never whether the work is on brand; it is whether someone free to leave at any second stays.',
       },
     ],
     faqs: [

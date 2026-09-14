@@ -213,7 +213,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
             </p>
             <p className="mt-3 text-[1.05rem] leading-relaxed text-mute">
               {calendlyUrl()
-                ? 'A conversation, not a funnel. Pick a time that suits you — we have the rest.'
+                ? 'A conversation, not a funnel. Pick a time that suits you. We have the rest.'
                 : 'A conversation, not a funnel. We will write back shortly.'}
             </p>
             {/*

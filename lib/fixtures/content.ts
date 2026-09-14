@@ -339,7 +339,7 @@ const projects: Project[] = [
     slug: { current: 'scytales-2' },
     order: 1,
     thumbnail: image('Scytáles ID Authentication'),
-    hoverDescription: 'Identity, proven on camera — without the lecture.',
+    hoverDescription: 'Identity, proven on camera, without the lecture.',
     heroVideoUrl: 'https://vimeo.com/1174819047',
     posterImage: image('Scytáles ID Authentication poster'),
     body: copy(
@@ -816,7 +816,7 @@ const aboutSections: AboutSection[] = [
         'No one likes to get interrupted by ads, no one likes to be preached to, but everyone likes to be entertained, feel, and believe.',
       ),
       block(
-        'A close encounter of the third kind, in Hynek’s classification — popularised by Close Encounters of the Third Kind (1977) — is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.',
+        'A close encounter of the third kind, in Hynek’s classification, popularised by Close Encounters of the Third Kind (1977), is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.',
       ),
     ],
     pageBody: [
@@ -862,7 +862,7 @@ const aboutSections: AboutSection[] = [
     lede: {
       headline: 'A creative agency built around film.',
       body: [
-        'Most agencies treat film as one output among many. We’re the other way round — film is the thing we’re best at, and everything else we do is in service of making it land.',
+        'Most agencies treat film as one output among many. We’re the other way round: film is the thing we’re best at, and everything else we do is in service of making it land.',
         'That means we sometimes start further back than a production company would. If the brand hasn’t been figured out, we figure it out. If nobody knows who they’re talking to, we go and find out. Then we make the thing.',
       ],
     },

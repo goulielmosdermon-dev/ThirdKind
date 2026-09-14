@@ -271,7 +271,9 @@ const settings: SiteSettings = {
     {
       key: 'work',
       label: 'Work',
-      description: 'Films, commercials, and branded documentaries.',
+      // No standfirst: the masthead reads "Work." and the work itself says
+      // what kind it is. The heading drops the line when it is empty.
+      description: '',
       canvasPosition: { x: 1800, y: 1160, tileWidth: 224 },
     },
     {

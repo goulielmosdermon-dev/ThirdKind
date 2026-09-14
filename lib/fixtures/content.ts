@@ -741,7 +741,7 @@ const aboutSections: AboutSection[] = [
       },
       {
         name: 'Goncalo Fonseça',
-        role: 'Creative Producer',
+        role: 'Producer',
         portrait: image('Goncalo Fonseça'),
       },
       {

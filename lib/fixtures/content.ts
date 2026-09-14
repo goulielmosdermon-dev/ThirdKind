@@ -820,20 +820,18 @@ const aboutSections: AboutSection[] = [
       ),
     ],
     pageBody: [
+      // The page carries no heading of its own — it opens on the argument —
+      // so the first line is the h2 and the case follows it.
       block(
-        'Companies need to rethink how they approach communication altogether.',
+        'Most brands are over-invested in activation and under-invested in brand.',
         'h2',
       ),
       block(
-        'The agency market is crowded, with thousands of agencies promising fast, predictable results. We take a different approach, focusing on meaningful ideas, strong storytelling and work built to have a lasting impact.',
+        'It’s an understandable mistake. Activation is measurable. You can see the clicks, the conversions, the cost per acquisition, and you can defend it in a meeting on Monday. Brand building is slower and harder to attribute, so it gets cut first.',
       ),
       block(
-        'We believe in steady growth, and in the heart and soul of communication as a tool to reach people. Revenue growth is the long term effect of that aspiration.',
+        'But the evidence has been consistent for two decades: short-term activation captures demand that already exists. Brand creates the demand. Companies that stop building it keep performing for a while, then find that every year their activation costs more to deliver the same result.',
       ),
-      block(
-        'There is so much content online. We are here to take a breath, see the full picture, and create from first principles.',
-      ),
-      block('We are ThirdKind.'),
     ],
     canvasPosition: { x: 2040, y: 1800, tileWidth: 176, rotation: 4 },
   },

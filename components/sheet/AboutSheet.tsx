@@ -26,10 +26,14 @@ const PROCESS_INTRO = 'From brief to delivery, with the numbers kept honest.';
  *
  * The point of the run is the cells nobody is in. A team of five laid out
  * left to right fills one row and starts a second, which reads as a list that
- * ran out; set into a wider field with the gaps chosen, the same five read as
- * an arrangement. They step across the row and then back between their own
- * gaps, so no column is empty twice and no portrait sits directly under
- * another.
+ * ran out; set into a field with the gaps chosen, the same five read as an
+ * arrangement.
+ *
+ * The shape is deliberately uneven rather than alternating: two together, a
+ * hole, one alone at the end of the row, then two more below sitting under
+ * the hole the first pair left. An even scatter is just a pattern at half
+ * density — it is the run of two, and the column that goes twice empty, that
+ * keep this from reading as a rule.
  *
  * Written out rather than computed: these are class names, and a name a build
  * cannot see in the source is a name it does not ship. A sixth member and
@@ -37,10 +41,14 @@ const PROCESS_INTRO = 'From brief to delivery, with the numbers kept honest.';
  * someone chooses their cells too.
  */
 const CELL = [
+  // A pair, together.
   '@md:col-start-1 @md:row-start-1',
-  '@md:col-start-3 @md:row-start-1',
-  '@md:col-start-5 @md:row-start-1',
-  '@md:col-start-2 @md:row-start-2',
+  '@md:col-start-2 @md:row-start-1',
+  // A column skipped, then one on its own at the end of the row.
+  '@md:col-start-4 @md:row-start-1',
+  // And below, under the gap the pair left, a second pair offset from the
+  // first — so the two rows lean opposite ways instead of lining up.
+  '@md:col-start-3 @md:row-start-2',
   '@md:col-start-4 @md:row-start-2',
 ];
 
@@ -381,7 +389,7 @@ export function AboutSheet({
               }
             >
               {section.key === 'team' ? (
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-12 @md:grid-cols-5">
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-12 @md:grid-cols-4">
                   {section.teamMembers.map((member, index) => (
                     <li
                       key={member.name}
@@ -390,13 +398,8 @@ export function AboutSheet({
                       {/* The portraits are shot 4:5. Held square they were
                           cropped top and bottom — a head trimmed to fit a box
                           it was never framed for — so the frame is the one the
-                          photograph already has.
-
-                          A rounder corner than the site's 6px: at this size
-                          six pixels is a corner you have to look for, and the
-                          field of portraits wants the softness to be part of
-                          how it reads rather than a detail. */}
-                      <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-paper">
+                          photograph already has. */}
+                      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-paper">
                         <Image
                           src={member.portrait.src}
                           alt={member.portrait.alt}

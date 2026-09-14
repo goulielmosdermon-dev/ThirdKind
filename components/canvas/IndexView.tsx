@@ -54,10 +54,21 @@ function IndexArrow() {
 const SLOT = [
   {
     wrap: 'w-full max-w-[40rem] md:max-w-none md:w-[58%]',
-    aspect: 'aspect-[16/10]',
+    // Square on a desktop. The slot beside it is a portrait pulled up into
+    // this one's row, so a letterbox here left the left-hand column ending
+    // half a screen above the right and a hole between them. The phone keeps
+    // the wide frame: there is one column there and nothing to close.
+    aspect: 'aspect-[16/10] md:aspect-square',
   },
   {
-    wrap: 'ml-auto w-full max-w-[34rem] md:mt-[-12vw] md:w-[40%]',
+    // Pulled a long way up into the slot before it. Height alone could never
+    // close the hole under that one — this slot flows after it, so growing it
+    // pushed this one down by exactly as much and the gap never moved. What
+    // closes it is this portrait riding higher, alongside the square rather
+    // than below it. Not far enough to bottom-align the two, which would read
+    // as a grid; far enough that the left column is no longer empty for half
+    // a screen.
+    wrap: 'ml-auto w-full max-w-[34rem] md:mt-[-30vw] md:w-[40%]',
     aspect: 'aspect-[4/5]',
   },
   {

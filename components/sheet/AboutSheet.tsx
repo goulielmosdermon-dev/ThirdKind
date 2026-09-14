@@ -345,7 +345,11 @@ export function AboutSheet({
                 // reads as part of the page, so it keeps the header's own left
                 // inset instead of floating in the middle of the panel.
                 section.key === 'team'
-                  ? 'max-w-[52rem] px-12 pb-24 @md:px-[8cqi] @md:pb-28'
+                  ? // Wider than the prose measure, and wider than the two-up
+                    // it replaced: three portraits across need the room, and
+                    // at this width each is served at very close to the size
+                    // the files actually are.
+                    'max-w-[76rem] px-12 pb-24 @md:px-[8cqi] @md:pb-28'
                   : `mx-auto max-w-[42rem] px-12 @md:px-0 ${
                       section.key === 'why'
                         ? 'pb-48 @md:pb-56'
@@ -354,21 +358,37 @@ export function AboutSheet({
               }
             >
               {section.key === 'team' ? (
-                <ul className="grid gap-6 @md:grid-cols-2">
+                /*
+                  Wrapped rather than laid into grid tracks, so a row that
+                  cannot be filled is centred instead of left hanging. The team
+                  is five, and five into three leaves two: in a grid those two
+                  sit left with a column-wide hole beside them, which reads as
+                  someone missing. Centred, the shape is deliberate.
+                */
+                <ul className="flex flex-wrap justify-center gap-x-6 gap-y-10">
                   {section.teamMembers.map((member) => (
-                    <li key={member.name} className="flex flex-col gap-3">
-                      <div className="relative aspect-square overflow-hidden rounded-md bg-paper">
+                    <li
+                      key={member.name}
+                      className="flex basis-[calc((100%-1.5rem)/2)] flex-col @md:basis-[calc((100%-3rem)/3)]"
+                    >
+                      {/* The portraits are shot 4:5. Held square they were
+                          cropped top and bottom — a head trimmed to fit a box
+                          it was never framed for — so the frame is the one the
+                          photograph already has. */}
+                      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-paper">
                         <Image
                           src={member.portrait.src}
                           alt={member.portrait.alt}
                           fill
-                          sizes="300px"
+                          sizes="(min-width: 768px) 340px, 45vw"
                           unoptimized={isUnoptimizedSrc(member.portrait.src)}
                           className="object-cover"
                         />
                       </div>
-                      <p className="font-display text-lede">{member.name}</p>
-                      <p className="text-sm text-mute">{member.role}</p>
+                      <p className="mt-4 font-display text-lede leading-tight">
+                        {member.name}
+                      </p>
+                      <p className="mt-1 text-sm text-mute">{member.role}</p>
                     </li>
                   ))}
                 </ul>

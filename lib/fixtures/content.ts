@@ -97,8 +97,10 @@ function localPortrait(alt: string, file: string): ImageAsset {
   return {
     src: `/about/${file}`,
     alt,
-    width: 896,
-    height: 896,
+    // The size the files actually are. They were declared square, which was
+    // never true of any of them.
+    width: 300,
+    height: 385,
   };
 }
 

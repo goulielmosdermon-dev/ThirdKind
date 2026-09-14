@@ -821,7 +821,7 @@ const aboutSections: AboutSection[] = [
         'h2',
       ),
       block(
-        'The agency market is oversaturated with thousands of agencies promising fast, predictable results. We are not another one of those.',
+        'The agency market is crowded, with thousands of agencies promising fast, predictable results. We take a different approach, focusing on meaningful ideas, strong storytelling and work built to have a lasting impact.',
       ),
       block(
         'We believe in steady growth, and in the heart and soul of communication as a tool to reach people. Revenue growth is the long term effect of that aspiration.',

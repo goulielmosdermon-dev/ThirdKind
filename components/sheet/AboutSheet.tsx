@@ -342,7 +342,7 @@ export function AboutSheet({
 
   return (
     <Sheet
-      title={poemPage ? 'Poem' : section.title}
+      title={poemPage ? 'Purpose' : section.title}
       tone="editorial"
       panelClassName={process ? 'bg-black text-white' : undefined}
     >

@@ -27,6 +27,8 @@ const PAGES = [
   // { label: 'Process', href: '/about/process' },
   { label: 'Why', href: '/about/why' },
   { label: 'Services', href: '/about/services' },
+  // The poem, under the name of the thing it is for.
+  { label: 'Purpose', href: '/about/poem' },
   { label: 'Contact', href: '/contact' },
 ] as const;
 

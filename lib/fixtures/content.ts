@@ -883,6 +883,12 @@ const aboutSections: AboutSection[] = [
           'People remember how you made them feel long after they forget what you said. We work on the parts that carry the feeling: how you sound, how you move, what you look like when nobody is paying close attention.',
       },
       {
+        title: 'Making it',
+        slug: { current: 'making-it' },
+        description:
+          'Shoot, 3D, edit, grade, sound — all of it happens here. Nothing gets sent out to a stranger halfway through and comes back not quite the thing you approved, and nobody has to have the idea explained to them a second time. It is also what lets us change our minds late, which is usually when the better decision turns up.',
+      },
+      {
         title: 'Getting heard',
         slug: { current: 'getting-heard' },
         description:
@@ -895,10 +901,10 @@ const aboutSections: AboutSection[] = [
           'One big film a year stopped carrying a brand a while ago. We set you up to keep making things: quick where it can be quick, careful where it counts, without spending the whole budget on the small stuff.',
       },
       {
-        title: 'Worth watching',
-        slug: { current: 'worth-watching' },
+        title: 'Earning the minute',
+        slug: { current: 'earning-the-minute' },
         description:
-          'Most ads get skipped because they earned it. We make the ones people sit through, and now and then send to a mate, which is the only share worth counting.',
+          'Nobody owes you their attention, and the skip button is right there. So the question is never whether the work is on brand; it is whether someone free to leave at any second stays. That gets decided twice — in the first ten seconds, and again somewhere around the middle — and we cut for those two moments before we cut for anything else.',
       },
     ],
     faqs: [

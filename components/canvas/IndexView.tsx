@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, type RefObject } from 'react';
 
 import type {
   CanvasNode,
@@ -14,18 +14,16 @@ import type {
 import {
   editorialCopy,
   editorialLeaves,
-  editorialMore,
   editorialThoughts,
 } from '@/lib/canvas/editorial';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
+import { EDITORIAL_LINE, EDITORIAL_LINE_PHONE } from '@/lib/type/display';
 import { MaskedWords } from '@/components/chrome/MaskedWords';
 import { MOTION } from '@/lib/motion/tokens';
-import { DISPLAY_BALANCE } from '@/lib/type/display';
 import { HeroReel } from '@/components/canvas/HeroReel';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
-import { InquirySection } from '@/components/inquiry/InquirySection';
-import { PillLabel } from '@/components/sheet/PillLabel';
+import { ThoughtsReel } from '@/components/canvas/ThoughtsReel';
 
 function IndexArrow() {
   return (
@@ -143,11 +141,10 @@ function ManifestoBand({
           {lines.map((block) => (
             <p
               key={block._key}
-              className={
-                phone
-                  ? 'text-[1.45rem] leading-[1.6]'
-                  : 'text-[clamp(1.6rem,2.3vw,2.15rem)] leading-[1.5]'
-              }
+              className={phone ? 'leading-[1.6]' : 'leading-[1.5]'}
+              style={{
+                fontSize: phone ? EDITORIAL_LINE_PHONE : EDITORIAL_LINE,
+              }}
             >
               {block.children.map((child) => child.text).join('')}
             </p>
@@ -159,265 +156,8 @@ function ManifestoBand({
 }
 
 /**
- * Three more pieces, in a row, after the index has been read.
- *
- * The card is the index's own — the line and its arrow, then what the work
- * involved, then the picture — so a piece reads the same wherever it appears.
- * The row is deliberately uneven: each slot takes a different crop and hangs
- * at a different height, which is what keeps three cards side by side from
- * reading as a grid of boxes.
- */
-const MORE_SLOT = [
-  { wrap: '', aspect: 'aspect-[16/10]' },
-  { wrap: 'md:mt-[6vw]', aspect: 'aspect-square' },
-  { wrap: 'md:mt-[2vw]', aspect: 'aspect-[4/3]' },
-] as const;
-
-function MoreWork({
-  items,
-  phone,
-  reduced,
-  onOpen,
-  onPrefetch,
-}: {
-  items: LeafCanvasNode[];
-  phone: boolean;
-  reduced: boolean;
-  onOpen: (href: string, nodeId: string) => void;
-  onPrefetch?: (href: string) => void;
-}) {
-  if (items.length === 0) {
-    return null;
-  }
-
-  return (
-    <section className={phone ? 'mt-20' : 'mt-[clamp(6rem,12vw,14rem)]'}>
-      <ul
-        className={`grid grid-cols-1 items-start ${
-          phone ? 'gap-14' : 'gap-10 md:grid-cols-3 md:gap-[4%]'
-        }`}
-      >
-        {items.map((node, index) => {
-          const slot = MORE_SLOT[index % MORE_SLOT.length] ?? MORE_SLOT[0];
-          const { line, name } = editorialCopy(node);
-          // The arrow stays welded to the last word so it never wraps alone.
-          const cut = line.lastIndexOf(' ');
-          let lead = '';
-          let tail = line;
-          if (name) {
-            lead = `${line} `;
-            tail = '';
-          } else if (cut > 0) {
-            lead = line.slice(0, cut + 1);
-            tail = line.slice(cut + 1);
-          }
-
-          return (
-            <motion.li
-              key={node.id}
-              className={phone ? '' : slot.wrap}
-              initial={reduced ? false : { opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{
-                duration: reduced ? MOTION.reduced : 0.6,
-                delay: reduced ? 0 : index * 0.08,
-                ease: MOTION.easeOut,
-              }}
-            >
-              <button
-                type="button"
-                className="group w-full cursor-pointer border-0 bg-transparent p-0 text-left text-ink"
-                onClick={() => onOpen(node.href, node.id)}
-                onPointerEnter={() => onPrefetch?.(node.href)}
-                onFocus={() => onPrefetch?.(node.href)}
-              >
-                <p
-                  // The index's own size, and the arrow with it: IndexArrow is
-                  // set in em, so it follows the line it is welded to.
-                  className={`font-display leading-snug ${
-                    phone
-                      ? 'mb-3 text-[1.05rem]'
-                      : 'mb-4 text-[clamp(1.05rem,1.55vw,1.4rem)] max-md:text-[1.15rem]'
-                  }`}
-                >
-                  {lead}
-                  <span className="whitespace-nowrap">
-                    {name ? <span className="text-mute">{name}</span> : tail}
-                    <IndexArrow />
-                  </span>
-                </p>
-
-                {node.tags?.length ? (
-                  <ul
-                    className={`flex flex-wrap gap-1.5 ${phone ? 'mb-3' : 'mb-4'}`}
-                  >
-                    {node.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
-                      >
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-
-                <span
-                  className={`relative block w-full overflow-hidden rounded-md bg-paper ${slot.aspect}`}
-                >
-                  <Image
-                    src={node.thumbnail.src}
-                    alt={node.thumbnail.alt}
-                    fill
-                    sizes={phone ? '393px' : '(min-width: 768px) 30vw, 92vw'}
-                    unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
-                    className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
-                  />
-                </span>
-              </button>
-            </motion.li>
-          );
-        })}
-      </ul>
-    </section>
-  );
-}
-
-/** How many pieces of writing the index opens with, and how many each
-    "Show more" adds after that. */
-const OPENS_WITH = 5;
-const STEP = 2;
-
-/** One piece of writing: label, title, and the button, top-aligned. */
-function ThoughtRow({
-  node,
-  phone,
-  index,
-  reduced = false,
-  onOpen,
-  onPrefetch,
-}: {
-  node: LeafCanvasNode;
-  phone: boolean;
-  /** Its place in the run, which is how far behind the one above it lands. */
-  index: number;
-  reduced?: boolean;
-  onOpen: (href: string, nodeId: string) => void;
-  onPrefetch?: (href: string) => void;
-}) {
-  const [hovered, setHovered] = useState(false);
-  // Where the still sits, in the row's own box, so it rides the pointer
-  // across the line the way the reference does.
-  const [point, setPoint] = useState({ x: 0, y: 0 });
-  const rowRef = useRef<HTMLLIElement>(null);
-  const label = node.tags?.[0] ?? 'Article';
-
-  return (
-    <motion.li
-      ref={rowRef}
-      // Each row resolves as it arrives. The ones on screen together trickle
-      // down a beat apart; the ones further along simply come in as they are
-      // reached. A row brought in by "Show more" is already in view, so it
-      // fades on the spot.
-      initial={reduced ? false : { opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.35 }}
-      transition={{
-        duration: reduced ? MOTION.reduced : 0.6,
-        delay: reduced ? 0 : Math.min(index, 5) * 0.08,
-        ease: MOTION.easeOut,
-      }}
-      className="relative border-t border-hairline last:border-b"
-      onPointerEnter={(event) => {
-        if (event.pointerType === 'touch') {
-          return;
-        }
-        setHovered(true);
-      }}
-      onPointerLeave={() => setHovered(false)}
-      onPointerMove={(event) => {
-        const box = rowRef.current?.getBoundingClientRect();
-        if (!box) {
-          return;
-        }
-        setPoint({ x: event.clientX - box.left, y: event.clientY - box.top });
-      }}
-    >
-      <button
-        type="button"
-        className="group flex w-full cursor-pointer items-start gap-4 border-0 bg-transparent px-0 py-5 text-left text-ink md:gap-8 md:py-6"
-        onClick={() => onOpen(node.href, node.id)}
-        onPointerEnter={() => onPrefetch?.(node.href)}
-        onFocus={() => onPrefetch?.(node.href)}
-      >
-        <span className="hidden w-[9rem] shrink-0 pt-[0.15em] text-[0.9rem] leading-snug text-ink md:block">
-          {label}
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-[0.78rem] text-mute md:hidden">
-            {label}
-          </span>
-          {/* Title in the sans, précis in Plantin — the two voices the
-              reference sets the line in. */}
-          <span className="mt-1 block text-[1.05rem] leading-snug font-semibold md:mt-0 md:text-[clamp(1.05rem,1.5vw,1.35rem)]">
-            {node.title}
-            {node.hoverDescription ? (
-              // Kept on the shared display balance, so the two faces read at
-              // the same optical size along the line.
-              <span
-                className="font-display font-normal text-mute"
-                style={{ fontSize: DISPLAY_BALANCE }}
-              >
-                {' '}
-                {node.hoverDescription}
-              </span>
-            ) : null}
-          </span>
-        </span>
-        <span className="shrink-0 self-start">
-          <PillLabel
-            label="Read now"
-            // No room for the word on a phone; the arrow says it.
-            labelClassName="max-md:hidden"
-            open={hovered}
-          />
-        </span>
-      </button>
-
-      {!phone ? (
-        <span
-          className="pointer-events-none absolute z-20 block w-[14rem] overflow-hidden"
-          style={{
-            left: point.x,
-            top: point.y,
-            transform: `translate(-50%, -50%) scale(${hovered ? 1 : 0.86})`,
-            opacity: hovered ? 1 : 0,
-            transition:
-              'opacity 260ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1)',
-          }}
-          aria-hidden
-        >
-          <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-black">
-            <Image
-              src={node.thumbnail.src}
-              alt=""
-              fill
-              sizes="224px"
-              unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
-              className="object-cover"
-            />
-          </span>
-        </span>
-      ) : null}
-    </motion.li>
-  );
-}
-
-/**
  * The writing, under the work: one line of type at full volume, read a word
- * at a time out of its own mask, then the pieces as a plain ruled list rather
- * than another run of pictures competing with the index above it.
+ * at a time out of its own mask, then the pieces themselves as a reel.
  */
 function ThoughtsRun({
   items,
@@ -430,13 +170,6 @@ function ThoughtsRun({
   onOpen: (href: string, nodeId: string) => void;
   onPrefetch?: (href: string) => void;
 }) {
-  const reduced = useReducedMotion() ?? false;
-  // Five to begin with, then two at a time. The rest of the writing is a
-  // click away rather than a page of scrolling nobody asked for.
-  const [shown, setShown] = useState(OPENS_WITH);
-  const visible = items.slice(0, shown);
-  const more = items.length - visible.length;
-
   if (items.length === 0) {
     return null;
   }
@@ -482,31 +215,12 @@ function ThoughtsRun({
         </h2>
       </section>
 
-      <section>
-        <ul>
-          {visible.map((node, index) => (
-            <ThoughtRow
-              key={node.id}
-              node={node}
-              phone={phone}
-              index={index}
-              reduced={reduced}
-              onOpen={onOpen}
-              onPrefetch={onPrefetch}
-            />
-          ))}
-        </ul>
-
-        {more > 0 ? (
-          <button
-            type="button"
-            onClick={() => setShown((count) => count + STEP)}
-            className="mt-8 cursor-pointer border-0 bg-transparent p-0 text-[0.9rem] text-mute underline-offset-4 transition-colors duration-300 hover:text-ink hover:underline"
-          >
-            Show more
-          </button>
-        ) : null}
-      </section>
+      <ThoughtsReel
+        items={items}
+        phone={phone}
+        onOpen={onOpen}
+        onPrefetch={onPrefetch}
+      />
     </>
   );
 }
@@ -540,7 +254,6 @@ export function IndexView({
 }) {
   const items = useMemo(() => editorialLeaves(nodes), [nodes]);
   const thoughts = useMemo(() => editorialThoughts(nodes), [nodes]);
-  const more = useMemo(() => editorialMore(nodes), [nodes]);
   const reduced = useReducedMotion() ?? false;
   const scrollRef = useRef<HTMLDivElement>(null);
   const manifestoRef = useRef<HTMLElement>(null);
@@ -629,10 +342,10 @@ export function IndexView({
     if (!onPrefetch) {
       return;
     }
-    for (const item of [...items, ...more, ...thoughts]) {
+    for (const item of [...items, ...thoughts]) {
       onPrefetch(item.href);
     }
-  }, [items, more, onPrefetch, thoughts]);
+  }, [items, onPrefetch, thoughts]);
 
   const sheet = {
     hidden: { opacity: 0 },
@@ -813,13 +526,12 @@ export function IndexView({
                   >
                     <motion.p
                       variants={mask}
-                      className={`font-display leading-snug ${
-                        phone
-                          ? 'text-[1.05rem]'
-                          : // On a phone it is set at the size the manifesto
-                            // body is read at, so the page keeps one measure.
-                            'text-[clamp(1.05rem,1.55vw,1.4rem)] max-md:text-[1.15rem]'
-                      }`}
+                      className="font-display leading-snug"
+                      // The one editorial size, shared with the writing and
+                      // the manifesto.
+                      style={{
+                        fontSize: phone ? EDITORIAL_LINE_PHONE : EDITORIAL_LINE,
+                      }}
                     >
                       {lead}
                       <span className="whitespace-nowrap">
@@ -896,16 +608,6 @@ export function IndexView({
           onOpen={onOpen}
           onPrefetch={onPrefetch}
         />
-
-        <MoreWork
-          items={more}
-          phone={phone}
-          reduced={reduced}
-          onOpen={onOpen}
-          onPrefetch={onPrefetch}
-        />
-
-        <InquirySection phone={phone} />
       </div>
       <SiteFooter compact={phone} />
     </motion.div>

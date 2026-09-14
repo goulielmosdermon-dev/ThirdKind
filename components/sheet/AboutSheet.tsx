@@ -16,7 +16,7 @@ import type {
   PortableText,
   ProcessStep,
   ServiceOffering,
-  ServicesOffer,
+  ServicesLede,
 } from '@/types/content';
 
 const PROCESS_INTRO = 'From brief to delivery, with the numbers kept honest.';
@@ -231,7 +231,7 @@ function DisciplineGrid({ services }: { services: ServiceOffering[] }) {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <ul className="mt-14 grid grid-cols-1 gap-x-8 gap-y-2 @md:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-x-8 gap-y-2 @md:grid-cols-2">
       {services.map((service) => {
         const key = service.slug.current;
         return (
@@ -251,13 +251,13 @@ function DisciplineGrid({ services }: { services: ServiceOffering[] }) {
 
 function ServicesView({
   title,
-  offer,
+  lede,
   services,
   faqs,
   framed,
 }: {
   title: string;
-  offer?: ServicesOffer;
+  lede?: ServicesLede;
   services: ServiceOffering[];
   faqs: Faq[];
   framed: boolean;
@@ -281,12 +281,28 @@ function ServicesView({
         className="mt-[3cqi] w-full rounded-md"
       />
 
-      {offer ? (
-        <p className="mt-[4cqi] max-w-[42rem] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink">
-          {offer.statement}
-        </p>
+      {/* One offer, said once. What follows is not a list of things to buy;
+          it is the order the one thing gets made in. */}
+      {lede ? (
+        <div className="mt-[4cqi] max-w-[42rem]">
+          <h2 className="font-sans text-[1.65rem] leading-snug font-semibold text-ink">
+            {lede.headline}
+          </h2>
+          {lede.body.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="mt-[2cqi] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
       ) : null}
-      <DisciplineGrid services={services} />
+
+      <div className="mt-[6cqi]">
+        <DisciplineGrid services={services} />
+      </div>
+
       <section className="mt-[6cqi]">
         <ServicesFaq faqs={faqs} />
       </section>
@@ -346,7 +362,7 @@ export function AboutSheet({
         ) : services && section.key === 'services' ? (
           <ServicesView
             title={section.title}
-            offer={section.offer}
+            lede={section.lede}
             services={section.services}
             faqs={section.faqs}
             framed={framed}

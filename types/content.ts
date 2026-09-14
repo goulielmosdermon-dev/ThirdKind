@@ -186,9 +186,16 @@ export type ServiceOffering = {
   description: string;
 };
 
-/** The single offer the stages belong to, above the scrolling column. */
-export type ServicesOffer = {
-  statement: string;
+/**
+ * The one offer, stated before anything that delivers it.
+ *
+ * The page used to open on a paragraph about showing up and then list its
+ * disciplines as equals, which read as a menu of things to buy. This says what
+ * the one thing is; the disciplines under it are what making it involves.
+ */
+export type ServicesLede = {
+  headline: string;
+  body: string[];
 };
 
 export type Faq = {
@@ -229,7 +236,7 @@ export type AboutWhySection = AboutSectionBase & {
 
 export type AboutServicesSection = AboutSectionBase & {
   key: 'services';
-  offer?: ServicesOffer;
+  lede?: ServicesLede;
   services: ServiceOffering[];
   faqs: Faq[];
 };

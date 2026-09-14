@@ -291,7 +291,7 @@ export function mapAboutSection(doc: {
     title?: string;
     description?: string;
   }[];
-  offer?: { statement?: string };
+  lede?: { headline?: string; body?: string[] };
   services?: {
     title?: string;
     slug?: { current?: string };
@@ -357,9 +357,12 @@ export function mapAboutSection(doc: {
     return {
       ...base,
       key,
-      ...(doc.offer?.statement
+      ...(doc.lede?.headline
         ? {
-            offer: { statement: doc.offer.statement },
+            lede: {
+              headline: doc.lede.headline,
+              body: (doc.lede.body ?? []).filter(Boolean),
+            },
           }
         : {}),
       services: (doc.services ?? []).flatMap((service) =>

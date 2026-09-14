@@ -84,7 +84,7 @@ export const siteContentQuery = groq`{
     body[] ${portableFields},
     teamMembers[]{ name, role, portrait ${imageFields} },
     processSteps[]{ step, title, description },
-    offer{ statement },
+    lede{ headline, body },
     services[]{ title, slug, description },
     faqs[]{ question, answer }
   },

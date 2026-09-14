@@ -859,52 +859,55 @@ const aboutSections: AboutSection[] = [
     },
     body: copy('One offer, several disciplines.'),
     canvasPosition: { x: 2500, y: 1800, tileWidth: 128, rotation: -5 },
-    offer: {
-      statement:
-        'A brand has to keep showing up: big moments and small, broad and personal. We make work that holds across all of it, cut for every channel it lands on, personal where that earns attention, and made without waste.',
+    lede: {
+      headline: 'A creative agency built around film.',
+      body: [
+        'Most agencies treat film as one output among many. We’re the other way round — film is the thing we’re best at, and everything else we do is in service of making it land.',
+        'That means we sometimes start further back than a production company would. If the brand hasn’t been figured out, we figure it out. If nobody knows who they’re talking to, we go and find out. Then we make the thing.',
+      ],
     },
     services: [
       {
-        title: 'Reading the room',
-        slug: { current: 'reading-the-room' },
+        title: 'Audience research',
+        slug: { current: 'audience-research' },
         description:
-          "Your customers belonged to something before they belonged to you. A sport, a scene, a group chat. We go and look at what those worlds actually care about this year, and find you a way in that doesn't make everyone wince.",
+          'Your customers belonged to something before they belonged to you. A sport, a scene, a group chat. We go and look at what those worlds actually care about this year, and find you a way in that doesn’t make everyone wince.',
       },
       {
         title: 'Brand strategy',
         slug: { current: 'brand-strategy' },
         description:
-          'Before anyone writes a word, the room has to agree on what you stand for and who you are for. We get that onto one page in plain language, so every decision after it has something to point at.',
+          'Before anyone writes a word, the room has to agree on what you stand for and who you’re for. We get that onto one page in plain language, so every decision after it has something to point at.',
       },
       {
-        title: 'How it feels',
-        slug: { current: 'how-it-feels' },
+        title: 'Brand identity',
+        slug: { current: 'brand-identity' },
         description:
-          'People remember how you made them feel long after they forget what you said. We work on the parts that carry the feeling: how you sound, how you move, what you look like when nobody is paying close attention.',
+          'People remember how you made them feel long after they forget what you said. How you sound, how you move, what you look like when nobody’s paying close attention. That’s the part that stays.',
       },
       {
-        title: 'Making it',
-        slug: { current: 'making-it' },
+        title: 'Production',
+        slug: { current: 'production' },
         description:
-          'Shoot, 3D, edit, grade, sound — all of it happens here. Nothing gets sent out to a stranger halfway through and comes back not quite the thing you approved, and nobody has to have the idea explained to them a second time. It is also what lets us change our minds late, which is usually when the better decision turns up.',
+          'Shoot, 3D, edit, grade, sound. All of it happens here. Nothing gets sent out to a stranger halfway through and comes back not quite the thing you approved, and nobody has to have the idea explained to them a second time. It’s also what lets us change our minds late, which is usually when the better decision turns up.',
       },
       {
-        title: 'Getting heard',
-        slug: { current: 'getting-heard' },
+        title: 'Distribution',
+        slug: { current: 'distribution' },
         description:
           'A good film nobody sees is an expensive hobby. We work out where the work goes, in what order, and what each piece is there to do, so the whole run adds up to something.',
       },
       {
-        title: 'Steady stream',
-        slug: { current: 'steady-stream' },
+        title: 'Volume work',
+        slug: { current: 'volume-work' },
         description:
-          'One big film a year stopped carrying a brand a while ago. We set you up to keep making things: quick where it can be quick, careful where it counts, without spending the whole budget on the small stuff.',
+          'Some jobs are one film. Some are twenty testimonials. Same craft either way, and we don’t get lazier on the short ones.',
       },
       {
         title: 'Earning the minute',
         slug: { current: 'earning-the-minute' },
         description:
-          'Nobody owes you their attention, and the skip button is right there. So the question is never whether the work is on brand; it is whether someone free to leave at any second stays.',
+          'Nobody owes you their attention, and the skip button is right there. The question is never whether the work is on brand. It’s whether someone free to leave at any second stays.',
       },
     ],
     faqs: [

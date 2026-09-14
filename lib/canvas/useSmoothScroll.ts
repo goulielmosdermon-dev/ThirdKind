@@ -72,6 +72,13 @@ export function useSmoothScroll(ref: RefObject<HTMLElement | null>): void {
       if (limit <= 0) {
         return;
       }
+      // A sideways gesture belongs to whatever is under it. This loop reads
+      // deltaY only, so taking a swipe along a row of cards would both stop
+      // the row moving and nudge the page down instead — the gesture would
+      // appear to do nothing, which is worse than not handling it.
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+        return;
+      }
       event.preventDefault();
       const delta = normalizeWheelDelta(
         event.deltaY,

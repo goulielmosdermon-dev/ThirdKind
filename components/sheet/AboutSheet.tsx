@@ -389,7 +389,7 @@ export function AboutSheet({
               }
             >
               {section.key === 'team' ? (
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-12 @md:grid-cols-4">
+                <ul className="grid grid-cols-1 gap-x-6 gap-y-12 @md:grid-cols-4">
                   {section.teamMembers.map((member, index) => (
                     <li
                       key={member.name}

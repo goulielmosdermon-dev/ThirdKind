@@ -113,21 +113,32 @@ export function ArticleSheet({
                     href={`/thoughts/${item.slug.current}`}
                     className="block"
                   >
-                    <p className="font-display text-[1.2rem] leading-tight text-ink">
-                      {item.title}
-                    </p>
-                    <p className="mt-1 text-sm leading-snug text-mute">
-                      {item.hoverDescription}
-                    </p>
-                    <span className="relative mt-3 block aspect-[16/10] w-full overflow-hidden rounded-md bg-hairline">
+                    {/* The words are held to a fixed height so every still
+                        in the row starts on the same line. A title that runs
+                        to two lines used to push its own picture down, and a
+                        row of tops at two different heights reads as a
+                        mistake rather than as a rhythm. */}
+                    <div className="min-h-[4.75rem]">
+                      <p className="font-display text-[1.2rem] leading-tight text-ink">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 text-sm leading-snug text-mute">
+                        {item.hoverDescription}
+                      </p>
+                    </div>
+                    {/* No crop: the still is shown at the shape it was made,
+                        so the row is even along the top and ragged along the
+                        bottom, which is the picture's own business. */}
+                    <span className="mt-3 block w-full overflow-hidden rounded-md bg-hairline">
                       <Image
                         src={item.coverImage.src}
                         alt=""
-                        fill
+                        width={item.coverImage.width}
+                        height={item.coverImage.height}
                         sizes="(max-width: 767px) 78vw, 40vw"
                         quality={95}
                         unoptimized={isUnoptimizedSrc(item.coverImage.src)}
-                        className="object-cover"
+                        className="h-auto w-full"
                       />
                     </span>
                   </AppLink>

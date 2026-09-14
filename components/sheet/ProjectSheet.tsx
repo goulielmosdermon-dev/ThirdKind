@@ -109,21 +109,27 @@ export function ProjectSheet({
                     href={`/work/${item.slug.current}`}
                     className="block"
                   >
-                    <p className="font-display text-[1.2rem] leading-tight text-white">
-                      {item.client}
-                    </p>
-                    <p className="mt-1 text-sm leading-snug text-white/70">
-                      {item.hoverDescription}
-                    </p>
-                    <span className="relative mt-3 block aspect-[16/10] w-full overflow-hidden rounded-md bg-white/10">
+                    {/* Held to a height, so every still starts on the same
+                        line however long the line above it ran. */}
+                    <div className="min-h-[4.75rem]">
+                      <p className="font-display text-[1.2rem] leading-tight text-white">
+                        {item.client}
+                      </p>
+                      <p className="mt-1 text-sm leading-snug text-white/70">
+                        {item.hoverDescription}
+                      </p>
+                    </div>
+                    {/* Shown at the shape it was made, not cropped to a band. */}
+                    <span className="mt-3 block w-full overflow-hidden rounded-md bg-white/10">
                       <Image
                         src={item.thumbnail.src}
                         alt=""
-                        fill
+                        width={item.thumbnail.width}
+                        height={item.thumbnail.height}
                         sizes="(max-width: 767px) 78vw, 40vw"
                         quality={95}
                         unoptimized={isUnoptimizedSrc(item.thumbnail.src)}
-                        className="object-cover"
+                        className="h-auto w-full"
                       />
                     </span>
                   </AppLink>

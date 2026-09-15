@@ -290,7 +290,7 @@ function ServicesView({
         {/* Centred in what the heading leaves, and then a little above that:
             the hands read as sitting low if they are set on the true middle,
             because the alien hand carries its weight below the line. */}
-        <div className="-mx-12 mt-[3cqi] flex min-h-0 flex-1 -translate-y-[3%] items-center @md:-mx-[5cqi]">
+        <div className="-mx-12 mt-[3cqi] flex min-h-0 flex-1 -translate-y-[12%] max-md:translate-y-0 items-center @md:-mx-[5cqi]">
           <ServicesHands />
         </div>
       </div>

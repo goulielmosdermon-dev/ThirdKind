@@ -32,9 +32,16 @@ import {
  * there the frame stands taller and the hands take a smaller share of its
  * height, which comes to about the same reach across.
  */
+/*
+  A turned hand needs more height than its own: rotating it about the
+  fingertip swings the far end down and out, so the vertical room a hand takes
+  is about height * (cos(turn) + aspect * sin(turn)) — for the alien hand, a
+  third as much again as its height. The heights below are set under that, so
+  nothing reaches the frame's edge and nothing is cut.
+*/
 const FRAME = {
-  wide: { ratio: 2.8, alienHeight: 0.85 },
-  phone: { ratio: 1.55, alienHeight: 0.55 },
+  wide: { ratio: 2.2, alienHeight: 0.62 },
+  phone: { ratio: 1.35, alienHeight: 0.46 },
 } as const;
 
 /**
@@ -111,7 +118,9 @@ export function ServicesHands() {
   return (
     <div
       data-surface="dark"
-      className="relative w-full overflow-hidden bg-black"
+      // No ground of its own: the opening is already black, and a black box
+      // here would paint over the heading when the frame is stood higher.
+      className="relative w-full overflow-hidden"
       style={{ aspectRatio: `${frame.ratio}` }}
       role="img"
       aria-label="A constellation hand and a human hand reaching toward each other, the point where they meet marked “our work together”."

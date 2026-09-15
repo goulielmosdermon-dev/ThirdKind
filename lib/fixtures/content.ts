@@ -860,7 +860,7 @@ const aboutSections: AboutSection[] = [
     body: copy('One offer, several disciplines.'),
     canvasPosition: { x: 2500, y: 1800, tileWidth: 128, rotation: -5 },
     lede: {
-      headline: 'A creative agency built around film.',
+      headline: 'A creative agency built around storytelling.',
       body: [
         'When a business has genuine intentions to inspire and entertain, to provide value through its communication, it will build stronger relationships and invite more customers.',
       ],

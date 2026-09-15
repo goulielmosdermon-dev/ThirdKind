@@ -7,6 +7,7 @@ import { useId, useState } from 'react';
 import { useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { ServicesFaq } from '@/components/sheet/ServicesFaq';
+import { ServicesHands } from '@/components/sheet/ServicesHands';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import { MOTION } from '@/lib/motion/tokens';
@@ -265,47 +266,52 @@ function ServicesView({
   // Same shape as the Work index: one left-aligned column inset by the page
   // gutter, with the image filling the width between those gutters.
   return (
-    <div className="px-12 pb-28 @md:px-[5cqi]">
-      <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
-        <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
-          {title}.
-        </h1>
-      </div>
-
-      <Image
-        src="/about/our-work-together.jpg"
-        alt="A constellation hand and a human hand reaching toward each other, the point where they meet marked “our work together”."
-        width={1600}
-        height={1558}
-        sizes="(min-width: 900px) 90vw, 100vw"
-        className="mt-[3cqi] w-full rounded-md"
-      />
-
-      {/* One offer, said once. What follows is not a list of things to buy;
-          it is the order the one thing gets made in. */}
-      {lede ? (
-        <div className="mt-[4cqi] max-w-[42rem]">
-          <h2 className="font-sans text-[1.65rem] leading-snug font-semibold text-ink">
-            {lede.headline}
-          </h2>
-          {lede.body.map((paragraph) => (
-            <p
-              key={paragraph}
-              className="mt-[2cqi] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink"
-            >
-              {paragraph}
-            </p>
-          ))}
+    <div className="pb-28">
+      {/* The page opens black, with the hands coming together on it: the
+          heading stands white on the same ground rather than over it, and the
+          close button, which is white and set to difference, reads against it
+          without being told anything. */}
+      <div
+        data-surface="dark"
+        className="bg-black px-12 pb-[3cqi] @md:px-[5cqi]"
+      >
+        <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
+          <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
+            {title}.
+          </h1>
         </div>
-      ) : null}
-
-      <div className="mt-[6cqi]">
-        <DisciplineGrid services={services} />
+        <div className="mt-[3cqi]">
+          <ServicesHands />
+        </div>
       </div>
 
-      <section className="mt-[6cqi]">
-        <ServicesFaq faqs={faqs} />
-      </section>
+      <div className="px-12 @md:px-[5cqi]">
+        {/* One offer, said once. What follows is not a list of things to buy;
+          it is the order the one thing gets made in. */}
+        {lede ? (
+          <div className="mt-[4cqi] max-w-[42rem]">
+            <h2 className="font-sans text-[1.65rem] leading-snug font-semibold text-ink">
+              {lede.headline}
+            </h2>
+            {lede.body.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="mt-[2cqi] text-[clamp(1.2rem,2.2cqi,1.45rem)] leading-[1.45] text-ink"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        ) : null}
+
+        <div className="mt-[6cqi]">
+          <DisciplineGrid services={services} />
+        </div>
+
+        <section className="mt-[6cqi]">
+          <ServicesFaq faqs={faqs} />
+        </section>
+      </div>
     </div>
   );
 }

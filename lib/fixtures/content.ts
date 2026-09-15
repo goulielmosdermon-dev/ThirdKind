@@ -862,8 +862,7 @@ const aboutSections: AboutSection[] = [
     lede: {
       headline: 'A creative agency built around film.',
       body: [
-        'Most agencies treat film as one output among many. We’re the other way round: film is the thing we’re best at, and everything else we do is in service of making it land.',
-        'That means we sometimes start further back than a production company would. If the brand hasn’t been figured out, we figure it out. If nobody knows who they’re talking to, we go and find out. Then we make the thing.',
+        'When a business has genuine intentions to inspire and entertain, to provide value through its communication, it will build stronger relationships and invite more customers.',
       ],
     },
     services: [

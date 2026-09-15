@@ -102,6 +102,48 @@ const REACH_S = 1.5;
 const TOUCHED_S = REACH_S - 0.15;
 const REACH = [0.22, 1, 0.36, 1] as const;
 
+/**
+ * Who the hand belongs to, standing over it.
+ *
+ * Set in the label's own wrapper, which is the unturned one, so the word
+ * stays level however far the hand beneath it is turned — and travels in with
+ * the hand it names.
+ */
+function HandLabel({
+  children,
+  at,
+  turn,
+  reduced,
+}: {
+  children: string;
+  /** Across the hand's own art: where the body of the hand sits under it. */
+  at: number;
+  /** The turn of the hand it stands on, which the word undoes for itself. */
+  turn: number;
+  reduced: boolean;
+}) {
+  return (
+    <motion.span
+      className="font-display absolute bottom-full mb-[0.3em] text-[clamp(0.85rem,1.5vw,1.15rem)] leading-none text-white mix-blend-difference"
+      style={{
+        left: `${at * 100}%`,
+        // Placed in the hand's own frame, so "above the hand" is above the
+        // art itself however far it is turned — and then stood back up, so
+        // the word reads level.
+        transform: `translateX(-50%) rotate(${-turn}deg)`,
+        transformOrigin: 'center bottom',
+      }}
+      initial={reduced ? undefined : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={
+        reduced ? { duration: 0 } : { duration: 0.6, delay: TOUCHED_S + 0.15 }
+      }
+    >
+      {children}
+    </motion.span>
+  );
+}
+
 export function ServicesHands() {
   const reduced = useReducedMotion() ?? false;
   const narrow = useNarrow();
@@ -137,11 +179,15 @@ export function ServicesHands() {
         transition={reach}
       >
         <div
+          className="relative"
           style={{
             transform: `rotate(${ALIEN_TURN}deg)`,
             transformOrigin: `${ALIEN_CONTACT.x * 100}% ${ALIEN_CONTACT.y * 100}%`,
           }}
         >
+          <HandLabel at={0.26} turn={ALIEN_TURN} reduced={reduced}>
+            us
+          </HandLabel>
           <Image
             src="/brand/hand-alien.png"
             alt=""
@@ -168,11 +214,15 @@ export function ServicesHands() {
         transition={reach}
       >
         <div
+          className="relative"
           style={{
             transform: `rotate(${HUMAN_TURN}deg)`,
             transformOrigin: `${HUMAN_CONTACT.x * 100}% ${HUMAN_CONTACT.y * 100}%`,
           }}
         >
+          <HandLabel at={0.7} turn={HUMAN_TURN} reduced={reduced}>
+            you
+          </HandLabel>
           <Image
             src="/brand/hand-human.png"
             alt=""

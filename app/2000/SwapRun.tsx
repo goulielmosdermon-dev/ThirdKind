@@ -32,6 +32,9 @@ const WHEEL_THRESHOLD = 6;
 export type Slide = {
   /** Set on the first slide of a chapter, so the rail can reach it. */
   chapter?: string;
+  /** The chapter this slide belongs to, carried by every slide in it so the
+      deck can name where it is without counting back to the first. */
+  chapterTitle?: string;
   /** A text slide, read through the line masks. */
   lines?: string[];
   /** Anything else — a mark, a track, a plate. */
@@ -203,6 +206,9 @@ export function SwapRun({
     };
   }, [go, slides.length]);
 
+  /** The chapter being read, for the corner. */
+  const here = slides[active]?.chapterTitle;
+
   const stateOf = (i: number): RevealState =>
     i === active ? 'in' : i < active ? 'above' : 'below';
 
@@ -296,6 +302,24 @@ export function SwapRun({
         </div>
       </div>
 
+      {/* Where the deck has got to, named in the corner. It rides with the
+          viewport like the controls do, and changes on the slide that changes
+          chapter — crossfaded, so it reads as the deck moving on rather than
+          as a word being retyped. */}
+      {here ? (
+        <div className="pointer-events-none fixed inset-x-0 top-0 z-30">
+          <div className="mx-auto w-full max-w-[1180px] px-5 pt-5 md:px-10 md:pt-7">
+            <p
+              key={here}
+              className="font-display text-right text-[1.05rem] leading-none font-bold text-ink md:text-[1.25rem]"
+              style={{ animation: 'tk-title-in 0.6s ease both' }}
+            >
+              {here}
+            </p>
+          </div>
+        </div>
+      ) : null}
+
       {/* The controls ride with the viewport, not with the run: they are the
           one part of the deck that is always in the same place. */}
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30">
@@ -305,19 +329,26 @@ export function SwapRun({
             {String(slides.length).padStart(2, '0')}
           </p>
 
-          <div className="flex items-center gap-2">
-            <StepButton
-              label="Previous slide"
-              disabled={active === 0}
-              onClick={() => go(active - 1)}
-              d="M15 5 8 12l7 7"
-            />
-            <StepButton
-              label="Next slide"
-              disabled={active === slides.length - 1}
-              onClick={() => go(active + 1)}
-              d="M9 5l7 7-7 7"
-            />
+          <div className="flex items-center gap-4">
+            {/* Said once, beside the thing it describes. Kept off a phone,
+                which has no arrow keys to press. */}
+            <p className="hidden font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute md:block">
+              Click left or right arrow on the keyboard to navigate
+            </p>
+            <div className="flex items-center gap-2">
+              <StepButton
+                label="Previous slide"
+                disabled={active === 0}
+                onClick={() => go(active - 1)}
+                d="M15 5 8 12l7 7"
+              />
+              <StepButton
+                label="Next slide"
+                disabled={active === slides.length - 1}
+                onClick={() => go(active + 1)}
+                d="M9 5l7 7-7 7"
+              />
+            </div>
           </div>
         </div>
 

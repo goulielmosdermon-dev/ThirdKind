@@ -20,6 +20,9 @@ export default function Page() {
       // replaced on the spot, so the wheel moves the deck on rather than
       // moving the page past it.
       motion="swap"
+      // Read a slide at a time, so the index folds away behind a hamburger
+      // rather than standing down the margin of every slide.
+      nav="menu"
     />
   );
 }

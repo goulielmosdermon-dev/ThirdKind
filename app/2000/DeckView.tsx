@@ -600,6 +600,7 @@ export function Deck({
   chapters = deck2000,
   credits = credits2000,
   motion = 'pinned',
+  nav = 'rail',
 }: {
   brand?: Brand;
   chapters?: Chapter[];
@@ -611,6 +612,12 @@ export function Deck({
    * replaced on the spot and nothing ever travels up the screen.
    */
   motion?: 'pinned' | 'swap';
+  /**
+   * How the index is carried: down the left margin, or behind a hamburger.
+   * A deck read a slide at a time wants the second — the list is a way back
+   * rather than something standing beside every slide.
+   */
+  nav?: 'rail' | 'menu';
 }) {
   const swap = motion === 'swap';
 
@@ -620,6 +627,7 @@ export function Deck({
     ? chapters.flatMap((chapter) =>
         chapter.blocks.map((block, index) => ({
           chapter: index === 0 ? chapter.id : undefined,
+          chapterTitle: chapter.title,
           ...(block.kind === 'text'
             ? { lines: block.lines }
             : { node: <SlideBody block={block} /> }),
@@ -636,10 +644,12 @@ export function Deck({
           distance — so the page easing would only be a second hand on the same
           control, fighting each step as it lands. */}
       {swap ? null : <SmoothPage />}
-      <DeckIndex entries={entries} textClass={NAV} />
+      <DeckIndex entries={entries} textClass={NAV} variant={nav} />
 
       <main
-        className={`flex flex-col lg:pl-44 ${
+        // The rail stands in the left margin and the page is inset to clear
+        // it; a menu takes no room of its own.
+        className={`flex flex-col ${nav === 'rail' ? 'lg:pl-44' : ''} ${
           swap ? '' : 'gap-[16vh] py-[12vh]'
         }`}
       >

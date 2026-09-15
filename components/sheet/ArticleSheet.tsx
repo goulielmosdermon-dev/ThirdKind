@@ -47,10 +47,12 @@ export function ArticleSheet({
           className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
           <p className="text-sm text-mute">Idea</p>
-          {/* The one editorial size: a piece's title reads at the size its
-              line in the index did, so opening it is not a change of voice. */}
+          {/* A piece's title is set exactly as its line in the index was —
+              the one editorial size, at the same weight and the same leading
+              — so opening it is not a change of voice. The weight has to be
+              said out loud: headings carry 600 from the base layer. */}
           <h1
-            className="font-display mt-4 w-full max-w-[40ch] leading-[1.12] text-balance text-ink"
+            className="font-display mt-4 w-full max-w-[40ch] leading-snug font-normal text-balance text-ink"
             style={{ fontSize: EDITORIAL_LINE }}
           >
             {article.title}

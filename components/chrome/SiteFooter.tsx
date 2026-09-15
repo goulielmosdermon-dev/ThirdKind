@@ -1,5 +1,6 @@
 'use client';
 
+import { CityClocks } from '@/components/chrome/CityClocks';
 import { AppLink } from '@/components/mobile/MobileChrome';
 
 const NAV = [
@@ -41,6 +42,10 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
           : 'bg-black px-[8vw] pt-16 pb-32 text-white'
       }
     >
+      {/* Where the studio keeps time, read across the head of the footer. */}
+      <div className={compact ? 'mb-12' : 'mb-16'}>
+        <CityClocks compact={compact} />
+      </div>
       <div
         className={
           compact

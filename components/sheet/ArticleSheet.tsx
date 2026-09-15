@@ -6,6 +6,7 @@ import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
+import { EDITORIAL_LINE } from '@/lib/type/display';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import type { Article } from '@/types/content';
 
@@ -46,7 +47,12 @@ export function ArticleSheet({
           className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
           <p className="text-sm text-mute">Idea</p>
-          <h1 className="font-display mt-4 w-full max-w-[40ch] text-[clamp(1.5rem,3cqi,2.5rem)] leading-[1.12] text-balance text-ink">
+          {/* The one editorial size: a piece's title reads at the size its
+              line in the index did, so opening it is not a change of voice. */}
+          <h1
+            className="font-display mt-4 w-full max-w-[40ch] leading-[1.12] text-balance text-ink"
+            style={{ fontSize: EDITORIAL_LINE }}
+          >
             {article.title}
           </h1>
           {/* Set like the work's tags, so the two indexes read as one shelf. */}

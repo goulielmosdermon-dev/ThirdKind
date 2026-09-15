@@ -14,7 +14,7 @@ import {
 import { useSheetNav } from '@/components/sheet/SheetNav';
 import { useNarrow } from '@/lib/chrome/useNarrow';
 import { usePageScroll } from '@/components/chrome/PageScroll';
-import { useSurfaceTone } from '@/lib/chrome/useSurfaceTone';
+import { useBackdropTone } from '@/lib/chrome/useBackdropTone';
 import { contentOpacity } from '@/lib/intro/layout';
 import { MOTION } from '@/lib/motion/tokens';
 import type { CanvasNode } from '@/types/content';
@@ -63,7 +63,10 @@ export function CommandNav({
   const menuId = useId();
   const { progress, complete } = useIntro();
   const reveal = contentOpacity(progress);
-  const dark = useSurfaceTone(rootRef) === 'dark';
+  // Judged by the pixels behind the bar rather than by what the section
+  // underneath claims about itself: a black photograph inside a light section
+  // used to leave the bar in its light state, unreadable.
+  const dark = useBackdropTone(rootRef) === 'dark';
   // The showcase runs full-bleed on a phone, so the bar keeps off it and rises
   // into place once the reader is past.
   const narrow = useNarrow();

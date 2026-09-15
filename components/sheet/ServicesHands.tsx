@@ -33,7 +33,7 @@ import {
  * height, which comes to about the same reach across.
  */
 const FRAME = {
-  wide: { ratio: 2.35, alienHeight: 0.7 },
+  wide: { ratio: 2.8, alienHeight: 0.85 },
   phone: { ratio: 1.55, alienHeight: 0.55 },
 } as const;
 
@@ -216,11 +216,10 @@ export function ServicesHands() {
               fill="none"
               stroke="#ffffff"
               strokeWidth="0.6"
-              // Drawn on once the hands have met, and left a little short of
-              // a full turn: the gap is what makes the ring read as going
-              // round rather than as a circle sitting still.
+              // Drawn on once the hands have met, and closed: the ring is a
+              // ring, not a run of one.
               initial={reduced ? undefined : { pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: reduced ? 1 : 0.84, opacity: 1 }}
+              animate={{ pathLength: 1, opacity: 1 }}
               transition={
                 reduced
                   ? { duration: 0 }

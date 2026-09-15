@@ -42,7 +42,8 @@ export function HeroMotto({
           }`}
         >
           <span
-            className="block font-display font-semibold"
+            // The name of the thing, in the heaviest cut the display face has.
+            className="block font-display font-bold"
             style={{
               fontSize: DISPLAY_BALANCE,
               opacity: lines[0],
@@ -54,7 +55,9 @@ export function HeroMotto({
           <span
             // The step to the right is a desktop shape; on a phone there is
             // no room for it and the line stacks flush under the first.
-            className="block font-medium md:pl-[4.2em]"
+            // The answering line stays in the display face too, at the weight
+            // the first line used to carry: one voice, said twice.
+            className="block font-display font-semibold md:pl-[4.2em]"
             style={{ opacity: lines[1], transition: 'opacity 0.5s ease' }}
           >
             in a world of ordinary

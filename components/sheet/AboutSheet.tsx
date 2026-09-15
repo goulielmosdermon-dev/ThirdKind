@@ -266,21 +266,31 @@ function ServicesView({
   // Same shape as the Work index: one left-aligned column inset by the page
   // gutter, with the image filling the width between those gutters.
   return (
-    <div className="pb-28">
+    <div className="flex flex-1 flex-col pb-28">
       {/* The page opens black, with the hands coming together on it: the
           heading stands white on the same ground rather than over it, and the
           close button, which is white and set to difference, reads against it
           without being told anything. */}
       <div
         data-surface="dark"
-        className="bg-black px-12 pb-[3cqi] @md:px-[5cqi]"
+        // The opening fills the screen: the sheet is the height of the window,
+        // so the black holds all of it and the page underneath starts where
+        // the reader scrolls to it, not a hand's width above the fold.
+        className={`flex flex-1 flex-col bg-black px-12 pb-[4cqi] @md:px-[5cqi] ${
+          framed ? '' : 'min-h-svh'
+        }`}
       >
         <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
           <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
             {title}.
           </h1>
         </div>
-        <div className="mt-[3cqi]">
+        {/* The hands stand in the middle of whatever is left, and run the
+            whole width of the black rather than sitting inside its gutters. */}
+        {/* Centred in what the heading leaves, and then a little above that:
+            the hands read as sitting low if they are set on the true middle,
+            because the alien hand carries its weight below the line. */}
+        <div className="-mx-12 mt-[3cqi] flex min-h-0 flex-1 -translate-y-[3%] items-center @md:-mx-[5cqi]">
           <ServicesHands />
         </div>
       </div>
@@ -354,7 +364,13 @@ export function AboutSheet({
     >
       <article
         data-surface={process ? 'dark' : 'light'}
-        className={process ? 'bg-black text-white' : 'bg-paper'}
+        // Services opens on a full screen of black, so the article is told to
+        // be at least as tall as the sheet and to lay its children out in a
+        // column — that is what gives the opening a height to fill. The
+        // sheet's own height is a real one, so the percentage lands.
+        className={`${process ? 'bg-black text-white' : 'bg-paper'} ${
+          section.key === 'services' ? 'flex min-h-full flex-col' : ''
+        }`}
       >
         {poemPage ? (
           <PoemReveal lines={poemLines(poem)} framed={framed} />

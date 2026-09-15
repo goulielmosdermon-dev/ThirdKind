@@ -13,10 +13,11 @@ const figtree = Figtree({
 
 // Nib Pro carries the display voice: Regular for the smaller settings — index
 // lines, précis, sheet copy — SemiBold for the headers proper, which is what
-// `font-semibold` reaches for, and Bold for the one line the whole site is
-// named after.
+// `font-semibold` reaches for, Bold for the one line the whole site is named
+// after, and Light for the line that answers it.
 const nib = localFont({
   src: [
+    { path: './fonts/NibPro-Light.ttf', weight: '300', style: 'normal' },
     { path: './fonts/NibPro-Regular.ttf', weight: '400', style: 'normal' },
     { path: './fonts/NibPro-SemiBold.ttf', weight: '600', style: 'normal' },
     { path: './fonts/NibPro-Bold.ttf', weight: '700', style: 'normal' },

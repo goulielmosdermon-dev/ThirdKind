@@ -290,7 +290,7 @@ function ServicesView({
         {/* Centred in what the heading leaves, and then a little above that:
             the hands read as sitting low if they are set on the true middle,
             because the alien hand carries its weight below the line. */}
-        <div className="-mx-12 mt-[3cqi] flex min-h-0 flex-1 -translate-y-[12%] max-md:translate-y-0 items-center @md:-mx-[5cqi]">
+        <div className="mt-[3cqi] flex min-h-0 flex-1 -translate-y-[12%] items-center max-md:translate-y-0 @md:-mx-[5cqi]">
           <ServicesHands />
         </div>
       </div>
@@ -299,7 +299,9 @@ function ServicesView({
         {/* One offer, said once. What follows is not a list of things to buy;
           it is the order the one thing gets made in. */}
         {lede ? (
-          <div className="mt-[4cqi] max-w-[42rem]">
+          // On a phone the container units come to almost nothing, so the
+          // white starts hard against the black. A real gap there instead.
+          <div className="mt-[4cqi] max-w-[42rem] max-md:mt-16">
             <h2 className="font-sans text-[1.65rem] leading-snug font-semibold text-ink">
               {lede.headline}
             </h2>

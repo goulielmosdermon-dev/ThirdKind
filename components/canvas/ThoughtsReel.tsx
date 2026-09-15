@@ -180,7 +180,10 @@ export function ThoughtsReel({
             {kicker}
           </p>
           <p
-            className="mt-4 font-display leading-snug tracking-[-0.015em] text-white"
+            // Held to a measure so a long title breaks onto a second line
+            // rather than running the width of the frame; balanced so the two
+            // lines come out roughly even instead of one word hanging.
+            className="mt-4 max-w-[26ch] font-display leading-snug tracking-[-0.015em] text-balance text-white"
             style={{
               fontSize: phone ? EDITORIAL_LINE_PHONE : EDITORIAL_LINE,
             }}

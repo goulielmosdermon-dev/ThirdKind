@@ -276,22 +276,34 @@ function ServicesView({
         // The opening fills the screen: the sheet is the height of the window,
         // so the black holds all of it and the page underneath starts where
         // the reader scrolls to it, not a hand's width above the fold.
-        className={`flex flex-1 flex-col bg-black px-12 pb-[4cqi] @md:px-[5cqi] ${
+        //
+        // The gutters are set on the parts, not on the whole: the hands run
+        // the full width of the black on a wide screen, and a negative margin
+        // to get there would have made the page itself wider than the window.
+        className={`flex flex-1 flex-col bg-black pb-[4cqi] ${
           framed ? '' : 'min-h-svh'
         }`}
       >
-        <div className={framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'}>
+        <div
+          className={`px-12 @md:px-[5cqi] ${
+            framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'
+          }`}
+        >
           <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
             {title}.
           </h1>
         </div>
-        {/* The hands stand in the middle of whatever is left, and run the
-            whole width of the black rather than sitting inside its gutters. */}
         {/* Centred in what the heading leaves, and then a little above that:
             the hands read as sitting low if they are set on the true middle,
-            because the alien hand carries its weight below the line. */}
-        <div className="mt-[3cqi] flex min-h-0 flex-1 -translate-y-[12%] items-center max-md:translate-y-0 @md:-mx-[5cqi]">
-          <ServicesHands />
+            because the alien hand carries its weight below the line. On a
+            phone they keep the page's gutter like everything else. */}
+        <div className="mt-[3cqi] flex min-h-0 flex-1 items-center px-12 @md:px-0">
+          {/* The lift is a share of the hands' own frame, not of the room
+              they are centred in: measured against the room, a tall window
+              would throw them at the ceiling. */}
+          <div className="w-full -translate-y-[12%] max-md:translate-y-0">
+            <ServicesHands />
+          </div>
         </div>
       </div>
 

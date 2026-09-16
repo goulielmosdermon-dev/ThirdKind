@@ -19,7 +19,7 @@ import {
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 import { EDITORIAL_LINE, EDITORIAL_LINE_PHONE } from '@/lib/type/display';
-import { MaskedWords } from '@/components/chrome/MaskedWords';
+import { MaskedCycle } from '@/components/chrome/MaskedCycle';
 import { MOTION } from '@/lib/motion/tokens';
 import { HeroReel } from '@/components/canvas/HeroReel';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
@@ -49,6 +49,19 @@ function IndexArrow() {
  * full measure — it is the piece the page is built around — and the two
  * either side of it hold their own halves.
  */
+/**
+ * The band's lines, read one after another.
+ *
+ * Four answers to the same unasked question — why the work gets made the way
+ * it does — each standing for a beat before the next takes its place.
+ */
+const BAND_LINES = [
+  'Because it\u2019s so much fun!',
+  'Give before you take.',
+  'Honesty beats majesty.',
+  'Don\u2019t interrupt. Invite.',
+] as const;
+
 const SLOT = [
   {
     wrap: 'w-full max-w-[40rem] md:max-w-none md:w-[58%]',
@@ -200,18 +213,7 @@ function ThoughtsRun({
               : 'text-[clamp(3rem,9.5vw,9rem)] md:mx-auto md:max-w-[92rem] md:px-[clamp(5.5rem,12vw,11rem)]'
           }`}
         >
-          <MaskedWords
-            once={false}
-            words={[
-              { text: 'Because' },
-              { text: 'it\u2019s' },
-              { text: 'so' },
-              { text: 'much' },
-              // The mark rides on the word rather than being a word of its
-              // own, so it can never be masked in on a line by itself.
-              { text: 'fun!' },
-            ]}
-          />
+          <MaskedCycle phrases={BAND_LINES} />
         </h2>
       </section>
 

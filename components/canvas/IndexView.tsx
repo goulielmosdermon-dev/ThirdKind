@@ -52,13 +52,12 @@ function IndexArrow() {
 /**
  * The band's lines, read one after another.
  *
- * Four lines of the same argument — how the work is made, and why — each
+ * Three lines of the same argument — how the work is made, and why — each
  * standing for a beat before the next takes its place.
  */
 const BAND_LINES = [
   'Give before you take',
-  'Don\u2019t interrupt',
-  'Invite',
+  'Don\u2019t interrupt. Invite',
   'Because it\u2019s so much fun',
 ] as const;
 

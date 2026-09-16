@@ -52,14 +52,14 @@ function IndexArrow() {
 /**
  * The band's lines, read one after another.
  *
- * Four answers to the same unasked question — why the work gets made the way
- * it does — each standing for a beat before the next takes its place.
+ * Four lines of the same argument — how the work is made, and why — each
+ * standing for a beat before the next takes its place.
  */
 const BAND_LINES = [
-  'Because it\u2019s so much fun!',
-  'Give before you take.',
-  'Honesty beats majesty.',
-  'Don\u2019t interrupt. Invite.',
+  'Give before you take',
+  'Don\u2019t interrupt',
+  'Invite',
+  'Because it\u2019s so much fun',
 ] as const;
 
 const SLOT = [
@@ -199,11 +199,12 @@ function ThoughtsRun({
         // before the index was let off its cap.
         className={
           phone
-            ? 'pt-[7.7rem] pb-[6.3rem]'
+            ? 'pt-[3.85rem] pb-[3.15rem]'
             : // Every figure is the one above it less 30%, floor, preferred
               // and ceiling alike, so the band keeps the same behaviour as it
-              // grows and simply holds less air around the line.
-              'pt-[clamp(9.8rem,19.6vw,18.2rem)] pb-[clamp(7.7rem,15.4vw,14rem)] md:-mx-[12vw]'
+              // grows and simply holds less air around the line. Halved: the
+              // line sat a screen away from the index either side of it.
+              'pt-[clamp(4.9rem,9.8vw,9.1rem)] pb-[clamp(3.85rem,7.7vw,7rem)] md:-mx-[12vw]'
         }
       >
         <h2

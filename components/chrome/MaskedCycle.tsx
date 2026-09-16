@@ -5,11 +5,27 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { MOTION } from '@/lib/motion/tokens';
 
-/** The masks a word rises through, shared with MaskedWords. */
-const WORD_IN = 0.85;
-const WORD_OUT = 0.7;
-const STAGGER_IN = 0.075;
-const STAGGER_OUT = 0.05;
+/*
+  The masks a word rises through.
+
+  Slower than the line that only ever arrives: this one turns over in front of
+  the reader every few seconds, and a move you watch repeatedly wants more time
+  in it than one you catch once on the way past.
+*/
+const WORD_IN = 1.5;
+const WORD_OUT = 1.25;
+const STAGGER_IN = 0.1;
+const STAGGER_OUT = 0.075;
+
+/*
+  How far a word travels to be out of sight.
+
+  Its own height is not enough: a glyph is drawn well above and below the line
+  box it is measured by — at this size, by a good part of it — so a word moved
+  its own height leaves the tops of the tall letters and the tails of the
+  descenders sitting in the mask. Far enough that nothing is left behind.
+*/
+const TRAVEL = 175;
 
 /** How long a line stands, once it is all the way in. */
 const HOLD_MS = 2000;
@@ -124,8 +140,11 @@ export function MaskedCycle({
             <span className="inline-block -mt-[0.12em] -mb-[0.26em] overflow-hidden pt-[0.12em] pb-[0.26em] align-bottom">
               <motion.span
                 className="inline-block"
+                // The word is moved, nothing else: given its own layer, the
+                // travel is the compositor's job rather than the page's.
+                style={{ willChange: 'transform' }}
                 variants={{
-                  below: { y: reduced ? 0 : '110%' },
+                  below: { y: reduced ? 0 : `${TRAVEL}%` },
                   shown: {
                     y: 0,
                     transition: {
@@ -134,7 +153,7 @@ export function MaskedCycle({
                     },
                   },
                   above: {
-                    y: reduced ? 0 : '-110%',
+                    y: reduced ? 0 : `-${TRAVEL}%`,
                     transition: {
                       duration: reduced ? MOTION.reduced : WORD_OUT,
                       ease: MOTION.easeOut,

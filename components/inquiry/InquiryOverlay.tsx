@@ -203,8 +203,10 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
             ×
           </button>
         </div>
+        {/* The dialog is named for the button that opens it, so a screen
+            reader hears the same words the page showed. */}
         <h2 id={titleId} className="font-display sr-only">
-          Reach Out
+          Make Extraordinary
         </h2>
         {sent ? (
           <div className="flex flex-col justify-center px-1 py-6">
@@ -373,7 +375,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
               }}
               className="mt-3 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white disabled:opacity-60"
             >
-              {pending ? 'Sending…' : 'Reach Out'}
+              {pending ? 'Sending…' : 'Make Extraordinary'}
             </motion.button>
           </form>
         )}

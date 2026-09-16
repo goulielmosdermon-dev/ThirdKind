@@ -313,7 +313,9 @@ export function InquirySection({ phone }: { phone: boolean }) {
                   className="cursor-pointer border-0 bg-transparent p-0 transition-opacity duration-300 hover:opacity-85 disabled:opacity-50"
                 >
                   {last ? (
-                    <PillLabel label={pending ? 'Sending' : 'Reach Out'} />
+                    <PillLabel
+                      label={pending ? 'Sending' : 'Make Extraordinary'}
+                    />
                   ) : (
                     <span className="flex aspect-square w-[2.65rem] items-center justify-center rounded-md bg-ink text-white">
                       <ArrowUpRight />

@@ -106,7 +106,7 @@ function localPortrait(alt: string, file: string): ImageAsset {
 
 const TEAM_PORTRAITS: Record<string, string> = {
   'Goulielmos Dermon': 'goulielmos-dermon.png',
-  'Goncalo Fonseça': 'goncalo-fonseca.png',
+  'Gonçalo Claro Da Fonseca': 'goncalo-fonseca.png',
   'Daria Dikalo': 'daria-dikalo.jpeg',
   'Tejas Ewing': 'tejas-ewing.png',
   'Carrie Penn': 'carrie-penn.png',
@@ -742,9 +742,9 @@ const aboutSections: AboutSection[] = [
         portrait: image('Goulielmos Dermon'),
       },
       {
-        name: 'Goncalo Fonseça',
+        name: 'Gonçalo Claro Da Fonseca',
         role: 'Producer',
-        portrait: image('Goncalo Fonseça'),
+        portrait: image('Gonçalo Claro Da Fonseca'),
       },
       {
         name: 'Daria Dikalo',

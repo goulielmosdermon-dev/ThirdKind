@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 
 import { CanvasViewport } from '@/components/canvas/CanvasViewport';
 import { CommandNav } from '@/components/chrome/CommandNav';
+import { TopMenu } from '@/components/chrome/TopMenu';
 import { PageScrollProvider } from '@/components/chrome/PageScroll';
 import { IntroProvider } from '@/components/intro/IntroContext';
 import { InquiryProvider } from '@/components/inquiry/InquiryProvider';
@@ -82,6 +83,7 @@ export function AppShell({
               ) : null}
               {children}
               <CommandNav nodes={nodes} />
+              <TopMenu nodes={nodes} />
             </div>
           </PageScrollProvider>
         </IntroProvider>

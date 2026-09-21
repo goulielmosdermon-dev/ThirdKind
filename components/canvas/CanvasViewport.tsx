@@ -656,6 +656,13 @@ export function CanvasViewport({
   // Where the header band currently sits, so the motto can ride down with it
   // instead of hanging over the page below.
   const [headerTop, setHeaderTop] = useState(0);
+  const onHeaderOffset = useCallback(
+    (top: number) => {
+      setHeaderTop(top);
+      report({ headerTop: top });
+    },
+    [report],
+  );
   const onHeaderPassed = useCallback(
     (passed: boolean) => {
       setHeaderPassed(passed);
@@ -864,7 +871,7 @@ export function CanvasViewport({
               manifesto={manifesto}
               onOpeningPassed={setOpeningPassed}
               onHeaderPassed={onHeaderPassed}
-              onHeaderOffset={setHeaderTop}
+              onHeaderOffset={onHeaderOffset}
               onOpen={(href, nodeId) => {
                 markOpenedFromCanvas(nodeId);
                 router.push(href);

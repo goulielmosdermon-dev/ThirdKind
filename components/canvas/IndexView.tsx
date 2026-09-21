@@ -56,8 +56,8 @@ function IndexArrow() {
  * standing for a beat before the next takes its place.
  */
 const BAND_LINES = [
-  'Give before you take',
   'Don\u2019t interrupt. Invite',
+  'Give before you take',
   'Because it\u2019s so much fun',
 ] as const;
 

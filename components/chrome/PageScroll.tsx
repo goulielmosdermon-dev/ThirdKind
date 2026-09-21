@@ -14,6 +14,8 @@ type Milestones = {
   headerPassed: boolean;
   /** The black manifesto section has too — the opening is behind us. */
   openingPassed: boolean;
+  /** Where the header band's top edge sits on screen, so chrome can ride it. */
+  headerTop: number;
 };
 
 type PageScrollValue = Milestones & {
@@ -31,13 +33,15 @@ export function PageScrollProvider({ children }: { children: ReactNode }) {
   const [milestones, setMilestones] = useState<Milestones>({
     headerPassed: false,
     openingPassed: false,
+    headerTop: 0,
   });
 
   const report = useCallback((next: Partial<Milestones>) => {
     setMilestones((current) => {
       const merged = { ...current, ...next };
       return merged.headerPassed === current.headerPassed &&
-        merged.openingPassed === current.openingPassed
+        merged.openingPassed === current.openingPassed &&
+        merged.headerTop === current.headerTop
         ? current
         : merged;
     });
@@ -64,6 +68,7 @@ export function usePageScroll(): PageScrollValue {
     useContext(PageScrollContext) ?? {
       headerPassed: true,
       openingPassed: true,
+      headerTop: 0,
       report: () => {},
     }
   );

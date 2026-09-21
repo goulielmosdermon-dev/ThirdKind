@@ -12,14 +12,13 @@ import {
   withMobilePrefix,
 } from '@/components/mobile/MobileChrome';
 import { useSheetNav } from '@/components/sheet/SheetNav';
-import { useNarrow } from '@/lib/chrome/useNarrow';
 import { usePageScroll } from '@/components/chrome/PageScroll';
 import { useBackdropTone } from '@/lib/chrome/useBackdropTone';
 import { contentOpacity } from '@/lib/intro/layout';
 import { MOTION } from '@/lib/motion/tokens';
 import type { CanvasNode } from '@/types/content';
 
-const PAGES = [
+export const PAGES = [
   { label: 'Work', href: '/work' },
   { label: 'Thoughts', href: '/thoughts' },
   { label: 'Team', href: '/about/team' },
@@ -32,7 +31,7 @@ const PAGES = [
   { label: 'Contact', href: '/contact' },
 ] as const;
 
-function pageIsCurrent(label: string, pathname: string): boolean {
+export function pageIsCurrent(label: string, pathname: string): boolean {
   if (label === 'Work') {
     // '/' is the canvas now that Work has an index of its own.
     return pathname.startsWith('/work');
@@ -67,11 +66,10 @@ export function CommandNav({
   // underneath claims about itself: a black photograph inside a light section
   // used to leave the bar in its light state, unreadable.
   const dark = useBackdropTone(rootRef) === 'dark';
-  // The showcase runs full-bleed on a phone, so the bar keeps off it and rises
-  // into place once the reader is past.
-  const narrow = useNarrow();
+  // The bar keeps off the showcase and rises into place once the reader has
+  // scrolled on to the band of sayings below it.
   const { headerPassed } = usePageScroll();
-  const waiting = narrow && !embedded && !headerPassed;
+  const waiting = !embedded && !headerPassed;
 
   useEffect(() => {
     if (!open) {
@@ -171,12 +169,8 @@ export function CommandNav({
         // height grows it upward and leaves the input exactly where it was.
         // Motion's layout projection used to scale the whole bar instead,
         // which is what made it jump on open.
-        // The radius stays a fixed 21px rather than animating rounded-full ->
-        // rounded-[22px]: CSS interpolates 9999px linearly, so the corners read
-        // as fully round for most of the transition and then snap flat at the
-        // end. At the closed height (42px) 21px is already a full pill, so a
-        // constant value looks identical closed and never jumps open.
-        className={`rounded-[21px] border px-3 py-1.5 shadow-[0_10px_30px_rgb(28_26_22/0.08)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        // The index images' radius, fixed, so it never jumps as the menu opens.
+        className={`rounded-md border px-3 py-1.5 shadow-[0_10px_30px_rgb(28_26_22/0.08)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           dark ? 'border-white/20 bg-white/12' : 'border-ink/10 bg-white/10'
         }`}
       >

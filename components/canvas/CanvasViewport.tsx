@@ -50,9 +50,6 @@ import {
   largeHandHeight,
   layoutHands,
   mottoLineOpacity,
-  remap,
-  STORY_LINES,
-  storyLineOpacity,
 } from '@/lib/intro/layout';
 
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
@@ -640,8 +637,11 @@ export function CanvasViewport({
           captionSize ?? undefined,
         )
       : null;
+  const [openingPassed, setOpeningPassed] = useState(false);
+  // The hands no longer open the site. They appear only once the reader has
+  // scrolled past the opening into the index, parked in their corners.
   const hands =
-    size && size.width > 0 && size.height > 0
+    complete && openingPassed && size && size.width > 0 && size.height > 0
       ? layoutHands(progress, size.width, size.height)
       : null;
   // The images are laid out once at their opening size and then only
@@ -650,7 +650,6 @@ export function CanvasViewport({
   // on a phone.
   const handBase = size ? largeHandHeight(size.width) : 0;
   const narrow = useNarrow();
-  const [openingPassed, setOpeningPassed] = useState(false);
   // The command bar sits outside the scroller, so it is told from here.
   const { report } = usePageScroll();
   const [headerPassed, setHeaderPassed] = useState(false);
@@ -776,7 +775,7 @@ export function CanvasViewport({
                 width={3354}
                 height={2203}
                 priority
-                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none ${complete ? '' : 'tk-hands-in'}`}
+                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none tk-hands-in`}
                 style={{
                   ...handTone,
                   height: handBase,
@@ -798,7 +797,7 @@ export function CanvasViewport({
                 width={2517}
                 height={1819}
                 priority
-                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none ${complete ? '' : 'tk-hands-in'}`}
+                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none tk-hands-in`}
                 style={{
                   ...handTone,
                   height: handBase * HUMAN_SCALE,
@@ -815,62 +814,6 @@ export function CanvasViewport({
                 }}
               />
             </>
-          ) : null}
-
-          <div
-            // On a phone the hands park 32px in from the edges, so the copy
-            // is held further in still, clear of the fingertips either side.
-            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6 max-md:px-12"
-            aria-hidden={progress < 0.3 || progress > 0.72}
-          >
-            <div className="w-full max-w-[40rem] text-left">
-              {STORY_LINES.map((line, index) => (
-                <p
-                  key={line}
-                  className="font-display text-[clamp(1.15rem,2.2vw,1.65rem)] leading-[1.35] text-ink"
-                  style={{
-                    opacity: storyLineOpacity(progress, index),
-                    transition: complete
-                      ? undefined
-                      : 'opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
-                  }}
-                >
-                  {line}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          {!complete ? (
-            <p
-              // Held back on a phone: the drifting arrow reads as an
-              // instruction to scroll up, which is the wrong way.
-              className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex flex-col items-center gap-2 text-ink max-md:hidden"
-              style={{ opacity: 1 - remap(progress, 0.9, 1) }}
-              aria-hidden={progress > 0.95}
-            >
-              <svg
-                className="tk-scroll-arrow"
-                width="16"
-                height="24"
-                viewBox="0 0 16 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.25"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="M8 21V4" />
-                <path d="M2.5 9.5 8 4l5.5 5.5" />
-              </svg>
-              {/* The arrow alone was read as decoration. The word says what to
-                  do; it holds still while the arrow drifts, so the movement
-                  stays the thing that catches the eye. */}
-              <span className="font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute uppercase">
-                Scroll
-              </span>
-            </p>
           ) : null}
 
           <AnimatePresence>

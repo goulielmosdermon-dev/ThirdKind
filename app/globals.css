@@ -103,25 +103,6 @@ body {
   }
 }
 
-/* Scroll cue: the arrow rises and dissolves, restarting from transparent so
-   the loop has no visible seam. */
-@keyframes tk-scroll-arrow {
-  0% {
-    opacity: 0;
-    transform: translateY(7px);
-  }
-  28% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.55;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-11px);
-  }
-}
-
 /* The hands resolve gently on first paint rather than snapping in. */
 @keyframes tk-hands-in {
   from {
@@ -157,10 +138,6 @@ body {
   animation: tk-scroll-hint 2.8s ease-in-out infinite;
 }
 
-.tk-scroll-arrow {
-  animation: tk-scroll-arrow 2.6s cubic-bezier(0.4, 0, 0.3, 1) infinite;
-}
-
 .tk-hands-in {
   animation: tk-hands-in 2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -171,11 +148,6 @@ body {
   }
 
   .tk-scroll-hint {
-    animation: none;
-    opacity: 0.7;
-  }
-
-  .tk-scroll-arrow {
     animation: none;
     opacity: 0.7;
   }

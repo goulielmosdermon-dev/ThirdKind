@@ -16,7 +16,7 @@ import { clamp01 } from '@/lib/intro/layout';
 type IntroValue = {
   progress: number;
   complete: boolean;
-  /** True while the intro is playing itself out on a phone. */
+  /** True while the intro is playing itself out. */
   autoplay: boolean;
   advance: (delta: number) => void;
 };
@@ -24,23 +24,28 @@ type IntroValue = {
 const IntroContext = createContext<IntroValue | null>(null);
 
 /**
- * The intro plays in beats where there is no wheel to drive it: the hands hold
- * together, part, the story reads, the motto lands, and the canvas comes up.
- * Each entry is [elapsed ms, progress], interpolated in between, so a beat is
- * lengthened by moving one number rather than re-timing the whole thing.
+ * Where the intro opens. The hands and the story that used to come before the
+ * motto are gone, so progress starts just short of "Extraordinary" and the
+ * timeline in lib/intro/layout carries on from there unchanged.
+ */
+const INTRO_START = 0.72;
+
+/**
+ * The intro plays in beats: "Extraordinary", a hold, "in a world of
+ * ordinary", a hold, and the page fades up. Each entry is [elapsed ms,
+ * progress], interpolated in between, so a beat is lengthened by moving one
+ * number rather than re-timing the whole thing.
  */
 const AUTOPLAY_BEATS: ReadonlyArray<readonly [number, number]> = [
-  // Hands touching, held.
-  [0, 0],
-  [2200, 0],
-  // They part.
-  [4800, 0.3],
-  // The story reads itself out, a line at a time.
-  [10600, 0.7],
-  // "Make Extraordinary".
-  [13000, 0.86],
-  // And the canvas fades up.
-  [14400, 1],
+  [0, INTRO_START],
+  [300, INTRO_START],
+  // "Extraordinary".
+  [1300, 0.8],
+  // "in a world of ordinary", after a beat.
+  [2400, 0.9],
+  // Held, then the page fades up.
+  [4000, 0.94],
+  [4800, 1],
 ];
 
 const AUTOPLAY_MS = AUTOPLAY_BEATS[AUTOPLAY_BEATS.length - 1]![0];
@@ -59,17 +64,6 @@ function autoplayProgress(elapsed: number): number {
   return 1;
 }
 
-/** A phone: no hover, a coarse pointer, or simply a narrow window. */
-function prefersAutoplay(): boolean {
-  if (typeof window === 'undefined' || !window.matchMedia) {
-    return false;
-  }
-  return (
-    window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
-    window.matchMedia('(max-width: 767px)').matches
-  );
-}
-
 export function IntroProvider({
   children,
   skip = false,
@@ -78,7 +72,7 @@ export function IntroProvider({
   skip?: boolean;
 }) {
   const reduced = useReducedMotion() === true;
-  const [progress, setProgress] = useState(skip ? 1 : 0);
+  const [progress, setProgress] = useState(skip ? 1 : INTRO_START);
   // Only known in the browser, so it settles on the first effect rather than
   // during render; until then the intro is treated as hand-driven.
   const [autoplay, setAutoplay] = useState(false);
@@ -93,11 +87,10 @@ export function IntroProvider({
     }
   }
 
-  // Scrolling an intro is a chore on a touch screen, so on a phone it plays
-  // by itself: the hands part, the story reads, the motto lands, and the page
-  // fades up without the reader having to drag anything.
+  // The intro plays by itself on every screen: the motto lands a line at a
+  // time and the page fades up without the reader having to do anything.
   useEffect(() => {
-    if (skip || !prefersAutoplay()) {
+    if (skip) {
       return;
     }
     let frame = 0;

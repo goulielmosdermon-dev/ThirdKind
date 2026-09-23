@@ -119,7 +119,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
       >
         <AppLink
           href="/"
-          className={`font-display font-semibold text-[clamp(1.5rem,2.2vw,2.125rem)] leading-none transition-colors duration-300 ${tone}`}
+          className={`font-display font-semibold text-[clamp(1.25rem,1.7vw,1.625rem)] leading-none transition-colors duration-300 ${tone}`}
           onClick={() => setOpen(false)}
         >
           ThirdKind.

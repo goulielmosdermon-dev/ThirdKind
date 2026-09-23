@@ -171,6 +171,13 @@ type Sampled = Pixels | 'blocked' | 'pending';
  * the next pass, or it would be remembered as unreadable for good.
  */
 const readings = new Map<string, Pixels | 'blocked'>();
+/**
+ * A film is redrawn for every probe point, and two bars probe 48 points each
+ * — a hundred canvas reads of the same frame. One frame is read and held for
+ * this long instead, which is short enough that the bar still follows a cut.
+ */
+const FRAME_MS = 120;
+const frames = new Map<string, { at: number; pixels: Pixels }>();
 
 /** Draw a picture small and keep its pixels. Cross-origin sources refuse. */
 function readPixels(
@@ -180,6 +187,12 @@ function readPixels(
   const held = readings.get(key);
   if (held) {
     return held;
+  }
+  if (media instanceof HTMLVideoElement) {
+    const frame = frames.get(key);
+    if (frame && performance.now() - frame.at < FRAME_MS) {
+      return frame.pixels;
+    }
   }
   if (media instanceof HTMLImageElement && !media.complete) {
     return 'pending';
@@ -209,9 +222,14 @@ function readPixels(
     // and the caller falls back to what the surface says about itself.
     result = 'blocked';
   }
-  // A video is still moving, so its reading is not kept.
-  if (result !== 'pending' && media instanceof HTMLImageElement) {
-    readings.set(key, result);
+  // A video is still moving, so its reading is kept only for a frame's worth
+  // of probes rather than for good.
+  if (result !== 'pending') {
+    if (media instanceof HTMLImageElement) {
+      readings.set(key, result);
+    } else if (result !== 'blocked') {
+      frames.set(key, { at: performance.now(), pixels: result });
+    }
   }
   return result;
 }
@@ -272,4 +290,5 @@ export function mediaLuminance(
 /** Forget every picture read so far. Used when the page changes under us. */
 export function forgetReadings(): void {
   readings.clear();
+  frames.clear();
 }

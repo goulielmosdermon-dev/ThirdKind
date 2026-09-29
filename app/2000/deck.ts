@@ -374,7 +374,7 @@ export const credits: Credit[] = [
   {
     name: 'Goulielmos Dermon',
     role: 'Director',
-    url: 'thirdkindcreative.com',
-    href: 'https://thirdkindcreative.com',
+    url: 'goulielmos.site',
+    href: 'https://goulielmos.site',
   },
 ];

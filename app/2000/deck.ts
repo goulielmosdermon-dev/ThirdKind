@@ -343,6 +343,27 @@ export const chapters: Chapter[] = [
   },
 ];
 
+/**
+ * The 2000 deck as the fashion houses read it: the premise names them as
+ * fashion brands rather than brands at large.
+ */
+export const fashionChapters: Chapter[] = chapters.map((chapter) => ({
+  ...chapter,
+  blocks: chapter.blocks.map((block) =>
+    block.kind === 'text'
+      ? {
+          ...block,
+          lines: block.lines.map((line) =>
+            line.replace(
+              /^Brands have become standardized/,
+              'Fashion brands have become standardized',
+            ),
+          ),
+        }
+      : block,
+  ),
+}));
+
 export const credits: Credit[] = [
   {
     name: 'Chris Hudson',

@@ -31,6 +31,8 @@ export const config = {
   matcher: [
     '/ZARA2000/:path*',
     '/ZARA2000',
+    '/BV2000/:path*',
+    '/BV2000',
     '/ePay/:path*',
     '/ePay',
     '/Ford/:path*',

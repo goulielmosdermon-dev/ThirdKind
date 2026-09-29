@@ -665,7 +665,11 @@ export function Deck({
                 unoptimized
                 /* Brand marks arrive on a white box; multiply drops it into
                    the paper without needing a cut-out of every logo. */
-                className="h-auto w-[min(220px,45vw)] mix-blend-multiply"
+                className={`h-auto mix-blend-multiply ${
+                  brand.logo.large
+                    ? 'w-[min(440px,90vw)]'
+                    : 'w-[min(220px,45vw)]'
+                }`}
               />
             </FadeIn>
           </Column>

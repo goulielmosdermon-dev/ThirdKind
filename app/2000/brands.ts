@@ -16,7 +16,13 @@ export type Brand = {
   slug: string;
   name: string;
   /** The recipient's mark, ahead of the first slide. Optional until it lands. */
-  logo?: { src: string; w: number; h: number };
+  logo?: {
+    src: string;
+    w: number;
+    h: number;
+    /** Shows the mark at twice the usual width. */
+    large?: boolean;
+  };
   password: string;
 };
 
@@ -26,6 +32,17 @@ export const brands: Record<string, Brand> = {
     name: 'Zara',
     logo: { src: '/2000/logos/zara.webp', w: 1024, h: 538 },
     password: process.env.DECK_PASSWORD_ZARA2000 ?? 'ZARA2000',
+  },
+  BV2000: {
+    slug: 'BV2000',
+    name: 'Bottega Veneta',
+    logo: {
+      src: '/2000/logos/bottega-veneta.webp',
+      w: 1280,
+      h: 672,
+      large: true,
+    },
+    password: process.env.DECK_PASSWORD_BV2000 ?? 'BV2000',
   },
   ePay: {
     slug: 'ePay',

@@ -13,6 +13,20 @@ const ABOUT_SWATCH: Partial<Record<AboutSectionKey, string>> = {
   poem: '#0B0B0B',
 };
 
+// Keyed by slug: the CMS has no country field for projects yet.
+const PROJECT_COUNTRY: Record<string, string> = {
+  scania: 'Sweden',
+  scytales: 'Sweden',
+  'scytales-2': 'Sweden',
+  'up-hellas': 'Greece',
+  'rap-therapy': 'UK',
+  'augustine-jewels': 'UK',
+  'a-m': 'Greece',
+  ilana: 'UK',
+  noirgaze: 'UK',
+  'oldboy-brand': 'Greece',
+};
+
 export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
   const hubs: CanvasNode[] = content.settings.hubs.map((hub) => ({
     id: `hub-${hub.key}`,
@@ -42,6 +56,7 @@ export function deriveCanvasNodes(content: SiteContent): CanvasNode[] {
     tags: project.credits
       .map((credit) => credit.role)
       .filter((role) => role.trim().length > 0),
+    country: PROJECT_COUNTRY[project.slug.current],
   }));
 
   const articleLeaves: CanvasNode[] = content.articles.map((article) => ({

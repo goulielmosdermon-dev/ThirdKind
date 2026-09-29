@@ -64,7 +64,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
             aria-label="Site"
             data-overlay
             data-chrome
-            className="fixed inset-x-0 top-0 z-[41] bg-void px-12 pt-24 pb-12 shadow-[0_20px_60px_rgb(28_26_22/0.12)] md:px-10"
+            className="fixed inset-x-0 top-0 z-[41] bg-void px-12 pt-24 pb-12 shadow-[0_20px_60px_rgb(28_26_22/0.12)] md:px-[12vw]"
             initial={reduced ? { opacity: 0 } : { y: '-100%' }}
             animate={reduced ? { opacity: 1 } : { y: 0 }}
             exit={reduced ? { opacity: 0 } : { y: '-100%' }}
@@ -107,7 +107,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
         ref={barRef}
         data-overlay
         data-chrome
-        className="fixed inset-x-0 top-0 z-[42] flex items-center justify-between py-5 pr-9 pl-12 md:px-10"
+        className="fixed inset-x-0 top-0 z-[42] flex items-center justify-between px-12 py-5 md:px-[12vw]"
         style={{
           opacity: reveal,
           transform: `translate3d(0, ${ride}px, 0)`,
@@ -129,7 +129,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls={menuId}
-          className="relative flex h-10 w-10 items-center justify-center focus-visible:outline-none"
+          className="relative flex h-10 w-10 items-center justify-end focus-visible:outline-none"
           onClick={() => setOpen((value) => !value)}
         >
           {/* Two lines that cross into an X while the menu is open. */}

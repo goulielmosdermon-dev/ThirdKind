@@ -319,6 +319,8 @@ export type HubCanvasNode = CanvasNodeBase & {
 export type LeafCanvasNode = CanvasNodeBase & {
   /** What the work involved, shown as tags. Empty for non-project leaves. */
   tags?: string[];
+  /** Where the client is based, shown after the tags. Projects only. */
+  country?: string;
   kind: 'leaf';
   hubKey: HubKey;
   href: string;

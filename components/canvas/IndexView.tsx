@@ -546,7 +546,7 @@ export function IndexView({
                       </span>
                     </motion.p>
                   </span>
-                  {node.tags?.length ? (
+                  {node.tags?.length || node.country ? (
                     // The tags arrive one after the other, after the line and
                     // before the picture.
                     <motion.ul
@@ -560,7 +560,7 @@ export function IndexView({
                       }}
                       className={`flex flex-wrap gap-1.5 ${phone ? 'mb-3' : 'mb-4'}`}
                     >
-                      {node.tags.map((tag) => (
+                      {node.tags?.map((tag) => (
                         <motion.li
                           key={tag}
                           variants={tagIn}
@@ -569,6 +569,14 @@ export function IndexView({
                           {tag}
                         </motion.li>
                       ))}
+                      {node.country ? (
+                        <motion.li
+                          variants={tagIn}
+                          className="border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                        >
+                          {node.country}
+                        </motion.li>
+                      ) : null}
                     </motion.ul>
                   ) : null}
                   <motion.span

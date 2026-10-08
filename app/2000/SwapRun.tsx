@@ -206,9 +206,6 @@ export function SwapRun({
     };
   }, [go, slides.length]);
 
-  /** The chapter being read, for the corner. */
-  const here = slides[active]?.chapterTitle;
-
   const stateOf = (i: number): RevealState =>
     i === active ? 'in' : i < active ? 'above' : 'below';
 
@@ -266,6 +263,14 @@ export function SwapRun({
                   }}
                   aria-hidden={state !== 'in'}
                 >
+                  {slide.chapterTitle ? (
+                    <p
+                      className="font-display mb-6 text-[1.75rem] leading-[1.15] font-bold text-ink md:mb-8"
+                      style={moveStyle(state, i)}
+                    >
+                      {slide.chapterTitle}
+                    </p>
+                  ) : null}
                   {slide.lines ? (
                     <Reveal
                       lines={slide.lines}
@@ -273,23 +278,7 @@ export function SwapRun({
                       state={state}
                     />
                   ) : (
-                    <div
-                      // The same move the lines make, on a thing that has no
-                      // lines: in from below, out through the top.
-                      style={{
-                        opacity: state === 'in' ? 1 : 0,
-                        transform:
-                          state === 'in'
-                            ? 'none'
-                            : state === 'above'
-                              ? 'translateY(-6%)'
-                              : 'translateY(6%)',
-                        transition:
-                          'opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 1.15s cubic-bezier(0.22, 1, 0.36, 1)',
-                        transitionDelay:
-                          state === 'in' && i > 0 ? `${LAG}s` : '0s',
-                      }}
-                    >
+                    <div style={moveStyle(state, i)}>
                       <SlideState.Provider value={state}>
                         {slide.node}
                       </SlideState.Provider>
@@ -301,24 +290,6 @@ export function SwapRun({
           </div>
         </div>
       </div>
-
-      {/* Where the deck has got to, named in the corner. It rides with the
-          viewport like the controls do, and changes on the slide that changes
-          chapter — crossfaded, so it reads as the deck moving on rather than
-          as a word being retyped. */}
-      {here ? (
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-30">
-          <div className="mx-auto w-full max-w-[1180px] px-5 pt-5 md:px-10 md:pt-7">
-            <p
-              key={here}
-              className="font-display text-right text-[1.05rem] leading-none font-bold text-ink md:text-[1.25rem]"
-              style={{ animation: 'tk-title-in 0.6s ease both' }}
-            >
-              {here}
-            </p>
-          </div>
-        </div>
-      ) : null}
 
       {/* The controls ride with the viewport, not with the run: they are the
           one part of the deck that is always in the same place. */}
@@ -369,6 +340,25 @@ export function SwapRun({
       </div>
     </div>
   );
+}
+
+/**
+ * The move the lines make, for a thing that has no lines: in from below, out
+ * through the top, after the slide it replaces has gone.
+ */
+function moveStyle(state: RevealState, index: number): React.CSSProperties {
+  return {
+    opacity: state === 'in' ? 1 : 0,
+    transform:
+      state === 'in'
+        ? 'none'
+        : state === 'above'
+          ? 'translateY(-6%)'
+          : 'translateY(6%)',
+    transition:
+      'opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 1.15s cubic-bezier(0.22, 1, 0.36, 1)',
+    transitionDelay: state === 'in' && index > 0 ? `${LAG}s` : '0s',
+  };
 }
 
 /** One of the two steps, drawn as a chevron so it needs no font. */

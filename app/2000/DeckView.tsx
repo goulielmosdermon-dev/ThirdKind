@@ -29,6 +29,22 @@ const TEXT = 'font-display text-[1.375rem] leading-[1.3]';
 const NAV =
   'font-sans text-[0.6875rem] leading-[1.3] uppercase tracking-[0.09em]';
 
+/** Whether a block already opens with its chapter's name, full stop or not. */
+function saysTitle(block: Block, title: string): boolean {
+  const opening =
+    'title' in block
+      ? block.title
+      : block.kind === 'text'
+        ? block.lines[0]
+        : '';
+  const bare = (text: string) =>
+    text
+      .trim()
+      .replace(/[.!?]+$/, '')
+      .toLowerCase();
+  return typeof opening === 'string' && bare(opening) === bare(title);
+}
+
 /** Every block shares one spine: text sits on the same left edge as the plates. */
 function Column({ children }: { children: React.ReactNode }) {
   return (
@@ -627,7 +643,12 @@ export function Deck({
     ? chapters.flatMap((chapter) =>
         chapter.blocks.map((block, index) => ({
           chapter: index === 0 ? chapter.id : undefined,
-          chapterTitle: chapter.title,
+          // A logo is its own title, and a slide headed with the chapter's
+          // name would only say it twice.
+          chapterTitle:
+            block.kind === 'lead' || saysTitle(block, chapter.title)
+              ? undefined
+              : chapter.title,
           ...(block.kind === 'text'
             ? { lines: block.lines }
             : { node: <SlideBody block={block} /> }),

@@ -198,7 +198,9 @@ export function Sheet({
       : MOTION.sheetIn;
 
   return (
-    <div className={framed ? 'absolute inset-0 z-40' : 'fixed inset-0 z-40'}>
+    <div
+      className={framed ? 'absolute inset-0 z-[45]' : 'fixed inset-0 z-[45]'}
+    >
       <motion.button
         type="button"
         aria-label="Close overlay"

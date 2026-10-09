@@ -32,6 +32,7 @@ export function PillLabel({
 }) {
   const block = tone === 'paper' ? 'bg-white text-ink' : 'bg-ink text-white';
   const controlled = open !== undefined;
+  const corners = 'rounded-md hover:rounded-none';
 
   const arrow = (side: 'left' | 'right') => {
     // The wrapper is a touch wider than the arrow it holds, and the slack is
@@ -61,11 +62,11 @@ export function PillLabel({
         aria-hidden
       >
         <span
-          className={`flex aspect-square w-[var(--pill-arrow)] shrink-0 items-center justify-center rounded-md ${origin} ${block} ${arrowMotion ?? ''}`}
+          className={`flex aspect-square w-[var(--pill-arrow)] shrink-0 items-center justify-center ${corners} ${origin} ${block} ${arrowMotion ?? ''}`}
           style={{
             transform: controlled ? `scale(${shown ? 1 : 0.5})` : undefined,
             opacity: controlled ? (shown ? 1 : 0) : undefined,
-            transition: `transform 420ms ${EASE}, opacity 260ms ease`,
+            transition: `transform 420ms ${EASE}, opacity 260ms ease, border-radius 300ms ease`,
           }}
         >
           <ArrowUpRight />
@@ -83,7 +84,7 @@ export function PillLabel({
     >
       {arrow('left')}
       <span
-        className={`flex items-center rounded-md px-3.5 text-[0.8rem] whitespace-nowrap tracking-[0.04em] md:px-5 md:text-sm ${block} ${labelClassName}`}
+        className={`flex items-center ${corners} px-3.5 transition-[border-radius] duration-300 text-[0.8rem] whitespace-nowrap tracking-[0.04em] md:px-5 md:text-sm ${block} ${labelClassName}`}
       >
         {label}
       </span>

@@ -61,7 +61,7 @@ function ArticleCard({
       className="group block w-full"
     >
       <span
-        className="relative block w-full overflow-hidden rounded-md bg-hairline"
+        className="relative block w-full overflow-hidden rounded-md bg-hairline transition-[border-radius] duration-300 group-hover:rounded-none"
         style={{ aspectRatio: aspect }}
       >
         <span className="tk-loading absolute inset-0" aria-hidden />

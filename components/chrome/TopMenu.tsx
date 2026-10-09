@@ -79,7 +79,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
                     <AppLink
                       href={page.href}
                       aria-current={current ? 'page' : undefined}
-                      className={`inline-block text-[clamp(1rem,1.5vw,1.2rem)] rounded-md bg-black/[0.08] px-[0.5em] py-[0.15em] font-sans leading-snug text-ink transition-colors duration-300 hover:bg-black/[0.14] ${
+                      className={`inline-block border border-ink px-[0.6em] py-[0.25em] font-sans text-[clamp(1rem,1.5vw,1.2rem)] leading-snug text-ink transition-[border-radius] duration-300 hover:rounded-md ${
                         current ? 'opacity-50' : ''
                       }`}
                       onClick={() => {

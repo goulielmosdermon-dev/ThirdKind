@@ -56,6 +56,9 @@ const CELL = [
 const TEAM_INTRO =
   'From slightly elsewhere. Different backgrounds, one stubborn standard for the work.';
 
+const TEAM_NAME =
+  'A close encounter of the third kind, in Hynek’s classification, popularised by Close Encounters of the Third Kind (1977), is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.';
+
 function poemLines(value: PortableText): string[] {
   return value
     .flatMap((block) =>
@@ -470,6 +473,11 @@ export function AboutSheet({
                     </li>
                   ))}
                 </ul>
+              ) : null}
+              {section.key === 'team' ? (
+                <p className="mt-20 max-w-[36rem] text-[1.05rem] leading-snug text-mute @md:mt-24">
+                  {TEAM_NAME}
+                </p>
               ) : null}
 
               {section.key === 'why' ? (

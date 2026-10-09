@@ -32,9 +32,7 @@ const WEIGHTS = [1, 0.88, 1.16, 0.94, 1.08] as const;
 function columnsFor(width: number): number {
   if (width < 560) return 1;
   if (width < 860) return 2;
-  if (width < 1180) return 3;
-  if (width < 1500) return 4;
-  return 5;
+  return 3;
 }
 
 /** The first runs of the catalogue are what load. */

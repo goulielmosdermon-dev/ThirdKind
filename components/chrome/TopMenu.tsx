@@ -71,7 +71,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
             transition={{ duration, ease: MOTION.easeOut }}
             onPointerDown={(event) => event.stopPropagation()}
           >
-            <ul className="flex flex-wrap gap-2">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
               {PAGES.map((page) => {
                 const current = pageIsCurrent(page.label, path);
                 return (
@@ -79,7 +79,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
                     <AppLink
                       href={page.href}
                       aria-current={current ? 'page' : undefined}
-                      className={`inline-block border border-ink px-[0.6em] py-[0.25em] font-sans text-[clamp(1rem,1.5vw,1.2rem)] leading-snug text-ink transition-[border-radius] duration-300 hover:rounded-md ${
+                      className={`relative inline-block font-sans text-[clamp(1rem,1.5vw,1.2rem)] leading-snug text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-ink after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:font-display hover:italic hover:after:scale-x-100 ${
                         current ? 'opacity-50' : ''
                       }`}
                       onClick={() => {

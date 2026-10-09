@@ -227,6 +227,18 @@ function ThoughtsRun({
   );
 }
 
+/** The paragraph on where the name comes from, which the team page carries instead. */
+function isNameNote(block: PortableText[number]): boolean {
+  return (
+    block._type === 'block' &&
+    block.children
+      .map((child) => child.text)
+      .join('')
+      .trim()
+      .startsWith('A close encounter')
+  );
+}
+
 export function IndexView({
   nodes,
   manifesto = [],
@@ -456,7 +468,7 @@ export function IndexView({
       </section>
 
       <ManifestoBand
-        blocks={manifesto}
+        blocks={manifesto.filter((block) => !isNameNote(block))}
         phone={phone}
         sectionRef={manifestoRef}
       />

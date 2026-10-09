@@ -49,7 +49,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-signal) 35%, transparent);
+  background: #0000ff;
   color: var(--color-ink);
 }
 

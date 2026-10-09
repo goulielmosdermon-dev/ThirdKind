@@ -199,7 +199,11 @@ export function Sheet({
 
   return (
     <div
-      className={framed ? 'absolute inset-0 z-[45]' : 'fixed inset-0 z-[45]'}
+      className={
+        framed
+          ? 'absolute inset-0 z-[45] select-text'
+          : 'fixed inset-0 z-[45] select-text'
+      }
     >
       <motion.button
         type="button"

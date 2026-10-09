@@ -701,7 +701,7 @@ export function CanvasViewport({
     <div
       ref={frameRef}
       data-intro-complete={complete ? 'true' : undefined}
-      className={`relative h-dvh w-dvw overflow-hidden bg-void select-none ${
+      className={`relative h-dvh w-dvw overflow-hidden bg-void ${
         indexed ? 'cursor-default' : panning ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       style={{ touchAction: indexed ? 'pan-y' : 'none' }}
@@ -713,7 +713,7 @@ export function CanvasViewport({
       <div ref={pageScrollRef} className="h-full overflow-hidden">
         <div className="relative h-dvh overflow-hidden">
           <div
-            className="absolute origin-top-left"
+            className="absolute origin-top-left select-none"
             aria-hidden={!complete}
             style={{
               width: WORLD_WIDTH,

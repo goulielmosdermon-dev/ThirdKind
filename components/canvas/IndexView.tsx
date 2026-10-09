@@ -2,14 +2,9 @@
 
 import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 
-import type {
-  CanvasNode,
-  LeafCanvasNode,
-  PortableText,
-  PortableTextBlock,
-} from '@/types/content';
+import type { CanvasNode, LeafCanvasNode, PortableText } from '@/types/content';
 
 import {
   editorialCopy,
@@ -97,71 +92,125 @@ const SLOT = [
   },
 ] as const;
 
+const MANIFESTO_COPY =
+  'Nobody likes being interrupted or preached at. What people want is to be entertained, to feel, and to believe. When a business means that, customers trust.';
+
 /**
- * The Why copy, read once on the way down from the showcase into the index.
- * The same text the About sheet carries, minus its heading — the line the
- * sheet opens on is the sheet's own — set larger here, because these few
- * paragraphs are the whole of the page at this point.
+ * The Why copy, one paragraph. When the band comes on screen the wrapped
+ * lines rise in one after another, then stand.
  */
 function ManifestoBand({
-  blocks,
   phone,
   sectionRef,
 }: {
-  blocks: PortableText;
   phone: boolean;
   sectionRef: RefObject<HTMLElement | null>;
 }) {
-  const lines = blocks.filter(
-    (block): block is PortableTextBlock =>
-      block._type === 'block' && block.style !== 'h2',
-  );
-  if (lines.length === 0) {
-    return null;
-  }
+  const reduced = useReducedMotion() ?? false;
+  const measureRef = useRef<HTMLParagraphElement>(null);
+  const [lines, setLines] = useState<string[]>([MANIFESTO_COPY]);
+  const [shown, setShown] = useState(reduced);
+
+  useEffect(() => {
+    const host = measureRef.current;
+    if (!host) {
+      return;
+    }
+    const measure = () => {
+      const words = MANIFESTO_COPY.split(/\s+/);
+      const probe = document.createElement('span');
+      probe.style.cssText =
+        'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none';
+      const cs = getComputedStyle(host);
+      probe.style.font = cs.font;
+      probe.style.letterSpacing = cs.letterSpacing;
+      host.appendChild(probe);
+      const max = host.clientWidth;
+      const next: string[] = [];
+      let current = '';
+      for (const word of words) {
+        const trial = current ? `${current} ${word}` : word;
+        probe.textContent = trial;
+        if (current && probe.offsetWidth > max) {
+          next.push(current);
+          current = word;
+        } else {
+          current = trial;
+        }
+      }
+      if (current) {
+        next.push(current);
+      }
+      probe.remove();
+      setLines(next);
+    };
+    measure();
+    const watcher = new ResizeObserver(measure);
+    watcher.observe(host);
+    return () => watcher.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (reduced) {
+      return;
+    }
+    const section = sectionRef.current;
+    if (!section) {
+      return;
+    }
+    const root = section.closest(
+      '[data-preview-scroll], [data-index-view]',
+    ) as HTMLElement | null;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShown(true);
+          observer.disconnect();
+        }
+      },
+      { root, threshold: 0.35 },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [reduced, sectionRef]);
 
   return (
-    // Full-bleed black, and it says so, which is what tells the command bar to
-    // invert while the reader is over it.
     <section
       ref={sectionRef}
       data-surface="dark"
       className="bg-black text-white"
     >
       <div
-        // The gap read from the showcase's own edge, not the section box: the
-        // slab starts below the section's own bottom padding, so its top
-        // padding is the smaller of the two numbers.
-        // Three caps used to stack here — the column at 92rem, the gutter
-        // stopping at 11rem, and the prose at 52rem — and the prose was
-        // reached first, so the band read as the same narrow ribbon at every
-        // size and only drifted further into the middle as the screen grew.
-        // It takes the index's rule instead: a gutter that is a share of the
-        // screen, and nothing else in the way.
         className={
           phone
-            ? 'px-12 pt-14 pb-16'
-            : // The band ran nearly the width of the screen with 4rem of air
-              // above and below it, which read as a strip rather than a page.
-              // The gutter is a larger share of the screen and keeps growing
-              // with it; the air is set from the same measure, so a wide
-              // screen gets a deeper band rather than a longer line.
-              'px-12 pt-14 pb-16 md:px-[14vw] md:pt-[clamp(6rem,11vw,22rem)] md:pb-[clamp(6rem,11vw,22rem)]'
+            ? 'px-12 py-14'
+            : 'px-12 py-14 md:px-[12vw] md:py-[clamp(6rem,11vw,22rem)]'
         }
       >
-        <div className={phone ? 'space-y-6' : 'space-y-8'}>
-          {lines.map((block) => (
-            <p
-              key={block._key}
-              className={phone ? 'leading-[1.6]' : 'leading-[1.5]'}
-              style={{
-                fontSize: phone ? EDITORIAL_LINE_PHONE : EDITORIAL_LINE,
-              }}
+        <p
+          ref={measureRef}
+          className="font-display text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.08] tracking-[-0.015em]"
+        >
+          {lines.map((line, index) => (
+            <span
+              key={`${index}-${line}`}
+              className="block overflow-hidden pt-[0.12em] pb-[0.26em] -mt-[0.12em]"
             >
-              {block.children.map((child) => child.text).join('')}
-            </p>
+              <motion.span
+                className="block"
+                initial={reduced ? false : { y: '110%' }}
+                animate={{ y: shown || reduced ? '0%' : '110%' }}
+                transition={{
+                  duration: reduced ? MOTION.reduced : 0.85,
+                  delay: reduced || !shown ? 0 : index * 0.14,
+                  ease: MOTION.easeOut,
+                }}
+              >
+                {line}
+              </motion.span>
+            </span>
           ))}
-        </div>
+        </p>
       </div>
     </section>
   );
@@ -227,21 +276,8 @@ function ThoughtsRun({
   );
 }
 
-/** The paragraph on where the name comes from, which the team page carries instead. */
-function isNameNote(block: PortableText[number]): boolean {
-  return (
-    block._type === 'block' &&
-    block.children
-      .map((child) => child.text)
-      .join('')
-      .trim()
-      .startsWith('A close encounter')
-  );
-}
-
 export function IndexView({
   nodes,
-  manifesto = [],
   onOpen,
   onPrefetch,
   onOpeningPassed,
@@ -250,7 +286,7 @@ export function IndexView({
   density = 'desktop',
 }: {
   nodes: CanvasNode[];
-  /** The Why section's own copy, read the same here as it is in the sheet. */
+  /** Kept so the shell can still pass Why copy; the band now carries its own. */
   manifesto?: PortableText;
   onOpen: (href: string, nodeId: string) => void;
   /** Warms the sheet route so the panel can slide in without a fetch gap. */
@@ -430,8 +466,8 @@ export function IndexView({
       exit="gone"
       className={
         phone
-          ? 'relative z-[8]'
-          : 'absolute inset-0 z-[8] overflow-y-auto overscroll-y-contain'
+          ? 'relative z-[8] select-text'
+          : 'absolute inset-0 z-[8] overflow-y-auto overscroll-y-contain select-text'
       }
       onPointerDown={(event) => event.stopPropagation()}
     >
@@ -467,11 +503,7 @@ export function IndexView({
         </div>
       </section>
 
-      <ManifestoBand
-        blocks={manifesto.filter((block) => !isNameNote(block))}
-        phone={phone}
-        sectionRef={manifestoRef}
-      />
+      <ManifestoBand phone={phone} sectionRef={manifestoRef} />
 
       <div
         className={

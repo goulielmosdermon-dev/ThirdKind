@@ -9,10 +9,10 @@ export const DISPLAY_BALANCE = '1em';
 /**
  * The size an editorial line is set at, wherever one is read.
  *
- * A project's line in the index, a piece of writing's title in the reel, and
- * the manifesto are the same kind of thing — one sentence of the page's own
- * voice, standing on its own above or beside a picture — and they were set at
- * three different sizes. One value, so they stay the same kind of thing.
+ * A project's line in the index and a piece of writing's title in the reel
+ * are the same kind of thing — one sentence of the page's own voice, standing
+ * on its own above or beside a picture — and they were set at different sizes.
+ * One value, so they stay the same kind of thing.
  *
  * The value is the intro's own, so the line the page opens on and the lines it
  * goes on to read are set alike at every width rather than only at the one the

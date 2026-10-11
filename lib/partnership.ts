@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 export const PARTNERSHIPS = {
   USA: { label: 'USA', market: 'US' },
   UK: { label: 'UK', market: 'UK' },
-  China: { label: 'China', market: 'China' },
-  Japan: { label: 'Japan', market: 'Japan' },
+  China: { label: 'China', market: 'China', native: '第三类' },
+  Japan: { label: 'Japan', market: 'Japan', native: '第三種' },
 } as const;
 
 export type PartnershipKey = keyof typeof PARTNERSHIPS;

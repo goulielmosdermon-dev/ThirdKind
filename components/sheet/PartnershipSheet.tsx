@@ -19,7 +19,7 @@ const QUALITIES = [
 
 function Label({ children }: { children: string }) {
   return (
-    <p className="mt-12 text-[0.8rem] tracking-[0.08em] text-mute uppercase">
+    <p className="font-display mt-12 text-[1.15rem] leading-snug font-bold text-ink">
       {children}
     </p>
   );
@@ -27,7 +27,9 @@ function Label({ children }: { children: string }) {
 
 export function PartnershipSheet({ market }: { market: PartnershipKey }) {
   const framed = useFramed();
-  const { label, market: place } = PARTNERSHIPS[market];
+  const entry = PARTNERSHIPS[market];
+  const { label, market: place } = entry;
+  const native = 'native' in entry ? entry.native : undefined;
   const title = `ThirdKind. ${label}`;
 
   return (
@@ -40,6 +42,11 @@ export function PartnershipSheet({ market }: { market: PartnershipKey }) {
         <div className="w-full max-w-[38rem] text-center text-[1.05rem] leading-[1.55] text-ink">
           <h1 className="font-display text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08]">
             {title}
+            {native ? (
+              <span className="mt-3 block font-sans font-semibold">
+                {native}
+              </span>
+            ) : null}
           </h1>
           <p className="mt-10">
             If you&apos;ve been working for a large creative agency and have

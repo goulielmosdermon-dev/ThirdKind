@@ -168,6 +168,17 @@ function mapGallery(
   return gallery;
 }
 
+/** Copy the CMS still has wrong, keyed by slug until those fields are edited. */
+const PROJECT_COPY: Record<
+  string,
+  { title: string; hoverDescription: string }
+> = {
+  noirgaze: {
+    title: 'Four Beach Films',
+    hoverDescription: '',
+  },
+};
+
 export function mapProject(doc: {
   _id: string;
   title?: string;
@@ -190,16 +201,18 @@ export function mapProject(doc: {
   body?: SanityBlock[];
   gallery?: SanityGalleryItem[];
 }): Project {
-  const title = doc.title ?? 'Untitled';
+  const slug = doc.slug?.current ?? doc._id;
+  const copy = PROJECT_COPY[slug];
+  const title = copy?.title ?? doc.title ?? 'Untitled';
   return {
     _id: doc._id,
     _type: 'project',
     title,
     client: doc.client ?? '',
-    slug: { current: doc.slug?.current ?? doc._id },
+    slug: { current: slug },
     order: doc.order ?? 0,
     thumbnail: mapImage(doc.thumbnail, title),
-    hoverDescription: doc.hoverDescription ?? '',
+    hoverDescription: copy?.hoverDescription ?? doc.hoverDescription ?? '',
     heroVideoUrl: doc.heroVideoUrl ?? '',
     posterImage: mapImage(doc.posterImage, `${title} poster`),
     body: mapPortable(doc.body),

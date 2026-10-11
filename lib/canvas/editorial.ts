@@ -52,9 +52,9 @@ export function editorialCopy(node: LeafCanvasNode): {
   name: string;
 } {
   if (node.hubKey === 'work') {
-    const [client] = node.title.split(' — ');
+    const [client, piece] = node.title.split(' — ');
     return {
-      line: node.hoverDescription || node.title,
+      line: node.hoverDescription || piece?.trim() || node.title,
       name: client?.trim() ?? '',
     };
   }

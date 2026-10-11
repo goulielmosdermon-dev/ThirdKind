@@ -10,12 +10,6 @@ import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import type { Project } from '@/types/content';
 
 /**
- * The work as one long wall: columns of stills that keep going down, dealt out
- * again as the reader reaches the end of them. It scrolls the way the rest of
- * the site does — nothing moves sideways.
- */
-
-/**
  * The crops the wall cycles through, so a column reads as a run of different
  * pictures rather than a stack of identical boxes.
  */
@@ -28,19 +22,10 @@ const ASPECTS = ['16/10', '3/4', '16/9', '1/1', '4/5', '3/2'] as const;
  */
 const WEIGHTS = [1, 0.88, 1.16, 0.94, 1.08] as const;
 
-/** How many columns fit at a given width. */
+/** How many columns fit at a given width. Two at most. */
 function columnsFor(width: number): number {
-  if (width < 560) return 1;
-  if (width < 860) return 2;
-  return 3;
+  return width < 560 ? 1 : 2;
 }
-
-/** The first runs of the catalogue are what load. */
-const FIRST_RUNS = 2;
-/** A ceiling, so a reader who holds scroll does not grow the page forever. */
-const MAX_RUNS = 40;
-/** How close to the bottom the reader gets before the next run is dealt. */
-const REACH = 1600;
 
 function ProjectCard({
   project,
@@ -94,8 +79,7 @@ export function WorkIndexSheet({
 }) {
   const framed = useFramed();
   const gridRef = useRef<HTMLDivElement>(null);
-  const [columns, setColumns] = useState(3);
-  const [runs, setRuns] = useState(FIRST_RUNS);
+  const [columns, setColumns] = useState(2);
 
   // Column count is worked out here rather than in CSS because the cards are
   // dealt into the columns one by one: the wall has to know how many there
@@ -112,37 +96,6 @@ export function WorkIndexSheet({
     return () => observer.disconnect();
   }, []);
 
-  // The wall has no end: as the reader comes within a screen or so of the
-  // bottom another run of the catalogue is dealt on behind them. The sheet
-  // scrolls in its own box, so the reach is measured against that box rather
-  // than the window.
-  useEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) {
-      return;
-    }
-    let scroller: HTMLElement | null = grid.parentElement;
-    while (scroller) {
-      const overflow = getComputedStyle(scroller).overflowY;
-      if (overflow === 'auto' || overflow === 'scroll') {
-        break;
-      }
-      scroller = scroller.parentElement;
-    }
-    if (!scroller) {
-      return;
-    }
-    const box = scroller;
-    const onScroll = () => {
-      const left = box.scrollHeight - box.scrollTop - box.clientHeight;
-      if (left < REACH) {
-        setRuns((current) => Math.min(current + 1, MAX_RUNS));
-      }
-    };
-    box.addEventListener('scroll', onScroll, { passive: true });
-    return () => box.removeEventListener('scroll', onScroll);
-  }, []);
-
   if (projects.length === 0) {
     return (
       <Sheet title="Work" tone="editorial">
@@ -151,11 +104,11 @@ export function WorkIndexSheet({
     );
   }
 
-  // One long deal of cards — the catalogue, over and over — dropped into the
-  // columns in turn, so the columns stay level however tall each card is.
-  const cards = Array.from({ length: runs * projects.length }, (_, index) => ({
+  // One deal of the catalogue, dropped into the columns in turn so they stay
+  // level however tall each card is.
+  const cards = projects.map((project, index) => ({
     key: index,
-    project: projects[index % projects.length]!,
+    project,
     aspect: ASPECTS[index % ASPECTS.length]!,
   }));
   const lanes = Array.from({ length: columns }, (_, lane) =>

@@ -46,9 +46,11 @@ export function ProjectSheet({
             <h1 className="font-display max-w-[18ch] text-[clamp(1.75rem,3.5cqi,3.15rem)] leading-[1.05] text-white">
               {project.title}
             </h1>
-            <p className="mt-4 max-w-[36rem] text-[1.05rem] leading-snug text-white/90 @md:text-xl">
-              {project.hoverDescription}
-            </p>
+            {project.hoverDescription ? (
+              <p className="mt-4 max-w-[36rem] text-[1.05rem] leading-snug text-white/90 @md:text-xl">
+                {project.hoverDescription}
+              </p>
+            ) : null}
           </div>
         </header>
 
@@ -116,9 +118,11 @@ export function ProjectSheet({
                       <p className="font-display text-[1.2rem] leading-tight text-white">
                         {item.client}
                       </p>
-                      <p className="mt-1 text-sm leading-snug text-white/70">
-                        {item.hoverDescription}
-                      </p>
+                      {item.hoverDescription ? (
+                        <p className="mt-1 text-sm leading-snug text-white/70">
+                          {item.hoverDescription}
+                        </p>
+                      ) : null}
                     </div>
                     {/* Shown at the shape it was made, not cropped to a band. */}
                     <span className="mt-3 block w-full overflow-hidden rounded-md bg-white/10">

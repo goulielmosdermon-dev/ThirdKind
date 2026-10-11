@@ -56,8 +56,8 @@ export function PartnershipSheet({ market }: { market: PartnershipKey }) {
 
           <Label>You could be</Label>
           <p className="mt-3">
-            A copywriter, creative director, account manager, art director,
-            strategy director, brand strategist or _________.
+            A copywriter, creative director, art director, strategy director,
+            brand strategist or _________.
           </p>
 
           <Label>About</Label>

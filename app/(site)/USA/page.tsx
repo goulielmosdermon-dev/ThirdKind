@@ -1,13 +1,8 @@
-import { UsaSheet } from '@/components/sheet/UsaSheet';
+import { PartnershipSheet } from '@/components/sheet/PartnershipSheet';
+import { partnershipMeta } from '@/lib/partnership';
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'ThirdKind. USA',
-  description:
-    'A partnership to run ThirdKind in the US market. Not a job — a share of what you build.',
-};
+export const metadata = partnershipMeta('USA');
 
 export default function UsaPage() {
-  return <UsaSheet />;
+  return <PartnershipSheet market="USA" />;
 }

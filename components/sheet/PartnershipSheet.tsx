@@ -2,6 +2,7 @@
 
 import { Sheet } from '@/components/sheet/Sheet';
 import { useFramed } from '@/components/mobile/MobileChrome';
+import { PARTNERSHIPS, type PartnershipKey } from '@/lib/partnership';
 
 const QUALITIES = [
   'Long-term thinker',
@@ -24,10 +25,13 @@ function Label({ children }: { children: string }) {
   );
 }
 
-export function UsaSheet() {
+export function PartnershipSheet({ market }: { market: PartnershipKey }) {
   const framed = useFramed();
+  const { label, market: place } = PARTNERSHIPS[market];
+  const title = `ThirdKind. ${label}`;
+
   return (
-    <Sheet title="ThirdKind. USA" tone="editorial">
+    <Sheet title={title} tone="editorial">
       <article
         className={`flex min-h-[var(--frame-h,100dvh)] items-center justify-center bg-paper px-12 pb-28 ${
           framed ? 'pt-[6.5rem]' : 'pt-20'
@@ -35,7 +39,7 @@ export function UsaSheet() {
       >
         <div className="w-full max-w-[38rem] text-center text-[1.05rem] leading-[1.55] text-ink">
           <h1 className="font-display text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08]">
-            ThirdKind. USA
+            {title}
           </h1>
           <p className="mt-10">
             If you&apos;ve been working for a large creative agency and have
@@ -77,7 +81,9 @@ export function UsaSheet() {
           </p>
 
           <Label>Your first goal</Label>
-          <p className="mt-3">Bring in your first client in the US market.</p>
+          <p className="mt-3">
+            Bring in your first client in the {place} market.
+          </p>
 
           <Label>Contact</Label>
           <p className="mt-3">

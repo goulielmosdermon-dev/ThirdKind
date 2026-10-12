@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
         destination: 'https://lastsunnyday.com/:path*',
         permanent: true,
       },
+      // Partnership posts are capitalised routes; Linux hosts 404 the lowercase form.
+      { source: '/india', destination: '/India', permanent: true },
+      { source: '/usa', destination: '/USA', permanent: true },
+      { source: '/uk', destination: '/UK', permanent: true },
+      { source: '/china', destination: '/China', permanent: true },
+      { source: '/japan', destination: '/Japan', permanent: true },
     ];
   },
 };

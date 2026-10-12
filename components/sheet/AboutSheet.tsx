@@ -454,7 +454,7 @@ export function AboutSheet({
                           cropped top and bottom — a head trimmed to fit a box
                           it was never framed for — so the frame is the one the
                           photograph already has. */}
-                      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-paper">
+                      <div className="relative aspect-[4/5] overflow-hidden bg-paper">
                         <Image
                           src={member.portrait.src}
                           alt={member.portrait.alt}

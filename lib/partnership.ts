@@ -5,6 +5,7 @@ export const PARTNERSHIPS = {
   UK: { label: 'UK', market: 'UK' },
   China: { label: 'China', market: 'China', native: '第三类' },
   Japan: { label: 'Japan', market: 'Japan', native: '第三種' },
+  India: { label: 'India', market: 'India' },
 } as const;
 
 export type PartnershipKey = keyof typeof PARTNERSHIPS;

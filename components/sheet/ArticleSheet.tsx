@@ -81,7 +81,7 @@ export function ArticleSheet({
             priority
             sizes="(min-width: 1024px) 84vw, 84vw"
             unoptimized={isUnoptimizedSrc(article.coverImage.src)}
-            className="h-auto w-full rounded-md"
+            className="h-auto w-full"
           />
         </div>
 
@@ -137,7 +137,7 @@ export function ArticleSheet({
                     {/* No crop: the still is shown at the shape it was made,
                         so the row is even along the top and ragged along the
                         bottom, which is the picture's own business. */}
-                    <span className="mt-3 block w-full overflow-hidden rounded-md bg-hairline">
+                    <span className="mt-3 block w-full overflow-hidden bg-hairline">
                       <Image
                         src={item.coverImage.src}
                         alt=""

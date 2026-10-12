@@ -629,7 +629,7 @@ export function IndexView({
                     // round "Explore" grows out of nothing and follows the
                     // pointer, and shrinks away again on the way out.
                     data-explore
-                    className={`relative block w-full overflow-hidden rounded-md bg-paper transition-[border-radius] duration-300 group-hover:rounded-none ${slot.aspect}`}
+                    className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
                   >
                     {node.swatch ? (
                       <span

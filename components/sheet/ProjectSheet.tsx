@@ -125,7 +125,7 @@ export function ProjectSheet({
                       ) : null}
                     </div>
                     {/* Shown at the shape it was made, not cropped to a band. */}
-                    <span className="mt-3 block w-full overflow-hidden rounded-md bg-white/10">
+                    <span className="mt-3 block w-full overflow-hidden bg-white/10">
                       <Image
                         src={item.thumbnail.src}
                         alt=""

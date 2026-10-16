@@ -187,14 +187,21 @@ function DisciplineRow({
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={panelId}
-        className={`flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left text-[0.875rem] leading-snug transition-colors duration-200 ${
-          open
-            ? 'rounded-t-md bg-ink text-white'
-            : 'rounded-md bg-black/[0.06] text-ink hover:bg-black/[0.1]'
-        }`}
+        className="group flex w-full cursor-pointer items-baseline justify-between gap-4 border-0 bg-transparent py-2 text-left text-ink"
       >
-        <span>{service.title}</span>
-        <span aria-hidden className="shrink-0 text-base leading-none">
+        <span
+          className={`text-[clamp(1rem,1.5vw,1.2rem)] leading-snug underline underline-offset-4 ${
+            open
+              ? 'font-display italic'
+              : 'font-sans not-italic group-hover:font-display group-hover:italic'
+          }`}
+        >
+          {service.title}
+        </span>
+        <span
+          aria-hidden
+          className="shrink-0 text-[clamp(1rem,1.5vw,1.2rem)] leading-none"
+        >
           +
         </span>
       </button>
@@ -207,7 +214,7 @@ function DisciplineRow({
             // The panel is in flow, so opening a row pushes the rest of the
             // list down. It used to be absolutely positioned at @md, which
             // painted it straight over the next button and hid it.
-            className="overflow-hidden rounded-b-md bg-ink"
+            className="overflow-hidden"
             initial={reduced ? { height: 'auto' } : { height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={reduced ? { height: 0 } : { height: 0, opacity: 0 }}
@@ -216,11 +223,11 @@ function DisciplineRow({
               ease: MOTION.easeOut,
             }}
           >
-            <div className="flex gap-3 pt-1 pr-4 pb-4 pl-7 @md:pb-5">
-              <span aria-hidden className="text-white/50">
+            <div className="flex gap-3 pt-1 pr-1 pb-4 pl-0 @md:pb-5">
+              <span aria-hidden className="text-mute">
                 &#8627;
               </span>
-              <p className="text-[0.875rem] leading-[1.45] text-white/90">
+              <p className="text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.45] text-ink">
                 {service.description}
               </p>
             </div>
@@ -235,7 +242,7 @@ function DisciplineGrid({ services }: { services: ServiceOffering[] }) {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <ul className="grid grid-cols-1 gap-x-8 gap-y-2 @md:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-x-8 gap-y-1 @md:grid-cols-2">
       {services.map((service) => {
         const key = service.slug.current;
         return (
@@ -270,53 +277,19 @@ function ServicesView({
   // gutter, with the image filling the width between those gutters.
   return (
     <div className="flex flex-1 flex-col pb-28">
-      {/* The page opens black, with the hands coming together on it: the
-          heading stands white on the same ground rather than over it, and the
-          close button, which is white and set to difference, reads against it
-          without being told anything. */}
       <div
-        data-surface="dark"
-        // The opening fills the screen: the sheet is the height of the window,
-        // so the black holds all of it and the page underneath starts where
-        // the reader scrolls to it, not a hand's width above the fold.
-        //
-        // The gutters are set on the parts, not on the whole: the hands run
-        // the full width of the black on a wide screen, and a negative margin
-        // to get there would have made the page itself wider than the window.
-        className={`flex flex-1 flex-col bg-black pb-[4cqi] ${
-          framed ? '' : 'min-h-svh'
+        className={`px-12 @md:px-[5cqi] ${
+          framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-[5cqi]'
         }`}
       >
-        <div
-          className={`px-12 @md:px-[5cqi] ${
-            framed ? 'pt-[6.5rem]' : 'pt-[7cqi] @md:pt-[5cqi]'
-          }`}
-        >
-          <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-white">
-            {title}.
-          </h1>
-        </div>
-        {/* Centred in what the heading leaves, and then a little above that:
-            the hands read as sitting low if they are set on the true middle,
-            because the alien hand carries its weight below the line. On a
-            phone they keep the page's gutter like everything else. */}
-        <div className="mt-[3cqi] flex min-h-0 flex-1 items-center px-12 @md:px-0">
-          {/* The lift is a share of the hands' own frame, not of the room
-              they are centred in: measured against the room, a tall window
-              would throw them at the ceiling. */}
-          <div className="w-full -translate-y-[12%] max-md:translate-y-0">
-            <ServicesHands />
-          </div>
-        </div>
-      </div>
+        <h1 className="font-display w-full max-w-[40ch] text-[clamp(2.25rem,4.6cqi,3.85rem)] leading-[1.08] text-balance text-ink">
+          {title}.
+        </h1>
 
-      <div className="px-12 @md:px-[5cqi]">
         {/* One offer, said once. What follows is not a list of things to buy;
           it is the order the one thing gets made in. */}
         {lede ? (
-          // On a phone the container units come to almost nothing, so the
-          // white starts hard against the black. A real gap there instead.
-          <div className="mt-[4cqi] max-w-[42rem] max-md:mt-16">
+          <div className="mt-[4cqi] max-w-[42rem] max-md:mt-12">
             <h2 className="font-sans text-[1.65rem] leading-snug font-semibold text-ink">
               {lede.headline}
             </h2>
@@ -334,11 +307,24 @@ function ServicesView({
         <div className="mt-[6cqi]">
           <DisciplineGrid services={services} />
         </div>
-
-        <section className="mt-[6cqi]">
-          <ServicesFaq faqs={faqs} />
-        </section>
       </div>
+
+      {/* The hands get a band of black to themselves between the offer and
+          the questions. The gutters are set on the hands, not the band: on a
+          wide screen they run the full width of the black, and a negative
+          margin to get there would make the page wider than the window. On a
+          phone the container units come to almost nothing, so the black gets
+          real gaps above and below it. */}
+      <div
+        data-surface="dark"
+        className="mt-[8cqi] bg-black px-12 py-[6cqi] max-md:mt-16 max-md:py-16 @md:px-0"
+      >
+        <ServicesHands />
+      </div>
+
+      <section className="mt-[6cqi] px-12 max-md:mt-16 @md:px-[5cqi]">
+        <ServicesFaq faqs={faqs} />
+      </section>
     </div>
   );
 }
@@ -381,9 +367,8 @@ export function AboutSheet({
     >
       <article
         data-surface={process ? 'dark' : 'light'}
-        // Services opens on a full screen of black, so the article is told to
-        // be at least as tall as the sheet and to lay its children out in a
-        // column — that is what gives the opening a height to fill. The
+        // Services is told to be at least as tall as the sheet and to lay its
+        // children out in a column, so a short page still fills the panel. The
         // sheet's own height is a real one, so the percentage lands.
         className={`${process ? 'bg-black text-white' : 'bg-paper'} ${
           section.key === 'services' ? 'flex min-h-full flex-col' : ''

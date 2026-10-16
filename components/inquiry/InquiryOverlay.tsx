@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 
 import { useFramed } from '@/components/mobile/MobileChrome';
+import { PillLabel } from '@/components/sheet/PillLabel';
 import {
   BUDGET_OPTIONS,
   INQUIRY_ABOUT_OPTIONS,
@@ -373,9 +374,9 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
                 delay: reduced ? 0 : 0.16 + 9 * 0.055,
                 ease: MOTION.easeOut,
               }}
-              className="mt-3 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white disabled:opacity-60"
+              className="mt-3 inline-flex cursor-pointer border-0 bg-transparent p-0 disabled:opacity-60"
             >
-              {pending ? 'Sending…' : 'Make Extraordinary'}
+              <PillLabel label={pending ? 'Sending…' : 'Make Extraordinary'} />
             </motion.button>
           </form>
         )}

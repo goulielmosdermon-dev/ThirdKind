@@ -59,10 +59,10 @@ describe('editorialLeaves', () => {
   it('keeps only the four named work leaves, in order', () => {
     const nodes = [
       leaf({
-        id: 'rap',
+        id: 'nordic',
         hubKey: 'work',
-        title: 'Rap',
-        href: '/work/rap-therapy',
+        title: 'Nordic',
+        href: '/work/augustine-jewels',
       }),
       leaf({
         id: 'scania',
@@ -81,7 +81,7 @@ describe('editorialLeaves', () => {
     ];
     expect(editorialLeaves(nodes).map((node) => node.id)).toEqual([
       'scania',
-      'rap',
+      'nordic',
     ]);
     expect(editorialThoughts(nodes).map((node) => node.id)).toEqual(['t1']);
   });
@@ -125,10 +125,10 @@ describe('editorialLeaves', () => {
         href: '/work/scania',
       }),
       leaf({
-        id: 'rap',
+        id: 'nordic',
         hubKey: 'work',
-        title: 'Rap Therapy',
-        href: '/work/rap-therapy',
+        title: 'Augustine Jewels',
+        href: '/work/augustine-jewels',
       }),
       leaf({
         id: 'idea',
@@ -141,7 +141,7 @@ describe('editorialLeaves', () => {
       'scania',
       'up',
       'auth',
-      'rap',
+      'nordic',
     ]);
   });
 });

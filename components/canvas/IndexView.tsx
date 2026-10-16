@@ -11,7 +11,7 @@ import {
   editorialLeaves,
   editorialThoughts,
 } from '@/lib/canvas/editorial';
-import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
+import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 import { EDITORIAL_LINE, EDITORIAL_LINE_PHONE } from '@/lib/type/display';
 import { MaskedCycle } from '@/components/chrome/MaskedCycle';
@@ -645,7 +645,7 @@ export function IndexView({
                           phone ? '393px' : '(min-width: 768px) 55vw, 92vw'
                         }
                         priority={index < 3}
-                        unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
+                        unoptimized={isUnoptimizedAsset(node.thumbnail)}
                         className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
                       />
                     )}

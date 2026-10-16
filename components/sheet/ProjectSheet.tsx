@@ -7,7 +7,7 @@ import { AppLink } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
 import { HeroFilm, WorkReel, WorkStory } from '@/components/sheet/WorkMedia';
-import { isUnoptimizedAsset, isUnoptimizedSrc } from '@/lib/content/mediaSrc';
+import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { vimeoIdFromUrl } from '@/lib/content/vimeo';
 import type { Project } from '@/types/content';
 
@@ -133,7 +133,7 @@ export function ProjectSheet({
                         height={item.thumbnail.height}
                         sizes="(max-width: 767px) 78vw, 40vw"
                         quality={95}
-                        unoptimized={isUnoptimizedSrc(item.thumbnail.src)}
+                        unoptimized={isUnoptimizedAsset(item.thumbnail)}
                         className="h-auto w-full"
                       />
                     </span>

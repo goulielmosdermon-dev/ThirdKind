@@ -24,14 +24,24 @@ function FaqItem({
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        className={`w-full rounded-md px-4 py-2.5 text-left text-[0.875rem] leading-snug transition-colors duration-200 ${
-          open
-            ? 'bg-ink text-white'
-            : 'bg-black/[0.06] text-ink hover:bg-black/[0.1]'
-        }`}
+        className="group flex w-full cursor-pointer items-baseline justify-between gap-4 border-0 bg-transparent py-2 text-left text-ink"
         onClick={onToggle}
       >
-        {faq.question}
+        <span
+          className={`text-[clamp(1rem,1.5vw,1.2rem)] leading-snug underline underline-offset-4 ${
+            open
+              ? 'font-display italic'
+              : 'font-sans not-italic group-hover:font-display group-hover:italic'
+          }`}
+        >
+          {faq.question}
+        </span>
+        <span
+          aria-hidden
+          className="shrink-0 text-[clamp(1rem,1.5vw,1.2rem)] leading-none"
+        >
+          +
+        </span>
       </button>
       <AnimatePresence initial={false}>
         {open ? (
@@ -47,11 +57,11 @@ function FaqItem({
             }}
             className="overflow-hidden"
           >
-            <div className="flex gap-3 pt-3 pr-1 pb-2 pl-7">
+            <div className="flex gap-3 pt-1 pr-1 pb-3">
               <span aria-hidden className="text-mute">
                 &#8627;
               </span>
-              <p className="text-[0.875rem] leading-[1.45] text-ink">
+              <p className="text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.45] text-ink">
                 {faq.answer}
               </p>
             </div>
@@ -73,7 +83,7 @@ export function ServicesFaq({ faqs }: { faqs: Faq[] }) {
   return (
     <div className="w-full min-w-0">
       <p className="pb-4 text-sm lowercase text-mute">frequently asked</p>
-      <ul className="flex w-full flex-col gap-2">
+      <ul className="flex w-full flex-col gap-1">
         {faqs.map((faq, index) => (
           <FaqItem
             key={faq.question}

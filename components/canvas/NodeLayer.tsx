@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
-import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useMemo, useState, useSyncExternalStore } from 'react';
 
 import type { CanvasNode, LeafCanvasNode, Viewport } from '@/types/content';
 
@@ -34,7 +34,7 @@ import {
 } from '@/lib/canvas/gridLayout';
 import { leafReadingOrder } from '@/lib/canvas/readingOrder';
 import { INITIAL_FOCUS_WORLD, type ViewportSize } from '@/lib/canvas/viewport';
-import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
+import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { MOTION } from '@/lib/motion/tokens';
 
 const PRIORITY_COUNT = 6;
@@ -139,27 +139,24 @@ export function NodeLayer({
     return grouped;
   }, [leaves, packed]);
 
-  useEffect(() => {
-    if (packed || !revealEnabled) {
-      return;
-    }
-    setEntered((current) => {
-      let next: Set<string> | null = null;
-      for (const node of nodes) {
-        if (node.kind === 'ambient' || current.has(node.id)) {
-          continue;
-        }
-        if (!isNodeInView(node, revealView, viewport.scale)) {
-          continue;
-        }
-        if (!next) {
-          next = new Set(current);
-        }
-        next.add(node.id);
+  // Updated during render rather than in an effect: the set only ever grows,
+  // so this settles after one extra pass instead of cascading renders.
+  if (!packed && revealEnabled) {
+    let next: Set<string> | null = null;
+    for (const node of nodes) {
+      if (node.kind === 'ambient' || entered.has(node.id)) {
+        continue;
       }
-      return next ?? current;
-    });
-  }, [nodes, packed, revealEnabled, revealView, viewport.scale]);
+      if (!isNodeInView(node, revealView, viewport.scale)) {
+        continue;
+      }
+      next ??= new Set(entered);
+      next.add(node.id);
+    }
+    if (next) {
+      setEntered(next);
+    }
+  }
 
   // Where the hovered tile actually sits once it has grown, so neighbours
   // give way to the open frame rather than the resting thumbnail.
@@ -247,7 +244,9 @@ export function NodeLayer({
                 initial={false}
                 animate={{
                   opacity:
-                    shown && node.kind === 'hub' && hoveredHubKey === node.hubKey
+                    shown &&
+                    node.kind === 'hub' &&
+                    hoveredHubKey === node.hubKey
                       ? 1
                       : 0,
                 }}
@@ -441,7 +440,7 @@ export function NodeLayer({
                     fill
                     sizes={`${openWidth}px`}
                     priority={priorityIds.has(node.id)}
-                    unoptimized={isUnoptimizedSrc(node.thumbnail.src)}
+                    unoptimized={isUnoptimizedAsset(node.thumbnail)}
                     onLoad={(event) => {
                       const img = event.currentTarget;
                       if (img.naturalWidth > 0) {

@@ -10,7 +10,7 @@ const INDEX_WORK_ORDER = [
   '/work/scania',
   '/work/up-hellas',
   '/work/scytales-2',
-  '/work/rap-therapy',
+  '/work/augustine-jewels',
 ] as const;
 
 /**
@@ -32,7 +32,7 @@ export function editorialLeaves(nodes: CanvasNode[]): LeafCanvasNode[] {
 const MORE_WORK_ORDER = [
   '/work/noirgaze',
   '/work/ilana',
-  '/work/augustine-jewels',
+  '/work/rap-therapy',
 ] as const;
 
 export function editorialMore(nodes: CanvasNode[]): LeafCanvasNode[] {

@@ -149,6 +149,7 @@ const LOCAL_STILL: Record<string, { width: number; height: number }> = {
   '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/sc-2.jpg': { width: 5504, height: 3072 },
+  '/work/up-hellas/header.png': { width: 2688, height: 1500 },
   '/work/up-hellas/poster.png': { width: 1736, height: 974 },
   '/work/up-hellas/still-1.png': { width: 1314, height: 1158 },
   '/work/up-hellas/still-2.png': { width: 2068, height: 1154 },
@@ -207,7 +208,10 @@ function hydrateProject(project: Project): Project {
     ...project,
     // Thumbnails are only ever shown small, so they keep going through the
     // optimiser even when the full-size still beside them does not.
-    thumbnail: optimized(remote(project.thumbnail.alt, item.thumb)),
+    thumbnail:
+      project.slug.current === 'up-hellas'
+        ? remote(project.thumbnail.alt, item.thumb)
+        : optimized(remote(project.thumbnail.alt, item.thumb)),
     posterImage: remote(project.posterImage.alt, item.poster || item.thumb),
     heroVideoUrl: item.heroVideo ? `https://vimeo.com/${item.heroVideo}` : '',
     body: paras.length > 0 ? copy(...paras) : project.body,
@@ -380,7 +384,7 @@ const projects: Project[] = [
     title: 'Internal Sales',
     client: 'Scytáles',
     slug: { current: 'scytales' },
-    order: 3,
+    order: 10,
     thumbnail: image('Scytáles Internal Sales'),
     hoverDescription: 'An internal story told like an external one.',
     heroVideoUrl: 'https://vimeo.com/1162194421',
@@ -422,7 +426,7 @@ const projects: Project[] = [
     title: 'Will It Ever Stop',
     client: 'Rap Therapy',
     slug: { current: 'rap-therapy' },
-    order: 5,
+    order: 6,
     thumbnail: image('Rap Therapy Will It Ever Stop'),
     hoverDescription: 'A music film that lets the wound speak first.',
     heroVideoUrl: 'https://vimeo.com/1070483583',
@@ -435,7 +439,7 @@ const projects: Project[] = [
     gallery: [{ _type: 'image', image: image('Rap Therapy still') }],
     story: [],
     canvasPosition: { x: 1400, y: 1280, tileWidth: 176, rotation: 4 },
-    featured: true,
+    featured: false,
   },
   {
     _id: 'project-augustine-jewels',
@@ -443,7 +447,7 @@ const projects: Project[] = [
     title: 'Nordic Collection',
     client: 'Augustine Jewels',
     slug: { current: 'augustine-jewels' },
-    order: 6,
+    order: 3,
     thumbnail: image('Augustine Jewels Nordic Collection'),
     hoverDescription: 'Green stones, green sky, one long northern night.',
     heroVideoUrl: 'https://vimeo.com/935002942',
@@ -453,7 +457,7 @@ const projects: Project[] = [
     gallery: [{ _type: 'image', image: image('Augustine still') }],
     story: [],
     canvasPosition: { x: 1780, y: 1420, tileWidth: 96, rotation: -7 },
-    featured: false,
+    featured: true,
   },
   {
     _id: 'project-oldboy-brand',
@@ -520,7 +524,7 @@ const projects: Project[] = [
     title: 'Four Beach Films',
     client: 'Noir Gaze',
     slug: { current: 'noirgaze' },
-    order: 10,
+    order: 5,
     thumbnail: image('Noir Gaze New Product Launch'),
     hoverDescription: '',
     heroVideoUrl: 'https://vimeo.com/956762066',

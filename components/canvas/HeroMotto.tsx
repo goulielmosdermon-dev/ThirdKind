@@ -71,7 +71,7 @@ export function HeroMotto({
           // that would otherwise follow. The index does the same thing.
           onPointerDown={(event) => event.stopPropagation()}
           data-hero-action
-          className="mt-[clamp(0.875rem,1.75vw,1.5rem)] inline-block transition-opacity duration-700 hover:opacity-85"
+          className="mt-[clamp(0.875rem,1.75vw,1.5rem)] inline-block cursor-pointer border-0 bg-transparent p-0 transition-opacity duration-700"
           style={{
             opacity: action ? 1 : 0,
             pointerEvents: action ? 'auto' : 'none',

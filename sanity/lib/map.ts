@@ -179,6 +179,31 @@ const PROJECT_COPY: Record<
   },
 };
 
+/** Work-index order. CMS `order` is ignored while this list is the wall. */
+const PROJECT_ORDER: Record<string, number> = {
+  'scytales-2': 1,
+  scania: 2,
+  'augustine-jewels': 3,
+  'up-hellas': 4,
+  noirgaze: 5,
+  'rap-therapy': 6,
+  'oldboy-brand': 7,
+  ilana: 8,
+  'a-m': 9,
+  scytales: 10,
+};
+
+/** Stills the CMS still has wrong, keyed by slug until those fields are edited. */
+const PROJECT_STILL: Record<string, ImageAsset> = {
+  'up-hellas': {
+    src: '/work/up-hellas/header.png',
+    alt: 'UP Hellas A Christmas UP-ROL',
+    width: 2688,
+    height: 1500,
+    unoptimized: true,
+  },
+};
+
 export function mapProject(doc: {
   _id: string;
   title?: string;
@@ -210,11 +235,13 @@ export function mapProject(doc: {
     title,
     client: doc.client ?? '',
     slug: { current: slug },
-    order: doc.order ?? 0,
-    thumbnail: mapImage(doc.thumbnail, title),
+    order: PROJECT_ORDER[slug] ?? doc.order ?? 0,
+    thumbnail: PROJECT_STILL[slug] ?? mapImage(doc.thumbnail, title),
     hoverDescription: copy?.hoverDescription ?? doc.hoverDescription ?? '',
     heroVideoUrl: doc.heroVideoUrl ?? '',
-    posterImage: mapImage(doc.posterImage, `${title} poster`),
+    posterImage: PROJECT_STILL[slug]
+      ? { ...PROJECT_STILL[slug]!, alt: `${title} poster` }
+      : mapImage(doc.posterImage, `${title} poster`),
     body: mapPortable(doc.body),
     credits: (doc.credits ?? []).flatMap((credit) =>
       credit.role && credit.name

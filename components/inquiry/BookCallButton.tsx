@@ -6,7 +6,6 @@ import { useInquiry } from '@/components/inquiry/InquiryProvider';
 export function BookCallButton({
   label = 'Make Extraordinary',
   tone = 'ink',
-  variant = 'solid',
   className,
 }: {
   label?: string;
@@ -16,22 +15,10 @@ export function BookCallButton({
 }) {
   const { openInquiry } = useInquiry();
 
-  if (variant === 'quiet') {
-    return (
-      <button
-        type="button"
-        className={`inline-flex w-fit rounded-md bg-black/[0.06] px-4 py-2 text-sm text-ink ${className ?? ''}`}
-        onClick={() => openInquiry()}
-      >
-        {label}
-      </button>
-    );
-  }
-
   return (
     <button
       type="button"
-      className={`inline-flex transition-opacity duration-300 hover:opacity-85 ${className ?? ''}`}
+      className={`inline-flex cursor-pointer border-0 bg-transparent p-0 ${className ?? ''}`}
       onClick={() => openInquiry()}
     >
       <PillLabel label={label} tone={tone} />

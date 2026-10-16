@@ -270,14 +270,6 @@
         {
           "type": "silentVideo",
           "vimeoId": "1100899910"
-        },
-        {
-          "type": "image",
-          "src": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/6925d90134abc6be8484c828_Screenshot 2025-11-25 at 6.24.05 PM.png"
-        },
-        {
-          "type": "image",
-          "src": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/6925dfe40474aa9b474c3695_Screenshot 2025-11-25 at 6.56.58 PM.png"
         }
       ],
       "story": [
@@ -296,20 +288,12 @@
         {
           "type": "silentVideo",
           "vimeoId": "1100899910"
-        },
-        {
-          "type": "image",
-          "src": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/6925d90134abc6be8484c828_Screenshot 2025-11-25 at 6.24.05 PM.png"
-        },
-        {
-          "type": "image",
-          "src": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/6925dfe40474aa9b474c3695_Screenshot 2025-11-25 at 6.56.58 PM.png"
         }
       ]
     },
     "up-hellas": {
-      "thumb": "/work/up-hellas/poster.png",
-      "poster": "/work/up-hellas/poster.png",
+      "thumb": "/work/up-hellas/header.png",
+      "poster": "/work/up-hellas/header.png",
       "heroVideo": "1148438581",
       "body": [
         "UP Hellas wanted to create a Christmas story inspired by \"A Christmas Carol\", but with a twist. This was initially meant to be a small and simple video, but we advised that if the goal was to create something character driven, the best approach was to fully deliver the goods. And so we did.",

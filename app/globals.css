@@ -58,6 +58,11 @@ body {
   outline-offset: 2px;
 }
 
+/* An underlined field shows focus on its own line instead. */
+[data-field] :focus-visible {
+  outline: none;
+}
+
 /* In the base layer, so a utility on the element itself still wins — a
    heading set in the sans asks for it by class. Unlayered, this rule would
    beat every Tailwind utility. */

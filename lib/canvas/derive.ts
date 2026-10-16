@@ -14,7 +14,7 @@ const ABOUT_SWATCH: Partial<Record<AboutSectionKey, string>> = {
 };
 
 // Keyed by slug: the CMS has no country field for projects yet.
-const PROJECT_COUNTRY: Record<string, string> = {
+export const PROJECT_COUNTRY: Record<string, string> = {
   scania: 'Sweden',
   scytales: 'Sweden',
   'scytales-2': 'Sweden',

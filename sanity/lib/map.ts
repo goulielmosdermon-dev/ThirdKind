@@ -195,6 +195,13 @@ const PROJECT_ORDER: Record<string, number> = {
 
 /** Stills the CMS still has wrong, keyed by slug until those fields are edited. */
 const PROJECT_STILL: Record<string, ImageAsset> = {
+  scania: {
+    src: '/work/scania/header.png',
+    alt: 'Scania Vehicle E-Wallet',
+    width: 2242,
+    height: 1256,
+    unoptimized: true,
+  },
   'up-hellas': {
     src: '/work/up-hellas/header.png',
     alt: 'UP Hellas A Christmas UP-ROL',

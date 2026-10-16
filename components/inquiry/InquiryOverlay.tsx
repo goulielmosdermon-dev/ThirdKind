@@ -33,23 +33,30 @@ function Field({
         delay: reduced ? 0 : 0.16 + index * 0.055,
         ease: MOTION.easeOut,
       }}
-      className="flex flex-col gap-1.5 rounded-md bg-black/[0.06] px-4 py-3"
+      // Drawn like the site's buttons: no fill or box, a hairline under the
+      // words, and the display italic on the label while the field is in use.
+      data-field=""
+      className="group/field flex flex-col gap-2 border-b border-ink pb-2 focus-within:shadow-[0_1px_0_0_var(--color-ink)]"
     >
-      <span className="text-[0.7rem] leading-none text-mute">{label}</span>
+      <span className="font-sans text-[0.78rem] leading-none text-mute not-italic group-focus-within/field:font-display group-focus-within/field:text-ink group-focus-within/field:italic group-hover/field:font-display group-hover/field:italic">
+        {label}
+      </span>
       {children}
     </motion.label>
   );
 }
 
 const inputClass =
-  'w-full bg-transparent text-[0.95rem] text-ink outline-none placeholder:text-mute/70';
+  'w-full bg-transparent font-sans text-[clamp(1rem,1.5vw,1.2rem)] leading-snug text-ink outline-none placeholder:text-mute/70';
 
-const selectClass = `${inputClass} appearance-none pr-6`;
+// Required and still on the empty option, a select is :invalid: it reads as a
+// placeholder until something is picked.
+const selectClass = `${inputClass} appearance-none pr-6 invalid:text-mute/70`;
 
 function Chevron() {
   return (
     <span
-      className="pointer-events-none absolute right-0 bottom-1 text-mute"
+      className="pointer-events-none absolute right-0 bottom-2 text-ink"
       aria-hidden
     >
       <svg viewBox="0 0 12 8" className="h-2 w-3">
@@ -191,7 +198,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
         className={`relative z-10 w-full overflow-y-auto bg-paper px-5 pt-3 pb-6 outline-none ${
           framed
             ? 'max-h-full shadow-[0_-8px_40px_rgba(28,26,22,0.12)]'
-            : 'max-h-[min(94dvh,52rem)] max-w-[28rem] shadow-[0_-8px_40px_rgba(28,26,22,0.12)] sm:rounded-md sm:px-6'
+            : 'max-h-[min(94dvh,52rem)] max-w-[28rem] shadow-[0_-8px_40px_rgba(28,26,22,0.12)] sm:px-6'
         }`}
       >
         <div className="mb-2 flex justify-end">
@@ -224,29 +231,27 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
               stay on screen: this panel waits underneath with the invitee
               still to hand.
             */}
-            {calendlyUrl() ? (
+            <div className="mt-8 flex flex-wrap items-baseline gap-x-8 gap-y-4">
+              {calendlyUrl() ? (
+                <button
+                  type="button"
+                  className="inline-flex cursor-pointer border-0 bg-transparent p-0"
+                  onClick={() => void openCalendly(booking)}
+                >
+                  <PillLabel label="Pick a time" />
+                </button>
+              ) : null}
               <button
                 type="button"
-                className="mt-6 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white"
-                onClick={() => void openCalendly(booking)}
+                className="inline-flex cursor-pointer border-0 bg-transparent p-0"
+                onClick={onClose}
               >
-                Pick a time
+                <PillLabel label="Close" />
               </button>
-            ) : null}
-            <button
-              type="button"
-              className={
-                calendlyUrl()
-                  ? 'mt-2 w-full rounded-md bg-black/[0.06] py-3 text-center text-[0.95rem] text-ink'
-                  : 'mt-6 w-full rounded-md bg-ink py-3.5 text-center text-[0.95rem] text-white'
-              }
-              onClick={onClose}
-            >
-              Close
-            </button>
+            </div>
           </div>
         ) : (
-          <form className="flex flex-col gap-2.5" onSubmit={onSubmit}>
+          <form className="flex flex-col gap-6" onSubmit={onSubmit}>
             <input
               type="text"
               name="website"
@@ -374,7 +379,7 @@ export function InquiryOverlay({ onClose }: { onClose: () => void }) {
                 delay: reduced ? 0 : 0.16 + 9 * 0.055,
                 ease: MOTION.easeOut,
               }}
-              className="mt-3 inline-flex cursor-pointer border-0 bg-transparent p-0 disabled:opacity-60"
+              className="mt-4 inline-flex cursor-pointer border-0 bg-transparent p-0 disabled:opacity-60"
             >
               <PillLabel label={pending ? 'Sending…' : 'Make Extraordinary'} />
             </motion.button>

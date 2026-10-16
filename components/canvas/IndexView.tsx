@@ -18,6 +18,7 @@ import { MaskedCycle } from '@/components/chrome/MaskedCycle';
 import { MOTION } from '@/lib/motion/tokens';
 import { HeroReel } from '@/components/canvas/HeroReel';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
+import { PillLabel } from '@/components/sheet/PillLabel';
 import { ThoughtsReel } from '@/components/canvas/ThoughtsReel';
 
 function IndexArrow() {
@@ -86,18 +87,17 @@ const SLOT = [
     // Half again the width it closed on, and the cap comes off with it or the
     // share of the column it is given stops meaning anything past 36rem.
     wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[69%] md:max-w-none',
-    // Half the height it stood at, so the frame is read across rather than
-    // cropped to a portrait of the middle of it.
-    aspect: 'aspect-[4/5] md:aspect-[8/5]',
+    // The Nordic Collection's slot, at the same frame it has in the Work sheet.
+    aspect: 'aspect-[20/21]',
   },
 ] as const;
 
-const MANIFESTO_COPY =
-  'Nobody likes being interrupted or preached at. What people want is to be entertained, to feel, and to believe. When a business means that, customers trust.';
+const MANIFESTO_LEAD =
+  'Nobody likes being interrupted or preached at. What people want is to be entertained, to feel, and to believe. When a business means that, customers';
 
 /**
- * The Why copy, one paragraph. When the band comes on screen the wrapped
- * lines rise in one after another, then stand.
+ * The Why copy, one paragraph, standing still. Only its last word moves: it
+ * comes up slowly out of nothing once the band is on screen.
  */
 function ManifestoBand({
   phone,
@@ -107,48 +107,7 @@ function ManifestoBand({
   sectionRef: RefObject<HTMLElement | null>;
 }) {
   const reduced = useReducedMotion() ?? false;
-  const measureRef = useRef<HTMLParagraphElement>(null);
-  const [lines, setLines] = useState<string[]>([MANIFESTO_COPY]);
   const [shown, setShown] = useState(reduced);
-
-  useEffect(() => {
-    const host = measureRef.current;
-    if (!host) {
-      return;
-    }
-    const measure = () => {
-      const words = MANIFESTO_COPY.split(/\s+/);
-      const probe = document.createElement('span');
-      probe.style.cssText =
-        'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none';
-      const cs = getComputedStyle(host);
-      probe.style.font = cs.font;
-      probe.style.letterSpacing = cs.letterSpacing;
-      host.appendChild(probe);
-      const max = host.clientWidth;
-      const next: string[] = [];
-      let current = '';
-      for (const word of words) {
-        const trial = current ? `${current} ${word}` : word;
-        probe.textContent = trial;
-        if (current && probe.offsetWidth > max) {
-          next.push(current);
-          current = word;
-        } else {
-          current = trial;
-        }
-      }
-      if (current) {
-        next.push(current);
-      }
-      probe.remove();
-      setLines(next);
-    };
-    measure();
-    const watcher = new ResizeObserver(measure);
-    watcher.observe(host);
-    return () => watcher.disconnect();
-  }, []);
 
   useEffect(() => {
     if (reduced) {
@@ -187,29 +146,24 @@ function ManifestoBand({
             : 'px-12 py-14 md:px-[12vw] md:py-[clamp(6rem,11vw,22rem)]'
         }
       >
-        <p
-          ref={measureRef}
-          className="font-display text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.08] tracking-[-0.015em]"
-        >
-          {lines.map((line, index) => (
-            <span
-              key={`${index}-${line}`}
-              className="block overflow-hidden pt-[0.12em] pb-[0.26em] -mt-[0.12em]"
-            >
-              <motion.span
-                className="block"
-                initial={reduced ? false : { y: '110%' }}
-                animate={{ y: shown || reduced ? '0%' : '110%' }}
-                transition={{
-                  duration: reduced ? MOTION.reduced : 0.85,
-                  delay: reduced || !shown ? 0 : index * 0.14,
-                  ease: MOTION.easeOut,
-                }}
-              >
-                {line}
-              </motion.span>
-            </span>
-          ))}
+        <p className="font-display text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
+          {MANIFESTO_LEAD}{' '}
+          <motion.span
+            className="inline-block"
+            initial={reduced ? false : { opacity: 0, filter: 'blur(10px)' }}
+            animate={
+              shown
+                ? { opacity: 1, filter: 'blur(0px)' }
+                : { opacity: 0, filter: 'blur(10px)' }
+            }
+            transition={{
+              duration: reduced ? MOTION.reduced : 2.6,
+              delay: reduced ? 0 : 0.4,
+              ease: [0.33, 0, 0.67, 1],
+            }}
+          >
+            trust.
+          </motion.span>
         </p>
       </div>
     </section>
@@ -655,6 +609,20 @@ export function IndexView({
             );
           })}
         </ul>
+
+        <div
+          className={`flex justify-center ${phone ? 'mt-14' : 'mt-[clamp(4rem,7vw,10rem)]'}`}
+        >
+          <button
+            type="button"
+            className="cursor-pointer border-0 bg-transparent p-0"
+            onClick={() => onOpen('/work', '')}
+            onPointerEnter={() => onPrefetch?.('/work')}
+            onFocus={() => onPrefetch?.('/work')}
+          >
+            <PillLabel label="Explore more" />
+          </button>
+        </div>
 
         <ThoughtsRun
           items={thoughts}

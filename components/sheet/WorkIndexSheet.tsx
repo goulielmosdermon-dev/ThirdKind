@@ -1,12 +1,16 @@
 'use client';
 
+import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { Sheet } from '@/components/sheet/Sheet';
+import { PROJECT_COUNTRY } from '@/lib/canvas/derive';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
+import { MOTION } from '@/lib/motion/tokens';
+import { EDITORIAL_LINE } from '@/lib/type/display';
 import type { Project } from '@/types/content';
 
 /**
@@ -14,6 +18,13 @@ import type { Project } from '@/types/content';
  * pictures rather than a stack of identical boxes.
  */
 const ASPECTS = ['16/10', '3/4', '16/9', '1/1', '4/5', '3/2'] as const;
+
+/** Crops set by hand, by slug, where the cycle's crop does not suit the picture. */
+const ASPECT_BY_SLUG: Record<string, string> = {
+  // Kept in step with its slot in the home index.
+  'augustine-jewels': '20/21',
+  scytales: '4/3',
+};
 
 /**
  * Column widths, repeated across however many columns there is room for. They
@@ -36,14 +47,58 @@ function ProjectCard({
   aspect: string;
   eager: boolean;
 }) {
+  const reduced = useReducedMotion() ?? false;
+  const [active, setActive] = useState(false);
+  const tags = project.credits
+    .map((credit) => credit.role)
+    .filter((role) => role.trim().length > 0);
+  const country = PROJECT_COUNTRY[project.slug.current];
+  const sameName = project.client.trim() === project.title.trim();
+
+  const copy = {
+    off: { transition: { staggerChildren: 0 } },
+    on: { transition: { staggerChildren: reduced ? 0 : 0.07 } },
+  };
+  const line = {
+    off: { y: '110%', transition: { duration: MOTION.reduced } },
+    on: {
+      y: '0%',
+      transition: {
+        duration: reduced ? MOTION.reduced : 0.55,
+        ease: MOTION.easeOut,
+      },
+    },
+  };
+  const tag = {
+    off: {
+      opacity: 0,
+      y: reduced ? 0 : 6,
+      transition: { duration: MOTION.reduced },
+    },
+    on: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: reduced ? MOTION.reduced : 0.45,
+        ease: MOTION.easeOut,
+      },
+    },
+  };
+
   return (
     <AppLink
       href={`/work/${project.slug.current}`}
       className="group block w-full"
+      onPointerEnter={() => setActive(true)}
+      onPointerLeave={() => setActive(false)}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
     >
-      <span
+      <motion.span
         className="relative block w-full overflow-hidden bg-hairline"
         style={{ aspectRatio: aspect }}
+        initial={false}
+        animate={active ? 'on' : 'off'}
       >
         <span className="tk-loading absolute inset-0" aria-hidden />
         <Image
@@ -57,15 +112,51 @@ function ProjectCard({
           sizes="560px"
           quality={95}
           unoptimized={isUnoptimizedAsset(project.thumbnail)}
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          className="object-cover"
         />
-      </span>
-      <span className="mt-3 block text-[0.82rem] leading-tight text-mute">
-        {project.client}
-      </span>
-      <span className="font-display mt-1 block text-[1.05rem] leading-tight text-ink">
-        {project.title}
-      </span>
+        <motion.span
+          variants={copy}
+          className="absolute inset-x-0 bottom-0 flex flex-col items-start p-[clamp(1rem,2cqi,1.75rem)] text-white"
+        >
+          <span className="block overflow-hidden pt-[0.12em] pb-[0.26em]">
+            <motion.span
+              variants={line}
+              className="font-display block leading-snug"
+              style={{ fontSize: EDITORIAL_LINE }}
+            >
+              {sameName ? (
+                project.title
+              ) : (
+                <>
+                  {project.title}{' '}
+                  <span className="text-white/70">{project.client}</span>
+                </>
+              )}
+            </motion.span>
+          </span>
+          {tags.length || country ? (
+            <span className="mt-2 flex flex-wrap gap-1.5">
+              {tags.map((name) => (
+                <motion.span
+                  key={name}
+                  variants={tag}
+                  className="rounded-full border border-white/60 px-3 py-1 text-[0.78rem] leading-none"
+                >
+                  {name}
+                </motion.span>
+              ))}
+              {country ? (
+                <motion.span
+                  variants={tag}
+                  className="border border-white/60 px-3 py-1 text-[0.78rem] leading-none"
+                >
+                  {country}
+                </motion.span>
+              ) : null}
+            </span>
+          ) : null}
+        </motion.span>
+      </motion.span>
     </AppLink>
   );
 }
@@ -109,7 +200,8 @@ export function WorkIndexSheet({
   const cards = projects.map((project, index) => ({
     key: index,
     project,
-    aspect: ASPECTS[index % ASPECTS.length]!,
+    aspect:
+      ASPECT_BY_SLUG[project.slug.current] ?? ASPECTS[index % ASPECTS.length]!,
   }));
   const lanes = Array.from({ length: columns }, (_, lane) =>
     cards.filter((card) => card.key % columns === lane),
@@ -134,7 +226,8 @@ export function WorkIndexSheet({
           {lanes.map((lane, index) => (
             <div
               key={index}
-              className="flex min-w-0 flex-col gap-[4cqi] max-md:gap-10"
+              // The same gap down a column as across the columns.
+              className="flex min-w-0 flex-col gap-[1.6cqi] max-md:gap-5"
               style={{ flex: `${WEIGHTS[index % WEIGHTS.length]} 1 0%` }}
             >
               {lane.map((card) => (

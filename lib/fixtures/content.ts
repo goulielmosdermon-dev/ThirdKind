@@ -149,6 +149,7 @@ const LOCAL_STILL: Record<string, { width: number; height: number }> = {
   '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/sc-2.jpg': { width: 5504, height: 3072 },
+  '/work/scania/header.png': { width: 2242, height: 1256 },
   '/work/up-hellas/header.png': { width: 2688, height: 1500 },
   '/work/up-hellas/poster.png': { width: 1736, height: 974 },
   '/work/up-hellas/still-1.png': { width: 1314, height: 1158 },
@@ -209,7 +210,7 @@ function hydrateProject(project: Project): Project {
     // Thumbnails are only ever shown small, so they keep going through the
     // optimiser even when the full-size still beside them does not.
     thumbnail:
-      project.slug.current === 'up-hellas'
+      project.slug.current === 'up-hellas' || project.slug.current === 'scania'
         ? remote(project.thumbnail.alt, item.thumb)
         : optimized(remote(project.thumbnail.alt, item.thumb)),
     posterImage: remote(project.posterImage.alt, item.poster || item.thumb),

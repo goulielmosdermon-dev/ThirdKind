@@ -5,8 +5,8 @@ import { chapters, credits } from './deck';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Mind The Hack — Communications & Demand Strategy',
-  description: 'A strategy from ThirdKind Creative.',
+  title: 'Mind The Hack — Content Strategy',
+  description: 'A content strategy from ThirdKind Creative.',
   robots: { index: false, follow: false },
 };
 
@@ -20,9 +20,9 @@ export default function Page() {
       // replaced on the spot, so the wheel moves the deck on rather than
       // moving the page past it.
       motion="swap"
-      // Read a slide at a time, so the index folds away behind a hamburger
-      // rather than standing down the margin of every slide.
-      nav="menu"
+      // The chapters sit on screen as tags, so the index is a way through
+      // the deck rather than a list folded behind a hamburger.
+      nav="tags"
     />
   );
 }

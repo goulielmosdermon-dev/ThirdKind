@@ -60,9 +60,12 @@ export type Slide = {
 export function SwapRun({
   slides,
   className,
+  padLeft = false,
 }: {
   slides: Slide[];
   className: string;
+  /** Room for a tag index standing down the left of the frame. */
+  padLeft?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -265,7 +268,7 @@ export function SwapRun({
                 >
                   {slide.chapterTitle ? (
                     <p
-                      className="font-display mb-6 text-[1.75rem] leading-[1.15] font-bold text-ink md:mb-8"
+                      className="font-display mb-6 text-[1.75rem] leading-[1.15] font-extrabold text-ink md:mb-8"
                       style={moveStyle(state, i)}
                     >
                       {slide.chapterTitle}
@@ -293,33 +296,30 @@ export function SwapRun({
 
       {/* The controls ride with the viewport, not with the run: they are the
           one part of the deck that is always in the same place. */}
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30">
+      <div
+        className={`pointer-events-none fixed inset-x-0 bottom-0 z-30 ${
+          padLeft ? 'left-48 md:left-52' : ''
+        }`}
+      >
         <div className="pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-between gap-6 px-5 pb-5 md:px-10 md:pb-7">
           <p className="font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute uppercase tabular-nums">
             {String(active + 1).padStart(2, '0')} /{' '}
             {String(slides.length).padStart(2, '0')}
           </p>
 
-          <div className="flex items-center gap-4">
-            {/* Said once, beside the thing it describes. Kept off a phone,
-                which has no arrow keys to press. */}
-            <p className="hidden font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute md:block">
-              Click left or right arrow on the keyboard to navigate
-            </p>
-            <div className="flex items-center gap-2">
-              <StepButton
-                label="Previous slide"
-                disabled={active === 0}
-                onClick={() => go(active - 1)}
-                d="M15 5 8 12l7 7"
-              />
-              <StepButton
-                label="Next slide"
-                disabled={active === slides.length - 1}
-                onClick={() => go(active + 1)}
-                d="M9 5l7 7-7 7"
-              />
-            </div>
+          <div className="flex items-center gap-2">
+            <StepButton
+              label="Previous slide"
+              disabled={active === 0}
+              onClick={() => go(active - 1)}
+              d="M15 5 8 12l7 7"
+            />
+            <StepButton
+              label="Next slide"
+              disabled={active === slides.length - 1}
+              onClick={() => go(active + 1)}
+              d="M9 5l7 7-7 7"
+            />
           </div>
         </div>
 

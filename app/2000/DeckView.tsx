@@ -9,6 +9,7 @@ import { PinnedRun } from './PinnedRun';
 import { Quadrant } from './Quadrant';
 import { SwapRun, type Slide } from './SwapRun';
 import { Reveal } from './Reveal';
+import { HoverTags } from './HoverTags';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
 import { type Brand } from './brands';
 import {
@@ -17,11 +18,17 @@ import {
   type Block,
   type Chapter,
   type Credit,
+  type ListItem,
   type Plate,
 } from './deck';
 
 /** One font, one size — everything on the page uses this and nothing else. */
 const TEXT = 'font-display text-[1.375rem] leading-[1.3]';
+
+/** Chapter names. Extra bold so a title is always the heavy cut of Nib,
+    whether it sits above a text slide or in the left of a list. */
+const TITLE =
+  'font-display text-[1.75rem] leading-[1.15] font-extrabold text-ink';
 
 /** The index sits at half the deck's size, in the site sans — it labels, it
     doesn't speak, so it stays out of the deck's voice. Set in caps, with the
@@ -92,7 +99,15 @@ function Frame({
  * A block with no frame of its own: no full-height box, no fade, no sticky.
  * The run it sits in owns all of that — this is only what the slide shows.
  */
-function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
+function SlideBody({
+  block,
+  heading = false,
+}: {
+  block: Exclude<Block, { kind: 'text' }>;
+  /** The list title is standing in for the chapter name, so it takes the
+      title cut rather than the body. */
+  heading?: boolean;
+}) {
   switch (block.kind) {
     case 'lead':
       return block.image ? (
@@ -108,7 +123,7 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
              already cut out, and multiplying would only dirty its colour. */
           className={`mx-auto h-auto w-[min(34rem,78vw)] ${
             block.image.src.endsWith('.svg') ? '' : 'mix-blend-multiply'
-          }`}
+          } ${block.image.grade ?? ''}`}
         />
       ) : (
         <p className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}>
@@ -218,7 +233,11 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
     case 'list': {
       const groups = 'groups' in block ? block.groups : undefined;
       const items = 'items' in block ? block.items : undefined;
-      const termed = Boolean(items?.some((item) => Array.isArray(item)));
+      const plot = 'plot' in block ? block.plot : undefined;
+      const boxed = 'boxed' in block && block.boxed;
+      const hover = 'hover' in block && block.hover;
+      const termed =
+        !hover && Boolean(items?.some((item) => Array.isArray(item)));
 
       const tags = (names: readonly string[]) => (
         <ul className="flex flex-wrap gap-2">
@@ -229,6 +248,52 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
               </span>
             </li>
           ))}
+        </ul>
+      );
+
+      const terms = (rows: readonly ListItem[]) => (
+        <dl className="flex flex-col gap-[3.5vh]">
+          {rows.map((item) => {
+            const [term, note] = Array.isArray(item)
+              ? item
+              : [item as string, ''];
+            return (
+              <div key={term}>
+                <dt className={TEXT}>{term}</dt>
+                {note ? (
+                  <dd className={`mt-[0.4em] max-w-[38ch] ${TEXT} text-mute`}>
+                    {note}
+                  </dd>
+                ) : null}
+              </div>
+            );
+          })}
+        </dl>
+      );
+
+      const boxedTags = (rows: readonly ListItem[], stacked = false) => (
+        <ul
+          className={
+            stacked ? 'flex flex-col gap-5' : 'flex flex-wrap gap-x-3 gap-y-5'
+          }
+        >
+          {rows.map((item) => {
+            const [term, note] = Array.isArray(item)
+              ? item
+              : [item as string, ''];
+            return (
+              <li key={term} className="flex items-center gap-2">
+                <span className="shrink-0 rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
+                  {term}
+                </span>
+                {note ? (
+                  <span className="border border-hairline px-4 py-2 text-[0.95rem] leading-[1.3] text-mute">
+                    {note}
+                  </span>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       );
 
@@ -247,34 +312,47 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
         );
       }
 
+      /* A list beside a plot: the same two columns the list already uses,
+         with the chart where the tags would sit. */
+      if (plot) {
+        return (
+          <div className="grid grid-cols-1 items-center gap-[4vh] md:grid-cols-2 md:gap-16">
+            <div>
+              {block.title ? (
+                <p className={`mb-[4vh] ${TEXT}`}>{block.title}</p>
+              ) : null}
+              {hover && items ? (
+                <HoverTags items={items} />
+              ) : boxed && items ? (
+                boxedTags(items, true)
+              ) : termed && items ? (
+                terms(items)
+              ) : (
+                tags((items ?? []).map((item) => String(item)))
+              )}
+            </div>
+            <Quadrant
+              block={plot}
+              className="mx-auto w-full max-w-[41.5rem] text-[clamp(0.71rem,1.4vw,1.13rem)]"
+            />
+          </div>
+        );
+      }
+
       return (
         <div className="grid grid-cols-1 gap-[4vh] md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-16">
           {block.title ? (
-            <p className={TEXT}>{block.title}</p>
+            <p className={heading ? TITLE : TEXT}>{block.title}</p>
           ) : (
             <div aria-hidden />
           )}
 
-          {termed && items ? (
-            <dl className="flex flex-col gap-[3.5vh]">
-              {items.map((item) => {
-                const [term, note] = Array.isArray(item)
-                  ? item
-                  : [item as string, ''];
-                return (
-                  <div key={term}>
-                    <dt className={TEXT}>{term}</dt>
-                    {note ? (
-                      <dd
-                        className={`mt-[0.4em] max-w-[38ch] ${TEXT} text-mute`}
-                      >
-                        {note}
-                      </dd>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </dl>
+          {hover && items ? (
+            <HoverTags items={items} />
+          ) : boxed && items ? (
+            boxedTags(items)
+          ) : termed && items ? (
+            terms(items)
           ) : (
             tags((items ?? []).map((item) => String(item)))
           )}
@@ -408,7 +486,7 @@ function BlockView({
               // that travels down it.
               <div className="md:h-full">
                 <div className="md:sticky md:top-[22vh]">
-                  <Reveal className={TEXT} lines={[block.title]} />
+                  <Reveal className={TITLE} lines={[block.title]} />
                 </div>
               </div>
             ) : (
@@ -665,11 +743,10 @@ export function Deck({
    */
   motion?: 'pinned' | 'swap';
   /**
-   * How the index is carried: down the left margin, or behind a hamburger.
-   * A deck read a slide at a time wants the second — the list is a way back
-   * rather than something standing beside every slide.
+   * How the index is carried: down the left margin, behind a hamburger, or
+   * as tags across the top.
    */
-  nav?: 'rail' | 'menu';
+  nav?: 'rail' | 'menu' | 'tags';
 }) {
   const swap = motion === 'swap';
 
@@ -687,13 +764,20 @@ export function Deck({
               : chapter.title,
           ...(block.kind === 'text'
             ? { lines: block.lines }
-            : { node: <SlideBody block={block} /> }),
+            : {
+                node: (
+                  <SlideBody
+                    block={block}
+                    heading={saysTitle(block, chapter.title)}
+                  />
+                ),
+              }),
         })),
       )
     : [];
   const entries = chapters
     .filter((c) => !c.unlisted)
-    .map((c) => ({ id: c.id, title: c.title }));
+    .map((c) => ({ id: c.id, title: c.nav ?? c.title }));
 
   return (
     <div className="bg-paper text-ink">
@@ -706,9 +790,9 @@ export function Deck({
       <main
         // The rail stands in the left margin and the page is inset to clear
         // it; a menu takes no room of its own.
-        className={`flex flex-col ${nav === 'rail' ? 'lg:pl-44' : ''} ${
-          swap ? '' : 'gap-[16vh] py-[12vh]'
-        }`}
+        className={`flex flex-col ${
+          nav === 'tags' ? 'pl-48 md:pl-52' : nav === 'rail' ? 'lg:pl-44' : ''
+        } ${swap ? '' : 'gap-[16vh] py-[12vh]'}`}
       >
         {brand?.logo ? (
           <Column>
@@ -741,7 +825,11 @@ export function Deck({
                 {chapter.title}
               </h2>
             ))}
-            <SwapRun slides={slides} className={TEXT} />
+            <SwapRun
+              slides={slides}
+              className={TEXT}
+              padLeft={nav === 'tags'}
+            />
           </>
         ) : (
           chapters.map((chapter, ci) => (

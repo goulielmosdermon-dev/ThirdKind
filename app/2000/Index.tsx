@@ -18,10 +18,10 @@ export function DeckIndex({
   textClass: string;
   /**
    * How the index is carried. `rail` stands the whole list down the left
-   * margin; `menu` folds it behind a hamburger, which is what a deck read
-   * full-screen wants — the list is a way back, not something to read.
+   * margin; `menu` folds it behind a hamburger; `tags` keeps every chapter
+   * on screen as a pill, which is what a short deck wants.
    */
-  variant?: 'rail' | 'menu';
+  variant?: 'rail' | 'menu' | 'tags';
 }) {
   const [open, setOpen] = useState(false);
   const menuId = useId();
@@ -61,6 +61,33 @@ export function DeckIndex({
     window.addEventListener('keydown', onKey, true);
     return () => window.removeEventListener('keydown', onKey, true);
   }, [open]);
+
+  if (variant === 'tags') {
+    return (
+      <nav
+        aria-label="Index"
+        className="pointer-events-none fixed top-0 left-0 z-40 flex h-full w-48 flex-col justify-center gap-1.5 pl-3 md:w-52 md:pl-4"
+      >
+        {entries.map((e) => {
+          const current = active === e.id;
+          return (
+            <a
+              key={e.id}
+              href={`#ch-${e.id}`}
+              aria-current={current ? 'true' : undefined}
+              className={`pointer-events-auto self-start rounded-full border px-2.5 py-[0.3rem] font-sans text-[0.5625rem] leading-none font-extrabold tracking-[0.08em] uppercase whitespace-nowrap transition-opacity duration-fast ${
+                current
+                  ? 'border-ink text-ink'
+                  : 'border-hairline text-mute hover:opacity-100'
+              }`}
+            >
+              {e.title}
+            </a>
+          );
+        })}
+      </nav>
+    );
+  }
 
   if (variant === 'menu') {
     return (

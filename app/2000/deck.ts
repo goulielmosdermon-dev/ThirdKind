@@ -16,14 +16,43 @@ export type Plate = {
   w: number;
   h: number;
   alt: string;
+  /** A grade on the picture — grayscale, contrast — left off for a straight still. */
+  grade?: string;
 };
 
 export type Row = readonly [label: string, value: string];
 
-export type ListItem = string | readonly [term: string, note: string];
+export type ListItem =
+  | string
+  | readonly [term: string, note: string]
+  | readonly [term: string, note: string, image: Plate];
 
 /** A labelled run of tags, so a slide can carry more than one shelf. */
 export type TagGroup = { label: string; items: readonly string[] };
+
+/**
+ * A positioning plot: two axes, a field of competitors, and us.
+ *
+ * Drawn rather than shown as a picture, so the type is the deck's own and
+ * the thing stays sharp and readable at any size. Coordinates run -1 to 1
+ * from the crossing of the axes — x to the right, y upward — which is how
+ * the plot is read, and keeps the numbers meaningful if the box changes
+ * shape.
+ */
+export type QuadrantBlock = {
+  kind: 'quadrant';
+  title: string;
+  axes: { top: string; right: string; bottom: string; left: string };
+  points: {
+    label: string;
+    x: number;
+    y: number;
+    /** Which side of the dot the name sits on. Defaults to the right. */
+    side?: 'left' | 'right';
+    /** Us. Larger, in the deck's own voice, and in the accent. */
+    mark?: boolean;
+  }[];
+};
 
 export type Block =
   | { kind: 'full'; image: Plate; caption?: string }
@@ -41,11 +70,24 @@ export type Block =
    * A standfirst over an itemised run — what a text slide cannot hold.
    *
    * A plain item flows as a tag. One given a note is a thing with something
-   * to say about it, so the run sets them out as terms instead. `groups`
-   * is the same tags, shelved under labels, for a slide that has more than
-   * one kind of thing to name.
+   * to say about it, so the run sets them out as terms instead. `boxed`
+   * keeps the tag and puts the note in a square under it. `hover` keeps the
+   * tag and drops the note — and a still, if one is carried — in underneath
+   * on hover. `groups` is the same tags, shelved under labels, for a slide
+   * that has more than one kind of thing to name.
    */
-  | { kind: 'list'; title?: string; items: ListItem[]; groups?: undefined }
+  | {
+      kind: 'list';
+      title?: string;
+      items: ListItem[];
+      groups?: undefined;
+      /** The competition plot, sitting beside the list on the same slide. */
+      plot?: QuadrantBlock;
+      /** Tag on top, square note under it — an answer, not a second tag. */
+      boxed?: boolean;
+      /** Tag stays a tag; the note appears beneath it on hover. */
+      hover?: boolean;
+    }
   | { kind: 'list'; title?: string; groups: TagGroup[]; items?: undefined }
   /**
    * A board of stills, read as one image rather than as several.
@@ -56,29 +98,7 @@ export type Block =
    * are, instead of being dealt out two to a slide.
    */
   | { kind: 'mosaic'; images: Plate[]; caption?: string }
-  /**
-   * A positioning plot: two axes, a field of competitors, and us.
-   *
-   * Drawn rather than shown as a picture, so the type is the deck's own and
-   * the thing stays sharp and readable at any size. Coordinates run -1 to 1
-   * from the crossing of the axes — x to the right, y upward — which is how
-   * the plot is read, and keeps the numbers meaningful if the box changes
-   * shape.
-   */
-  | {
-      kind: 'quadrant';
-      title: string;
-      axes: { top: string; right: string; bottom: string; left: string };
-      points: {
-        label: string;
-        x: number;
-        y: number;
-        /** Which side of the dot the name sits on. Defaults to the right. */
-        side?: 'left' | 'right';
-        /** Us. Larger, in the deck's own voice, and in the accent. */
-        mark?: boolean;
-      }[];
-    }
+  | QuadrantBlock
   /** A piece of music, named and playable. */
   | { kind: 'sound'; src: string; title: string; artist: string }
   /** A film, in the site's own player. */
@@ -104,6 +124,8 @@ export type Chapter = {
   /** Anchor id for the section; the rail links to it. */
   id: string;
   title: string;
+  /** Shorter name in the index, when the slide title is longer than the list wants. */
+  nav?: string;
   /** Off the index — the section still renders, it just isn't listed. */
   unlisted?: boolean;
   blocks: Block[];

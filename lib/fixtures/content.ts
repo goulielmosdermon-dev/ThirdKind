@@ -751,12 +751,12 @@ const aboutSections: AboutSection[] = [
     teamMembers: [
       {
         name: 'Goulielmos Dermon',
-        role: 'Creative Director',
+        role: 'Founder',
         portrait: image('Goulielmos Dermon'),
       },
       {
         name: 'Gonçalo Claro Da Fonseca',
-        role: 'Producer',
+        role: 'Chief Creative Officer / Portugal',
         portrait: image('Gonçalo Claro Da Fonseca'),
       },
       {

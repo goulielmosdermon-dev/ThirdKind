@@ -23,3 +23,9 @@ export const DISPLAY_BALANCE = '1em';
  */
 export const EDITORIAL_LINE = 'clamp(1.15rem, 2.2vw, 1.65rem)';
 export const EDITORIAL_LINE_PHONE = 'clamp(1rem, 4vw, 1.22rem)';
+
+/**
+ * The size of the line the page opens on — "Extraordinary" on the header.
+ * A piece's own title, once you are inside it, is set the same.
+ */
+export const HEADER_LINE = 'clamp(2rem, 4.8vw, 4.5rem)';

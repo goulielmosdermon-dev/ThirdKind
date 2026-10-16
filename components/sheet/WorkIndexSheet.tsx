@@ -13,6 +13,7 @@ import {
   coverFocusStyle,
   isUnoptimizedAsset,
 } from '@/lib/content/mediaSrc';
+import { useMobileSpotlight } from '@/lib/chrome/useMobileSpotlight';
 import { MOTION } from '@/lib/motion/tokens';
 import { EDITORIAL_LINE } from '@/lib/type/display';
 import type { Project } from '@/types/content';
@@ -46,13 +47,22 @@ function ProjectCard({
   project,
   aspect,
   eager,
+  mobile,
+  spotlighted,
+  index,
+  setNode,
 }: {
   project: Project;
   aspect: string;
   eager: boolean;
+  mobile: boolean;
+  spotlighted: boolean;
+  index: number;
+  setNode: (index: number, node: HTMLElement | null) => void;
 }) {
   const reduced = useReducedMotion() ?? false;
-  const [active, setActive] = useState(false);
+  const [hover, setHover] = useState(false);
+  const active = mobile ? spotlighted : hover;
   const tags = project.credits
     .map((credit) => credit.role)
     .filter((role) => role.trim().length > 0);
@@ -93,10 +103,11 @@ function ProjectCard({
     <AppLink
       href={`/work/${project.slug.current}`}
       className="group block w-full"
-      onPointerEnter={() => setActive(true)}
-      onPointerLeave={() => setActive(false)}
-      onFocus={() => setActive(true)}
-      onBlur={() => setActive(false)}
+      ref={(node) => setNode(index, node)}
+      onPointerEnter={mobile ? undefined : () => setHover(true)}
+      onPointerLeave={mobile ? undefined : () => setHover(false)}
+      onFocus={mobile ? undefined : () => setHover(true)}
+      onBlur={mobile ? undefined : () => setHover(false)}
     >
       <motion.span
         className={`relative block w-full overflow-hidden bg-hairline transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -180,6 +191,7 @@ export function WorkIndexSheet({
   const framed = useFramed();
   const gridRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(2);
+  const { mobile, activeIndex, setNode } = useMobileSpotlight(projects.length);
 
   // Column count is worked out here rather than in CSS because the cards are
   // dealt into the columns one by one: the wall has to know how many there
@@ -245,6 +257,10 @@ export function WorkIndexSheet({
                   project={card.project}
                   aspect={card.aspect}
                   eager={card.key < columns * 2}
+                  mobile={mobile}
+                  spotlighted={activeIndex === card.key}
+                  index={card.key}
+                  setNode={setNode}
                 />
               ))}
             </div>

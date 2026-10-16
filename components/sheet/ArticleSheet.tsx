@@ -6,7 +6,7 @@ import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
-import { EDITORIAL_LINE } from '@/lib/type/display';
+import { HEADER_LINE } from '@/lib/type/display';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import type { Article } from '@/types/content';
 
@@ -47,13 +47,11 @@ export function ArticleSheet({
           className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
           <p className="text-sm text-mute">Idea</p>
-          {/* A piece's title is set exactly as its line in the index was —
-              the one editorial size, at the same weight and the same leading
-              — so opening it is not a change of voice. The weight has to be
-              said out loud: headings carry 600 from the base layer. */}
+          {/* The piece's own title, at the header's size and weight, so
+              opening a thought is the same voice the page opens on. */}
           <h1
-            className="font-display mt-4 w-full max-w-[40ch] leading-snug font-normal text-balance text-ink"
-            style={{ fontSize: EDITORIAL_LINE }}
+            className="font-display mt-4 w-full max-w-[18ch] leading-[1.02] font-bold tracking-[-0.015em] text-balance text-ink"
+            style={{ fontSize: HEADER_LINE }}
           >
             {article.title}
           </h1>

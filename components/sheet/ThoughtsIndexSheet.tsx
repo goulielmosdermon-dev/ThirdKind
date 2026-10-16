@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { Sheet } from '@/components/sheet/Sheet';
+import { useMobileSpotlight } from '@/lib/chrome/useMobileSpotlight';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { MOTION } from '@/lib/motion/tokens';
 import { EDITORIAL_LINE } from '@/lib/type/display';
@@ -27,9 +28,24 @@ function published(value: string): string {
 /** One crop for every still, the portrait of the reference card. */
 const CARD_ASPECT = '4 / 5';
 
-function ArticleCard({ article, eager }: { article: Article; eager: boolean }) {
+function ArticleCard({
+  article,
+  eager,
+  mobile,
+  spotlighted,
+  index,
+  setNode,
+}: {
+  article: Article;
+  eager: boolean;
+  mobile: boolean;
+  spotlighted: boolean;
+  index: number;
+  setNode: (index: number, node: HTMLElement | null) => void;
+}) {
   const reduced = useReducedMotion() ?? false;
-  const [active, setActive] = useState(false);
+  const [hover, setHover] = useState(false);
+  const active = mobile ? spotlighted : hover;
   const tags = (article.tags ?? []).filter((tag) => tag.trim().length > 0);
 
   const copy = {
@@ -76,10 +92,11 @@ function ArticleCard({ article, eager }: { article: Article; eager: boolean }) {
     <AppLink
       href={`/thoughts/${article.slug.current}`}
       className="group block w-full"
-      onPointerEnter={() => setActive(true)}
-      onPointerLeave={() => setActive(false)}
-      onFocus={() => setActive(true)}
-      onBlur={() => setActive(false)}
+      ref={(node) => setNode(index, node)}
+      onPointerEnter={mobile ? undefined : () => setHover(true)}
+      onPointerLeave={mobile ? undefined : () => setHover(false)}
+      onFocus={mobile ? undefined : () => setHover(true)}
+      onBlur={mobile ? undefined : () => setHover(false)}
     >
       <motion.span
         className={`relative block w-full overflow-hidden bg-hairline transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -143,6 +160,7 @@ function ArticleCard({ article, eager }: { article: Article; eager: boolean }) {
 
 export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
   const framed = useFramed();
+  const { mobile, activeIndex, setNode } = useMobileSpotlight(articles.length);
 
   return (
     <Sheet title="Thoughts" tone="editorial">
@@ -163,6 +181,10 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
               key={article._id}
               article={article}
               eager={index < 9}
+              mobile={mobile}
+              spotlighted={activeIndex === index}
+              index={index}
+              setNode={setNode}
             />
           ))}
         </div>

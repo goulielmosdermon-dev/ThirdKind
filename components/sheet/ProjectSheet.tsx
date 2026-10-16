@@ -7,7 +7,11 @@ import { AppLink } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
 import { HeroFilm, WorkReel, WorkStory } from '@/components/sheet/WorkMedia';
-import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
+import {
+  COVER_FOCUS_FRAME,
+  coverFocusStyle,
+  isUnoptimizedAsset,
+} from '@/lib/content/mediaSrc';
 import { vimeoIdFromUrl } from '@/lib/content/vimeo';
 import type { Project } from '@/types/content';
 
@@ -29,15 +33,18 @@ export function ProjectSheet({
           className="relative min-h-[var(--frame-h,100dvh)] overflow-hidden"
         >
           <span className="tk-loading absolute inset-0" aria-hidden />
-          <Image
-            src={project.posterImage.src}
-            alt={project.posterImage.alt}
-            fill
-            priority
-            sizes="100vw"
-            unoptimized={isUnoptimizedAsset(project.posterImage)}
-            className="object-cover"
-          />
+          <span className={COVER_FOCUS_FRAME}>
+            <Image
+              src={project.posterImage.src}
+              alt={project.posterImage.alt}
+              fill
+              priority
+              sizes="100vw"
+              unoptimized={isUnoptimizedAsset(project.posterImage)}
+              style={coverFocusStyle(project.posterImage)}
+              className="object-cover"
+            />
+          </span>
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
             aria-hidden

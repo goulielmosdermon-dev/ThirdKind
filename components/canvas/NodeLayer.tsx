@@ -34,7 +34,11 @@ import {
 } from '@/lib/canvas/gridLayout';
 import { leafReadingOrder } from '@/lib/canvas/readingOrder';
 import { INITIAL_FOCUS_WORLD, type ViewportSize } from '@/lib/canvas/viewport';
-import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
+import {
+  COVER_FOCUS_FRAME,
+  coverFocusStyle,
+  isUnoptimizedAsset,
+} from '@/lib/content/mediaSrc';
 import { MOTION } from '@/lib/motion/tokens';
 
 const PRIORITY_COUNT = 6;
@@ -433,7 +437,7 @@ export function NodeLayer({
                 />
               ) : null}
               {visible && !node.swatch ? (
-                <span className="absolute inset-0">
+                <span className={COVER_FOCUS_FRAME}>
                   <Image
                     src={node.thumbnail.src}
                     alt={node.thumbnail.alt}
@@ -447,6 +451,7 @@ export function NodeLayer({
                         onAspect(node.id, img.naturalHeight / img.naturalWidth);
                       }
                     }}
+                    style={coverFocusStyle(node.thumbnail)}
                     className="object-cover"
                   />
                 </span>

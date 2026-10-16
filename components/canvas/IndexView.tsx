@@ -11,7 +11,11 @@ import {
   editorialLeaves,
   editorialThoughts,
 } from '@/lib/canvas/editorial';
-import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
+import {
+  COVER_FOCUS_FRAME,
+  coverFocusStyle,
+  isUnoptimizedAsset,
+} from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
 import { EDITORIAL_LINE, EDITORIAL_LINE_PHONE } from '@/lib/type/display';
 import { MaskedCycle } from '@/components/chrome/MaskedCycle';
@@ -591,17 +595,20 @@ export function IndexView({
                         style={{ backgroundColor: node.swatch }}
                       />
                     ) : (
-                      <Image
-                        src={node.thumbnail.src}
-                        alt={node.thumbnail.alt}
-                        fill
-                        sizes={
-                          phone ? '393px' : '(min-width: 768px) 55vw, 92vw'
-                        }
-                        priority={index < 3}
-                        unoptimized={isUnoptimizedAsset(node.thumbnail)}
-                        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
-                      />
+                      <span className={COVER_FOCUS_FRAME}>
+                        <Image
+                          src={node.thumbnail.src}
+                          alt={node.thumbnail.alt}
+                          fill
+                          sizes={
+                            phone ? '393px' : '(min-width: 768px) 55vw, 92vw'
+                          }
+                          priority={index < 3}
+                          unoptimized={isUnoptimizedAsset(node.thumbnail)}
+                          style={coverFocusStyle(node.thumbnail)}
+                          className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
+                        />
+                      </span>
                     )}
                   </motion.span>
                 </button>

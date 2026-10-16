@@ -8,7 +8,11 @@ import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { Sheet } from '@/components/sheet/Sheet';
 import { PROJECT_COUNTRY } from '@/lib/canvas/derive';
-import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
+import {
+  COVER_FOCUS_FRAME,
+  coverFocusStyle,
+  isUnoptimizedAsset,
+} from '@/lib/content/mediaSrc';
 import { MOTION } from '@/lib/motion/tokens';
 import { EDITORIAL_LINE } from '@/lib/type/display';
 import type { Project } from '@/types/content';
@@ -101,19 +105,22 @@ function ProjectCard({
         animate={active ? 'on' : 'off'}
       >
         <span className="tk-loading absolute inset-0" aria-hidden />
-        <Image
-          src={project.thumbnail.src}
-          alt=""
-          fill
-          priority={eager}
-          loading={eager ? undefined : 'lazy'}
-          // Well over the card's own width, and at a quality that leaves the
-          // grain alone: nothing here should look re-encoded.
-          sizes="560px"
-          quality={95}
-          unoptimized={isUnoptimizedAsset(project.thumbnail)}
-          className="object-cover"
-        />
+        <span className={COVER_FOCUS_FRAME}>
+          <Image
+            src={project.thumbnail.src}
+            alt=""
+            fill
+            priority={eager}
+            loading={eager ? undefined : 'lazy'}
+            // Well over the card's own width, and at a quality that leaves the
+            // grain alone: nothing here should look re-encoded.
+            sizes="560px"
+            quality={95}
+            unoptimized={isUnoptimizedAsset(project.thumbnail)}
+            style={coverFocusStyle(project.thumbnail)}
+            className="object-cover"
+          />
+        </span>
         <motion.span
           variants={copy}
           className="absolute inset-x-0 bottom-0 flex flex-col items-start p-[clamp(1rem,2cqi,1.75rem)] text-white"

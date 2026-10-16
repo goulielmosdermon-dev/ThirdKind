@@ -142,14 +142,22 @@ function hydrateAboutSection(section: AboutSection): AboutSection {
  * the browser instead, so the only compression it carries is the one it
  * arrived with.
  */
-const LOCAL_STILL: Record<string, { width: number; height: number }> = {
+const LOCAL_STILL: Record<
+  string,
+  Pick<ImageAsset, 'width' | 'height' | 'hotspot'>
+> = {
   'https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/69d13ffb069cb974023ae6ff_thumb.jpg':
     { width: 1562, height: 1066 },
   '/work/scytales-2/gmb-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/sc-2.jpg': { width: 5504, height: 3072 },
-  '/work/scania/header.png': { width: 2242, height: 1256 },
+  // The truck stands a little right of the frame's middle.
+  '/work/scania/header.png': {
+    width: 2242,
+    height: 1256,
+    hotspot: { x: 0.519, y: 0.5 },
+  },
   '/work/up-hellas/header.png': { width: 2688, height: 1500 },
   '/work/up-hellas/poster.png': { width: 1736, height: 974 },
   '/work/up-hellas/still-1.png': { width: 1314, height: 1158 },

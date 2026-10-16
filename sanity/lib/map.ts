@@ -200,6 +200,7 @@ const PROJECT_STILL: Record<string, ImageAsset> = {
     alt: 'Scania Vehicle E-Wallet',
     width: 2242,
     height: 1256,
+    hotspot: { x: 0.519, y: 0.5 },
     unoptimized: true,
   },
   'up-hellas': {

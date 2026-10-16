@@ -751,7 +751,7 @@ const aboutSections: AboutSection[] = [
     teamMembers: [
       {
         name: 'Goulielmos Dermon',
-        role: 'Founder',
+        role: 'Founder / CEO',
         portrait: image('Goulielmos Dermon'),
       },
       {

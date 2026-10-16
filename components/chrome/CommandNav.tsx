@@ -67,9 +67,10 @@ export function CommandNav({
   // used to leave the bar in its light state, unreadable.
   const dark = useBackdropTone(rootRef) === 'dark';
   // The bar keeps off the showcase and rises into place once the reader has
-  // scrolled on to the band of sayings below it.
+  // scrolled on to the band of sayings below it. A page opened over the
+  // showcase has left it behind already, so the bar is there for that page.
   const { headerPassed } = usePageScroll();
-  const waiting = !embedded && !headerPassed;
+  const waiting = !embedded && !headerPassed && path === '/';
 
   useEffect(() => {
     if (!open) {

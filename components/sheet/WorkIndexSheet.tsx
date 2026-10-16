@@ -99,7 +99,9 @@ function ProjectCard({
       onBlur={() => setActive(false)}
     >
       <motion.span
-        className="relative block w-full overflow-hidden bg-hairline"
+        className={`relative block w-full overflow-hidden bg-hairline transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          active ? 'rounded-[30px]' : 'rounded-none'
+        }`}
         style={{ aspectRatio: aspect }}
         initial={false}
         animate={active ? 'on' : 'off'}

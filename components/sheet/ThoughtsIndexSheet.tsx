@@ -1,12 +1,15 @@
 'use client';
 
+import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
+import { MOTION } from '@/lib/motion/tokens';
+import { EDITORIAL_LINE } from '@/lib/type/display';
 import type { Article } from '@/types/content';
 
 function published(value: string): string {
@@ -21,37 +24,70 @@ function published(value: string): string {
   });
 }
 
-/**
- * The crops the grid cycles through, so a column reads as a run of different
- * pictures rather than a stack of identical boxes. Same wall as the work.
- */
-const ASPECTS = ['16/10', '3/4', '16/9', '1/1', '4/5', '3/2'] as const;
+/** One crop for every still, the portrait of the reference card. */
+const CARD_ASPECT = '4 / 5';
 
-/** Column widths, close to even but never quite. */
-const WEIGHTS = [1, 0.88, 1.16, 0.94, 1.08] as const;
+function ArticleCard({ article, eager }: { article: Article; eager: boolean }) {
+  const reduced = useReducedMotion() ?? false;
+  const [active, setActive] = useState(false);
+  const tags = (article.tags ?? []).filter((tag) => tag.trim().length > 0);
 
-/** How many columns fit at a given width. Two at most. */
-function columnsFor(width: number): number {
-  return width < 560 ? 1 : 2;
-}
+  const copy = {
+    off: { transition: { staggerChildren: 0 } },
+    on: { transition: { staggerChildren: reduced ? 0 : 0.07 } },
+  };
+  const line = {
+    off: { y: '110%', transition: { duration: MOTION.reduced } },
+    on: {
+      y: '0%',
+      transition: {
+        duration: reduced ? MOTION.reduced : 0.55,
+        ease: MOTION.easeOut,
+      },
+    },
+  };
+  const tag = {
+    off: {
+      opacity: 0,
+      y: reduced ? 0 : 6,
+      transition: { duration: MOTION.reduced },
+    },
+    on: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: reduced ? MOTION.reduced : 0.45,
+        ease: MOTION.easeOut,
+      },
+    },
+  };
+  const wash = {
+    off: { opacity: 0, transition: { duration: MOTION.reduced } },
+    on: {
+      opacity: 1,
+      transition: {
+        duration: reduced ? MOTION.reduced : 0.45,
+        ease: MOTION.easeOut,
+      },
+    },
+  };
 
-function ArticleCard({
-  article,
-  aspect,
-  eager,
-}: {
-  article: Article;
-  aspect: string;
-  eager: boolean;
-}) {
   return (
     <AppLink
       href={`/thoughts/${article.slug.current}`}
       className="group block w-full"
+      onPointerEnter={() => setActive(true)}
+      onPointerLeave={() => setActive(false)}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
     >
-      <span
-        className="relative block w-full overflow-hidden bg-hairline"
-        style={{ aspectRatio: aspect }}
+      <motion.span
+        className={`relative block w-full overflow-hidden bg-hairline transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          active ? 'rounded-[30px]' : 'rounded-none'
+        }`}
+        style={{ aspectRatio: CARD_ASPECT }}
+        initial={false}
+        animate={active ? 'on' : 'off'}
       >
         <span className="tk-loading absolute inset-0" aria-hidden />
         <Image
@@ -60,17 +96,46 @@ function ArticleCard({
           fill
           priority={eager}
           loading={eager ? undefined : 'lazy'}
-          sizes="560px"
+          sizes="(min-width: 768px) 30vw, 92vw"
           quality={95}
           unoptimized={isUnoptimizedAsset(article.coverImage)}
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          className="object-cover"
         />
-      </span>
+        <motion.span
+          variants={wash}
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/80 via-black/35 to-transparent"
+        />
+        <motion.span
+          variants={copy}
+          className="absolute inset-x-0 bottom-0 flex flex-col items-start p-[clamp(1rem,2cqi,1.75rem)] text-white"
+        >
+          <span className="block overflow-hidden pt-[0.12em] pb-[0.26em]">
+            <motion.span
+              variants={line}
+              className="font-display block leading-snug"
+              style={{ fontSize: EDITORIAL_LINE }}
+            >
+              {article.title}
+            </motion.span>
+          </span>
+          {tags.length ? (
+            <span className="mt-2 flex flex-wrap gap-1.5">
+              {tags.map((name) => (
+                <motion.span
+                  key={name}
+                  variants={tag}
+                  className="rounded-full border border-white/60 px-3 py-1 text-[0.78rem] leading-none"
+                >
+                  {name}
+                </motion.span>
+              ))}
+            </span>
+          ) : null}
+        </motion.span>
+      </motion.span>
       <span className="mt-3 block text-[0.82rem] leading-tight text-mute">
         {published(article.publishedAt)}
-      </span>
-      <span className="font-display mt-1 block text-[1.05rem] leading-tight text-ink">
-        {article.title}
       </span>
     </AppLink>
   );
@@ -78,34 +143,6 @@ function ArticleCard({
 
 export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
   const framed = useFramed();
-  const gridRef = useRef<HTMLDivElement>(null);
-  const [columns, setColumns] = useState(2);
-
-  // Column count is worked out here rather than in CSS because the cards are
-  // dealt into the columns one by one: the grid has to know how many there
-  // are before it can share them out.
-  useEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) {
-      return;
-    }
-    const measure = () => setColumns(columnsFor(grid.clientWidth));
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(grid);
-    return () => observer.disconnect();
-  }, []);
-
-  // One deal of the archive, dropped into the columns in turn so they stay
-  // level however tall each card is.
-  const cards = articles.map((article, index) => ({
-    key: index,
-    article,
-    aspect: ASPECTS[index % ASPECTS.length]!,
-  }));
-  const lanes = Array.from({ length: columns }, (_, lane) =>
-    cards.filter((card) => card.key % columns === lane),
-  );
 
   return (
     <Sheet title="Thoughts" tone="editorial">
@@ -120,25 +157,13 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
           <IndexHeading name="Thoughts" />
         </div>
 
-        <div
-          ref={gridRef}
-          className="flex items-start gap-[1.6cqi] px-[3cqi] pt-[3cqi] pb-[6cqi] max-md:gap-5 max-md:px-12"
-        >
-          {lanes.map((lane, index) => (
-            <div
-              key={index}
-              className="flex min-w-0 flex-col gap-[4cqi] max-md:gap-10"
-              style={{ flex: `${WEIGHTS[index % WEIGHTS.length]} 1 0%` }}
-            >
-              {lane.map((card) => (
-                <ArticleCard
-                  key={card.key}
-                  article={card.article}
-                  aspect={card.aspect}
-                  eager={card.key < columns * 2}
-                />
-              ))}
-            </div>
+        <div className="grid grid-cols-1 gap-[1.6cqi] px-[3cqi] pt-[3cqi] pb-[6cqi] max-md:gap-5 max-md:px-12 @md:grid-cols-3">
+          {articles.map((article, index) => (
+            <ArticleCard
+              key={article._id}
+              article={article}
+              eager={index < 9}
+            />
           ))}
         </div>
       </div>

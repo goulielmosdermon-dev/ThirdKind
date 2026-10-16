@@ -587,29 +587,33 @@ export function IndexView({
                     // round "Explore" grows out of nothing and follows the
                     // pointer, and shrinks away again on the way out.
                     data-explore
-                    className={`relative block w-full overflow-hidden bg-paper ${slot.aspect}`}
+                    className={`relative block w-full ${slot.aspect}`}
                   >
-                    {node.swatch ? (
-                      <span
-                        className="absolute inset-0"
-                        style={{ backgroundColor: node.swatch }}
-                      />
-                    ) : (
-                      <span className={COVER_FOCUS_FRAME}>
-                        <Image
-                          src={node.thumbnail.src}
-                          alt={node.thumbnail.alt}
-                          fill
-                          sizes={
-                            phone ? '393px' : '(min-width: 768px) 55vw, 92vw'
-                          }
-                          priority={index < 3}
-                          unoptimized={isUnoptimizedAsset(node.thumbnail)}
-                          style={coverFocusStyle(node.thumbnail)}
-                          className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
+                    {/* Radius lives on the inner frame so the wipe's clip-path
+                        does not square the corners off again. */}
+                    <span className="absolute inset-0 overflow-hidden bg-paper transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-none group-hover:rounded-[30px] group-focus-visible:rounded-[30px]">
+                      {node.swatch ? (
+                        <span
+                          className="absolute inset-0"
+                          style={{ backgroundColor: node.swatch }}
                         />
-                      </span>
-                    )}
+                      ) : (
+                        <span className={COVER_FOCUS_FRAME}>
+                          <Image
+                            src={node.thumbnail.src}
+                            alt={node.thumbnail.alt}
+                            fill
+                            sizes={
+                              phone ? '393px' : '(min-width: 768px) 55vw, 92vw'
+                            }
+                            priority={index < 3}
+                            unoptimized={isUnoptimizedAsset(node.thumbnail)}
+                            style={coverFocusStyle(node.thumbnail)}
+                            className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
+                          />
+                        </span>
+                      )}
+                    </span>
                   </motion.span>
                 </button>
               </motion.li>

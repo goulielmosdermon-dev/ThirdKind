@@ -22,6 +22,9 @@ export type Row = readonly [label: string, value: string];
 
 export type ListItem = string | readonly [term: string, note: string];
 
+/** A labelled run of tags, so a slide can carry more than one shelf. */
+export type TagGroup = { label: string; items: readonly string[] };
+
 export type Block =
   | { kind: 'full'; image: Plate; caption?: string }
   | { kind: 'pair'; images: [Plate, Plate]; caption?: string }
@@ -38,9 +41,12 @@ export type Block =
    * A standfirst over an itemised run — what a text slide cannot hold.
    *
    * A plain item flows as a tag. One given a note is a thing with something
-   * to say about it, so the run sets them out as terms instead.
+   * to say about it, so the run sets them out as terms instead. `groups`
+   * is the same tags, shelved under labels, for a slide that has more than
+   * one kind of thing to name.
    */
-  | { kind: 'list'; title?: string; items: ListItem[] }
+  | { kind: 'list'; title?: string; items: ListItem[]; groups?: undefined }
+  | { kind: 'list'; title?: string; groups: TagGroup[]; items?: undefined }
   /**
    * A board of stills, read as one image rather than as several.
    *

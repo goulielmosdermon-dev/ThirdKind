@@ -458,6 +458,90 @@ export const chapters: Chapter[] = [
   },
   {
     id: '22',
+    title: 'What this returns',
+    blocks: [
+      {
+        kind: 'list',
+        groups: [
+          {
+            label: 'Sales & growth',
+            items: [
+              'Top-of-mind recall',
+              'Faster sales',
+              'Sales enablement',
+              'Market expansion',
+              'Bigger clients',
+              'Escape price wars',
+            ],
+          },
+          {
+            label: 'Money & value',
+            items: [
+              'Pricing power',
+              'Higher valuation',
+              'Cheaper acquisition',
+              'Protected margins',
+            ],
+          },
+          {
+            label: 'People',
+            items: [
+              'Talent attraction',
+              'Faster hiring',
+              'Employee retention',
+              'Internal alignment',
+            ],
+          },
+          {
+            label: 'Reputation & resilience',
+            items: [
+              'Crisis protection',
+              'Differentiation',
+              'Long-term relevance',
+              'Challenger defense',
+            ],
+          },
+          {
+            label: 'Relationships',
+            items: [
+              'Client loyalty',
+              'More referrals',
+              'Partner attraction',
+              'Credibility',
+            ],
+          },
+          {
+            label: 'Strategic',
+            items: ['Clarity', 'Thought leadership', 'Lasting assets'],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '23',
+    title: 'The usual objections',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'The usual objections',
+        items: [
+          'Cost',
+          'Slow payback',
+          'Hard to measure',
+          'Overpromising risk',
+          'Unwanted attention',
+          'Internal friction',
+          'Wrong message',
+          'Inconsistency',
+          'Distraction',
+          'Poaching risk',
+        ],
+      },
+    ],
+  },
+  {
+    id: '24',
     title: 'Why us',
     blocks: [
       {
@@ -471,7 +555,7 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '23',
+    id: '25',
     title: 'Up next',
     blocks: [
       {
@@ -488,7 +572,7 @@ export const chapters: Chapter[] = [
   },
   {
     // Off the index, the way the other decks close.
-    id: '24',
+    id: '26',
     title: 'ThirdKind Creative',
     unlisted: true,
     blocks: [

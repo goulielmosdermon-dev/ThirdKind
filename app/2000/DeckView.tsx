@@ -216,7 +216,36 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
        heading, which has nothing to stick to inside a frame that does not
        scroll. The heading simply holds the left of the slide. */
     case 'list': {
-      const termed = block.items.some((item) => Array.isArray(item));
+      const groups = 'groups' in block ? block.groups : undefined;
+      const items = 'items' in block ? block.items : undefined;
+      const termed = Boolean(items?.some((item) => Array.isArray(item)));
+
+      const tags = (names: readonly string[]) => (
+        <ul className="flex flex-wrap gap-2">
+          {names.map((item) => (
+            <li key={item}>
+              <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+      );
+
+      /* Shelves of tags fill the slide; the chapter name already sits above,
+         so a second heading would only say it twice. */
+      if (groups) {
+        return (
+          <div className="grid grid-cols-2 gap-x-6 gap-y-[2.8vh] md:gap-x-10 lg:grid-cols-3">
+            {groups.map((group) => (
+              <div key={group.label}>
+                <p className={`mb-3 ${NAV} text-mute`}>{group.label}</p>
+                {tags(group.items)}
+              </div>
+            ))}
+          </div>
+        );
+      }
 
       return (
         <div className="grid grid-cols-1 gap-[4vh] md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-16">
@@ -226,9 +255,9 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
             <div aria-hidden />
           )}
 
-          {termed ? (
+          {termed && items ? (
             <dl className="flex flex-col gap-[3.5vh]">
-              {block.items.map((item) => {
+              {items.map((item) => {
                 const [term, note] = Array.isArray(item)
                   ? item
                   : [item as string, ''];
@@ -247,15 +276,7 @@ function SlideBody({ block }: { block: Exclude<Block, { kind: 'text' }> }) {
               })}
             </dl>
           ) : (
-            <ul className="flex flex-wrap gap-2">
-              {block.items.map((item) => (
-                <li key={String(item)}>
-                  <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
-                    {String(item)}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            tags((items ?? []).map((item) => String(item)))
           )}
         </div>
       );
@@ -360,7 +381,23 @@ function BlockView({
        checklist. Ones carrying a note are set out as terms down the column,
        because a tag has nowhere to put the second line. */
     case 'list': {
-      const termed = block.items.some((item) => Array.isArray(item));
+      const groups = 'groups' in block ? block.groups : undefined;
+      const items = 'items' in block ? block.items : undefined;
+      const termed = Boolean(items?.some((item) => Array.isArray(item)));
+
+      const tags = (names: readonly string[], delay = 0) => (
+        <ul className="flex flex-wrap gap-2">
+          {names.map((item, i) => (
+            <li key={item}>
+              <FadeIn delay={delay + i * 0.05}>
+                <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
+                  {item}
+                </span>
+              </FadeIn>
+            </li>
+          ))}
+        </ul>
+      );
 
       return (
         <Column>
@@ -378,9 +415,18 @@ function BlockView({
               <div aria-hidden />
             )}
 
-            {termed ? (
+            {groups ? (
+              <div className="flex flex-col gap-[3.5vh]">
+                {groups.map((group, g) => (
+                  <FadeIn key={group.label} delay={g * 0.08}>
+                    <p className={`mb-3 ${NAV} text-mute`}>{group.label}</p>
+                    {tags(group.items)}
+                  </FadeIn>
+                ))}
+              </div>
+            ) : termed && items ? (
               <dl className="flex flex-col gap-[5vh]">
-                {block.items.map((item, i) => {
+                {items.map((item, i) => {
                   const [term, note] = Array.isArray(item)
                     ? item
                     : [item as string, ''];
@@ -402,17 +448,7 @@ function BlockView({
               /* Set below the deck's reading size: at full size each tag takes
                  a line of its own and the block reads as a list again, which
                  is the one thing it is not. */
-              <ul className="flex flex-wrap gap-2">
-                {block.items.map((item, i) => (
-                  <li key={String(item)}>
-                    <FadeIn delay={i * 0.05}>
-                      <span className="block rounded-full border border-hairline px-4 py-2 text-[0.95rem] leading-none text-mute">
-                        {String(item)}
-                      </span>
-                    </FadeIn>
-                  </li>
-                ))}
-              </ul>
+              tags((items ?? []).map((item) => String(item)))
             )}
           </div>
         </Column>

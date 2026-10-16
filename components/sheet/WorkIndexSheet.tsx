@@ -32,6 +32,15 @@ const ASPECT_BY_SLUG: Record<string, string> = {
 };
 
 /**
+ * Taller crops on a phone, where the cycle's landscape frames read as strips.
+ * Desktop keeps the cycle.
+ */
+const MOBILE_ASPECT_BY_SLUG: Record<string, string> = {
+  'oldboy-brand': '4/5',
+  'a-m': '4/5',
+};
+
+/**
  * Column widths, repeated across however many columns there is room for. They
  * are close to even but never quite, which is what keeps the wall from
  * settling into a table.
@@ -222,7 +231,9 @@ export function WorkIndexSheet({
     key: index,
     project,
     aspect:
-      ASPECT_BY_SLUG[project.slug.current] ?? ASPECTS[index % ASPECTS.length]!,
+      ASPECT_BY_SLUG[project.slug.current] ??
+      (mobile ? MOBILE_ASPECT_BY_SLUG[project.slug.current] : undefined) ??
+      ASPECTS[index % ASPECTS.length]!,
   }));
   const lanes = Array.from({ length: columns }, (_, lane) =>
     cards.filter((card) => card.key % columns === lane),

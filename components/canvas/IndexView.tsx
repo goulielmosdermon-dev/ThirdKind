@@ -88,9 +88,8 @@ const SLOT = [
     aspect: 'aspect-[5/4] md:aspect-[16/9]',
   },
   {
-    // Half again the width it closed on, and the cap comes off with it or the
-    // share of the column it is given stops meaning anything past 36rem.
-    wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[69%] md:max-w-none',
+    // Narrower than the two-thirds it closed on — smaller, not a shorter crop.
+    wrap: 'ml-auto w-full max-w-[36rem] md:mt-24 md:w-[40%] md:max-w-none',
     // The Nordic Collection's slot, at the same frame it has in the Work sheet.
     aspect: 'aspect-[20/21]',
   },
@@ -607,6 +606,7 @@ export function IndexView({
                               phone ? '393px' : '(min-width: 768px) 55vw, 92vw'
                             }
                             priority={index < 3}
+                            quality={95}
                             unoptimized={isUnoptimizedAsset(node.thumbnail)}
                             style={coverFocusStyle(node.thumbnail)}
                             className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"

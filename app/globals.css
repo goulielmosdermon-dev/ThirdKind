@@ -7,6 +7,7 @@
   --color-mute: #6e6860;
   --color-hairline: #d5cfc4;
   --color-signal: #9a7a18;
+  --color-select: #0000ff;
   --color-scrim: #1c1a1626;
 
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
@@ -78,6 +79,44 @@ body {
        smaller than a heading. */
     font-weight: 600;
   }
+}
+
+/* Mind the Hack only: Nib comes off. Headings are SF Bold; the rest is SF Regular. */
+[data-deck='mindthehack'] {
+  --font-display:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+    'Segoe UI', system-ui, sans-serif;
+}
+
+[data-deck='mindthehack'] .font-display {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+    'Segoe UI', system-ui, sans-serif;
+  font-weight: 400;
+}
+
+[data-deck='mindthehack'] h1,
+[data-deck='mindthehack'] h2,
+[data-deck='mindthehack'] h3,
+[data-deck='mindthehack'] h4,
+[data-deck='mindthehack'] h5,
+[data-deck='mindthehack'] h6,
+[data-deck='mindthehack'] .font-display.font-extrabold {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+    'Segoe UI', system-ui, sans-serif;
+  font-weight: 700;
+}
+
+/* Content tags: black stroke and type. The index menu is outside main. */
+[data-deck='mindthehack'] main li span.border {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+[data-deck='mindthehack'] main li span.border-select {
+  border-color: var(--color-select);
+  color: var(--color-select);
 }
 
 @keyframes tk-pulse {

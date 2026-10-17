@@ -66,7 +66,7 @@ export function DeckIndex({
     return (
       <nav
         aria-label="Index"
-        className="pointer-events-none fixed top-0 left-0 z-40 flex h-full w-48 flex-col justify-center gap-1.5 pl-3 md:w-52 md:pl-4"
+        className="pointer-events-none fixed top-0 left-0 z-40 flex h-full w-56 flex-col justify-center gap-1.5 pl-3 md:w-60 md:pl-4"
       >
         {entries.map((e) => {
           const current = active === e.id;
@@ -75,10 +75,11 @@ export function DeckIndex({
               key={e.id}
               href={`#ch-${e.id}`}
               aria-current={current ? 'true' : undefined}
-              className={`pointer-events-auto self-start rounded-full border px-2.5 py-[0.3rem] font-sans text-[0.5625rem] leading-none font-extrabold tracking-[0.08em] uppercase whitespace-nowrap transition-opacity duration-fast ${
+              onClick={() => setActive(e.id)}
+              className={`pointer-events-auto relative self-start py-1 font-sans text-[0.84375rem] leading-none whitespace-nowrap transition-[font-weight,font-variation-settings,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:origin-left after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] after:content-[''] ${
                 current
-                  ? 'border-ink text-ink'
-                  : 'border-hairline text-mute hover:opacity-100'
+                  ? "font-bold text-ink after:scale-x-100 [font-variation-settings:'wght'_700]"
+                  : "font-normal text-mute after:scale-x-0 [font-variation-settings:'wght'_400] hover:text-ink"
               }`}
             >
               {e.title}

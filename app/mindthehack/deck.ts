@@ -17,13 +17,14 @@ const still = (
 /**
  * Mind The Hack — a content strategy.
  *
- * Fifteen slides, carried like Ford: `swap`, so the frame never moves and
+ * Eighteen slides, carried like Ford: `swap`, so the frame never moves and
  * each slide replaces the one before it. One block is one slide.
  */
 export const chapters: Chapter[] = [
   {
     id: '01',
     title: 'Mind The Hack',
+    unlisted: true,
     blocks: [
       {
         kind: 'lead',
@@ -34,138 +35,119 @@ export const chapters: Chapter[] = [
           alt: 'Mind The Hack',
           grade: 'brightness-0',
         },
+        scale: 0.5,
       },
     ],
   },
   {
     id: '02',
-    title: 'The problem',
+    title: 'The Problem',
     blocks: [
       {
         kind: 'list',
         title: 'Great product. Silent brand.',
+        lede: "You're doing everything yourself.",
         items: [
           'No video',
           'No educational content',
           'No product content',
           'A quiet LinkedIn',
         ],
-      },
-    ],
-  },
-  {
-    id: '03',
-    title: 'The real pain',
-    blocks: [
-      {
-        kind: 'text',
-        lines: ["You're doing everything yourself."],
-      },
-    ],
-  },
-  {
-    id: '04',
-    title: 'Why now',
-    blocks: [
-      {
-        kind: 'list',
-        title: 'Regulation is a first buying moment.',
-        boxed: true,
-        items: [
-          ['NIS2', 'Audit due 30 June 2026. Boards now liable.'],
-          ['DORA', 'Already enforceable. Real attack testing.'],
-          ['EU AI Act', 'Tightening through 2026–27.'],
-        ],
-        plot: {
-          kind: 'quadrant',
-          title: 'Nobody owns story + craft. You can.',
-          axes: {
-            top: 'Strong craft',
-            bottom: 'Generic / low craft',
-            left: 'Product-led',
-            right: 'Story-led',
-          },
-          points: [
-            { label: 'Pentera', x: -0.729, y: 0.751 },
-            { label: 'Mind The Hack', x: 0.317, y: 0.739, mark: true },
-            { label: 'Horizon3', x: -0.315, y: 0.475 },
-            { label: 'Cymulate', x: -0.139, y: -0.122 },
-            { label: 'Picus', x: -0.579, y: -0.223, side: 'left' },
-            { label: 'XM Cyber', x: -0.7, y: -0.623 },
-            { label: 'Cytomate', x: -0.348, y: -0.823 },
-          ],
-        },
-      },
-    ],
-  },
-  {
-    id: '05',
-    title: 'The idea',
-    blocks: [
-      {
-        kind: 'text',
-        lines: [
-          "You can't bore people into buying. Educate, entertain, challenge.",
-        ],
+        squares: ['No trust', 'No strategy'],
       },
     ],
   },
   {
     id: '06',
-    title: 'What this returns',
-    nav: 'The Returns',
+    title: 'The Show Up',
     blocks: [
       {
         kind: 'list',
-        title: 'What this returns',
+        title: 'The Show Up',
+        hover: true,
         items: [
-          'Faster sales',
-          'Market expansion',
-          'Credibility',
-          'Talent attraction',
-          'Pricing power',
-          'Your time back',
+          [
+            'Repetition',
+            'Pair the brand with the moment of need, again and again. For a cybersecurity firm, that is the panic after a breach. Repeat it until the problem itself brings the brand to mind.',
+            'arrows',
+          ],
+          [
+            'Resemblance',
+            "Look like the kind of company a buyer can safely choose: polished, confident work. Then one distinctive touch, so you don't blend with every competitor.",
+            'square',
+          ],
+          [
+            'Cause and effect',
+            'Testimonials. They worked with us, and this happened — a story the buyer can repeat to their boss.',
+            'flow',
+          ],
+        ],
+      },
+    ],
+  },
+  {
+    id: '19',
+    title: 'Why',
+    blocks: [
+      {
+        kind: 'text',
+        lines: [
+          'We show up to create trust.',
+          'We show up to create ease for the consumer to make a decision.',
         ],
       },
     ],
   },
   {
     id: '07',
-    title: 'The usual objections',
-    nav: 'Objections',
+    title: 'Cognitive ease',
+    nav: 'Ease',
     blocks: [
       {
-        kind: 'list',
-        title: 'The usual objections',
-        boxed: true,
-        items: [
-          ['Cost', 'Start small. Step one only.'],
-          ['Slow payback', 'Product content works from week one.'],
-          ['Hard to measure', 'Reach, recall, pipeline. Tracked monthly.'],
-          ['No time', 'We run it. You show up.'],
-          ['Inconsistency', 'A weekly rhythm, built for you.'],
+        kind: 'ease',
+        center: 'Ease',
+        from: [
+          'Repeated experience',
+          'Clear display',
+          'Primed idea',
+          'Good mood',
         ],
+        to: ['Feels familiar', 'Feels true', 'Feels good', 'Feels effortless'],
       },
     ],
   },
   {
-    id: '08',
+    id: '05',
+    title: 'The Fundamentals',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'The Fundamentals',
+        items: [],
+        squares: ['Educate', 'Entertain', 'Challenge'],
+      },
+    ],
+  },
+  {
+    id: '10',
     title: 'One step at a time',
     blocks: [
       {
         kind: 'list',
         title: 'One step at a time',
-        items: [
+        items: [],
+        squares: [
           'Product videos and testimonials',
           'Educational LinkedIn content and the brand film',
-          'High-end creative',
+          'High-End Creatives',
         ],
       },
     ],
   },
   {
-    id: '09',
+    id: '11',
     title: 'Step 1',
+    nav: 'The Three Steps',
     blocks: [
       {
         kind: 'list',
@@ -187,8 +169,9 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '10',
+    id: '12',
     title: 'Step 2',
+    unlisted: true,
     blocks: [
       {
         kind: 'list',
@@ -210,8 +193,9 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '11',
+    id: '13',
     title: 'Step 3',
+    unlisted: true,
     blocks: [
       {
         kind: 'list',
@@ -219,7 +203,7 @@ export const chapters: Chapter[] = [
         hover: true,
         items: [
           [
-            'Hero film',
+            'High-End Creatives',
             'Mind the hack. The world is familiar with the London Underground’s “Mind the gap” — which happens, intentionally or not, to be the company name. The hero creative leans into that familiarity, with a campaign that addresses a danger much like falling into the tracks, but for businesses instead. Getting hacked.',
             still(2, 898, 673, 'Towers seen from the pavement'),
           ],
@@ -228,8 +212,8 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '12',
-    title: 'What we need from you',
+    id: '14',
+    title: 'What We Need from You',
     blocks: [
       {
         kind: 'text',
@@ -238,8 +222,108 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '13',
+    id: '18',
+    title: 'B2B',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'People make the purchase. Not the business.',
+        items: [],
+        squares: [
+          'The buy is bigger',
+          'The stake is personal',
+          'They care more',
+          'They have more to lose',
+          'So it has to be exact',
+        ],
+      },
+    ],
+  },
+  {
+    id: '08',
+    title: 'What this returns',
+    nav: 'The Returns',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'What this returns',
+        items: [],
+        accent: true,
+        squares: [
+          'Faster sales',
+          'Market expansion',
+          'Credibility',
+          'Talent attraction',
+          'Pricing power',
+          'Your time back',
+        ],
+      },
+    ],
+  },
+  {
+    id: '09',
+    title: 'The usual objections',
+    nav: 'Objections',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'The usual objections',
+        boxed: true,
+        accent: true,
+        items: [
+          ['Cost', 'Start small. Step one only.'],
+          ['Slow payback', 'Product content works from week one.'],
+          ['Hard to measure', 'Reach, recall, pipeline. Tracked monthly.'],
+          ['No time', 'We run it. You show up.'],
+          ['Inconsistency', 'A weekly rhythm, built for you.'],
+        ],
+      },
+    ],
+  },
+  {
+    id: '04',
+    title: 'Why Now?',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'Regulation is a first buying moment.',
+        boxed: true,
+        items: [
+          ['NIS2', 'Audit due 30 June 2026. Boards now liable.'],
+          ['DORA', 'Already enforceable. Real attack testing.'],
+          ['EU AI Act', 'Tightening through 2026–27.'],
+        ],
+        plot: {
+          kind: 'quadrant',
+          axes: {
+            top: 'Strong craft',
+            bottom: 'Generic / low craft',
+            left: 'Product-led',
+            right: 'Story-led',
+          },
+          points: [
+            { label: 'Pentera', x: -0.729, y: 0.751 },
+            {
+              label: 'Mind The Hack',
+              x: 0.317,
+              y: 0.739,
+              mark: true,
+              logo: { src: '/mindthehack/logo.svg', w: 1912, h: 345 },
+            },
+            { label: 'Horizon3', x: -0.315, y: 0.475 },
+            { label: 'Cymulate', x: -0.139, y: -0.122 },
+            { label: 'Picus', x: -0.579, y: -0.223, side: 'left' },
+            { label: 'XM Cyber', x: -0.7, y: -0.623 },
+            { label: 'Cytomate', x: -0.348, y: -0.823 },
+          ],
+        },
+      },
+    ],
+  },
+  {
+    id: '15',
     title: 'Proof',
+    nav: 'Proof and Success',
     blocks: [
       {
         kind: 'list',
@@ -251,32 +335,115 @@ export const chapters: Chapter[] = [
           ],
         ],
       },
-    ],
-  },
-  {
-    id: '14',
-    title: 'What success looks like',
-    nav: 'Success',
-    blocks: [
       {
-        kind: 'list',
-        title: 'What success looks like',
-        items: [
-          'Reach beyond Greece',
-          'Message recall',
-          'Pipeline from target accounts',
+        kind: 'grid',
+        cells: [
+          {
+            kind: 'film',
+            vimeoId: '1162194421',
+            title: 'Scytáles — Internal Sales',
+            poster: {
+              src: '/work/scytales/sales-1.png',
+              w: 1446,
+              h: 952,
+              alt: 'Scytáles Internal Sales',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1212261799',
+            title: 'Scytáles — Age Verification Connector',
+            poster: {
+              src: '/work/scytales/sales-2.png',
+              w: 1920,
+              h: 1080,
+              alt: 'Scytáles Age Verification Connector',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1174801751',
+            title: 'Scania — Vehicle E-Wallet',
+            poster: {
+              src: '/work/scania/header.png',
+              w: 2242,
+              h: 1256,
+              alt: 'Scania Vehicle E-Wallet',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1212308055',
+            title: 'epay — testimonial',
+            poster: {
+              src: '/work/epay-testimonial.jpg',
+              w: 640,
+              h: 360,
+              alt: 'Customer testimonial',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1205498725',
+            title: 'Scytáles identity — gambling',
+            poster: {
+              src: '/work/scytales-2/gmb-3.jpg',
+              w: 5504,
+              h: 3072,
+              alt: 'Scytáles identity — gambling',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1205498724',
+            title: 'Scytáles identity — social',
+            poster: {
+              src: '/work/scytales-2/str-1.jpg',
+              w: 5504,
+              h: 3072,
+              alt: 'Scytáles identity — social',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1205498726',
+            title: 'Scytáles identity — alcohol',
+            poster: {
+              src: '/work/scytales-2/alc-3.jpg',
+              w: 5504,
+              h: 3072,
+              alt: 'Scytáles identity — alcohol',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1205498727',
+            title: 'Scytáles identity — screen',
+            poster: {
+              src: '/work/scytales-2/sc-2.jpg',
+              w: 5504,
+              h: 3072,
+              alt: 'Scytáles identity — screen',
+            },
+          },
         ],
       },
     ],
   },
   {
-    id: '15',
-    title: 'ThirdKind Creative',
+    id: '16',
+    title: 'What success looks like',
     unlisted: true,
     blocks: [
       {
-        kind: 'text',
-        lines: ['__thirdkindcreative.com|https://thirdkindcreative.com__'],
+        kind: 'list',
+        title: 'What success looks like',
+        items: [],
+        squares: [
+          'Reach beyond Greece',
+          'Message recall',
+          'Pipeline from target accounts',
+        ],
       },
     ],
   },

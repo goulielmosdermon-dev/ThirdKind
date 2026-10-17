@@ -12,18 +12,18 @@ type QuadrantBlock = Extract<Block, { kind: 'quadrant' }>;
 /**
  * The dots, as they were drawn.
  *
- * Taken off the source plots rather than invented: the grey of the field, the
- * accent that marks us, and a rule faint enough that the axes read as a
- * crossing rather than as a frame. They are literal values because that is
- * what they are — this one chart's palette, not the site's.
+ * Taken off the source plots rather than invented: the field in ink, the
+ * accent that marks us, and a rule that reads as a crossing. They are
+ * literal values because that is what they are — this one chart's palette,
+ * not the site's.
  */
-const FIELD = '#8a8a8a';
+const FIELD = 'var(--color-ink)';
 const MARK = '#00c59a';
-const RULE = 'color-mix(in srgb, var(--color-hairline) 62%, transparent)';
+const RULE = 'var(--color-ink)';
 
-/** The axis ends: the deck's voice, set small and tracked so they label. */
+/** The axis ends: body type at the plot's own size, not a caption. */
 const AXIS =
-  'font-display uppercase tracking-[0.14em] text-[0.5em] leading-none text-mute whitespace-nowrap';
+  'font-display text-[0.5em] leading-[1.3] text-ink whitespace-nowrap';
 
 const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
@@ -79,9 +79,11 @@ export function Quadrant({
 
   return (
     <figure className={className}>
-      <figcaption className="mb-[1.2em] font-display text-[0.62em] tracking-[0.16em] text-mute uppercase leading-none">
-        {title}
-      </figcaption>
+      {title ? (
+        <figcaption className="mb-[1.2em] font-display text-[0.62em] tracking-[0.16em] text-mute uppercase leading-none">
+          {title}
+        </figcaption>
+      ) : null}
 
       {/* The box the plot is read in. The top and bottom axis names sit
           outside the crossing, so the plot itself is inset by the room they
@@ -174,32 +176,58 @@ export function Quadrant({
                   transition: move(DOT_IN, delay),
                 }}
               >
-                {/* The dot is centred on the coordinate; the name hangs off
-                    it, on whichever side the plot had it. It comes up small
-                    and settles at size, so the field pops rather than fades. */}
-                <span
-                  aria-hidden
-                  className="absolute rounded-full"
-                  style={{
-                    width: point.mark ? '1.05em' : '0.8em',
-                    height: point.mark ? '1.05em' : '0.8em',
-                    background: point.mark ? MARK : FIELD,
-                    transform: `translate(-50%, -50%) scale(${drawn ? 1 : 0.4})`,
-                    transition: move(DOT_IN, delay),
-                  }}
-                />
-                <span
-                  className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap ${
-                    right ? 'left-[0.85em]' : 'right-[0.85em]'
-                  } ${
-                    point.mark
-                      ? 'font-display text-[0.78em]'
-                      : 'font-sans text-[0.66em] text-ink'
-                  }`}
-                  style={point.mark ? { color: MARK } : undefined}
-                >
-                  {point.label}
-                </span>
+                {point.logo ? (
+                  <span
+                    role="img"
+                    aria-label={point.label}
+                    className="absolute"
+                    style={{
+                      width: '7.6em',
+                      height: `${(7.6 * point.logo.h) / point.logo.w}em`,
+                      background: MARK,
+                      WebkitMaskImage: `url('${point.logo.src}')`,
+                      maskImage: `url('${point.logo.src}')`,
+                      WebkitMaskSize: 'contain',
+                      maskSize: 'contain',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskPosition: 'center',
+                      maskPosition: 'center',
+                      transform: `translate(-9%, -50%) scale(${drawn ? 1 : 0.4})`,
+                      transformOrigin: '0% 50%',
+                      transition: move(DOT_IN, delay),
+                    }}
+                  />
+                ) : (
+                  <>
+                    {/* The dot is centred on the coordinate; the name hangs off
+                        it, on whichever side the plot had it. It comes up small
+                        and settles at size, so the field pops rather than fades. */}
+                    <span
+                      aria-hidden
+                      className="absolute rounded-full"
+                      style={{
+                        width: point.mark ? '1.05em' : '0.8em',
+                        height: point.mark ? '1.05em' : '0.8em',
+                        background: point.mark ? MARK : FIELD,
+                        transform: `translate(-50%, -50%) scale(${drawn ? 1 : 0.4})`,
+                        transition: move(DOT_IN, delay),
+                      }}
+                    />
+                    <span
+                      className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap ${
+                        right ? 'left-[0.85em]' : 'right-[0.85em]'
+                      } ${
+                        point.mark
+                          ? 'font-display text-[0.78em]'
+                          : 'font-sans text-[0.66em] text-ink'
+                      }`}
+                      style={point.mark ? { color: MARK } : undefined}
+                    >
+                      {point.label}
+                    </span>
+                  </>
+                )}
               </div>
             );
           })}

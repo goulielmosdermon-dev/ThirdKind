@@ -19,7 +19,10 @@ export default async function Page({
   if (!deck || !brands[deck]) notFound();
 
   return (
-    <div className="flex min-h-svh items-center bg-paper text-ink">
+    <div
+      data-deck={deck === 'mindthehack' ? 'mindthehack' : undefined}
+      className="flex min-h-svh items-center bg-paper text-ink"
+    >
       <div className="mx-auto w-full max-w-[1180px] px-5 md:px-10">
         <Gate slug={deck} />
       </div>

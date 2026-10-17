@@ -216,9 +216,13 @@ function hydrateProject(project: Project): Project {
   return {
     ...project,
     // Thumbnails are only ever shown small, so they keep going through the
-    // optimiser even when the full-size still beside them does not.
+    // optimiser even when the full-size still beside them does not. The
+    // exceptions are stills we already hold at their own size — they go
+    // to the browser untouched.
     thumbnail:
-      project.slug.current === 'up-hellas' || project.slug.current === 'scania'
+      project.slug.current === 'up-hellas' ||
+      project.slug.current === 'scania' ||
+      project.slug.current === 'augustine-jewels'
         ? remote(project.thumbnail.alt, item.thumb)
         : optimized(remote(project.thumbnail.alt, item.thumb)),
     posterImage: remote(project.posterImage.alt, item.poster || item.thumb),

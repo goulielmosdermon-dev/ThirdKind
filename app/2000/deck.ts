@@ -22,10 +22,19 @@ export type Plate = {
 
 export type Row = readonly [label: string, value: string];
 
+/** How a hover tag is drawn, when it should not be a pill. */
+export type TagShape = 'arrows' | 'square' | 'flow';
+
+/** One cell in a proof grid: a film with its poster, or a still. */
+export type GridCell =
+  | { kind: 'film'; vimeoId: string; title: string; poster?: Plate }
+  | { kind: 'still'; image: Plate };
+
 export type ListItem =
   | string
   | readonly [term: string, note: string]
-  | readonly [term: string, note: string, image: Plate];
+  | readonly [term: string, note: string, image: Plate]
+  | readonly [term: string, note: string, shape: TagShape];
 
 /** A labelled run of tags, so a slide can carry more than one shelf. */
 export type TagGroup = { label: string; items: readonly string[] };
@@ -41,7 +50,7 @@ export type TagGroup = { label: string; items: readonly string[] };
  */
 export type QuadrantBlock = {
   kind: 'quadrant';
-  title: string;
+  title?: string;
   axes: { top: string; right: string; bottom: string; left: string };
   points: {
     label: string;
@@ -51,7 +60,21 @@ export type QuadrantBlock = {
     side?: 'left' | 'right';
     /** Us. Larger, in the deck's own voice, and in the accent. */
     mark?: boolean;
+    /** A mark instead of the dot and name — the logo sits on the point. */
+    logo?: { src: string; w: number; h: number };
   }[];
+};
+
+/**
+ * A cause-and-effect graph: a column of causes, a centre, a column of
+ * consequences, arrows in and out. Drawn, so it stays the slide's own type.
+ */
+export type EaseBlock = {
+  kind: 'ease';
+  caption?: string;
+  center: string;
+  from: readonly string[];
+  to: readonly string[];
 };
 
 export type Block =
@@ -65,7 +88,7 @@ export type Block =
    * A word, or the recipient's mark set the same way.
    */
   | { kind: 'lead'; text: string; image?: undefined }
-  | { kind: 'lead'; image: Plate; text?: undefined }
+  | { kind: 'lead'; image: Plate; text?: undefined; scale?: number }
   /**
    * A standfirst over an itemised run — what a text slide cannot hold.
    *
@@ -87,6 +110,12 @@ export type Block =
       boxed?: boolean;
       /** Tag stays a tag; the note appears beneath it on hover. */
       hover?: boolean;
+      /** A line above the tags — the claim the tags then prove. */
+      lede?: string;
+      /** Square tags under the round ones — a verdict, not another pill. */
+      squares?: readonly string[];
+      /** The square tags in the selection blue, not ink. */
+      accent?: boolean;
     }
   | { kind: 'list'; title?: string; groups: TagGroup[]; items?: undefined }
   /**
@@ -98,7 +127,13 @@ export type Block =
    * are, instead of being dealt out two to a slide.
    */
   | { kind: 'mosaic'; images: Plate[]; caption?: string }
+  /**
+   * Work on one slide: films with their posters, stills beside them.
+   * One cell is one piece. The grid holds the spread.
+   */
+  | { kind: 'grid'; cells: GridCell[] }
   | QuadrantBlock
+  | EaseBlock
   /** A piece of music, named and playable. */
   | { kind: 'sound'; src: string; title: string; artist: string }
   /** A film, in the site's own player. */

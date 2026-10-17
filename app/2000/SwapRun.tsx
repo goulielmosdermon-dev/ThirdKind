@@ -298,7 +298,7 @@ export function SwapRun({
           one part of the deck that is always in the same place. */}
       <div
         className={`pointer-events-none fixed inset-x-0 bottom-0 z-30 ${
-          padLeft ? 'left-48 md:left-52' : ''
+          padLeft ? 'left-56 md:left-60' : ''
         }`}
       >
         <div className="pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-between gap-6 px-5 pb-5 md:px-10 md:pb-7">

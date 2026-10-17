@@ -6,11 +6,14 @@ import { Lead } from './Lead';
 import { SmoothPage } from './SmoothPage';
 import { SoundBar } from './SoundBar';
 import { PinnedRun } from './PinnedRun';
+import { EaseGraph } from './EaseGraph';
 import { Quadrant } from './Quadrant';
 import { SwapRun, type Slide } from './SwapRun';
 import { Reveal } from './Reveal';
 import { HoverTags } from './HoverTags';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
+import { GridFilm } from './GridFilm';
+import type { ImageAsset } from '@/types/content';
 import { type Brand } from './brands';
 import {
   chapters as deck2000,
@@ -95,6 +98,16 @@ function Frame({
   );
 }
 
+function plateAsset(plate: Plate): ImageAsset {
+  return {
+    src: plate.src,
+    alt: plate.alt,
+    width: plate.w,
+    height: plate.h,
+    unoptimized: true,
+  };
+}
+
 /**
  * A block with no frame of its own: no full-height box, no fade, no sticky.
  * The run it sits in owns all of that — this is only what the slide shows.
@@ -121,9 +134,12 @@ function SlideBody({
           /* A raster mark arrives on a white box, and multiply drops it into
              the paper without needing a cut-out of every logo. A vector one is
              already cut out, and multiplying would only dirty its colour. */
-          className={`mx-auto h-auto w-[min(34rem,78vw)] ${
+          className={`mx-auto h-auto ${
             block.image.src.endsWith('.svg') ? '' : 'mix-blend-multiply'
           } ${block.image.grade ?? ''}`}
+          style={{
+            width: `min(${34 * (block.scale ?? 1)}rem, ${78 * (block.scale ?? 1)}vw)`,
+          }}
         />
       ) : (
         <p className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}>
@@ -190,6 +206,40 @@ function SlideBody({
         </figure>
       );
 
+    /* Work as a board: films keep their posters until they play, stills sit
+       in the same cells, so a proof slide can carry both without becoming
+       a run of full-bleed players. */
+    case 'grid':
+      return (
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
+          {block.cells.map((cell, index) =>
+            cell.kind === 'film' ? (
+              <GridFilm
+                key={`${cell.vimeoId}-${index}`}
+                vimeoId={cell.vimeoId}
+                title={cell.title}
+                poster={cell.poster ? plateAsset(cell.poster) : undefined}
+              />
+            ) : (
+              <div
+                key={cell.image.src}
+                className="relative aspect-video overflow-hidden bg-black"
+              >
+                <Image
+                  src={cell.image.src}
+                  alt={cell.image.alt}
+                  width={cell.image.w}
+                  height={cell.image.h}
+                  sizes="(min-width: 768px) 22vw, 45vw"
+                  unoptimized
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+            ),
+          )}
+        </div>
+      );
+
     /* Set by height rather than into a grid: every still keeps its own shape
        and nothing is cropped to make the rows line up. The board wraps into
        two or three rows and reads as one spread, which is the whole reason it
@@ -226,6 +276,14 @@ function SlideBody({
         />
       );
 
+    case 'ease':
+      return (
+        <EaseGraph
+          block={block}
+          className="mx-auto w-full max-w-[52rem] text-[clamp(0.95rem,1.7vw,1.35rem)]"
+        />
+      );
+
     /* A list is a slide in its own right here. It carries none of the page
        version's furniture — no Column, no FadeIn, and above all no sticky
        heading, which has nothing to stick to inside a frame that does not
@@ -236,6 +294,9 @@ function SlideBody({
       const plot = 'plot' in block ? block.plot : undefined;
       const boxed = 'boxed' in block && block.boxed;
       const hover = 'hover' in block && block.hover;
+      const lede = 'lede' in block ? block.lede : undefined;
+      const squares = 'squares' in block ? block.squares : undefined;
+      const accent = 'accent' in block && block.accent;
       const termed =
         !hover && Boolean(items?.some((item) => Array.isArray(item)));
 
@@ -271,6 +332,24 @@ function SlideBody({
         </dl>
       );
 
+      const squareTags = (names: readonly string[]) => (
+        <ul className="flex flex-wrap gap-2">
+          {names.map((item) => (
+            <li key={item}>
+              <span
+                className={`block border px-4 py-2 text-[0.95rem] leading-none ${
+                  accent
+                    ? 'border-select text-select'
+                    : 'border-hairline text-mute'
+                }`}
+              >
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+      );
+
       const boxedTags = (rows: readonly ListItem[], stacked = false) => (
         <ul
           className={
@@ -287,7 +366,13 @@ function SlideBody({
                   {term}
                 </span>
                 {note ? (
-                  <span className="border border-hairline px-4 py-2 text-[0.95rem] leading-[1.3] text-mute">
+                  <span
+                    className={`border px-4 py-2 text-[0.95rem] leading-[1.3] ${
+                      accent
+                        ? 'border-select text-select'
+                        : 'border-hairline text-mute'
+                    }`}
+                  >
                     {note}
                   </span>
                 ) : null}
@@ -314,6 +399,25 @@ function SlideBody({
 
       /* A list beside a plot: the same two columns the list already uses,
          with the chart where the tags would sit. */
+      const shelf = (
+        <>
+          {hover && items ? (
+            <HoverTags items={items} />
+          ) : boxed && items ? (
+            boxedTags(items, Boolean(plot))
+          ) : termed && items ? (
+            terms(items)
+          ) : (
+            tags((items ?? []).map((item) => String(item)))
+          )}
+          {squares?.length ? (
+            <div className={items?.length ? 'mt-5' : undefined}>
+              {squareTags(squares)}
+            </div>
+          ) : null}
+        </>
+      );
+
       if (plot) {
         return (
           <div className="grid grid-cols-1 items-center gap-[4vh] md:grid-cols-2 md:gap-16">
@@ -321,15 +425,10 @@ function SlideBody({
               {block.title ? (
                 <p className={`mb-[4vh] ${TEXT}`}>{block.title}</p>
               ) : null}
-              {hover && items ? (
-                <HoverTags items={items} />
-              ) : boxed && items ? (
-                boxedTags(items, true)
-              ) : termed && items ? (
-                terms(items)
-              ) : (
-                tags((items ?? []).map((item) => String(item)))
-              )}
+              {lede ? (
+                <p className={`mb-5 max-w-[42ch] ${TEXT} text-mute`}>{lede}</p>
+              ) : null}
+              {shelf}
             </div>
             <Quadrant
               block={plot}
@@ -347,15 +446,12 @@ function SlideBody({
             <div aria-hidden />
           )}
 
-          {hover && items ? (
-            <HoverTags items={items} />
-          ) : boxed && items ? (
-            boxedTags(items)
-          ) : termed && items ? (
-            terms(items)
-          ) : (
-            tags((items ?? []).map((item) => String(item)))
-          )}
+          <div>
+            {lede ? (
+              <p className={`mb-5 max-w-[42ch] ${TEXT} text-mute`}>{lede}</p>
+            ) : null}
+            {shelf}
+          </div>
         </div>
       );
     }
@@ -554,6 +650,18 @@ function BlockView({
             <Quadrant
               block={block}
               className="mx-auto w-full max-w-[41.5rem] text-[clamp(0.67rem,1.27vw,1.07rem)]"
+            />
+          </FadeIn>
+        </Column>
+      );
+
+    case 'ease':
+      return (
+        <Column>
+          <FadeIn>
+            <EaseGraph
+              block={block}
+              className="mx-auto w-full max-w-[52rem] text-[clamp(0.9rem,1.55vw,1.25rem)]"
             />
           </FadeIn>
         </Column>
@@ -759,7 +867,9 @@ export function Deck({
           // A logo is its own title, and a slide headed with the chapter's
           // name would only say it twice.
           chapterTitle:
-            block.kind === 'lead' || saysTitle(block, chapter.title)
+            block.kind === 'lead' ||
+            block.kind === 'grid' ||
+            saysTitle(block, chapter.title)
               ? undefined
               : chapter.title,
           ...(block.kind === 'text'
@@ -791,7 +901,7 @@ export function Deck({
         // The rail stands in the left margin and the page is inset to clear
         // it; a menu takes no room of its own.
         className={`flex flex-col ${
-          nav === 'tags' ? 'pl-48 md:pl-52' : nav === 'rail' ? 'lg:pl-44' : ''
+          nav === 'tags' ? 'pl-56 md:pl-60' : nav === 'rail' ? 'lg:pl-44' : ''
         } ${swap ? '' : 'gap-[16vh] py-[12vh]'}`}
       >
         {brand?.logo ? (

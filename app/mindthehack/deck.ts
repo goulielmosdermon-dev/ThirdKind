@@ -17,14 +17,14 @@ const still = (
 /**
  * Mind The Hack — a content strategy.
  *
- * Eighteen slides, carried like Ford: `swap`, so the frame never moves and
+ * Twenty slides, carried like Ford: `swap`, so the frame never moves and
  * each slide replaces the one before it. One block is one slide.
  */
 export const chapters: Chapter[] = [
   {
     id: '01',
     title: 'Mind The Hack',
-    unlisted: true,
+    nav: 'Mind the Hack',
     blocks: [
       {
         kind: 'lead',
@@ -54,6 +54,65 @@ export const chapters: Chapter[] = [
           'A quiet LinkedIn',
         ],
         squares: ['No trust', 'No strategy'],
+      },
+      {
+        kind: 'mosaic',
+        images: [
+          {
+            src: '/work/mindthehack/01-hellenic-team.png',
+            w: 1024,
+            h: 570,
+            alt: 'Hellenic Cyber Security Team — European Cybersecurity Challenge 2026',
+          },
+          {
+            src: '/work/mindthehack/02-sifted-250.png',
+            w: 1024,
+            h: 1022,
+            alt: 'Mind The Hack featured in the Sifted 250',
+          },
+          {
+            src: '/work/mindthehack/03-dive-deeper.png',
+            w: 1020,
+            h: 1024,
+            alt: 'This summer, we dive deeper. Into the cloud.',
+          },
+          {
+            src: '/work/mindthehack/04-startupper.png',
+            w: 1024,
+            h: 570,
+            alt: 'Why manage cybersecurity any other way',
+          },
+          {
+            src: '/work/mindthehack/05-five-stops.png',
+            w: 772,
+            h: 1024,
+            alt: 'Five stops. One question. Europe 2026.',
+          },
+          {
+            src: '/work/mindthehack/06-ctf.png',
+            w: 1024,
+            h: 730,
+            alt: 'CipherX CTF leaderboard',
+          },
+          {
+            src: '/work/mindthehack/07-london.png',
+            w: 1016,
+            h: 1024,
+            alt: 'Mind The Hack is heading to London',
+          },
+          {
+            src: '/work/mindthehack/08-speaker.png',
+            w: 1008,
+            h: 1024,
+            alt: 'Stavros Kirikos speaking at Infocom Security',
+          },
+          {
+            src: '/work/mindthehack/09-pool.png',
+            w: 466,
+            h: 1024,
+            alt: 'Working from a poolside sofa',
+          },
+        ],
       },
     ],
   },
@@ -217,7 +276,10 @@ export const chapters: Chapter[] = [
     blocks: [
       {
         kind: 'text',
-        lines: ['One shoot day. One hour a month. We handle the rest.'],
+        lines: [
+          'One shoot day. One hour a month. We handle the rest.',
+          'Educational content is better in-house: someone who knows the business.',
+        ],
       },
     ],
   },
@@ -241,12 +303,12 @@ export const chapters: Chapter[] = [
   },
   {
     id: '08',
-    title: 'What this returns',
+    title: 'What this returns long-term',
     nav: 'The Returns',
     blocks: [
       {
         kind: 'list',
-        title: 'What this returns',
+        title: 'What this returns long-term',
         items: [],
         accent: true,
         squares: [
@@ -273,7 +335,10 @@ export const chapters: Chapter[] = [
         items: [
           ['Cost', 'Start small. Step one only.'],
           ['Slow payback', 'Product content works from week one.'],
-          ['Hard to measure', 'Reach, recall, pipeline. Tracked monthly.'],
+          [
+            'Hard to measure',
+            'Some of the most effective things are the hardest to measure.',
+          ],
           ['No time', 'We run it. You show up.'],
           ['Inconsistency', 'A weekly rhythm, built for you.'],
         ],
@@ -385,17 +450,6 @@ export const chapters: Chapter[] = [
           {
             kind: 'film',
             vimeoId: '1205498725',
-            title: 'Scytáles identity — gambling',
-            poster: {
-              src: '/work/scytales-2/gmb-3.jpg',
-              w: 5504,
-              h: 3072,
-              alt: 'Scytáles identity — gambling',
-            },
-          },
-          {
-            kind: 'film',
-            vimeoId: '1205498724',
             title: 'Scytáles identity — social',
             poster: {
               src: '/work/scytales-2/str-1.jpg',
@@ -406,13 +460,24 @@ export const chapters: Chapter[] = [
           },
           {
             kind: 'film',
-            vimeoId: '1205498726',
+            vimeoId: '1205498724',
             title: 'Scytáles identity — alcohol',
             poster: {
               src: '/work/scytales-2/alc-3.jpg',
               w: 5504,
               h: 3072,
               alt: 'Scytáles identity — alcohol',
+            },
+          },
+          {
+            kind: 'film',
+            vimeoId: '1205498726',
+            title: 'Scytáles identity — gambling',
+            poster: {
+              src: '/work/scytales-2/gmb-3.jpg',
+              w: 5504,
+              h: 3072,
+              alt: 'Scytáles identity — gambling',
             },
           },
           {
@@ -444,6 +509,17 @@ export const chapters: Chapter[] = [
           'Message recall',
           'Pipeline from target accounts',
         ],
+      },
+    ],
+  },
+  {
+    id: '17',
+    title: 'thirdkindcreative.com',
+    nav: 'ThirdKind',
+    blocks: [
+      {
+        kind: 'text',
+        lines: ['__thirdkindcreative.com|https://thirdkindcreative.com__'],
       },
     ],
   },

@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useState } from 'react';
 
+import { ArrowUpRight } from '@/components/chrome/ArrowUpRight';
+
 type Entry = { id: string; title: string };
 
 /**
@@ -76,13 +78,24 @@ export function DeckIndex({
               href={`#ch-${e.id}`}
               aria-current={current ? 'true' : undefined}
               onClick={() => setActive(e.id)}
-              className={`pointer-events-auto relative self-start py-1 font-sans text-[0.84375rem] leading-none whitespace-nowrap transition-[font-weight,font-variation-settings,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:origin-left after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] after:content-[''] ${
-                current
-                  ? "font-bold text-ink after:scale-x-100 [font-variation-settings:'wght'_700]"
-                  : "font-normal text-mute after:scale-x-0 [font-variation-settings:'wght'_400] hover:text-ink"
+              className={`group/pill pointer-events-auto inline-flex items-baseline gap-[0.35em] self-start py-1 ${
+                current ? 'text-ink' : 'text-mute hover:text-ink'
               }`}
             >
-              {e.title}
+              <span
+                className={`relative font-sans text-[0.84375rem] leading-none not-italic whitespace-nowrap group-hover/pill:font-display group-hover/pill:italic ${
+                  current
+                    ? 'after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-current'
+                    : ''
+                }`}
+              >
+                {e.title}
+              </span>
+              {current ? (
+                <span className="inline-flex translate-y-[0.08em]" aria-hidden>
+                  <ArrowUpRight className="h-2.5 w-2.5" />
+                </span>
+              ) : null}
             </a>
           );
         })}

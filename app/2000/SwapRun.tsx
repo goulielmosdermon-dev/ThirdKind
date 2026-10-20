@@ -301,13 +301,8 @@ export function SwapRun({
           padLeft ? 'left-56 md:left-60' : ''
         }`}
       >
-        <div className="pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-between gap-6 px-5 pb-5 md:px-10 md:pb-7">
-          <p className="font-sans text-[0.6875rem] leading-none tracking-[0.09em] text-mute uppercase tabular-nums">
-            {String(active + 1).padStart(2, '0')} /{' '}
-            {String(slides.length).padStart(2, '0')}
-          </p>
-
-          <div className="flex items-center gap-2">
+        <div className="pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-end px-5 pb-5 md:px-10 md:pb-7">
+          <div className="flex items-center gap-3">
             <StepButton
               label="Previous slide"
               disabled={active === 0}
@@ -379,17 +374,17 @@ function StepButton({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink transition-opacity duration-200 disabled:pointer-events-none disabled:opacity-25"
+      className="flex h-8 w-8 items-center justify-center text-ink transition-opacity duration-200 disabled:pointer-events-none disabled:opacity-25"
     >
       <svg
         viewBox="0 0 24 24"
         aria-hidden
-        className="h-4 w-4"
+        className="h-3 w-3"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeWidth="2.75"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
       >
         <path d={d} />
       </svg>

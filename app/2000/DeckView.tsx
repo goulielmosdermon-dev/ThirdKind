@@ -13,6 +13,7 @@ import { Reveal } from './Reveal';
 import { HoverTags } from './HoverTags';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
 import { GridFilm } from './GridFilm';
+import { MosaicBoard } from './MosaicBoard';
 import type { ImageAsset } from '@/types/content';
 import { type Brand } from './brands';
 import {
@@ -50,6 +51,7 @@ function saysTitle(block: Block, title: string): boolean {
   const bare = (text: string) =>
     text
       .trim()
+      .replace(/__([^|_]+)(?:\|[^_]+)?__/g, '$1')
       .replace(/[.!?]+$/, '')
       .toLowerCase();
   return typeof opening === 'string' && bare(opening) === bare(title);
@@ -240,10 +242,6 @@ function SlideBody({
         </div>
       );
 
-    /* Set by height rather than into a grid: every still keeps its own shape
-       and nothing is cropped to make the rows line up. The board wraps into
-       two or three rows and reads as one spread, which is the whole reason it
-       is not a run of pairs. */
     case 'mosaic':
       return (
         <figure>
@@ -252,16 +250,7 @@ function SlideBody({
               {block.caption}
             </figcaption>
           ) : null}
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
-            {block.images.map((plate) => (
-              <Frame
-                key={plate.src}
-                plate={plate}
-                sizes="(min-width: 768px) 30vw, 45vw"
-                className="h-[13svh] w-auto object-contain md:h-[17svh]"
-              />
-            ))}
-          </div>
+          <MosaicBoard images={block.images} fit />
         </figure>
       );
 
@@ -677,16 +666,7 @@ function BlockView({
                   {block.caption}
                 </figcaption>
               ) : null}
-              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-                {block.images.map((plate) => (
-                  <Frame
-                    key={plate.src}
-                    plate={plate}
-                    sizes="(min-width: 768px) 30vw, 45vw"
-                    className="h-[16vh] w-auto object-contain md:h-[22vh]"
-                  />
-                ))}
-              </div>
+              <MosaicBoard images={block.images} />
             </figure>
           </FadeIn>
         </Column>
@@ -869,6 +849,7 @@ export function Deck({
           chapterTitle:
             block.kind === 'lead' ||
             block.kind === 'grid' ||
+            block.kind === 'mosaic' ||
             saysTitle(block, chapter.title)
               ? undefined
               : chapter.title,

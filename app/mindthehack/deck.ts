@@ -379,16 +379,6 @@ export const chapters: Chapter[] = [
     nav: 'Proof and Success',
     blocks: [
       {
-        kind: 'list',
-        title: 'Proof',
-        items: [
-          [
-            'Scytáles',
-            'Started with product, then built creatives. Same path.',
-          ],
-        ],
-      },
-      {
         kind: 'grid',
         cells: [
           {

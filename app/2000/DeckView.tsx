@@ -874,7 +874,6 @@ export function Deck({
           // name would only say it twice.
           chapterTitle:
             block.kind === 'lead' ||
-            block.kind === 'grid' ||
             block.kind === 'mosaic' ||
             (block.kind === 'list' && !block.title) ||
             saysTitle(block, chapter.title)

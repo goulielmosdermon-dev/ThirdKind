@@ -115,6 +115,8 @@ export type Block =
       boxed?: boolean;
       /** Tag stays a tag; the note appears beneath it on hover. */
       hover?: boolean;
+      /** A soft cue under the tags — how to find the hover. */
+      hint?: string;
       /** A line above the tags — the claim the tags then prove. */
       lede?: string;
       /** Square tags under the round ones — a verdict, not another pill. */

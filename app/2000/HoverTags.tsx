@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { ShapedTag } from './ShapedTag';
+import { SlideState } from './SwapRun';
 import type { ListItem, Plate, TagShape } from './deck';
 
 function parts(item: ListItem): {
@@ -25,10 +26,17 @@ function parts(item: ListItem): {
  * left, note on the right. The panel is taken out of flow so the centred
  * slide does not jump when it appears.
  */
-export function HoverTags({ items }: { items: readonly ListItem[] }) {
+export function HoverTags({
+  items,
+  hint,
+}: {
+  items: readonly ListItem[];
+  hint?: string;
+}) {
   const rows = items.map(parts);
   const [active, setActive] = useState<string | null>(null);
   const current = rows.find((row) => row.term === active);
+  const slide = useContext(SlideState);
 
   return (
     <div className="relative" onMouseLeave={() => setActive(null)}>
@@ -67,6 +75,11 @@ export function HoverTags({ items }: { items: readonly ListItem[] }) {
           );
         })}
       </ul>
+      {hint && !current && slide === 'in' ? (
+        <p className="tk-hover-cue pointer-events-none absolute top-full left-0 mt-3 font-sans text-[0.6875rem] leading-none text-mute">
+          {hint}
+        </p>
+      ) : null}
       {current && (current.image || current.note) ? (
         <div className="absolute top-full left-0 z-10 mt-5 flex items-start gap-5">
           {current.image ? (

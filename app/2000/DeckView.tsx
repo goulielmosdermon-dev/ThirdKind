@@ -409,7 +409,10 @@ function SlideBody({
       const shelf = (
         <>
           {hover && items ? (
-            <HoverTags items={items} />
+            <HoverTags
+              items={items}
+              hint={'hint' in block ? block.hint : undefined}
+            />
           ) : boxed && items ? (
             boxedTags(items, Boolean(plot))
           ) : termed && items ? (

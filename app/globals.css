@@ -135,6 +135,42 @@ body {
   }
 }
 
+/* Three soft arrivals under a hover shelf, then it stays gone. */
+@keyframes tk-hover-hint {
+  0%,
+  4% {
+    opacity: 0;
+  }
+  10%,
+  20% {
+    opacity: 0.4;
+  }
+  26%,
+  32% {
+    opacity: 0;
+  }
+  38%,
+  48% {
+    opacity: 0.4;
+  }
+  54%,
+  60% {
+    opacity: 0;
+  }
+  66%,
+  76% {
+    opacity: 0.4;
+  }
+  84%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.tk-hover-cue {
+  animation: tk-hover-hint 7.2s ease-in-out 0.7s 1 both;
+}
+
 /* The hands resolve gently on first paint rather than snapping in. */
 @keyframes tk-hands-in {
   from {
@@ -182,6 +218,11 @@ body {
   .tk-scroll-hint {
     animation: none;
     opacity: 0.7;
+  }
+
+  .tk-hover-cue {
+    animation: none;
+    opacity: 0.38;
   }
 
   .tk-hands-in {

@@ -213,6 +213,7 @@ export const chapters: Chapter[] = [
         kind: 'list',
         title: 'Step 1',
         hover: true,
+        hint: 'Hover over a tag to preview',
         items: [
           [
             'Product videos',
@@ -405,7 +406,7 @@ export const chapters: Chapter[] = [
           },
           {
             kind: 'film',
-            vimeoId: '1174801751',
+            vimeoId: '1174819047',
             title: 'Scania — Vehicle E-Wallet',
             poster: {
               src: '/work/scania/header.png',

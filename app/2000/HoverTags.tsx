@@ -88,9 +88,18 @@ export function HoverTags({ items }: { items: readonly ListItem[] }) {
             </span>
           ) : null}
           {current.note ? (
-            <p className="max-w-[38ch] pt-1 text-[0.95rem] leading-[1.35] text-mute">
-              {current.note}
-            </p>
+            <div className="max-w-[38ch] pt-1 text-[0.95rem] leading-[1.35]">
+              {current.note.split('\n\n').map((chunk, i) => (
+                <p
+                  key={i}
+                  className={
+                    i === 0 ? 'text-mute' : 'mt-8 whitespace-pre-line text-ink'
+                  }
+                >
+                  {chunk}
+                </p>
+              ))}
+            </div>
           ) : null}
         </div>
       ) : null}

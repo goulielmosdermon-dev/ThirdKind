@@ -374,14 +374,32 @@ function SlideBody({
       /* Shelves of tags fill the slide; the chapter name already sits above,
          so a second heading would only say it twice. */
       if (groups) {
+        const name = heading ? TITLE : TEXT;
+        const board = groups.map((group) => (
+          <div key={group.label}>
+            {group.square ? (
+              <p className="mb-8 w-fit border border-select px-4 py-2 text-[0.95rem] leading-none text-select">
+                {group.label}
+              </p>
+            ) : (
+              <p className="font-display mb-8 text-[1.75rem] leading-[1.15] font-extrabold text-select">
+                {group.label}
+              </p>
+            )}
+            {tags(group.items)}
+          </div>
+        ));
+        if (!block.title) {
+          return (
+            <div className="grid grid-cols-2 gap-x-10 gap-y-10 lg:grid-cols-3">
+              {board}
+            </div>
+          );
+        }
         return (
-          <div className="grid grid-cols-2 gap-x-6 gap-y-[2.8vh] md:gap-x-10 lg:grid-cols-3">
-            {groups.map((group) => (
-              <div key={group.label}>
-                <p className={`mb-3 ${NAV} text-mute`}>{group.label}</p>
-                {tags(group.items)}
-              </div>
-            ))}
+          <div className="grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-4 lg:items-start">
+            <p className={name}>{block.title}</p>
+            {board}
           </div>
         );
       }
@@ -427,14 +445,22 @@ function SlideBody({
         );
       }
 
+      if (!block.title) {
+        return (
+          <div className="flex justify-center">
+            <div>
+              {lede ? (
+                <p className={`mb-5 max-w-[42ch] ${TEXT} text-mute`}>{lede}</p>
+              ) : null}
+              {shelf}
+            </div>
+          </div>
+        );
+      }
+
       return (
         <div className="grid grid-cols-1 gap-[4vh] md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-16">
-          {block.title ? (
-            <p className={heading ? TITLE : TEXT}>{block.title}</p>
-          ) : (
-            <div aria-hidden />
-          )}
-
+          <p className={heading ? TITLE : TEXT}>{block.title}</p>
           <div>
             {lede ? (
               <p className={`mb-5 max-w-[42ch] ${TEXT} text-mute`}>{lede}</p>
@@ -850,6 +876,7 @@ export function Deck({
             block.kind === 'lead' ||
             block.kind === 'grid' ||
             block.kind === 'mosaic' ||
+            (block.kind === 'list' && !block.title) ||
             saysTitle(block, chapter.title)
               ? undefined
               : chapter.title,

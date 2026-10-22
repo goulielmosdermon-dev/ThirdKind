@@ -17,7 +17,7 @@ const still = (
 /**
  * Mind The Hack — a content strategy.
  *
- * Twenty slides, carried like Ford: `swap`, so the frame never moves and
+ * Twenty-one slides, carried like Ford: `swap`, so the frame never moves and
  * each slide replaces the one before it. One block is one slide.
  */
 export const chapters: Chapter[] = [
@@ -118,16 +118,16 @@ export const chapters: Chapter[] = [
   },
   {
     id: '06',
-    title: 'The Show Up',
+    title: 'Pillars',
+    nav: 'Pillars',
     blocks: [
       {
         kind: 'list',
-        title: 'The Show Up',
         hover: true,
         items: [
           [
             'Repetition',
-            'Pair the brand with the moment of need, again and again. For a cybersecurity firm, that is the panic after a breach. Repeat it until the problem itself brings the brand to mind.',
+            'Pair the brand with the moment of need, again and again. For a cybersecurity firm, that is the panic after a breach. Repeat it until the problem itself brings the brand to mind.\n\nSee what attackers\ncan actually exploit\nbefore they do.',
             'arrows',
           ],
           [
@@ -137,7 +137,7 @@ export const chapters: Chapter[] = [
           ],
           [
             'Cause and effect',
-            'Testimonials. They worked with us, and this happened — a story the buyer can repeat to their boss.',
+            'They worked with us, and this happened.',
             'flow',
           ],
         ],
@@ -189,11 +189,12 @@ export const chapters: Chapter[] = [
   },
   {
     id: '10',
-    title: 'One step at a time',
+    title: 'Strategy, One Step at a Time',
+    nav: 'Strategy',
     blocks: [
       {
         kind: 'list',
-        title: 'One step at a time',
+        title: 'Strategy, One Step at a Time',
         items: [],
         squares: [
           'Product videos and testimonials',
@@ -271,19 +272,6 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '14',
-    title: 'What We Need from You',
-    blocks: [
-      {
-        kind: 'text',
-        lines: [
-          'One shoot day. One hour a month. We handle the rest.',
-          'Educational content is better in-house: someone who knows the business.',
-        ],
-      },
-    ],
-  },
-  {
     id: '18',
     title: 'B2B',
     blocks: [
@@ -334,7 +322,7 @@ export const chapters: Chapter[] = [
         accent: true,
         items: [
           ['Cost', 'Start small. Step one only.'],
-          ['Slow payback', 'Product content works from week one.'],
+          ['Slow payback', 'Long term always beats short term.'],
           [
             'Hard to measure',
             'Some of the most effective things are the hardest to measure.',
@@ -504,10 +492,70 @@ export const chapters: Chapter[] = [
         kind: 'list',
         title: 'What success looks like',
         items: [],
+        accent: true,
         squares: [
           'Reach beyond Greece',
           'Message recall',
           'Pipeline from target accounts',
+        ],
+      },
+    ],
+  },
+  {
+    id: '20',
+    title: 'Collaboration',
+    blocks: [
+      {
+        kind: 'list',
+        title: 'Collaboration',
+        groups: [
+          {
+            label: 'One-off',
+            square: true,
+            items: ['Per job', 'Per video'],
+          },
+          {
+            label: 'Half-year retainer',
+            square: true,
+            items: [
+              'Filming',
+              'Editing',
+              'Educational content',
+              'Recurring content',
+              'Running a LinkedIn page',
+              'Paid advertising',
+              'Graphic design services for online creatives',
+              'Fixed production expenses',
+            ],
+          },
+          {
+            label: 'Full-year retainer',
+            square: true,
+            items: [
+              'Filming',
+              'Editing',
+              'Educational content',
+              'Recurring content',
+              'Running a LinkedIn page',
+              'Paid advertising',
+              'Graphic design services for online creatives',
+              'Fixed production expenses',
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '14',
+    title: 'What We Need from You',
+    unlisted: true,
+    blocks: [
+      {
+        kind: 'text',
+        lines: [
+          'One shoot day. A couple of hours a week. We handle the rest.',
+          'Educational content is better in-house: someone who knows the business.',
         ],
       },
     ],

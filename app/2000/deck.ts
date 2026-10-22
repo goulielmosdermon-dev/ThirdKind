@@ -37,7 +37,12 @@ export type ListItem =
   | readonly [term: string, note: string, shape: TagShape];
 
 /** A labelled run of tags, so a slide can carry more than one shelf. */
-export type TagGroup = { label: string; items: readonly string[] };
+export type TagGroup = {
+  label: string;
+  items: readonly string[];
+  /** Draw the label as a square tag instead of a heading. */
+  square?: boolean;
+};
 
 /**
  * A positioning plot: two axes, a field of competitors, and us.

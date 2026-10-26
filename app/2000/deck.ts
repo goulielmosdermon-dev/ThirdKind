@@ -143,7 +143,7 @@ export type Block =
    * Title over body, set with the work-sheet gutter — a creative named
    * plainly, without the deck's denser measure.
    */
-  | { kind: 'copy'; title: string; body?: string }
+  | { kind: 'copy'; title: string; body?: string; tag?: string }
   /**
    * A related piece of work: a still that opens the live page.
    */

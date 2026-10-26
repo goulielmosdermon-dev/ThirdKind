@@ -46,28 +46,14 @@ export function ArticleSheet({
         <header
           className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
-          <p className="text-sm text-mute">Idea</p>
           {/* The piece's own title, at the header's size and weight, so
               opening a thought is the same voice the page opens on. */}
           <h1
-            className="font-display mt-4 w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
+            className="font-display w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
             style={{ fontSize: HEADER_LINE }}
           >
             {article.title}
           </h1>
-          {/* Set like the work's tags, so the two indexes read as one shelf. */}
-          {article.tags?.length ? (
-            <ul className="mt-5 flex flex-wrap gap-1.5">
-              {article.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
-                >
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          ) : null}
         </header>
 
         <div className="px-12 @md:px-[8cqi]">

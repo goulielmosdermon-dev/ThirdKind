@@ -7,7 +7,6 @@ import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
 import { HeroFilm, WorkReel, WorkStory } from '@/components/sheet/WorkMedia';
-import { PROJECT_COUNTRY } from '@/lib/canvas/derive';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { vimeoIdFromUrl } from '@/lib/content/vimeo';
 import { HEADER_LINE } from '@/lib/type/display';
@@ -23,10 +22,6 @@ export function ProjectSheet({
   const framed = useFramed();
   const vimeoId = vimeoIdFromUrl(project.heroVideoUrl);
   const useStory = project.story.length > 0;
-  const tags = project.credits
-    .map((credit) => credit.role)
-    .filter((role) => role.trim().length > 0);
-  const country = PROJECT_COUNTRY[project.slug.current];
 
   return (
     <Sheet title={project.title} tone="editorial">
@@ -34,37 +29,12 @@ export function ProjectSheet({
         <header
           className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
-          {project.client ? (
-            <p className="text-sm text-mute">{project.client}</p>
-          ) : null}
           <h1
-            className="font-display mt-4 w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
+            className="font-display w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
             style={{ fontSize: HEADER_LINE }}
           >
             {project.title}
           </h1>
-          {project.hoverDescription ? (
-            <p className="mt-4 max-w-[36rem] text-[1.05rem] leading-snug text-mute @md:text-xl">
-              {project.hoverDescription}
-            </p>
-          ) : null}
-          {tags.length || country ? (
-            <ul className="mt-5 flex flex-wrap gap-1.5">
-              {tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
-                >
-                  {tag}
-                </li>
-              ))}
-              {country ? (
-                <li className="border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink">
-                  {country}
-                </li>
-              ) : null}
-            </ul>
-          ) : null}
         </header>
 
         <div className="px-12 pb-10 @md:px-[8cqi]">

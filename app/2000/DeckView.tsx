@@ -145,7 +145,9 @@ function SlideBody({
           }}
         />
       ) : (
-        <p className={`${TEXT} text-[clamp(2.5rem,9vw,6rem)] leading-none`}>
+        <p
+          className={`${TEXT} w-full text-left text-[clamp(2.5rem,9vw,6rem)] leading-none`}
+        >
           {block.text}
         </p>
       );
@@ -265,9 +267,16 @@ function SlideBody({
     case 'copy':
       return (
         <div className="w-full max-w-[42rem] px-6 font-sans text-body md:px-[4cqi]">
-          <h2 className="font-sans text-body font-bold text-ink">
-            {block.title}
-          </h2>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h2 className="font-sans text-body font-bold text-ink">
+              {block.title}
+            </h2>
+            {block.tag ? (
+              <span className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink">
+                {block.tag}
+              </span>
+            ) : null}
+          </div>
           {block.body ? (
             <p className="mt-6 whitespace-pre-line text-mute">{block.body}</p>
           ) : null}
@@ -755,9 +764,16 @@ function BlockView({
     case 'copy':
       return (
         <div className="w-full max-w-[42rem] px-6 font-sans text-body md:px-[4cqi]">
-          <h2 className="font-sans text-body font-bold text-ink">
-            {block.title}
-          </h2>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h2 className="font-sans text-body font-bold text-ink">
+              {block.title}
+            </h2>
+            {block.tag ? (
+              <span className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink">
+                {block.tag}
+              </span>
+            ) : null}
+          </div>
           {block.body ? (
             <p className="mt-6 whitespace-pre-line text-mute">{block.body}</p>
           ) : null}

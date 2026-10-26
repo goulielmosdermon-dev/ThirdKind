@@ -150,7 +150,7 @@ function ProjectCard({
           <span className="block overflow-hidden pt-[0.12em] pb-[0.26em]">
             <motion.span
               variants={line}
-              className="font-display block leading-snug"
+              className="font-sans block leading-snug"
               style={{ fontSize: EDITORIAL_LINE }}
             >
               {sameName ? (
@@ -158,7 +158,9 @@ function ProjectCard({
               ) : (
                 <>
                   {project.title}{' '}
-                  <span className="text-white/70">{project.client}</span>
+                  <span className="font-display text-white/70">
+                    {project.client}
+                  </span>
                 </>
               )}
             </motion.span>

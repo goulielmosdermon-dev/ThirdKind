@@ -329,6 +329,19 @@ export const chapters: Chapter[] = [
   },
   {
     id: '02',
+    title: '3 Films putting epay solutions at the heart of human interaction.',
+    nav: '3 films',
+    blocks: [
+      {
+        kind: 'text',
+        lines: [
+          '3 Films putting epay solutions at the heart of human interaction.',
+        ],
+      },
+    ],
+  },
+  {
+    id: '03',
     title: 'Sleep Tight',
     nav: 'Sleep Tight',
     blocks: [
@@ -341,13 +354,13 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '03',
+    id: '04',
     title: 'Sleep Tight',
     nav: 'Sleep Tight, stills',
     blocks: [{ kind: 'justified', images: SLEEP }],
   },
   {
-    id: '04',
+    id: '05',
     title: 'The Taxi Driver',
     blocks: [
       {
@@ -359,13 +372,13 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '05',
+    id: '06',
     title: 'The Taxi Driver',
     nav: 'Taxi Driver, stills',
     blocks: [{ kind: 'justified', images: TAXI }],
   },
   {
-    id: '06',
+    id: '07',
     title: 'The Tip',
     blocks: [
       {
@@ -377,13 +390,13 @@ export const chapters: Chapter[] = [
     ],
   },
   {
-    id: '07',
+    id: '08',
     title: 'The Tip',
     nav: 'The Tip, stills',
     blocks: [{ kind: 'justified', images: TIP }],
   },
   {
-    id: '08',
+    id: '09',
     title: 'Similar work',
     blocks: [
       {

@@ -149,7 +149,7 @@ function ManifestoBand({
             : 'px-12 py-14 md:px-[12vw] md:py-[clamp(6rem,11vw,22rem)]'
         }
       >
-        <p className="font-display text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
+        <p className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
           {MANIFESTO_LEAD}{' '}
           <motion.span
             className="inline-block"
@@ -529,7 +529,7 @@ export function IndexView({
                   >
                     <motion.p
                       variants={mask}
-                      className="font-display leading-snug"
+                      className={`${name ? 'font-sans' : 'font-display'} leading-snug`}
                       // The one editorial size, shared with the writing and
                       // the manifesto.
                       style={{
@@ -539,7 +539,7 @@ export function IndexView({
                       {lead}
                       <span className="whitespace-nowrap">
                         {name ? (
-                          <span className="text-mute">{name}</span>
+                          <span className="font-display text-mute">{name}</span>
                         ) : (
                           tail
                         )}

@@ -96,12 +96,14 @@ export function ProjectSheet({
                         className="object-cover"
                       />
                     </span>
-                    <span className="mt-4 block font-display text-[1.05rem] leading-snug text-white">
+                    <span className="mt-4 block font-sans text-[1.05rem] leading-snug text-white">
                       {item.title}
                       {item.client.trim() !== item.title.trim() ? (
                         <>
                           {' '}
-                          <span className="text-white/70">{item.client}</span>
+                          <span className="font-display text-white/70">
+                            {item.client}
+                          </span>
                         </>
                       ) : null}
                     </span>

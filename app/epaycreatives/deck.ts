@@ -333,10 +333,9 @@ export const chapters: Chapter[] = [
     nav: '3 films',
     blocks: [
       {
-        kind: 'text',
-        lines: [
+        kind: 'copy',
+        title:
           '3 Films putting epay solutions at the heart of human interaction.',
-        ],
       },
     ],
   },
@@ -397,6 +396,18 @@ export const chapters: Chapter[] = [
   },
   {
     id: '09',
+    title: 'Why',
+    nav: 'Why',
+    blocks: [
+      {
+        kind: 'copy',
+        title: 'Why',
+        body: 'With this campaign we want to connect epay to deep emotional moments, but through everyday scenes people already know. Show the core features inside those moments, and leave a good feeling on each one.\n\nMost brands right now are going the AI route, or the generic corporate one. This puts epay forward as a company that understands its customers and values them more than anything else.',
+      },
+    ],
+  },
+  {
+    id: '10',
     title: 'Similar work',
     blocks: [
       {

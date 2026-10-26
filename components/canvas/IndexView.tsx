@@ -565,7 +565,7 @@ export function IndexView({
                         <motion.li
                           key={tag}
                           variants={tagIn}
-                          className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                          className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
                         >
                           {tag}
                         </motion.li>
@@ -573,7 +573,7 @@ export function IndexView({
                       {node.country ? (
                         <motion.li
                           variants={tagIn}
-                          className="border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                          className="border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
                         >
                           {node.country}
                         </motion.li>

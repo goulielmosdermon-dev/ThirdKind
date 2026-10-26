@@ -142,7 +142,7 @@ function ArticleCard({
                 <motion.span
                   key={name}
                   variants={tag}
-                  className="rounded-full border border-white/60 px-3 py-1 text-[0.78rem] leading-none"
+                  className="rounded-full border-2 border-white/70 px-3 py-1 text-[0.78rem] font-medium leading-none"
                 >
                   {name}
                 </motion.span>

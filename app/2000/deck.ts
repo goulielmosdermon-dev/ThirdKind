@@ -135,6 +135,26 @@ export type Block =
    */
   | { kind: 'mosaic'; images: Plate[]; caption?: string }
   /**
+   * A justified wall of stills — rows fill the width, each picture keeps
+   * its shape, packed like a contact sheet rather than a mosaic column.
+   */
+  | { kind: 'justified'; images: Plate[] }
+  /**
+   * Title over body, set with the work-sheet gutter — a creative named
+   * plainly, without the deck's denser measure.
+   */
+  | { kind: 'copy'; title: string; body?: string }
+  /**
+   * A related piece of work: a still that opens the live page.
+   */
+  | {
+      kind: 'similar';
+      title: string;
+      href: string;
+      image: Plate;
+      note?: string;
+    }
+  /**
    * Work on one slide: films with their posters, stills beside them.
    * One cell is one piece. The grid holds the spread.
    */

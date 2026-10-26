@@ -50,7 +50,7 @@ export function ArticleSheet({
           {/* The piece's own title, at the header's size and weight, so
               opening a thought is the same voice the page opens on. */}
           <h1
-            className="font-display mt-4 w-full max-w-[18ch] leading-[1.02] font-bold tracking-[-0.015em] text-balance text-ink"
+            className="font-display mt-4 w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
             style={{ fontSize: HEADER_LINE }}
           >
             {article.title}
@@ -61,7 +61,7 @@ export function ArticleSheet({
               {article.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full border border-hairline px-3 py-1 text-[0.78rem] leading-none text-mute"
+                  className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
                 >
                   {tag}
                 </li>

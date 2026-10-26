@@ -14,6 +14,7 @@ import { HoverTags } from './HoverTags';
 import { FilmPlayer } from '@/components/sheet/FilmPlayer';
 import { GridFilm } from './GridFilm';
 import { MosaicBoard } from './MosaicBoard';
+import { JustifiedBoard } from './JustifiedBoard';
 import type { ImageAsset } from '@/types/content';
 import { type Brand } from './brands';
 import {
@@ -252,6 +253,49 @@ function SlideBody({
           ) : null}
           <MosaicBoard images={block.images} fit />
         </figure>
+      );
+
+    case 'justified':
+      return (
+        <div className="w-full px-6 md:px-[4cqi]">
+          <JustifiedBoard images={block.images} />
+        </div>
+      );
+
+    case 'copy':
+      return (
+        <div className="w-full max-w-[42rem] px-6 font-sans text-body md:px-[4cqi]">
+          <h2 className="font-sans text-body font-bold text-ink">
+            {block.title}
+          </h2>
+          {block.body ? (
+            <p className="mt-6 whitespace-pre-line text-mute">{block.body}</p>
+          ) : null}
+        </div>
+      );
+
+    case 'similar':
+      return (
+        <a
+          href={block.href}
+          target="_blank"
+          rel="noreferrer"
+          className="group block w-full max-w-[42rem] px-6 font-sans text-body no-underline md:px-[4cqi]"
+        >
+          <h2 className="font-sans text-body font-bold text-ink">
+            {block.title}
+          </h2>
+          <span className="mt-10 block overflow-hidden bg-hairline">
+            <Image
+              src={block.image.src}
+              alt={block.image.alt}
+              width={block.image.w}
+              height={block.image.h}
+              unoptimized
+              className="h-auto w-full transition-opacity duration-fast group-hover:opacity-90"
+            />
+          </span>
+        </a>
       );
 
     /* Sized off the slide rather than the page: one font size drives the
@@ -701,6 +745,51 @@ function BlockView({
         </Column>
       );
 
+    case 'justified':
+      return (
+        <div className="w-full px-6 md:px-[4cqi]">
+          <JustifiedBoard images={block.images} />
+        </div>
+      );
+
+    case 'copy':
+      return (
+        <div className="w-full max-w-[42rem] px-6 font-sans text-body md:px-[4cqi]">
+          <h2 className="font-sans text-body font-bold text-ink">
+            {block.title}
+          </h2>
+          {block.body ? (
+            <p className="mt-6 whitespace-pre-line text-mute">{block.body}</p>
+          ) : null}
+        </div>
+      );
+
+    case 'similar':
+      return (
+        <div className="w-full max-w-[42rem] px-6 font-sans text-body md:px-[4cqi]">
+          <a
+            href={block.href}
+            target="_blank"
+            rel="noreferrer"
+            className="group block no-underline"
+          >
+            <h2 className="font-sans text-body font-bold text-ink">
+              {block.title}
+            </h2>
+            <span className="mt-10 block overflow-hidden bg-hairline">
+              <Image
+                src={block.image.src}
+                alt={block.image.alt}
+                width={block.image.w}
+                height={block.image.h}
+                unoptimized
+                className="h-auto w-full transition-opacity duration-fast group-hover:opacity-90"
+              />
+            </span>
+          </a>
+        </div>
+      );
+
     /* A film, in the same player the work pages use.
 
        It holds the screen the way a table does: the frame sticks for a
@@ -848,6 +937,7 @@ export function Deck({
   credits = credits2000,
   motion = 'pinned',
   nav = 'rail',
+  gutter = 'default',
 }: {
   brand?: Brand;
   chapters?: Chapter[];
@@ -864,6 +954,8 @@ export function Deck({
    * as tags across the top.
    */
   nav?: 'rail' | 'menu' | 'tags';
+  /** Horizontal inset of the slide frame. `tight` is half the default. */
+  gutter?: 'default' | 'tight';
 }) {
   const swap = motion === 'swap';
 
@@ -878,6 +970,9 @@ export function Deck({
           chapterTitle:
             block.kind === 'lead' ||
             block.kind === 'mosaic' ||
+            block.kind === 'justified' ||
+            block.kind === 'copy' ||
+            block.kind === 'similar' ||
             (block.kind === 'list' && !block.title) ||
             saysTitle(block, chapter.title)
               ? undefined
@@ -885,6 +980,11 @@ export function Deck({
           ...(block.kind === 'text'
             ? { lines: block.lines }
             : {
+                instant:
+                  block.kind === 'lead' ||
+                  block.kind === 'copy' ||
+                  block.kind === 'justified' ||
+                  block.kind === 'similar',
                 node: (
                   <SlideBody
                     block={block}
@@ -949,6 +1049,7 @@ export function Deck({
               slides={slides}
               className={TEXT}
               padLeft={nav === 'tags'}
+              gutter={gutter}
             />
           </>
         ) : (

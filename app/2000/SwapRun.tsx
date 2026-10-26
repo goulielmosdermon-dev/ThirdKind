@@ -39,6 +39,8 @@ export type Slide = {
   lines?: string[];
   /** Anything else — a mark, a track, a plate. */
   node?: React.ReactNode;
+  /** Arrive and leave at once — no fade or slide in. */
+  instant?: boolean;
 };
 
 /**
@@ -61,12 +63,16 @@ export function SwapRun({
   slides,
   className,
   padLeft = false,
+  gutter = 'default',
 }: {
   slides: Slide[];
   className: string;
   /** Room for a tag index standing down the left of the frame. */
   padLeft?: boolean;
+  /** Horizontal inset of the slide frame. `tight` is half the default. */
+  gutter?: 'default' | 'tight';
 }) {
+  const padX = gutter === 'tight' ? 'px-2.5 md:px-5' : 'px-5 md:px-10';
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
@@ -239,7 +245,7 @@ export function SwapRun({
       })}
 
       <div className="sticky top-0 flex h-svh items-center">
-        <div className="mx-auto w-full max-w-[1180px] px-5 md:px-10">
+        <div className={`mx-auto w-full max-w-[1180px] ${padX}`}>
           {/* Stacked in one grid cell, so every slide occupies the same spot
               and the one before it is replaced rather than pushed. Centred in
               the row as well as on the screen: the cell is as tall as the
@@ -281,7 +287,7 @@ export function SwapRun({
                       state={state}
                     />
                   ) : (
-                    <div style={moveStyle(state, i)}>
+                    <div style={moveStyle(state, i, slide.instant)}>
                       <SlideState.Provider value={state}>
                         {slide.node}
                       </SlideState.Provider>
@@ -301,7 +307,9 @@ export function SwapRun({
           padLeft ? 'left-56 md:left-60' : ''
         }`}
       >
-        <div className="pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-end px-5 pb-5 md:px-10 md:pb-7">
+        <div
+          className={`pointer-events-auto mx-auto flex w-full max-w-[1180px] items-center justify-end pb-5 md:pb-7 ${padX}`}
+        >
           <div className="flex items-center gap-3">
             <StepButton
               label="Previous slide"
@@ -341,7 +349,17 @@ export function SwapRun({
  * The move the lines make, for a thing that has no lines: in from below, out
  * through the top, after the slide it replaces has gone.
  */
-function moveStyle(state: RevealState, index: number): React.CSSProperties {
+function moveStyle(
+  state: RevealState,
+  index: number,
+  instant = false,
+): React.CSSProperties {
+  if (instant) {
+    return {
+      opacity: state === 'in' ? 1 : 0,
+      transition: 'none',
+    };
+  }
   return {
     opacity: state === 'in' ? 1 : 0,
     transform:

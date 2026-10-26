@@ -2,17 +2,15 @@
 
 import Image from 'next/image';
 
-import { AppLink } from '@/components/mobile/MobileChrome';
+import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
 import { HeroFilm, WorkReel, WorkStory } from '@/components/sheet/WorkMedia';
-import {
-  COVER_FOCUS_FRAME,
-  coverFocusStyle,
-  isUnoptimizedAsset,
-} from '@/lib/content/mediaSrc';
+import { PROJECT_COUNTRY } from '@/lib/canvas/derive';
+import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { vimeoIdFromUrl } from '@/lib/content/vimeo';
+import { HEADER_LINE } from '@/lib/type/display';
 import type { Project } from '@/types/content';
 
 export function ProjectSheet({
@@ -22,48 +20,69 @@ export function ProjectSheet({
   project: Project;
   moreWork: Project[];
 }) {
+  const framed = useFramed();
   const vimeoId = vimeoIdFromUrl(project.heroVideoUrl);
   const useStory = project.story.length > 0;
+  const tags = project.credits
+    .map((credit) => credit.role)
+    .filter((role) => role.trim().length > 0);
+  const country = PROJECT_COUNTRY[project.slug.current];
 
   return (
     <Sheet title={project.title} tone="editorial">
-      <article>
+      <article data-surface="light" className="bg-paper">
         <header
-          data-surface="dark"
-          className="relative min-h-[var(--frame-h,100dvh)] overflow-hidden"
+          className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
         >
-          <span className="tk-loading absolute inset-0" aria-hidden />
-          <span className={COVER_FOCUS_FRAME}>
-            <Image
-              src={project.posterImage.src}
-              alt={project.posterImage.alt}
-              fill
-              priority
-              sizes="100vw"
-              unoptimized={isUnoptimizedAsset(project.posterImage)}
-              style={coverFocusStyle(project.posterImage)}
-              className="object-cover"
-            />
-          </span>
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
-            aria-hidden
-          />
-          <div className="absolute inset-x-0 bottom-0 px-12 pb-28 @md:px-[8cqi] @md:pb-20">
-            <h1 className="font-display max-w-[18ch] text-[clamp(1.75rem,3.5cqi,3.15rem)] leading-[1.05] text-white">
-              {project.title}
-            </h1>
-            {project.hoverDescription ? (
-              <p className="mt-4 max-w-[36rem] text-[1.05rem] leading-snug text-white/90 @md:text-xl">
-                {project.hoverDescription}
-              </p>
-            ) : null}
-          </div>
+          {project.client ? (
+            <p className="text-sm text-mute">{project.client}</p>
+          ) : null}
+          <h1
+            className="font-display mt-4 w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
+            style={{ fontSize: HEADER_LINE }}
+          >
+            {project.title}
+          </h1>
+          {project.hoverDescription ? (
+            <p className="mt-4 max-w-[36rem] text-[1.05rem] leading-snug text-mute @md:text-xl">
+              {project.hoverDescription}
+            </p>
+          ) : null}
+          {tags.length || country ? (
+            <ul className="mt-5 flex flex-wrap gap-1.5">
+              {tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
+                >
+                  {tag}
+                </li>
+              ))}
+              {country ? (
+                <li className="border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink">
+                  {country}
+                </li>
+              ) : null}
+            </ul>
+          ) : null}
         </header>
+
+        <div className="px-12 pb-10 @md:px-[8cqi]">
+          <Image
+            src={project.posterImage.src}
+            alt={project.posterImage.alt}
+            width={project.posterImage.width}
+            height={project.posterImage.height}
+            priority
+            sizes="(min-width: 1024px) 84vw, 84vw"
+            unoptimized={isUnoptimizedAsset(project.posterImage)}
+            className="h-auto w-full"
+          />
+        </div>
 
         <div
           data-surface="light"
-          className="bg-paper px-12 pt-16 pb-24 @md:px-[8cqi] @md:pt-24"
+          className="bg-paper px-12 pt-6 pb-24 @md:px-[8cqi] @md:pt-10"
         >
           <div className="mx-auto flex max-w-[1100px] flex-col gap-14 @md:gap-16">
             {vimeoId ? (
@@ -79,27 +98,6 @@ export function ProjectSheet({
             )}
 
             <WorkReel vimeoIds={project.reel ?? []} />
-
-            {project.credits.length > 0 ? (
-              <div className="max-w-[38rem] text-ink">
-                <p className="text-[1.05rem] leading-[1.8] font-semibold">
-                  Services
-                </p>
-                {/* Tags wrap rather than stacking one to a line. */}
-                <ul className="mt-3 flex flex-wrap gap-2">
-                  {project.credits.map((credit) => (
-                    <li
-                      key={`${credit.role}-${credit.name}`}
-                      className="rounded-full border border-hairline px-3.5 py-1.5 text-[0.85rem] leading-none text-mute"
-                    >
-                      {credit.name
-                        ? `${credit.role} — ${credit.name}`
-                        : credit.role}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
           </div>
         </div>
 
@@ -118,31 +116,24 @@ export function ProjectSheet({
                     href={`/work/${item.slug.current}`}
                     className="block"
                   >
-                    {/* Held to a height, so the gap above each still is the
-                        same however long the line above it ran. The row
-                        itself hangs off the foot. */}
-                    <div className="min-h-[4.75rem]">
-                      <p className="font-display text-[1.2rem] leading-tight text-white">
-                        {item.client}
-                      </p>
-                      {item.hoverDescription ? (
-                        <p className="mt-1 text-sm leading-snug text-white/70">
-                          {item.hoverDescription}
-                        </p>
-                      ) : null}
-                    </div>
-                    {/* Shown at the shape it was made, not cropped to a band. */}
-                    <span className="mt-3 block w-full overflow-hidden bg-white/10">
+                    <span className="relative block aspect-video overflow-hidden bg-hairline">
                       <Image
                         src={item.thumbnail.src}
                         alt=""
-                        width={item.thumbnail.width}
-                        height={item.thumbnail.height}
-                        sizes="(max-width: 767px) 78vw, 40vw"
-                        quality={95}
+                        fill
+                        sizes="(min-width: 768px) 24rem, 70vw"
                         unoptimized={isUnoptimizedAsset(item.thumbnail)}
-                        className="h-auto w-full"
+                        className="object-cover"
                       />
+                    </span>
+                    <span className="mt-4 block font-display text-[1.05rem] leading-snug text-white">
+                      {item.title}
+                      {item.client.trim() !== item.title.trim() ? (
+                        <>
+                          {' '}
+                          <span className="text-white/70">{item.client}</span>
+                        </>
+                      ) : null}
                     </span>
                   </AppLink>
                 </li>

@@ -348,7 +348,7 @@ export const chapters: Chapter[] = [
         kind: 'copy',
         title: 'Sleep Tight',
         tag: 'Android PAS',
-        body: 'A family trip seen through the eyes of a young girl slowly falling asleep. During the trip we see all the payment transactions that take place, the coffee at the village cafe, paying the tolls, paying for gas, paying for a treat for the little one. All shot from inside the car through her POV. The film ends with the girl safely in bed.',
+        body: 'A family trip seen through the eyes of a young girl slowly falling asleep. From inside the car, through her POV, we catch every payment along the way: coffee at the village cafe, the tolls, gas, a treat for the little one. The whole emotional weight of the film sits in that: it’s written through her comfortable eyes. Soft, safe, familiar. The film ends with her tucked in bed.',
       },
     ],
   },

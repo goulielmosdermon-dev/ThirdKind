@@ -63,7 +63,11 @@ export function ProjectSheet({
               <WorkStory beats={project.story} />
             ) : (
               <div className="max-w-[38rem]">
-                <PortableBody value={project.body} density="editorial" />
+                <PortableBody
+                  value={project.body}
+                  density="editorial"
+                  copyClassName="text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.8] text-ink"
+                />
               </div>
             )}
 

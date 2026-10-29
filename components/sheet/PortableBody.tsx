@@ -16,14 +16,17 @@ const headingClass: Record<string, string> = {
 export function PortableBody({
   value,
   density = 'compact',
+  copyClassName,
 }: {
   value: PortableText;
   density?: 'compact' | 'editorial';
+  copyClassName?: string;
 }) {
   const copyClass =
-    density === 'editorial'
+    copyClassName ??
+    (density === 'editorial'
       ? 'text-[1.05rem] leading-[1.8] text-ink'
-      : 'text-body leading-relaxed text-ink';
+      : 'text-body leading-relaxed text-ink');
 
   return (
     <div className={density === 'editorial' ? 'space-y-10' : 'space-y-4'}>

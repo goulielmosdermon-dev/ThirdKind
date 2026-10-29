@@ -121,7 +121,7 @@ export function WorkStory({
 }) {
   const copyClass =
     density === 'editorial'
-      ? 'max-w-[38rem] text-[1.05rem] leading-[1.8] text-ink'
+      ? 'max-w-[38rem] text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.8] text-ink'
       : 'max-w-[38rem] text-body leading-relaxed text-ink';
 
   const blocks: Array<{ key: string; node: ReactNode }> = [];

@@ -96,7 +96,7 @@ const SLOT = [
 ] as const;
 
 const MANIFESTO_LEAD =
-  'Nobody likes being interrupted or preached at. What people want is to be entertained, to feel, and to believe. When a business means that, customers';
+  'Nobody likes being interrupted or preached at. What people want is to feel and believe. When a business means that, customers';
 
 /**
  * The Why copy, one paragraph, standing still. Only its last word moves: it
@@ -376,25 +376,13 @@ export function IndexView({
   };
 
   // Each part of an index item arrives in turn: the line rises out of its
-  // mask, the tags come one after another, and the picture wipes open.
+  // mask, then the picture wipes open.
   const mask = {
     hidden: { y: reduced ? 0 : '110%' },
     shown: {
       y: 0,
       transition: {
         duration: reduced ? MOTION.reduced : 0.85,
-        ease: MOTION.easeOut,
-      },
-    },
-  };
-
-  const tagIn = {
-    hidden: { opacity: 0, y: reduced ? 0 : 6 },
-    shown: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: reduced ? MOTION.reduced : 0.5,
         ease: MOTION.easeOut,
       },
     },
@@ -547,39 +535,6 @@ export function IndexView({
                       </span>
                     </motion.p>
                   </span>
-                  {node.tags?.length || node.country ? (
-                    // The tags arrive one after the other, after the line and
-                    // before the picture.
-                    <motion.ul
-                      variants={{
-                        hidden: {},
-                        shown: {
-                          transition: {
-                            staggerChildren: reduced ? 0 : 0.07,
-                          },
-                        },
-                      }}
-                      className={`flex flex-wrap gap-1.5 ${phone ? 'mb-3' : 'mb-4'}`}
-                    >
-                      {node.tags?.map((tag) => (
-                        <motion.li
-                          key={tag}
-                          variants={tagIn}
-                          className="rounded-full border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
-                        >
-                          {tag}
-                        </motion.li>
-                      ))}
-                      {node.country ? (
-                        <motion.li
-                          variants={tagIn}
-                          className="border-[1.5px] border-ink/55 px-3 py-1 text-[0.78rem] font-medium leading-none text-ink"
-                        >
-                          {node.country}
-                        </motion.li>
-                      ) : null}
-                    </motion.ul>
-                  ) : null}
                   <motion.span
                     variants={wipe}
                     // The still claims the header's cursor: over it, the same

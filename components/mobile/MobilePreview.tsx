@@ -69,9 +69,6 @@ function MobileScreen({
     completeRef.current = complete;
     advanceRef.current = advance;
   });
-  // The showcase is the whole screen here and the black section follows it, so
-  // the hands keep out of the way until the reader is past both.
-  const [openingPassed, setOpeningPassed] = useState(false);
   const [size, setSize] = useState<{ width: number; height: number }>(
     IPHONE_15_PRO,
   );
@@ -154,7 +151,7 @@ function MobileScreen({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      {hands ? (
+      {hands && !complete ? (
         <>
           <Image
             src="/brand/hand-alien.png"
@@ -167,7 +164,6 @@ function MobileScreen({
               height: hands.alien.height,
               width: hands.alien.height * ALIEN_ASPECT,
               transform: `translate(${hands.alien.x}px, ${hands.alien.y}px)`,
-              opacity: openingPassed || !complete ? 1 : 0,
               transition: complete
                 ? 'opacity 0.45s ease'
                 : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
@@ -184,7 +180,6 @@ function MobileScreen({
               height: hands.human.height,
               width: hands.human.height * HUMAN_ASPECT,
               transform: `translate(${hands.human.x}px, ${hands.human.y}px)`,
-              opacity: openingPassed || !complete ? 1 : 0,
               transition: complete
                 ? 'opacity 0.45s ease'
                 : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), height 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
@@ -237,7 +232,6 @@ function MobileScreen({
             density="phone"
             nodes={nodes}
             manifesto={manifesto}
-            onOpeningPassed={setOpeningPassed}
             onOpen={(href, nodeId) => {
               markOpenedFromCanvas(nodeId);
               router.push(withMobilePrefix(href, true));

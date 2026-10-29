@@ -1,7 +1,6 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   useCallback,
@@ -42,15 +41,7 @@ import {
 } from '@/lib/canvas/viewport';
 
 import { MOTION } from '@/lib/motion/tokens';
-import {
-  ALIEN_ASPECT,
-  HUMAN_ASPECT,
-  HUMAN_SCALE,
-  contentOpacity,
-  largeHandHeight,
-  layoutHands,
-  mottoLineOpacity,
-} from '@/lib/intro/layout';
+import { contentOpacity, mottoLineOpacity } from '@/lib/intro/layout';
 
 import { EdgeLayer } from '@/components/canvas/EdgeLayer';
 import { HeroShowcase } from '@/components/canvas/HeroShowcase';
@@ -159,7 +150,7 @@ export function CanvasViewport({
     (href: string) => router.prefetch(href),
     [router],
   );
-  const { progress, complete, advance, autoplay } = useIntro();
+  const { progress, complete, advance } = useIntro();
   const reducedMotion = useReducedMotion() === true;
   const reveal = contentOpacity(progress);
   const completeRef = useRef(complete);
@@ -637,18 +628,6 @@ export function CanvasViewport({
           captionSize ?? undefined,
         )
       : null;
-  const [openingPassed, setOpeningPassed] = useState(false);
-  // The hands no longer open the site. They appear only once the reader has
-  // scrolled past the opening into the index, parked in their corners.
-  const hands =
-    complete && openingPassed && size && size.width > 0 && size.height > 0
-      ? layoutHands(progress, size.width, size.height)
-      : null;
-  // The images are laid out once at their opening size and then only
-  // transformed. Animating width/height instead re-lays out and repaints two
-  // large bitmaps on every frame, which is what made the hands part in steps
-  // on a phone.
-  const handBase = size ? largeHandHeight(size.width) : 0;
   const narrow = useNarrow();
   // The command bar sits outside the scroller, so it is told from here.
   const { report } = usePageScroll();
@@ -670,11 +649,6 @@ export function CanvasViewport({
     },
     [report],
   );
-  // The hands are drawn black, which is what the light canvas wants. The
-  // opening is dark throughout — the showcase, then the black band under it —
-  // so they invert to white for the whole of it and come back to black once
-  // the index, light again, has scrolled up under them.
-  const handsWhite = complete && !openingPassed;
   // The motto fades in on the intro's own curve and then simply stays, rather
   // than fading out into the page the way mottoOpacity has it: it is the
   // header's headline too, and it travels up out of view with the band.
@@ -684,19 +658,6 @@ export function CanvasViewport({
   const mottoLines: readonly [number, number] = complete
     ? [1, 1]
     : [mottoLineOpacity(progress, 0), mottoLineOpacity(progress, 1)];
-  const handTone = {
-    filter: handsWhite ? 'invert(1)' : undefined,
-    mixBlendMode: handsWhite ? ('normal' as const) : ('multiply' as const),
-    transition: 'filter 0.35s ease',
-  };
-  // While the intro plays itself out, progress already arrives once a frame;
-  // a transition on top of that only adds lag. The wheel-driven intro steps
-  // in jumps, so there it stays.
-  const handEase =
-    complete || autoplay
-      ? undefined
-      : 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)';
-
   return (
     <div
       ref={frameRef}
@@ -774,55 +735,6 @@ export function CanvasViewport({
             )}
           </div>
 
-          {hands ? (
-            <>
-              <Image
-                src="/brand/hand-alien.png"
-                alt="Third Kind"
-                width={3354}
-                height={2203}
-                priority
-                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none tk-hands-in`}
-                style={{
-                  ...handTone,
-                  height: handBase,
-                  width: handBase * ALIEN_ASPECT,
-                  transformOrigin: '0 0',
-                  transform: `translate3d(${hands.alien.x}px, ${hands.alien.y}px, 0) scale(${hands.alien.height / handBase})`,
-                  willChange: complete ? undefined : 'transform',
-                  transition: [
-                    complete ? 'opacity 0.45s ease' : handEase,
-                    'filter 0.35s ease',
-                  ]
-                    .filter(Boolean)
-                    .join(', '),
-                }}
-              />
-              <Image
-                src="/brand/hand-human.png"
-                alt=""
-                width={2517}
-                height={1819}
-                priority
-                className={`pointer-events-none absolute top-0 left-0 z-20 max-w-none tk-hands-in`}
-                style={{
-                  ...handTone,
-                  height: handBase * HUMAN_SCALE,
-                  width: handBase * HUMAN_SCALE * HUMAN_ASPECT,
-                  transformOrigin: '0 0',
-                  transform: `translate3d(${hands.human.x}px, ${hands.human.y}px, 0) scale(${hands.human.height / (handBase * HUMAN_SCALE)})`,
-                  willChange: complete ? undefined : 'transform',
-                  transition: [
-                    complete ? 'opacity 0.45s ease' : handEase,
-                    'filter 0.35s ease',
-                  ]
-                    .filter(Boolean)
-                    .join(', '),
-                }}
-              />
-            </>
-          ) : null}
-
           <AnimatePresence>
             {hovered &&
             captionOrigin &&
@@ -869,7 +781,6 @@ export function CanvasViewport({
             <IndexView
               nodes={nodes}
               manifesto={manifesto}
-              onOpeningPassed={setOpeningPassed}
               onHeaderPassed={onHeaderPassed}
               onHeaderOffset={onHeaderOffset}
               onOpen={(href, nodeId) => {

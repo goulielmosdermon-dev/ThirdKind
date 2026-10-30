@@ -1,0 +1,2630 @@
+{
+  "wardrobes": {
+    "title": {
+      "en": "Wardrobes",
+      "el": "Ντουλάπες"
+    },
+    "items": [
+      {
+        "id": "14810",
+        "title": {
+          "en": "Sliding Wardrobe",
+          "el": "Συρόμενη Ντουλάπα"
+        },
+        "image": "/DOMO/Images/Catalog/14810.jpg",
+        "copy": {
+          "en": "Mint-coloured synthetic sliding doors with a divider. The carcass is available in white or coloured melamine, 18 or 25 mm thick. The sliding mechanisms have integrated brakes.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συρόμενα φύλλα από συνθετικό υλικό σε απόχρωση μέντας με ένα διαχωριστικό. Κουτί: Μελαμίνη έγχρωμη ή λευκή σε πάχος 18 mm ή 25 mm. Μηχανισμοί συρόμενων φύλλων με ενσωματωμένα φρένα."
+        },
+        "source": "https://www.domogroup.gr/product/%cf%83%cf%85%cf%81%cf%8c%ce%bc%ce%b5%ce%bd%ce%b7-%ce%bd%cf%84%ce%bf%cf%85%ce%bb%ce%ac%cf%80%ce%b1/",
+        "preview": "/DOMO/Images/Catalog/Previews/14810.webp"
+      },
+      {
+        "id": "14752",
+        "title": {
+          "en": "Wardrobe – collection Ithaki",
+          "el": "Ντουλάπα – Σειρά Ιθάκη"
+        },
+        "image": "/DOMO/Images/Catalog/14752.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος : Πορτάκι Μασίφ. Χρώμα : Βαφή open poor λευκού χρώματος. Πόμολο : Bronze μεταλλική χούφτα και push button. Συνδυάστε το έπιπλο μπουντουάρ με την ντουλάπα σας. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/%ce%bd%cf%84%ce%bf%cf%85%ce%bb%ce%ac%cf%80%ce%b1-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%b9%ce%b8%ce%b1%ce%ba%ce%b7/",
+        "preview": "/DOMO/Images/Catalog/Previews/14752.webp"
+      },
+      {
+        "id": "14681",
+        "title": {
+          "en": "Wardrobe – collection Paros II",
+          "el": "Ντουλάπα – Σειρά Πάρος II"
+        },
+        "image": "/DOMO/Images/Catalog/14681.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα Ματ σε απόχρωση επιλογής. Πόμολο: Μασίφ cross laminate σε οριζόντια διάταξη με ενσωματωμένη οριζόντια σκαφτή χούφτα. Συνδυάστε το έπιπλο μπουντουάρ με την ντουλάπα σας. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας. Εάν επιθυμείτε η κατασκευή της ντουλάπας σας να γίνει δύο εποχών, τότε η λαβή μπορεί να τροποποιηθεί σε εξωτερικό συρτάρι."
+        },
+        "source": "https://www.domogroup.gr/product/closet_line_paros_ii/",
+        "preview": "/DOMO/Images/Catalog/Previews/14681.webp"
+      },
+      {
+        "id": "14687",
+        "title": {
+          "en": "Wardrobe – collection Pilio",
+          "el": "Ντουλάπα – Σειρά Πήλιο"
+        },
+        "image": "/DOMO/Images/Catalog/14687.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο. Χρώμα: Επιλογής του πελάτη με οικολογικά βερνίκια. Πόμολο: Μασίφ cross laminate σε οριζόντια διάταξη με ενσωματωμένη οριζόντια σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας. Εάν επιθυμείτε η κατασκευή της ντουλάπας σας να γίνει δύο εποχών, τότε η λαβή μπορεί να τροποποιηθεί σε εξωτερικό συρτάρι."
+        },
+        "source": "https://www.domogroup.gr/product/closet_linepelion/",
+        "preview": "/DOMO/Images/Catalog/Previews/14687.webp"
+      },
+      {
+        "id": "14690",
+        "title": {
+          "en": "Wardrobe – collection Pilio II",
+          "el": "Ντουλάπα – Σειρά Πήλιο II"
+        },
+        "image": "/DOMO/Images/Catalog/14690.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο. Χρώμα: Επιλογής του πελάτη με οικολογικά βερνίκια. Πόμολο: Μασίφ cross laminate σε οριζόντια διάταξη με ενσωματωμένη οριζόντια σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας. Εάν επιθυμείτε η κατασκευή της ντουλάπας σας να γίνει δύο εποχών, τότε η λαβή μπορεί να τροποποιηθεί σε εξωτερικό συρτάρι."
+        },
+        "source": "https://www.domogroup.gr/product/closet_linepelion_ii/",
+        "preview": "/DOMO/Images/Catalog/Previews/14690.webp"
+      },
+      {
+        "id": "14405",
+        "title": {
+          "en": "Wardrobe Two-season – collection Kimolos",
+          "el": "Ντουλάπα Δύο Εποχών – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/14405.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Πόρτες: Συνθετικό επίπεδο σε απόχρωση γυαλιστερό κρεμ. Πόμολο: Οριζόντια φάσα από μασίφ Δρυς με ενσωματωμένη σκαφτή χειρολαβή. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_two_seasons_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/14405.webp"
+      },
+      {
+        "id": "14404",
+        "title": {
+          "en": "Wardrobe Two-season – collection Kythnos",
+          "el": "Ντουλάπα Δύο Εποχών – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/14404.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γυαλιστερό λευκό. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_two_seasons_kythnos/",
+        "preview": "/DOMO/Images/Catalog/Previews/14404.webp"
+      },
+      {
+        "id": "12243",
+        "title": {
+          "en": "Walk-in wardrobe – Solid oak II",
+          "el": "Βεστιάριο – Μασίφ Δρυς II"
+        },
+        "image": "/DOMO/Images/Catalog/12243.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Καπλαμάς Μασίφ Δρυς. Διαστάσεις: Κατόπιν συνεννόησης. Ειδική Κατασκευή με προτεραιότητα της ανάγκες του πελάτη."
+        },
+        "source": "https://www.domogroup.gr/product/cloackoom_solid_oak/",
+        "preview": "/DOMO/Images/Catalog/Previews/12243.webp"
+      },
+      {
+        "id": "12333",
+        "title": {
+          "en": "Wardrobe Grey 4 – collection Kythnos",
+          "el": "Ντουλάπα Γκρι 4 – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/12333.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γκρι. Πάχος πόρτας: 2cm. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_grey_kythnos/",
+        "preview": "/DOMO/Images/Catalog/Previews/12333.webp"
+      },
+      {
+        "id": "12207",
+        "title": {
+          "en": "Wardrobe Grey – collection Kimolos",
+          "el": "Ντουλάπα Γκρι – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/12207.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα από Δρυς. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_grey_line_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/12207.webp"
+      },
+      {
+        "id": "12196",
+        "title": {
+          "en": "Sliding Wardrobe – Bespoke",
+          "el": "Συρόμενη Ντουλάπα – Ειδική Κατασκευή"
+        },
+        "image": "/DOMO/Images/Catalog/12196.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συρόμενα φύλλα από συνθετικό υλικό με ένα διαχωριστικό inox. Κουτί: Μελαμίνη έγχρωμη ή λευκή σε πάχος 18 mm ή 25 mm. Μηχανισμοί συρόμενων φύλλων με ενσωματωμένα φρένα. Ειδική Κατασκευή όπου ενσωματώνει δύο ανάγκες σε μια κατασκευή (Ντουλάπα & Ντουζιέρα)."
+        },
+        "source": "https://www.domogroup.gr/product/sliding_closet_special_construction/",
+        "preview": "/DOMO/Images/Catalog/Previews/12196.webp"
+      },
+      {
+        "id": "12203",
+        "title": {
+          "en": "Sliding Wardrobe with mirror",
+          "el": "Συρόμενη Ντουλάπα Με Καθρέφτη"
+        },
+        "image": "/DOMO/Images/Catalog/12203.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συρόμενα φύλλα με καθρέφτη και ένα διαχωριστικό inox. Κουτί: Μελαμίνη έγχρωμη ή λευκή σε πάχος 18 mm ή 25 mm. Μηχανισμοί συρόμενων φύλλων με ενσωματωμένα φρένα. Όλα τα προϊόντα μας όπως και οι ντουλάπες προσαρμόζονται σε διαστάσεις καλύπτοντας τις δικές σας ανάγκες ."
+        },
+        "source": "https://www.domogroup.gr/product/sliding_closet_mirror/",
+        "preview": "/DOMO/Images/Catalog/Previews/12203.webp"
+      },
+      {
+        "id": "7533",
+        "title": {
+          "en": "Wardrobe Grey – collection Kythnos",
+          "el": "Ντουλάπα Γκρι – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/7533.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γκρι. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Κατασκευή που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας για την δημιουργία πολλών κατασκευών σε κατοικία στην Αττική."
+        },
+        "source": "https://www.domogroup.gr/product/closetkythnos/",
+        "preview": "/DOMO/Images/Catalog/Previews/7533.webp"
+      },
+      {
+        "id": "7530",
+        "title": {
+          "en": "Walk-in wardrobe7 – collection Kimolos",
+          "el": "Βεστιάριο7 – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/7530.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Μοντέλο: Βεστιάριο Κίμωλος. Υλικά Φινιρίσματος: Λάκα ματ σε μεγάλη γκάμα αποχρώσεων σε συνδυασμό με ορθοστάτες από Μασίφ Δρυς. Οι προεκτάσεις των μασίφ ραφιών από κορμούς Ελληνικής ξυλείας που είναι τα καπάκια των κατασκευών χρησιμοποιούνται ως κομοδίνα. Το βεστιάριο Κίμωλος ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας. Μελέτη & σχεδιασμός: kipseli architects για το Εστία Project - Ιδιωτική Κατοικία Μύκονος By Domogroup."
+        },
+        "source": "https://www.domogroup.gr/product/cloackroom_line_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/7530.webp"
+      },
+      {
+        "id": "10773",
+        "title": {
+          "en": "Wardrobe – collection Kimolos",
+          "el": "Ντουλάπα – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/10773.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι λάκα ματ σε απόχρωση λευκό σε συνδυασμό με ενσωματωμένη μασίφ Δρύινη φάσα που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Ράφια: Μασίφ Δρυς. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Σύστημα “Κίμωλος”."
+        },
+        "source": "https://www.domogroup.gr/product/closet_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/10773.webp"
+      },
+      {
+        "id": "11034",
+        "title": {
+          "en": "Wardrobe – collection Kythnos",
+          "el": "Ντουλάπα – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/11034.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση λευκό. Πάχος πόρτας: 2cm. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_line_kythnos/",
+        "preview": "/DOMO/Images/Catalog/Previews/11034.webp"
+      },
+      {
+        "id": "7535",
+        "title": {
+          "en": "Wardrobe Linen 1 – collection Kythnos",
+          "el": "Ντουλάπα Linen 1 – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/7535.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο. Πόμολο: Μασίφ ξύλινο πόμολο πολυγωνικής διατομής. Στη συγκεκριμένη ντουλάπα ενσωματώνονται γραφείο και εξωτερικά ράφια από υλικό επιλογής του πελάτη. Μπορείτε πάντα μια κατασκευή από οποιοδήποτε υλικό να την μεταμορφώσετε με ξύλινες λεπτομέρειες. Κατασκευή που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας για τη δημιουργία πολλών κατασκευών σε κατοικία στην Αττική. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closetlinen/",
+        "preview": "/DOMO/Images/Catalog/Previews/7535.webp"
+      },
+      {
+        "id": "7534",
+        "title": {
+          "en": "Wardrobe White – collection Kythnos",
+          "el": "Ντουλάπα Λευκή – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/7534.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε λευκή απόχρωση. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closetkythnos_white/",
+        "preview": "/DOMO/Images/Catalog/Previews/7534.webp"
+      },
+      {
+        "id": "10991",
+        "title": {
+          "en": "Wardrobe Cement White – collection Ios",
+          "el": "Ντουλάπα Cement White – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/10991.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Κόντρα Πλακέ Θαλάσσης (ΚΠΘ). Χρώμα: Cement σε απόχρωση επιλογής. Πόμολο: Κάθετη ενσωματωμένη χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_ios_white/",
+        "preview": "/DOMO/Images/Catalog/Previews/10991.webp"
+      },
+      {
+        "id": "10996",
+        "title": {
+          "en": "Wardrobe Cement – collection Ios",
+          "el": "Ντουλάπα Cement – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/10996.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Κόντρα Πλακέ Θαλάσσης (ΚΠΘ) και το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε απο ΚΠΘ, είτε από μασίφ ξυλείες ( ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_line_ios/",
+        "preview": "/DOMO/Images/Catalog/Previews/10996.webp"
+      },
+      {
+        "id": "7545",
+        "title": {
+          "en": "Wardrobe Cement – collection Ios",
+          "el": "Ντουλάπα Cement – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/7545.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Κόντρα Πλακέ Θαλάσσης (ΚΠΘ) και το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε απο ΚΠΘ, είτε από μασίφ ξυλείες ( ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Χρώμα : Λάκα σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_ios_cement/",
+        "preview": "/DOMO/Images/Catalog/Previews/7545.webp"
+      },
+      {
+        "id": "7567",
+        "title": {
+          "en": "Wardrobe oak Rustic",
+          "el": "Ντουλάπα Δρυς Rustic"
+        },
+        "image": "/DOMO/Images/Catalog/7567.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Μοντέλο: Δρυς rustic. Πορτάκι ντουλάπας: Καπλαμάς Δρυς rustic σε φυσικό χρώμα με επεξεργασία brushed και smoked. Ανοιχτά κουτιά: Λάκα ματ σε μεγάλη γκάμα αποχρώσεων. Εσωτερικά κουτιά: Μελαμίνη 18'' έγχρωμη κατηγορία Ε1 οικολογική και αδιαβροχοποιημένη. Ένας συνδυασμός μοντέρνων και rustic στοιχείων δημιουργήθηκε για να ζεστάνει το χώρο σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_oak_rustic/",
+        "preview": "/DOMO/Images/Catalog/Previews/7567.webp"
+      },
+      {
+        "id": "11019",
+        "title": {
+          "en": "Wardrobe – collection Pilio",
+          "el": "Ντουλάπα – Σειρά Πήλιο"
+        },
+        "image": "/DOMO/Images/Catalog/11019.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο. Πάχος πόρτας: 2cm. Χρώμα: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Όταν έρχεται το πολύτιμο Ελληνικό ξύλο να συνυπάρξει αρμονικά με τον αέρα των Κυκλάδων. Η διακόσμηση σε ένα κυκλαδίτικο ξενώνα δε θα μπορούσε να συνδυαστεί με κάτι άλλο πέρα από το φυσικό υλικό του ξύλου. Αυτό το πάντρεμα του νησιώτικου αέρα και του φυσικού πολύτιμου ξύλου θα ικανοποιήσει οπτικά και αισθητικά κάθε προσδοκία σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_pelion/",
+        "preview": "/DOMO/Images/Catalog/Previews/11019.webp"
+      },
+      {
+        "id": "7568",
+        "title": {
+          "en": "Walk-in wardrobe – collection Rustic",
+          "el": "Βεστιάριο – Σειρά Rustic"
+        },
+        "image": "/DOMO/Images/Catalog/7568.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Πορτάκι συρταριέρας: Καπλαμάς Δρυς rustic σε φυσικό χρώμα με επεξεργασία brushed και smoked. Ανοιχτά κουτιά: Λάκα ματ σε μεγάλη γκάμα αποχρώσεων. Ένας συνδυασμός μοντέρνων και rustic στοιχείων δημιουργήθηκε για να ζεστάνει το χώρο σας και να δώσει μια ιδιαιτερότητα στο στυλ και στη διακόσμηση του σπιτιού σας."
+        },
+        "source": "https://www.domogroup.gr/product/cloackroom_rustic/",
+        "preview": "/DOMO/Images/Catalog/Previews/7568.webp"
+      },
+      {
+        "id": "7554",
+        "title": {
+          "en": "Wardrobe Cement – collection Delos",
+          "el": "Ντουλάπα Cement – Σειρά Δήλος"
+        },
+        "image": "/DOMO/Images/Catalog/7554.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: ΚΠΘ εσωτερικά. Χρώμα: Cement σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη κάθετη σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closetdilos/",
+        "preview": "/DOMO/Images/Catalog/Previews/7554.webp"
+      },
+      {
+        "id": "7549",
+        "title": {
+          "en": "Wardrobe Cement – collection Paros",
+          "el": "Ντουλάπα Cement – Σειρά Πάρος"
+        },
+        "image": "/DOMO/Images/Catalog/7549.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Τσιμεντοκονία σε συνδυασμό με μασίφ καστανιά. Πάχος πόρτας: 2cm. Λαβή: Πόμολο ενσωματωμένη οριζόντια χούφτα. Βαφή: Σε πολλές αποχρώσεις τσιμεντοκονίας. Το εσωτερικό των ντουλαπιών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Όλα τα προιόντα μας όπως και οι ντουλάπες προσαρμόζονται σε διαστάσεις καλύπτοντας τις δικές σας ανάγκες ."
+        },
+        "source": "https://www.domogroup.gr/product/closet_cement_paros/",
+        "preview": "/DOMO/Images/Catalog/Previews/7549.webp"
+      },
+      {
+        "id": "7548",
+        "title": {
+          "en": "Wardrobe Horizontal – collection Ios",
+          "el": "Ντουλάπα Horizontal – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/7548.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_horizontal_ios/",
+        "preview": "/DOMO/Images/Catalog/Previews/7548.webp"
+      },
+      {
+        "id": "7566",
+        "title": {
+          "en": "Votsalo coat rack & luggage stand",
+          "el": "Κρεμάστρα – Βαλιτσοθήκη Βότσαλο"
+        },
+        "image": "/DOMO/Images/Catalog/7566.jpeg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Ξυλεία: Μασίφ πεύκο σε συνδυασμό με λάκα ματ. Χρώμα: Βερνίκι νερού φυσικό ή επιλογής - οικολογικά. Διαστάσεις: Κατόπιν παραγγελίας. Μία κατασκευή ελεύθερη στο χώρο που μπορεί να χρησιμοποιηθεί ως έπιπλο εισόδου είτε σαν ντουλάπα στο δωμάτιο ενός ξενοδοχείου."
+        },
+        "source": "https://www.domogroup.gr/product/hanger_votsalo/",
+        "preview": "/DOMO/Images/Catalog/Previews/7566.webp"
+      },
+      {
+        "id": "7565",
+        "title": {
+          "en": "Wardrobe – collection Kimolos leaf",
+          "el": "Ντουλάπα – Σειρά Κίμωλος leaf"
+        },
+        "image": "/DOMO/Images/Catalog/7565.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ Δρυς φυλλαράκι σε συνδυασμό με την σειρά Κίμωλος σε λάκα ματ σε απόχρωση λευκή. Διαστάσεις: Κατόπιν συνεννόησης. Μία σύνθεση ντουλάπας που συνδυάζει την ανοικτή γκαρνταρόμπα Κίμωλος με το ιδιαίτερο χαρακτηριστικό πορτάκι leaf."
+        },
+        "source": "https://www.domogroup.gr/product/closet_kimolos_leaf/",
+        "preview": "/DOMO/Images/Catalog/Previews/7565.webp"
+      },
+      {
+        "id": "7541",
+        "title": {
+          "en": "Wardrobe White – collection Kimolos",
+          "el": "Ντουλάπα Λευκή – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/7541.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Μασίφ φάσα από panel f/j Δρυός με σκαφτή κάθετη ενσωματωμένη χούφτα καθ' όλο το ύψος. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Κατασκευή που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας για τη δημιουργία πολλών κατασκευών σε κατοικία στην Αττική."
+        },
+        "source": "https://www.domogroup.gr/product/closet_white_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/7541.webp"
+      },
+      {
+        "id": "7532",
+        "title": {
+          "en": "Wardrobe Aegon",
+          "el": "Ντουλάπα Aegon"
+        },
+        "image": "/DOMO/Images/Catalog/7532.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Μοντέλο: Aegon. Πορτάκι ντουλάπας: Από μασίφ ξυλεία custom κατασκευής με διαμπερείς εγκοπές. Υλικά Φινιρίσματος: Βακελίτης σε φινίρισμα lino σε συνδυασμό με λάκα ματ σε μεγάλη γκάμα αποχρώσεων. Αξεσουάρ: Εμφανείς σωλήνες κρέμασης & πόμολα μεταλλικά βαμμένα ηλεκτροστατικά σε χρώμα μαύρο. Ο χαρακτηριστικός σχεδιασμός ακολούθησε και τις κατασκευές στα mini bar που βρισκόντουσαν στον ίδιο χώρο των υπνοδωματίων. Η ντουλάπα AEGON ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας. Μελέτη & σχεδιασμός: Diversity Architects για το ξενοδοχείο Aegon Mykonos."
+        },
+        "source": "https://www.domogroup.gr/product/closet_aegon/",
+        "preview": "/DOMO/Images/Catalog/Previews/7532.webp"
+      },
+      {
+        "id": "11032",
+        "title": {
+          "en": "Wardrobe bespoke",
+          "el": "Ντουλάπα ειδική κατασκευή"
+        },
+        "image": "/DOMO/Images/Catalog/11032.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα σε απόχρωση επιλογής. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Κατασκευή που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας για τη δημιουργία πολλών κατασκευών σε κατοικία στην Αττική."
+        },
+        "source": "https://www.domogroup.gr/product/specialconstruction_closet/",
+        "preview": "/DOMO/Images/Catalog/Previews/11032.webp"
+      },
+      {
+        "id": "10966",
+        "title": {
+          "en": "Wardrobe – collection Air",
+          "el": "Ντουλάπα – Σειρά Air"
+        },
+        "image": "/DOMO/Images/Catalog/10966.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πλαίσιο αλουμινίου με ηλεκτροστατική βαφή RAL μαύρη άμμος. Ταμπλάς: Από τζάμι διάφανο ή φιμέ με προστατευτική μεμβράνη ή καθρέφτη. Φρένα στο ροδάκι κύλισης. Εμφανής οδηγός οροφής μονός με κάλυμμα. Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_air/",
+        "preview": "/DOMO/Images/Catalog/Previews/10966.webp"
+      },
+      {
+        "id": "12609",
+        "title": {
+          "en": "Wardrobe – collection Delos",
+          "el": "Ντουλάπα – Σειρά Δήλος"
+        },
+        "image": "/DOMO/Images/Catalog/12609.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λάκα ματ σε απόχρωση λευκό. Πάχος πόρτας: 2cm. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Μοντέλο Δήλος με ενσωματωμένη σκαφτή χειρολαβή. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_line_delos/",
+        "preview": "/DOMO/Images/Catalog/Previews/12609.webp"
+      },
+      {
+        "id": "11025",
+        "title": {
+          "en": "Wardrobe – collection Porto Heli",
+          "el": "Ντουλάπα – Σειρά Πορτοχέλι"
+        },
+        "image": "/DOMO/Images/Catalog/11025.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο. Πάχος πόρτας: 2 cm. Λαβή: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων. Όταν έρχεται το πολύτιμο Ελληνικό ξύλο να συνυπάρξει αρμονικά με τον αέρα των Κυκλάδων. Η διακόσμηση σε ένα κυκλαδίτικο ξενώνα δε θα μπορούσε να συνδυαστεί με κάτι άλλο πέρα από το φυσικό υλικό του ξύλου. Αυτό το πάντρεμα του νησιώτικου αέρα και του φυσικού πολύτιμου ξύλου θα ικανοποιήσει οπτικά και αισθητικά κάθε προσδοκία σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_portocheli/",
+        "preview": "/DOMO/Images/Catalog/Previews/11025.webp"
+      },
+      {
+        "id": "12192",
+        "title": {
+          "en": "Wardrobe Entrance – collection Ios",
+          "el": "Ντουλάπα Εισόδου – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/12192.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_entrance_ios/",
+        "preview": "/DOMO/Images/Catalog/Previews/12192.webp"
+      },
+      {
+        "id": "11266",
+        "title": {
+          "en": "Walk-in wardrobe oak",
+          "el": "Βεστιάριο Δρυς"
+        },
+        "image": "/DOMO/Images/Catalog/11266.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Καπλαμάς Μασίφ Δρυς. Διαστάσεις: Κατόπιν συνεννόησης. Ειδική Κατασκευή με προτεραιότητα τις ανάγκες του πελάτη."
+        },
+        "source": "https://www.domogroup.gr/product/cloackroom_oak/",
+        "preview": "/DOMO/Images/Catalog/Previews/11266.webp"
+      },
+      {
+        "id": "15248",
+        "title": {
+          "en": "Walk-in wardrobe – collection Air",
+          "el": "Βεστιάριο – Σειρά Air"
+        },
+        "image": "/DOMO/Images/Catalog/15248.jpeg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Ορθοστάτες, & Αποστάτες: Μεταλλικοί. Ράφια: Λάκα ή συνθετικό υλικό σε χρώμα επιλογής σας. Χρώμα: Βερνίκια νερού οικολογικά σε απόχρωση επιλογής από το χρωματολόγιο της εταιρείας & συνθετικά υλικά βάσει δείγματος. Διαστάσεις: Κατόπιν συνεννόησης. Custom κατασκευή με δυνατότητα προσαρμογής σε όλους τους χώρους."
+        },
+        "source": "https://www.domogroup.gr/product/%ce%b2%ce%b5%cf%83%cf%84%ce%b9%ce%ac%cf%81%ce%b9%ce%bf-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-air/",
+        "preview": "/DOMO/Images/Catalog/Previews/15248.webp"
+      },
+      {
+        "id": "7562",
+        "title": {
+          "en": "Walk-in wardrobe 8 – collection Kimolos",
+          "el": "Βεστιάριο 8 – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/7562.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Ορθοστάτες, & Αποστάτες: Μασίφ κυλινδρικές κολώνες f/j Δρυός, διαμέτρου 4cm. Ράφια: Λάκα ή συνθετικό υλικό σε χρώμα επιλογής σας. Χρώμα: Βερνίκια νερού οικολογικά σε απόχρωση επιλογής από το χρωματολόγιο της εταιρείας & συνθετικά υλικά βάσει δείγματος. Διαστάσεις: Κατόπιν συνεννόησης. Custom κατασκευή με δυνατότητα προσαρμογής σε όλους τους χώρους."
+        },
+        "source": "https://www.domogroup.gr/product/cloackroom_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/7562.webp"
+      },
+      {
+        "id": "11028",
+        "title": {
+          "en": "Wardrobe – Bespoke",
+          "el": "Ντουλάπα – Ειδική Κατασκευή"
+        },
+        "image": "/DOMO/Images/Catalog/11028.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Καπλαμάς μασίφ Δρυς. Διαστάσεις: Κατόπιν Συνεννόησης. Ειδική Κατασκευή από καπλαμά Δρυ όπου ενσωματώνει όλες τις ανάγκες σε μια κατασκευή (Ντουλάπα & Μπάνιο)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_special_construction/",
+        "preview": "/DOMO/Images/Catalog/Previews/11028.webp"
+      },
+      {
+        "id": "7537",
+        "title": {
+          "en": "Wardrobe Two-season – collection Classic",
+          "el": "Ντουλάπα Δύο Εποχών – Σειρά Classic"
+        },
+        "image": "/DOMO/Images/Catalog/7537.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι Μασίφ Μαόνι. Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Επιλογής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closetclassic/",
+        "preview": "/DOMO/Images/Catalog/Previews/7537.webp"
+      },
+      {
+        "id": "12186",
+        "title": {
+          "en": "Wardrobe White – collection Ios",
+          "el": "Ντουλάπα White – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/12186.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα σε απόχρωση επιλογής. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_white_ios/",
+        "preview": "/DOMO/Images/Catalog/Previews/12186.webp"
+      },
+      {
+        "id": "12239",
+        "title": {
+          "en": "Wardrobe Grey 3 – collection Kythnos",
+          "el": "Ντουλάπα Γκρι 3 – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/12239.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γκρι. Πάχος πόρτας: 2cm. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_grey_3_line_kythnos/",
+        "preview": "/DOMO/Images/Catalog/Previews/12239.webp"
+      },
+      {
+        "id": "12175",
+        "title": {
+          "en": "Wardrobe Grey 2 – collection Kythnos",
+          "el": "Ντουλάπα Γκρι 2 – Σειρά Κύθνος"
+        },
+        "image": "/DOMO/Images/Catalog/12175.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε γκρι απόχρωση. Πόμολο: Μασίφ ξύλινο κυλινδρικό ή πολυγωνικής διατομής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Κατασκευή που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας σε κατοικία στην Αττική."
+        },
+        "source": "https://www.domogroup.gr/product/closet_grey_kythnos-2/",
+        "preview": "/DOMO/Images/Catalog/Previews/12175.webp"
+      },
+      {
+        "id": "14585",
+        "title": {
+          "en": "Wardrobe – collection Delos II",
+          "el": "Ντουλάπα – Σειρά Δήλος II"
+        },
+        "image": "/DOMO/Images/Catalog/14585.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λάκα ματ σε απόχωση λευκό. Πάχος πόρτας: 2cm. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Μοντέλο Δήλος με ενσωματωμένη σκαφτή χειρολαβή. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet-delos-ii/",
+        "preview": "/DOMO/Images/Catalog/Previews/14585.webp"
+      },
+      {
+        "id": "7543",
+        "title": {
+          "en": "Wardrobe Natural wood I – collection Natural",
+          "el": "Ντουλάπα Φυσική Ξύλο Ι – Σειρά Natural"
+        },
+        "image": "/DOMO/Images/Catalog/7543.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απομίμηση ξύλου. Πόμολο: Ξύλινο μασίφ πόμολο με σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closet_natural/",
+        "preview": "/DOMO/Images/Catalog/Previews/7543.webp"
+      },
+      {
+        "id": "7538",
+        "title": {
+          "en": "Wardrobe 3T – collection Classic",
+          "el": "Ντουλάπα 3T – Σειρά Classic"
+        },
+        "image": "/DOMO/Images/Catalog/7538.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος : Μασίφ Πεύκο. Χρώμα: Βερνίκια νερού οικολογικά σε απόχρωση επιλογής από το χρωματολόγιο της εταιρείας ή βάσει δείγματος, επεξεργασία παλαίωσης. Πόμολο: Επιλογής. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closetclassic-2/",
+        "preview": "/DOMO/Images/Catalog/Previews/7538.webp"
+      },
+      {
+        "id": "10976",
+        "title": {
+          "en": "Wardrobe – collection Classic",
+          "el": "Ντουλάπα – Σειρά Classic"
+        },
+        "image": "/DOMO/Images/Catalog/10976.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκια από πεύκο ραμποτέ. Χρώμα: Οικολογικό βερνίκι αδιαβροχοποίησης σε φυσική απόχρωση. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_line_classic/",
+        "preview": "/DOMO/Images/Catalog/Previews/10976.webp"
+      },
+      {
+        "id": "7539",
+        "title": {
+          "en": "Wardrobe with glass – collection Classic",
+          "el": "Ντουλάπα Με Τζάμι – Σειρά Classic"
+        },
+        "image": "/DOMO/Images/Catalog/7539.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Μοντέλο: Σειρά Classic. Υλικά Φινιρίσματος: Μασίφ πεύκο σε συνδυασμό με τζάμι φθορίου. Πάχος πόρτας: 2cm. Βαφή: Φυσική απόχρωση. Το εσωτερικό των ντουλαπιών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Όλα τα προιόντα μας όπως και οι ντουλάπες προσαρμόζονται σε διαστάσεις καλύπτοντας τις δικές σας ανάγκες ."
+        },
+        "source": "https://www.domogroup.gr/product/closet_classic/",
+        "preview": "/DOMO/Images/Catalog/Previews/7539.webp"
+      },
+      {
+        "id": "14288",
+        "title": {
+          "en": "Wardrobe – collection Delos II",
+          "el": "Ντουλάπα – Σειρά Δήλος II"
+        },
+        "image": "/DOMO/Images/Catalog/14288.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λάκα ματ σε απόχρωση επιλογής του πελάτη. Πάχος πόρτας: 2cm. Μπάζα: Ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Μοντέλο Δήλος με ενσωματωμένη σκαφτή χειρολαβή. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης)."
+        },
+        "source": "https://www.domogroup.gr/product/closet_delos_ii/",
+        "preview": "/DOMO/Images/Catalog/Previews/14288.webp"
+      },
+      {
+        "id": "7553",
+        "title": {
+          "en": "Wardrobe – collection Paros",
+          "el": "Ντουλάπα – Σειρά Πάρος"
+        },
+        "image": "/DOMO/Images/Catalog/7553.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF εσωτερικά. Χρώμα: Λάκα Ματ σε απόχρωση επιλογής. Πόμολο: Μασίφ Καστανιά σε οριζόντια διάταξη με ενσωματωμένη οριζόντια σκαφτή χούφτα. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των κάθε ξεχωριστών αναγκών σας Εάν επιθυμείτε η κατασκευή της ντουλάπας σας να γίνει δύο εποχών, τότε η λαβή μπορεί να τροποποιηθεί σε εξωτερικό συρτάρι."
+        },
+        "source": "https://www.domogroup.gr/product/closetparos-2/",
+        "preview": "/DOMO/Images/Catalog/Previews/7553.webp"
+      },
+      {
+        "id": "7552",
+        "title": {
+          "en": "Wardrobe – collection Rhodes",
+          "el": "Ντουλάπα – Σειρά Ρόδος"
+        },
+        "image": "/DOMO/Images/Catalog/7552.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: MDF 19\" με επένδυση φυσικού καπλαμά Δρυ. Χρώμα: Με οικολογικά - υδατοδιαλυτά βερνίκια επιλογή από το χρωματολόγιο της εταιρείας. Πόμολο: Σκαφτό πόμολο με βαφή λάκας σε όλες τις αποχρώσεις Ral."
+        },
+        "source": "https://www.domogroup.gr/product/closetrodos/",
+        "preview": "/DOMO/Images/Catalog/Previews/7552.webp"
+      },
+      {
+        "id": "7542",
+        "title": {
+          "en": "Wardrobe Natural wood II – collection Natural",
+          "el": "Ντουλάπα Φυσική Ξύλο ΙΙ – Σειρά Natural"
+        },
+        "image": "/DOMO/Images/Catalog/7542.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό υλικό σε απομίμηση ξύλου. Πόμολο: Inox, επιλογή από δειγματολόγιο της εταιρείας. Το εσωτερικό των ντουλαπών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Η λειτουργική διαμόρφωση της ντουλάπας βασίζεται στην πλήρη αξιοποίηση του διαθέσιμου χώρου και στην εξυπηρέτηση των ξεχωριστών αναγκών σας."
+        },
+        "source": "https://www.domogroup.gr/product/closetnatural/",
+        "preview": "/DOMO/Images/Catalog/Previews/7542.webp"
+      },
+      {
+        "id": "7556",
+        "title": {
+          "en": "Sliding Wardrobe with a divider",
+          "el": "Συρόμενη Ντουλάπα Με Ένα Διαχωριστικό"
+        },
+        "image": "/DOMO/Images/Catalog/7556.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συρόμενα φύλλα από συνθετικό υλικό σε απόχρωση off white με ένα διαχωριστικό inox. Κουτί: Μελαμίνη έγχρωμη ή λευκή σε πάχος 18 mm ή 25 mm. Μηχανισμοί συρόμενων φύλλων: Ενσωματωμένα φρένα. Όλα τα προιόντα μας όπως και οι ντουλάπες προσαρμόζονται σε διαστάσεις καλύπτοντας τις δικές σας ανάγκες."
+        },
+        "source": "https://www.domogroup.gr/product/closet_sliding/",
+        "preview": "/DOMO/Images/Catalog/Previews/7556.webp"
+      }
+    ]
+  },
+  "kitchens": {
+    "title": {
+      "en": "Kitchens",
+      "el": "Κουζίνες"
+    },
+    "items": [
+      {
+        "id": "16203",
+        "title": {
+          "en": "Kitchen – collection Notos",
+          "el": "Κουζίνα – Σειρά Νότος"
+        },
+        "image": "/DOMO/Images/Catalog/16203.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "ΕΙΝΑΙ ΤΟ ΣΚΟΥΡΟ ΜΠΛΕ ΤΟ ΝΕΟ ΜΑΥΡΟ; Σε αυτό το ξεχωριστό project στα Νότια Προάστια, το σκούρο μπλε γίνεται πρωταγωνιστής,"
+        },
+        "source": "https://www.domogroup.gr/product/%ce%ba%ce%bf%cf%85%ce%b6%ce%af%ce%bd%ce%b1-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%bd%cf%8c%cf%84%ce%bf%cf%82/",
+        "preview": "/DOMO/Images/Catalog/Previews/16203.webp"
+      },
+      {
+        "id": "16209",
+        "title": {
+          "en": "Kitchen – collection Notos Paros1",
+          "el": "Κουζίνα – Σειρά Νότος Paros1"
+        },
+        "image": "/DOMO/Images/Catalog/16209.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Διαχρονική κομψότητα & λειτουργικός σχεδιασμός Ανακάλυψε την αρμονία του μινιμαλισμού με αυτή τη μοναδική κουζίνα από τη Domogroup για Βίλλα στην Πάρο. Φυσικές ξύλινες υφές, καθαρές γραμμές και σύγχρονη μεσογειακή αισθητική. Από τα custom ντουλάπια μέχρι τους ενιαίους πάγκους και τα ανοιχτά ράφια, κάθε λεπτομέρεια συνδυάζει την αισθητική με πρακτικότητα. Φυσικό ξύλο υψηλής ποιότητας Συρτάρια με μηχανισμό soft-close & άνετοι αποθηκευτικοί χώροι Εντοιχισμένες ηλεκτρικές συσκευές Νησίδα με εργονομικό σχεδιασμό για χρήση τραπεζιού Λειτουργική διάταξη για άνεση και ροή Domogroup – Ητεχνική αρτιότητα συναντά τη σύγχρονη αισθητική."
+        },
+        "source": "https://www.domogroup.gr/product/%ce%ba%ce%bf%cf%85%ce%b6%ce%af%ce%bd%ce%b1-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%bd%cf%8c%cf%84%ce%bf%cf%82-paros1/",
+        "preview": "/DOMO/Images/Catalog/Previews/16209.webp"
+      },
+      {
+        "id": "16213",
+        "title": {
+          "en": "Kitchen – collection Notos Paros2",
+          "el": "Κουζίνα – Σειρά Νότος Paros2"
+        },
+        "image": "/DOMO/Images/Catalog/16213.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Διαχρονική κομψότητα & λειτουργικός σχεδιασμός Ανακάλυψε την αρμονία του μινιμαλισμού με αυτή τη μοναδική κουζίνα από τη Domogroup για Βίλλα στην Πάρο. Φυσικές ξύλινες υφές, καθαρές γραμμές και σύγχρονη μεσογειακή αισθητική. Από τα custom ντουλάπια μέχρι τους ενιαίους πάγκους και τα ανοιχτά ράφια, κάθε λεπτομέρεια συνδυάζει την αισθητική με πρακτικότητα. Φυσικό ξύλο υψηλής ποιότητας Συρτάρια με μηχανισμό soft-close & άνετοι αποθηκευτικοί χώροι Εντοιχισμένες ηλεκτρικές συσκευές Νησίδα με εργονομικό σχεδιασμό για χρήση τραπεζιού Λειτουργική διάταξη για άνεση και ροή Domogroup – Ητεχνική αρτιότητα συναντά τη σύγχρονη αισθητική."
+        },
+        "source": "https://www.domogroup.gr/product/%ce%ba%ce%bf%cf%85%ce%b6%ce%af%ce%bd%ce%b1-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%bd%cf%8c%cf%84%ce%bf%cf%82-paros2/",
+        "preview": "/DOMO/Images/Catalog/Previews/16213.webp"
+      },
+      {
+        "id": "15916",
+        "title": {
+          "en": "Kitchen – collection Ithaki oak",
+          "el": "Κουζίνα – Σειρά Ιθάκη oak"
+        },
+        "image": "/DOMO/Images/Catalog/15916.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ πορτάκι Δρυς με βαφή σε φυσικές αποχρώσεις σε συνδυασμό με λάκα. Πάχος πόρτας: 2 cm. Πάγκος: Κεραμικός. Πόμολο: Μεταλλικά σε απόχρωση gold. Μια κουζίνα σχεδιασμένη με διαχρονικά υλικά. Καθαρές σχεδιαστικές γραμμές & με μεγάλη διαθεσιμότητα σε αποθηκευτικούς χώρους. Η νησίδα στο κέντρο της κουζίνας, τα ελεύθερα μασίφ ράφια & ο παραδοσιακός απορροφητήρας αναβαθμίζουν την αισθητική & τη λειτουργικότητα του χώρου. Όλα αυτά ολοκληρώνονται με την ειδικά διαμορφωμένη custom κατασκευή της εσωτερικής δίφυλλης πόρτας, που απομονώνει το χώρο αλλά ταυτόχρονα μέσω του τζαμιού προσφέρει και διαφάνεια."
+        },
+        "source": "https://www.domogroup.gr/product/%ce%ba%ce%bf%cf%85%ce%b6%ce%af%ce%bd%ce%b1-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%b9%ce%b8%ce%ac%ce%ba%ce%b7-oak/",
+        "preview": "/DOMO/Images/Catalog/Previews/15916.webp"
+      },
+      {
+        "id": "14801",
+        "title": {
+          "en": "Kitchen – collection Ios & Kimolos",
+          "el": "Κουζίνα – Σειρά Ίος & Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/14801.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι λάκα ματ σε απόχρωση γκρι σε συνδυασμό με ενσωματωμένη μασίφ Δρύινη φάσα που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος και πλάτη: Corian 2-4 cm. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χειρολαβή. Μπάζα: Inox 15 cm. Νησίδα: Μασίφ Δρυς F/J, πάχος 4cm χρώμα φυσικό."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_ios_kimwlos/",
+        "preview": "/DOMO/Images/Catalog/Previews/14801.webp"
+      },
+      {
+        "id": "15643",
+        "title": {
+          "en": "Kitchen-collection Ithaki Green",
+          "el": "Κουζίνα-Σειρά Ιθάκη Green"
+        },
+        "image": "/DOMO/Images/Catalog/15643.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Κουζίνα – Σειρά Ιθάκη Green Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ πορτάκι με βαφή λάκα ματ και εσωτερικά κάθετες σκοτίες. Πάχος πόρτας: 2 cm. Πάγκος: Μασίφ panel f/j Δρυς πάχος 4cm. Πόμολο: αντικέ λαβές. Μια κουζίνα με έμπνευση από την Ελληνική λιτότητα και πρακτικότητα, που δε θα αφήσει κανένα ασυγκίνητο. Vintage ντουλάπια & μασίφ πάγκος δημιουργούν τον τέλειο συνδυασμό."
+        },
+        "source": "https://www.domogroup.gr/product/%ce%ba%ce%bf%cf%85%ce%b6%ce%af%ce%bd%ce%b1-%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%b9%ce%b8%ce%ac%ce%ba%ce%b7-green/",
+        "preview": "/DOMO/Images/Catalog/Previews/15643.webp"
+      },
+      {
+        "id": "14678",
+        "title": {
+          "en": "Kitchen – collection Pilio II",
+          "el": "Κουζίνα – Σειρά Πήλιο II"
+        },
+        "image": "/DOMO/Images/Catalog/14678.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο και τσιμεντοκονία. Πάγκος: Κτιστός. Πάχος πόρτας: 2 cm. Λαβή: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Μπάζα: Μασίφ 10 ή 15 cm. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_linepelion-ii/",
+        "preview": "/DOMO/Images/Catalog/Previews/14678.webp"
+      },
+      {
+        "id": "14571",
+        "title": {
+          "en": "Kitchen – Kasteli",
+          "el": "Κουζίνα – Καστέλι"
+        },
+        "image": "/DOMO/Images/Catalog/14571.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Κόντρα Πλακέ Θαλάσσης. Μοντέλο “Καστέλι” με κάθετες γκινησιές ραμποτέ. Βαφή: Λάκας με επεξεργασία πατίνας & διχρωμίας, πάχος πόρτας 2cm. Πάγκος: Μάρμαρο Διονύσου. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 15 cm. Πόμολο: Vintage Μεταλλική χούφτα."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kasteli/",
+        "preview": "/DOMO/Images/Catalog/Previews/14571.webp"
+      },
+      {
+        "id": "14439",
+        "title": {
+          "en": "Kitchen – collection Pilio Ioniso",
+          "el": "Κουζίνα – Σειρά Πήλιο Ioniso"
+        },
+        "image": "/DOMO/Images/Catalog/14439.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ ξυλεία Cross Laminate Pine (σταυρωτή αντικολλητή ξυλεία). Μοντέλο \"Πήλιο\" με κάθετες γκινησιές ραμποτέ σε φυσικές αποχρώσεις ξύλου με επεξεργασία brushed & διχρωμία. Πάχος πόρτας: 2cm. Πάγκος: Κτιστός. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 15 cm. Πόμολο: Ενσωματωμένη σκαφτή χειρολαβή."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_ioniso/",
+        "preview": "/DOMO/Images/Catalog/Previews/14439.webp"
+      },
+      {
+        "id": "14395",
+        "title": {
+          "en": "Kitchen – collection Kimolos",
+          "el": "Κουζίνα – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/14395.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο υλικό με ενσωματωμένη μασίφ Δρύινη φάσα που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος: Μασίφ panel f/j Δρυός σε φυσική απόχρωση, πάχος 4cm. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 15 cm. Πόμολο: Σύστημα “Κίμωλος”."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/14395.webp"
+      },
+      {
+        "id": "13287",
+        "title": {
+          "en": "Kitchen – collection Ios & Rustic",
+          "el": "Κουζίνα – Σειρά Ίος & Rustic"
+        },
+        "image": "/DOMO/Images/Catalog/13287.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Καπλαμά Δρυς Rustic σε συνδυασμό με λάκα ματ σε απόχρωση γκρι. Πάχος πόρτας: 2cm. Πάγκος: Μασίφ Δρυς F/J, πάχος 4cm χρώμα φυσικό. Πλάτη: Γυαλιστερή λάκα σε απόχρωση γκρι, πάχος 2cm. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χειρολαβή. Μπάζα: ίδιο υλικό με τα πορτάκια 15 cm. Πάσο Κουζίνας: Μασίφ Δρυς F/J, πάχος 4cm χρώμα φυσικό με μεταλλική βάση στήριξης \"Π\"."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_ios_rustic/",
+        "preview": "/DOMO/Images/Catalog/Previews/13287.webp"
+      },
+      {
+        "id": "14714",
+        "title": {
+          "en": "Kitchen – collection Ithaki White",
+          "el": "Κουζίνα – Σειρά Ιθάκη White"
+        },
+        "image": "/DOMO/Images/Catalog/14714.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ πορτάκι με βαφή open poor λευκού χρώματος. Πάχος πόρτας: 2 cm. Πάγκος: Χαλαζιακός. Πόμολο: Bronze μεταλλική χούφτα. Μια κουζίνα με έμπνευση από την Ελληνική λιτότητα και πρακτικότητα, που δε θα αφήσει κανένα ασυγκίνητο. Vintage λευκά ντουλάπια που χαρακτηρίζονται από την αρμονική συνύπαρξη της κομψότητας και του κλασικού στυλ."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_line_ithaca_white/",
+        "preview": "/DOMO/Images/Catalog/Previews/14714.webp"
+      },
+      {
+        "id": "13282",
+        "title": {
+          "en": "Kitchen – collection Pilio",
+          "el": "Κουζίνα – Σειρά Πήλιο"
+        },
+        "image": "/DOMO/Images/Catalog/13282.jpeg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο. Πάγκος: Κτιστός τσιμεντοκονία. Πάχος πόρτας: 2 cm. Πόμολο: Vintage Μεταλλική χούφτα. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_pelion/",
+        "preview": "/DOMO/Images/Catalog/Previews/13282.webp"
+      },
+      {
+        "id": "6986",
+        "title": {
+          "en": "Kitchen – collection Ithaki Black",
+          "el": "Κουζίνα – Σειρά Ιθάκη Black"
+        },
+        "image": "/DOMO/Images/Catalog/6986.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ πορτάκι με βαφή λάκα ματ και επεξεργασία πατίνας. Πάχος πόρτας: 2 cm. Πάγκος: κόντρα πλακέ θαλάσσης με βαφή τσιμεντοκονίας. Πόμολο: Bronze μεταλλική χούφτα. Μια κουζίνα με έμπνευση από την Ελληνική λιτότητα και πρακτικότητα, που δε θα αφήσει κανένα ασυγκίνητο. Vintage μαύρα ντουλάπια, μασίφ λεπτομέρειες και πάγκος με βαφή τσιμεντοκονίας δημιουργούν την τέλεια τριλογία. Στα ξύλινα δοκάρια επάνω από την κουζίνα έχει τοποθετηθεί κρυφός ο απορροφητήρας. Στην ίδια ρουστίκ λογική έχει δημιουργηθεί και η κεντρική νησίδα."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_ithaca_black/",
+        "preview": "/DOMO/Images/Catalog/Previews/6986.webp"
+      },
+      {
+        "id": "10546",
+        "title": {
+          "en": "Kitchen Outdoor – collection Porto Heli",
+          "el": "Κουζίνα εξωτερικής χρήσης – Σειρά  Πορτοχέλι"
+        },
+        "image": "/DOMO/Images/Catalog/10546.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ ξυλεία Cross Laminate Pine (σταυρωτή αντικολλητή ξυλεία). Πάχος πόρτας: 2cm. Πάγκος: Κτιστός. Πλάτη: Φυσική πέτρα. Πόμολο: Ενσωματωμένη σκαφτή χειρολαβή."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_outdoor_portocheli/",
+        "preview": "/DOMO/Images/Catalog/Previews/10546.webp"
+      },
+      {
+        "id": "10544",
+        "title": {
+          "en": "Kitchen – collection Porto Heli",
+          "el": "Κουζίνα  – Σειρά  Πορτοχέλι"
+        },
+        "image": "/DOMO/Images/Catalog/10544.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ ξυλεία Cross Laminate Pine (σταυρωτή αντικολλητή ξυλεία). Πάχος πόρτας: 2cm. Πάγκος: Κτιστός. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 15 cm. Πόμολο: Ενσωματωμένη σκαφτή χειρολαβή."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_portocheli/",
+        "preview": "/DOMO/Images/Catalog/Previews/10544.webp"
+      },
+      {
+        "id": "6989",
+        "title": {
+          "en": "Kitchen – collection Nisyros",
+          "el": "Κουζίνα – Σειρά Nίσυρος"
+        },
+        "image": "/DOMO/Images/Catalog/6989.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία πεύκο. Πάχος πόρτας: 2 cm. Σχέδιο πόρτας: Κάθετο Ραμποτέ χωρίς εμφανή κινησιά. Κουτί: Κόντρα Πλακέ Θαλάσσης Latvia 22\". Σοβατεπί: Μασίφ ίδια απόχρωση με τα πορτάκια. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων. Πάγκος & Τραπέζι: Μασίφ Panel f/j Δρυς με επεξεργασία παλαίωσης σε χρώμα white transparent. Οι κουζίνες ανήκουν σε ευρύτερο έργο που ανέλαβε η εταιρία μας. Μελέτη & σχεδιασμός: Anna Apostolou για το Melanopetra Project Guesthouse At Nisiros."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_nisiros/",
+        "preview": "/DOMO/Images/Catalog/Previews/6989.webp"
+      },
+      {
+        "id": "6917",
+        "title": {
+          "en": "Kitchen White – collection Bethlehem Paros",
+          "el": "Κουζίνα Λευκή – Σειρά Βηθλεέμ Πάρος"
+        },
+        "image": "/DOMO/Images/Catalog/6917.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Το εσωτερικό των ντουλαπιών μπορεί να κατασκευαστεί είτε από Κόντρα Πλακέ Θαλάσσης (ΚΠΘ), είτε από μασίφ ξυλείες (ελληνικής προέλευσης), είτε ακόμα από μελαμίνη (πιστοποιημένης προέλευσης). Υλικά Φινιρίσματος: Ματ λάκα λευκή. Πάχος πόρτας: 1,8cm. Πάγκος: Μαρμάρινος. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χούφτα."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_bethlehem_paros/",
+        "preview": "/DOMO/Images/Catalog/Previews/6917.webp"
+      },
+      {
+        "id": "11375",
+        "title": {
+          "en": "Kitchen furniture – collection Nisyros 2",
+          "el": "Έπιπλα κουζίνας – Σειρά Nίσυρος 2"
+        },
+        "image": "/DOMO/Images/Catalog/11375.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία πεύκο. Πάχος πόρτας: 2 cm. Σχέδιο πόρτας: Κάθετο Ραμποτέ χωρίς εμφανή κινησιά. Κουτί: Κόντρα Πλακέ Θαλάσσης Latvia 22″. Σοβατεπί: Μασίφ ίδια απόχρωση με τα πορτάκια. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων. Πάγκος & Τραπέζι: Μασίφ Panel f/j Δρυς με επεξεργασία παλαίωσης σε χρώμα white transparent. Οι κουζίνες ανήκουν σε ευρύτερο έργο που ανέλαβε η εταιρία μας. Μελέτη & σχεδιασμός: Anna Apostolou για το Melanopetra Project Guesthouse At Nisiros."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_nisyros2/",
+        "preview": "/DOMO/Images/Catalog/Previews/11375.webp"
+      },
+      {
+        "id": "10485",
+        "title": {
+          "en": "Kitchen – collection Pilio & Ios",
+          "el": "Κουζίνα – Σειρά Πήλιο & Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/10485.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ καστανιά σε συνδυασμό με λευκή λάκα ματ. Πάχος πόρτας: 2cm. Πάγκος: Corian λευκός, πάχος 4cm. Πλάτη: Corian λευκός, πάχος 2cm. Μπάζα: ίδιο υλικό με τα πορτάκια 15 cm. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χειρολαβή. Κουζίνα που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας σε κατοικία στην Ιπποκράτειο Πολιτεία."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_pelion_ios/",
+        "preview": "/DOMO/Images/Catalog/Previews/10485.webp"
+      },
+      {
+        "id": "10582",
+        "title": {
+          "en": "Kitchen – collection Kipseli",
+          "el": "Κουζίνα – Σειρά Kipseli"
+        },
+        "image": "/DOMO/Images/Catalog/10582.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λευκή λάκα ματ. Πάχος πόρτας: 2cm. Πάγκος: Κτιστός. Πόμολο: Push button. Ξύλινη κατασκευή απορροφητήρα & επιτοίχια ράφια: Κορμός μασίφ Ελληνικής λεύκας. Custom κατασκευή με δυνατότητα προσαρμογής σε όλους τους χώρους. Κουζίνα που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας σε κατοικία στην Μύκονο. Σχεδιασμός: kipseli architects."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kipseli/",
+        "preview": "/DOMO/Images/Catalog/Previews/10582.webp"
+      },
+      {
+        "id": "6999",
+        "title": {
+          "en": "Kitchen – collection Kion",
+          "el": "Κουζίνα  – Σειρά Kion"
+        },
+        "image": "/DOMO/Images/Catalog/6999.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Καστανιά μασίφ τρικολλητή. Πάχος πόρτας: 2.2 cm. Πάγκος: Κτιστός. Πόμολο: Ενσωματωμένη σκαφτή χειρολαβή. Μελέτη & σχεδιασμός: ΚΙΟΝ architects για τη Villa Lenora."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kion/",
+        "preview": "/DOMO/Images/Catalog/Previews/6999.webp"
+      },
+      {
+        "id": "9703",
+        "title": {
+          "en": "Kitchen – collection Rustic",
+          "el": "Κουζίνα  – Σειρά Rustic"
+        },
+        "image": "/DOMO/Images/Catalog/9703.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Δρυς Rustic σε συνδυασμό. Πάχος πόρτας: 2cm. Πάγκος: Κεραμικός σε απόχρωση calacata miele πάχος 4cm. Πλάτη: Κεραμικός σε απόχρωση calacata miele πάχος 1.8cm. Πόμολο: Μαύρο μεταλλικό. Τι είναι το μοντέρνο χωρίς το παλιό; Αυτό το ερώτημα απαντά αυτή η κουζίνα συνδυάζοντας άψογα το ζεστό φιλόξενο ξύλο του Δρυ με πετρώδη υλικά σε λιτές σχεδιαστικές γραμμές. Οι κουζίνες ανήκουν σε ευρύτερο έργο που ανέλαβε η εταιρεία μας. Μελέτη & σχεδιασμός: Miltos Portokalis για το boutique hotel The Foundry Hotel Athens ."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_rustic/",
+        "preview": "/DOMO/Images/Catalog/Previews/9703.webp"
+      },
+      {
+        "id": "6930",
+        "title": {
+          "en": "Kitchen – collection Mani natural",
+          "el": "Κουζίνα  – Σειρά Μάνη natural"
+        },
+        "image": "/DOMO/Images/Catalog/6930.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ Δρυς/Καστανιά. Πάχος πόρτας: 2 cm. Κουτί: Μασίφ Πεύκο πάχους 2cm. Ποδαράκι: Μασίφ 15 cm. Βαφή: Λάδι και επεξεργασία παλαίωσης. Πάγκος: Μάρμαρο Διονύσου. Πόμολο: Φυσικός Σίδηρος."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_mani_natural/",
+        "preview": "/DOMO/Images/Catalog/Previews/6930.webp"
+      },
+      {
+        "id": "10480",
+        "title": {
+          "en": "Kitchen – collection Rustic & Color",
+          "el": "Κουζίνα  – Σειρά Rustic & Color"
+        },
+        "image": "/DOMO/Images/Catalog/10480.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Δρυς Rustic σε συνδυασμό με λάκα ματ σε απόχρωση λαδί. Πάχος πόρτας: 2 cm. Πάγκος: Κεραμικός σε διάφορες αποχρώσεις πάχος 4cm. Πόμολο: Μαύρο μεταλλικό. Τι είναι το μοντέρνο χωρίς το παλιό; Αυτό το ερώτημα απαντά αυτή η κουζίνα συνδυάζοντας άψογα το ζεστό φιλόξενο ξύλο του Δρυ με πετρώδη υλικά σε λιτές σχεδιαστικές γραμμές. Οι κουζίνες ανήκουν σε ευρύτερο έργο που ανέλαβε η εταιρεία μας. Μελέτη & σχεδιασμός: Miltos Portokalis για το boutique hotel The Foundry Hotel Athens ."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_rustic_color/",
+        "preview": "/DOMO/Images/Catalog/Previews/10480.webp"
+      },
+      {
+        "id": "10572",
+        "title": {
+          "en": "Kitchen – collection Kimolos island",
+          "el": "Κουζίνα – Σειρά Κίμωλος island"
+        },
+        "image": "/DOMO/Images/Catalog/10572.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι λάκα ματ σε απόχρωση γκρι σε συνδυασμό με ενσωματωμένη μασίφ Δρύινη φάσα που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος: Κτιστός. Μπάζα: inox 15cm. Πόμολο: Σύστημα \"Κίμωλος\"."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kimolos_island/",
+        "preview": "/DOMO/Images/Catalog/Previews/10572.webp"
+      },
+      {
+        "id": "10575",
+        "title": {
+          "en": "Kitchen – collection Mani",
+          "el": "Κουζίνα  – Σειρά Μάνη"
+        },
+        "image": "/DOMO/Images/Catalog/10575.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ Καστανιά. Πάχος πόρτας: 2.2 cm. Κουτί: Μασίφ Πεύκο πάχους 2cm. Ποδαράκι: Μασίφ σε σχήμα κώνος 15 cm. Βαφή: Λάδι και επεξεργασία παλαίωσης. Πάγκος: Κερλίτης πάχους 4cm & Πλάτη κερλίτης πάχους 1.8cm. Πόμολο: Χειροποίητο από σχοινί. Ράφια ελεύθερα: Μασίφ πάχους 4cm με κρυφή στήριξη. Μια κουζίνα έμπνευση από το μεγαλείο της απλότητας της Μάνης από μασίφ καστανιά. Η βιτρίνα με το κοτετσόσυρμα αφαιρεί τον όγκο της ρηχής τροφοθήκης και παρεμβαίνει στην κουζίνα σας δίνοντάς της φρέσκια εικόνα. Εάν θέλετε να δώσετε λειτουργικότητα και χαρακτήρα στο ταβάνι της κουζίνας σας, συμπληρώστε στη σύνθεση μία κρεμαστή ραφιέρα, έτσι θα βρουν χώρο αποθήκευσης και τα μαγειρικά σας σκεύη."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_mani/",
+        "preview": "/DOMO/Images/Catalog/Previews/10575.webp"
+      },
+      {
+        "id": "10609",
+        "title": {
+          "en": "Kitchen – collection Kimolos White",
+          "el": "Κουζίνα – Σειρά Κίμωλος White"
+        },
+        "image": "/DOMO/Images/Catalog/10609.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι λάκα ματ σε απόχρωση λευκή σε συνδυασμό με ενσωματωμένη μασίφ Δρύινη φάσα που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος: Κεραμικός απόχρωση calacata miele πάχος 4cm. Πλάτη: Κεραμική απόχρωση calacata miele πάχος 2cm. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Σύστημα \"Κίμωλος\"."
+        },
+        "source": "https://www.domogroup.gr/product/epipla_kouzinas_kimolos-2/",
+        "preview": "/DOMO/Images/Catalog/Previews/10609.webp"
+      },
+      {
+        "id": "6932",
+        "title": {
+          "en": "Kitchen – collection Pilio grey",
+          "el": "Κουζίνα – Σειρά Πήλιο grey"
+        },
+        "image": "/DOMO/Images/Catalog/6932.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο και τσιμεντοκονία. Πάγκος: Κτιστός. Πάχος πόρτας: 2 cm. Λαβή: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Μπάζα: Μασίφ 10 ή 15 cm. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_pelion_grey/",
+        "preview": "/DOMO/Images/Catalog/Previews/6932.webp"
+      },
+      {
+        "id": "10588",
+        "title": {
+          "en": "Kitchen – collection Vintage",
+          "el": "Κουζίνα – Σειρά  Vintage"
+        },
+        "image": "/DOMO/Images/Catalog/10588.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Ημιμασίφ πορτάκι με περιμετρικό μασίφ πλαίσιο & βαφή λάκα ματ. Πάχος πόρτας: 2cm. Πάγκος: Κεραμικός χρώμα calacata miele πάχος 4cm. Πλάτη: Κεραμική χρώμα calacata miele πάχος 1.8cm. Μπάζα: inox 15 cm. Πόμολο: Μεταλλικό."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_vintage/",
+        "preview": "/DOMO/Images/Catalog/Previews/10588.webp"
+      },
+      {
+        "id": "6931",
+        "title": {
+          "en": "Kitchen – collection Pilio white",
+          "el": "Κουζίνα – Σειρά Πήλιο white"
+        },
+        "image": "/DOMO/Images/Catalog/6931.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο και τσιμεντοκονία. Πάγκος: Κτιστός. Πάχος πόρτας: 2 cm. Λαβή: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_pelion_white-2/",
+        "preview": "/DOMO/Images/Catalog/Previews/6931.webp"
+      },
+      {
+        "id": "12625",
+        "title": {
+          "en": "Kitchen – collection Athina Light Grey",
+          "el": "Κουζίνα – Σειρά Αθήνα Light Grey"
+        },
+        "image": "/DOMO/Images/Catalog/12625.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο υλικό χρώματος ανοιχτό γκρι. Πάχος πόρτας: 1,8cm. Κουτί: Μελαμίνη Λευκή 18mm οικολογική και αδιαβροχοποιημένη κατηγορία ΕΟ. Μπάζα: Inox 15 cm. Πάγκος: Πολυμερικός συνθετικός πάχος 4cm. Πόμολο: Inox από κατάλογο συνεργατών."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_simply_light_grey/",
+        "preview": "/DOMO/Images/Catalog/Previews/12625.webp"
+      },
+      {
+        "id": "12307",
+        "title": {
+          "en": "Kitchen – collection Ios",
+          "el": "Κουζίνα – Σειρά Ίος"
+        },
+        "image": "/DOMO/Images/Catalog/12307.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λευκή λάκα ματ. Πάχος πόρτας: 1,8cm. Κουτί: Μελαμίνη Λευκή 18cm οικολογική και αδιαβροχοποιημένη κατηγορία ΕΟ. Μπάζα: Inox 12 cm. Πάγκος & Πλάτη: Corian 4-2cm. Πόμολο: Ενσωματωμένη οριζόντια σκαφτή χειρολαβή. Μελέτη & σχεδιασμός: Γεωργακοπούλου Κατερίνα."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_ios/",
+        "preview": "/DOMO/Images/Catalog/Previews/12307.webp"
+      },
+      {
+        "id": "12627",
+        "title": {
+          "en": "Kitchen – collection Athina Grey",
+          "el": "Κουζίνα – Σειρά Αθήνα Grey"
+        },
+        "image": "/DOMO/Images/Catalog/12627.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο υλικό σε γκρι απόχρωση. Πάχος πόρτας: 1,8cm. Κουτί: Μελαμίνη Λευκή 18mm οικολογική και αδιαβροχοποιημένη κατηγορία ΕΟ. Μπάζα: Inox 15 cm. Πάγκος: Πολυμερικός συνθετικός, πάχος 4cm και πλάτη πάχος 2cm. Πόμολο: Inox από κατάλογο συνεργατών."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_simple_grey/",
+        "preview": "/DOMO/Images/Catalog/Previews/12627.webp"
+      },
+      {
+        "id": "6991",
+        "title": {
+          "en": "Kitchen – collection Melissi Villas White",
+          "el": "Κουζίνα  – Σειρά Melissi Villas White"
+        },
+        "image": "/DOMO/Images/Catalog/6991.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση ματ λευκό. Πάχος πόρτας: 1,8cm. Πάγκος: Μασίφ panel f/j Δρυός σε φυσική απόχρωση, πάχος 4cm. Πλάτη: Μασίφ panel f/j Δρυός σε φυσική απόχρωση, πάχος 2cm. Μπάζα: Inox 10 cm. Πόμολο: Ξύλινο από μασίφ Δρυ, σχήμα κώνος."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_melissi_white/",
+        "preview": "/DOMO/Images/Catalog/Previews/6991.webp"
+      },
+      {
+        "id": "10603",
+        "title": {
+          "en": "Kitchen furniture – collection Athina",
+          "el": "Έπιπλα Κουζίνας – Σειρά  Αθήνα"
+        },
+        "image": "/DOMO/Images/Catalog/10603.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση ανθρακί σε συνδυασμό με λεπτομέρειες καπλαμά δρυ. Πάχος πόρτας: 1.8cm. Πάγκος: Compact άνθυγρος πάχος 1.2cm. Πλάτη: Ημιμασίφ Δρύινες σανίδες διατομής 2200 x 220 x 14 mm σε οριζόντια διάταξη. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 15 cm. Πόμολο: Push button."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_simply/",
+        "preview": "/DOMO/Images/Catalog/Previews/10603.webp"
+      },
+      {
+        "id": "6992",
+        "title": {
+          "en": "Kitchen – collection Melissi Villas Olive",
+          "el": "Κουζίνα  – Σειρά Melissi Villas Olive"
+        },
+        "image": "/DOMO/Images/Catalog/6992.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση ματ λευκό & λαδί. Πάχος πόρτας: 1,8cm. Πάγκος: Μασίφ panel f/j Δρυός σε φυσική απόχρωση, πάχος 4cm. Ράφια ελεύθερης τοποθέτησης: Μασίφ panel f/j Δρυός σε φυσική απόχρωση, πάχος 4cm. Μπάζα: Inox 10 cm. Πόμολο: Ξύλινο από μασίφ Δρυ, σχήμα κώνος."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_melissi_olive/",
+        "preview": "/DOMO/Images/Catalog/Previews/6992.webp"
+      },
+      {
+        "id": "6929",
+        "title": {
+          "en": "Kitchen Grey – collection Kimolos",
+          "el": "Κουζίνα Γκρι – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/6929.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι τσιμεντοκονίας με ενσωματωμένη μασίφ φάσα καστανιάς που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος: Μασίφ f/j Δρυς, βαμμένος λευκός, πάχος 4cm. Μπάζα: ίδιο υλικό με τα πορτάκια 15cm. Πόμολο: Σύστημα \"Κίμωλος\". Στα μασίφ ράφια-δοκάρια πάνω από την εστία εντοιχίζουμε κρυφό απορροφητήρα καταργώντας τον τυπικό σχεδιασμό ντουλαπιών."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kimolos_grey/",
+        "preview": "/DOMO/Images/Catalog/Previews/6929.webp"
+      },
+      {
+        "id": "10586",
+        "title": {
+          "en": "Kitchen – collection Tsagkarada Villas",
+          "el": "Κουζίνα – Σειρά  Tsagkarada Villas"
+        },
+        "image": "/DOMO/Images/Catalog/10586.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λευκή λάκα ματ. Πάχος πόρτας: 2cm. Πάγκος: Συνθετικός σε απόχρωση λευκή, πάχος 4cm. Μπάζα: ίδιο υλικό με τα πορτάκια 10 cm. Πόμολο: Μεταλλικό."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_tsagkarada/",
+        "preview": "/DOMO/Images/Catalog/Previews/10586.webp"
+      },
+      {
+        "id": "14458",
+        "title": {
+          "en": "Kitchen – collection Pilio White II",
+          "el": "Κουζίνα – Σειρά Πήλιο White II"
+        },
+        "image": "/DOMO/Images/Catalog/14458.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ τρικολλητή ξυλεία καστανιάς ή πεύκο και τσιμεντοκονία. Πάχος πόρτας: 2 cm. Λαβή: Ενσωματωμένη οριζόντια σκαφτή χούφτα. Βαφή: Επεξεργασία παλαίωσης μονοχρωμίας ή διχρωμίας σε μεγάλη γκάμα χρωμάτων."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_pelion_white/",
+        "preview": "/DOMO/Images/Catalog/Previews/14458.webp"
+      },
+      {
+        "id": "7001",
+        "title": {
+          "en": "Kitchen – collection Gloss 2",
+          "el": "Κουζίνα – Σειρά Gloss 2"
+        },
+        "image": "/DOMO/Images/Catalog/7001.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γυαλιστερό λευκό. Πάχος πόρτας: 1,8cm. Κουτί: Μελαμίνη Λευκή 18mm οικολογική και αδιαβροχοποιημένη κατηγορία ΕΟ. Μπάζα: Inox 12 cm. Πάγκος: Μασίφ Δρυς f/j πάχος 4cm και πλάτη πάχος 2cm. Πόμολο: Inox από κατάλογο συνεργατών."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_gloss2/",
+        "preview": "/DOMO/Images/Catalog/Previews/7001.webp"
+      },
+      {
+        "id": "6997",
+        "title": {
+          "en": "Kitchen – collection Gloss 3",
+          "el": "Κουζίνα – Σειρά Gloss 3"
+        },
+        "image": "/DOMO/Images/Catalog/6997.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γυαλιστερό λευκό. Πάχος πόρτας: 1,8cm. Κουτί: Μελαμίνη Λευκή 18 οικολογική και αδιαβροχοποιημένη κατηγορία ΕΟ. Μπάζα: Inox 12 cm. Πάγκος & Πλάτη: Μασίφ panel f/j Δρυός πάχους 4-2cm. Πόμολο: Inox, τύπος Gola."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_gloss3/",
+        "preview": "/DOMO/Images/Catalog/Previews/6997.webp"
+      },
+      {
+        "id": "6993",
+        "title": {
+          "en": "Kitchen – collection KG",
+          "el": "Κουζίνα – Σειρά KG"
+        },
+        "image": "/DOMO/Images/Catalog/6993.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Λάκα ματ σε απόχρωση γκρι & λευκό. Πάχος πόρτας: 2cm. Πάγκος: Corian λευκός, πάχος 4cm. Πλάτη: Corian λευκός, πάχος 2cm. Μπάζα: inox 15 cm. Πόμολο: Gola inox. Τραπέζι - πάσο: Μασίφ panel f/j Δρυς, πάχος 4 cm. Σχεδιασμός & μελέτη: Γεωργακοπούλου Κατερίνα."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kg/",
+        "preview": "/DOMO/Images/Catalog/Previews/6993.webp"
+      },
+      {
+        "id": "6998",
+        "title": {
+          "en": "Kitchen – collection Gloss",
+          "el": "Κουζίνα – Σειρά Gloss"
+        },
+        "image": "/DOMO/Images/Catalog/6998.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση γυαλιστερό λευκό. Πάχος πόρτας: 18mm. Κουτί: Μελαμίνη Λευκή 18mm οικολογική και αδιαβροχοποιημένη κατηγορία ΕΟ. Μπάζα: Inox ύψος 12 cm. Πάγκος: Μασίφ Δρυς πάχος 4cm. Πόμολο: Inox, τύπος Gola."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_gloss/",
+        "preview": "/DOMO/Images/Catalog/Previews/6998.webp"
+      },
+      {
+        "id": "7002",
+        "title": {
+          "en": "Kitchen – collection Kimolos Black",
+          "el": "Κουζίνα – Σειρά Κίμωλος Black"
+        },
+        "image": "/DOMO/Images/Catalog/7002.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι λάκα ματ σε απόχρωση μαύρη σε συνδυασμό με ενσωματωμένη μασίφ φάσα καστανιάς που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος: κόντρα πλακέ θαλάσσης με βαφή τσιμεντοκονίας. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Σύστημα \"Κίμωλος\". Η νησίδα στη μέση έχει πρόσβαση στον εσωτερικό της χώρο και από τις δύο πλευρές και ολοκληρώνεται κατασκευαστικά και σχεδιαστικά με το γνωστό σε όλους μας Butcher Table, πιστό αντίγραφο των αντίστοιχων παλαιών παραδοσιακών."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_kimolos_black/",
+        "preview": "/DOMO/Images/Catalog/Previews/7002.webp"
+      },
+      {
+        "id": "6994",
+        "title": {
+          "en": "Kitchen – collection Athina dark grey",
+          "el": "Κουζίνα – Σειρά Αθήνα dark grey"
+        },
+        "image": "/DOMO/Images/Catalog/6994.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Συνθετικό επίπεδο σε απόχρωση σκούρο γκρι. Πάχος πόρτας: 1.8cm. Πάγκος: Συνθετικός σε απόχρωση λευκή. Μπάζα: Inox 15 cm. Πόμολο: Ξύλινο μασίφ Δρυς κώνος. Κατασκευή που ανήκει σε ευρύτερο έργο που ανέλαβε η εταιρεία μας για τη δημιουργία πολλών κατασκευών σε κατοικία στην Αττική."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_simplydarkgrey/",
+        "preview": "/DOMO/Images/Catalog/Previews/6994.webp"
+      },
+      {
+        "id": "7005",
+        "title": {
+          "en": "Kitchen – collection Blackboard cement",
+          "el": "Κουζίνα – Σειρά Blackboard cement"
+        },
+        "image": "/DOMO/Images/Catalog/7005.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: ΚΠΘ με επικάλυψη τσιμεντοκονίας. Πάχος πόρτας: 2 cm. Κουτί: κόντρα πλακέ θαλάσσης πάχους 2cm. Μπάζα: αντίστοιχο υλικό με το πορτάκι, ύψους 10cm. Βαφή: μεγάλη γκάμα χρωμάτων σε τσιμεντοκονία. Πάγκος: κόντρα πλακέ θαλάσσης με βαφή τσιμεντοκονίας. Λαβή: ενσωματωμένη χούφτα."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_blackboardcement/",
+        "preview": "/DOMO/Images/Catalog/Previews/7005.webp"
+      },
+      {
+        "id": "10897",
+        "title": {
+          "en": "Kitchen – collection Kimolos",
+          "el": "Κουζίνα – Σειρά Κίμωλος"
+        },
+        "image": "/DOMO/Images/Catalog/10897.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Πορτάκι λάκα ματ σε απόχρωση μπορντό και γκρι σε συνδυασμό με ενσωματωμένη μασίφ Δρύινη φάσα που λειτουργεί ως πόμολο. Πάχος πόρτας: 2cm. Πάγκος: Χαλαζία πάχος 4cm. Πλάτη: Χαλαζία πάχος 2cm. Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 10 cm. Πόμολο: Σύστημα \"Κίμωλος\"."
+        },
+        "source": "https://www.domogroup.gr/product/epipla_kouzinas_kimolos/",
+        "preview": "/DOMO/Images/Catalog/Previews/10897.webp"
+      },
+      {
+        "id": "10595",
+        "title": {
+          "en": "Kitchen Blackboard – Blackboard",
+          "el": "Κουζίνα Μαυροπίνακας – Βlackboard"
+        },
+        "image": "/DOMO/Images/Catalog/10595.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Mασίφ καστανιά πορτάκι σε συνδυασμό με μαυροπίνακα στα κρεμαστά πορτάκια Πάχος πόρτας: 2.5cm Πάγκος: Μασίφ panel f/j Δρυς, πάχος 4cm Μπάζα: ίδιο χρώμα και υλικό με τα πορτάκια 15 cm Πόμολο: Ενσωματωμένη σκαφτή χειρολαβή"
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_blackboard/",
+        "preview": "/DOMO/Images/Catalog/Previews/10595.webp"
+      },
+      {
+        "id": "9692",
+        "title": {
+          "en": "Kitchen – collection Ithaki Cream",
+          "el": "Κουζίνα – Σειρά Ιθάκη Cream"
+        },
+        "image": "/DOMO/Images/Catalog/9692.jpg",
+        "copy": {
+          "en": "Designed around your space, with a choice of materials, finishes and internal layouts. Contact our team to discuss dimensions and configuration.",
+          "el": "Τεχνικά Χαρακτηριστικά Υλικά Φινιρίσματος: Μασίφ πορτάκι με βαφή λάκα ματ και επεξεργασία πατίνας. Πάχος πόρτας: 2 cm. Πάγκος: Μασίφ panel f/j οξιάς σε απόχρωση καρυδί πάχος 4cm. Πλάτη: Ραμποτέ ίδιο υλικό και χρώμα με τα πορτάκια. Πόμολο: Vintage. Vintage ντουλάπια, μασίφ λεπτομέρειες και ξύλινος πάγκος δημιουργούν την τέλεια τριλογία."
+        },
+        "source": "https://www.domogroup.gr/product/kitchen_ithakicream/",
+        "preview": "/DOMO/Images/Catalog/Previews/9692.webp"
+      }
+    ]
+  },
+  "contract-0": {
+    "title": {
+      "en": "Staircases",
+      "el": "Σκάλες"
+    },
+    "items": [
+      {
+        "id": "contract-0-0",
+        "title": {
+          "en": "Swing",
+          "el": "Αιώρα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-0.webp"
+      },
+      {
+        "id": "contract-0-1",
+        "title": {
+          "en": "Linea with storage",
+          "el": "Linea με αποθηκευτικό χώρο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-1.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-1.webp"
+      },
+      {
+        "id": "contract-0-2",
+        "title": {
+          "en": "Spiral staircase",
+          "el": "Σκάλα Κοχλίας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-2.webp"
+      },
+      {
+        "id": "contract-0-3",
+        "title": {
+          "en": "Bespoke construction for villa in Thissio",
+          "el": "Ειδική κατασκευή για Βίλα στο Θησείο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-3.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-3.webp"
+      },
+      {
+        "id": "contract-0-4",
+        "title": {
+          "en": "Bespoke construction for Austrian Embassy",
+          "el": "Ειδική κατασκευή για Αυστριακή Πρεσβεία"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-4.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-4.webp"
+      },
+      {
+        "id": "contract-0-5",
+        "title": {
+          "en": "Bespoke construction oak",
+          "el": "Ειδική κατασκευή Δρυς"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-5.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-5.webp"
+      },
+      {
+        "id": "contract-0-6",
+        "title": {
+          "en": "Caldera",
+          "el": "Caldera"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-6.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-6.webp"
+      },
+      {
+        "id": "contract-0-7",
+        "title": {
+          "en": "Stair cladding",
+          "el": "Επένδυση σκάλας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-7.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-7.webp"
+      },
+      {
+        "id": "contract-0-8",
+        "title": {
+          "en": "Linea Cement",
+          "el": "Linea Cement"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-8.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-8.webp"
+      },
+      {
+        "id": "contract-0-9",
+        "title": {
+          "en": "Bespoke construction for historic house in Spetses",
+          "el": "Ειδική κατασκευή για παλαιό αρχοντικό στις Σπέτσες"
+        },
+        "image": "/DOMO/Images/Catalog/contract-0-9.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-0-9.webp"
+      }
+    ]
+  },
+  "contract-1": {
+    "title": {
+      "en": "Wooden windows & exterior doors",
+      "el": "Κουφώματα & εξώπορτες"
+    },
+    "items": [
+      {
+        "id": "contract-1-0",
+        "title": {
+          "en": "Bassa Maina Kouphoma",
+          "el": "Bassa Maina Κούφωμα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-0.webp"
+      },
+      {
+        "id": "contract-1-1",
+        "title": {
+          "en": "Kissimi Hotel Kouphoma",
+          "el": "Kissimi Hotel Κούφωμα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-1.jpeg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-1.webp"
+      },
+      {
+        "id": "contract-1-2",
+        "title": {
+          "en": "Kouphomata for katoikia in Andro",
+          "el": "Κουφώματα για κατοικία στην Άνδρο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-2.webp"
+      },
+      {
+        "id": "contract-1-3",
+        "title": {
+          "en": "Kouphomata for katoikia in Mukono",
+          "el": "Κουφώματα για κατοικία στην Mύκονο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-3.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-3.webp"
+      },
+      {
+        "id": "contract-1-4",
+        "title": {
+          "en": "Kouphomata kai exoporta",
+          "el": "Κουφώματα και εξώπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-4.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-4.webp"
+      },
+      {
+        "id": "contract-1-5",
+        "title": {
+          "en": "Exoporta in Mykono",
+          "el": "Εξώπορτα στην Mykono"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-5.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-5.webp"
+      },
+      {
+        "id": "contract-1-6",
+        "title": {
+          "en": "Kouphomata for katoikia in Andro",
+          "el": "Κουφώματα για κατοικία στην Άνδρο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-6.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-6.webp"
+      },
+      {
+        "id": "contract-1-7",
+        "title": {
+          "en": "Kouphomata se xenodokheio",
+          "el": "Κουφώματα σε ξενοδοχείο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-7.jpeg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-7.webp"
+      },
+      {
+        "id": "contract-1-8",
+        "title": {
+          "en": "Kouphomata",
+          "el": "Kουφώματα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-8.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-8.webp"
+      },
+      {
+        "id": "contract-1-9",
+        "title": {
+          "en": "Kouphomata se bila in Mukono",
+          "el": "Kουφώματα σε βίλα στην Μύκονο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-9.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-9.webp"
+      },
+      {
+        "id": "contract-1-10",
+        "title": {
+          "en": "Kouphomata",
+          "el": "Kουφώματα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-10.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-10.webp"
+      },
+      {
+        "id": "contract-1-11",
+        "title": {
+          "en": "Exoporta Rampotel",
+          "el": "Εξώπορτα Ραμποτέl"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-11.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-11.webp"
+      },
+      {
+        "id": "contract-1-12",
+        "title": {
+          "en": "Exoporta Kifisias",
+          "el": "Εξώπορτα Kifisias"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-12.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-12.webp"
+      },
+      {
+        "id": "contract-1-13",
+        "title": {
+          "en": "Exoporta rampote",
+          "el": "Εξώπορτα ραμποτέ"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-13.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-13.webp"
+      },
+      {
+        "id": "contract-1-14",
+        "title": {
+          "en": "Exoporta eidike kataskeue",
+          "el": "Εξώπορτα ειδική κατασκευή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-14.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-14.webp"
+      },
+      {
+        "id": "contract-1-15",
+        "title": {
+          "en": "Paradosiake exoporta in Andro",
+          "el": "Παραδοσιακή εξώπορτα στην Άνδρο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-15.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-15.webp"
+      },
+      {
+        "id": "contract-1-16",
+        "title": {
+          "en": "Exoporta",
+          "el": "Εξώπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-16.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-16.webp"
+      },
+      {
+        "id": "contract-1-17",
+        "title": {
+          "en": "Kouphomata se xenodokheio",
+          "el": "Κουφώματα σε ξενοδοχείο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-17.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-17.webp"
+      },
+      {
+        "id": "contract-1-18",
+        "title": {
+          "en": "Kouphomata for katoikia in Andro",
+          "el": "Κουφώματα για κατοικία στην Άνδρο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-18.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-18.webp"
+      },
+      {
+        "id": "contract-1-19",
+        "title": {
+          "en": "Exoporta Austriakes Presbeias",
+          "el": "Εξώπορτα Αυστριακής Πρεσβείας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-1-19.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-1-19.webp"
+      }
+    ]
+  },
+  "contract-2": {
+    "title": {
+      "en": "Interior doors",
+      "el": "Εσωτερικές πόρτες"
+    },
+    "items": [
+      {
+        "id": "contract-2-0",
+        "title": {
+          "en": "Xios Leaf",
+          "el": "Xios Leaf"
+        },
+        "image": "/DOMO/Images/Catalog/contract-2-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/esoterikes-portes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-2-0.webp"
+      }
+    ]
+  },
+  "contract-3": {
+    "title": {
+      "en": "Wooden shading systems",
+      "el": "Συστήματα σκίασης"
+    },
+    "items": [
+      {
+        "id": "contract-3-0",
+        "title": {
+          "en": "Pergkola me kalami xenodokheio Aegeon",
+          "el": "Πέργκολα με καλάμι ξενοδοχείο Aegeon"
+        },
+        "image": "/DOMO/Images/Catalog/contract-3-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/pergkoles/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-3-0.webp"
+      },
+      {
+        "id": "contract-3-1",
+        "title": {
+          "en": "Ksuline Pergkola in Teno",
+          "el": "Ξύλινη Πέργκολα στην Τήνο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-3-1.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/pergkoles/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-3-1.webp"
+      },
+      {
+        "id": "contract-3-2",
+        "title": {
+          "en": "Ksuline Pergkola in Nea Stura",
+          "el": "Ξύλινη Πέργκολα στην Νέα Στύρα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-3-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/pergkoles/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-3-2.webp"
+      }
+    ]
+  },
+  "contract-4": {
+    "title": {
+      "en": "Gates & fences",
+      "el": "Αυλόπορτες & περιφράξεις"
+    },
+    "items": [
+      {
+        "id": "contract-4-0",
+        "title": {
+          "en": "Auloporta",
+          "el": "Αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-0.webp"
+      },
+      {
+        "id": "contract-4-1",
+        "title": {
+          "en": "Auloporta",
+          "el": "Αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-1.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-1.webp"
+      },
+      {
+        "id": "contract-4-2",
+        "title": {
+          "en": "Auloporta",
+          "el": "Αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-2.webp"
+      },
+      {
+        "id": "contract-4-3",
+        "title": {
+          "en": "Auloporta",
+          "el": "Αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-3.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-3.webp"
+      },
+      {
+        "id": "contract-4-4",
+        "title": {
+          "en": "Kagkela periphraxes",
+          "el": "Κάγκελα περίφραξης"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-4.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-4.webp"
+      },
+      {
+        "id": "contract-4-5",
+        "title": {
+          "en": "Auloporta Paradosiake",
+          "el": "Αυλόπορτα Παραδοσιακή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-5.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-5.webp"
+      },
+      {
+        "id": "contract-4-6",
+        "title": {
+          "en": "Auloporta Monasteriake",
+          "el": "Αυλόπορτα Μοναστηριακή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-6.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-6.webp"
+      },
+      {
+        "id": "contract-4-7",
+        "title": {
+          "en": "Auloporta Paradosiake",
+          "el": "Αυλόπορτα Παραδοσιακή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-7.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-7.webp"
+      },
+      {
+        "id": "contract-4-8",
+        "title": {
+          "en": "Kagkela",
+          "el": "Κάγκελα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-8.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-8.webp"
+      },
+      {
+        "id": "contract-4-9",
+        "title": {
+          "en": "Kagkela periphraxes",
+          "el": "Κάγκελα περίφραξης"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-9.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-9.webp"
+      },
+      {
+        "id": "contract-4-10",
+        "title": {
+          "en": "Gkarazoporta",
+          "el": "Γκαραζόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-10.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-10.webp"
+      },
+      {
+        "id": "contract-4-11",
+        "title": {
+          "en": "Auloporta",
+          "el": "Αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-11.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-11.webp"
+      },
+      {
+        "id": "contract-4-12",
+        "title": {
+          "en": "Periphraxe",
+          "el": "Περίφραξη"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-12.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-12.webp"
+      },
+      {
+        "id": "contract-4-13",
+        "title": {
+          "en": "Auloporta",
+          "el": "Αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-4-13.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-4-13.webp"
+      }
+    ]
+  },
+  "contract-5": {
+    "title": {
+      "en": "Deck",
+      "el": "Deck"
+    },
+    "items": [
+      {
+        "id": "contract-5-0",
+        "title": {
+          "en": "Ksulino Dapedo | Deck 1",
+          "el": "Ξύλινο Δάπεδο | Deck 1"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-0.webp"
+      },
+      {
+        "id": "contract-5-1",
+        "title": {
+          "en": "Ksulino Dapedo | Deck 2",
+          "el": "Ξύλινο Δάπεδο | Deck 2"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-1.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-1.webp"
+      },
+      {
+        "id": "contract-5-2",
+        "title": {
+          "en": "Ksulino Dapedo | Deck 3",
+          "el": "Ξύλινο Δάπεδο | Deck 3"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-2.webp"
+      },
+      {
+        "id": "contract-5-3",
+        "title": {
+          "en": "Ksulino Dapedo | Deck 4",
+          "el": "Ξύλινο Δάπεδο | Deck 4"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-3.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-3.webp"
+      },
+      {
+        "id": "contract-5-4",
+        "title": {
+          "en": "Ksulino Dapedo | Deck  5",
+          "el": "Ξύλινο Δάπεδο | Deck  5"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-4.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-4.webp"
+      },
+      {
+        "id": "contract-5-5",
+        "title": {
+          "en": "Ksulino Dapedo | Deck 6",
+          "el": "Ξύλινο Δάπεδο | Deck 6"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-5.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-5.webp"
+      },
+      {
+        "id": "contract-5-6",
+        "title": {
+          "en": "Ksulino Dapedo | Deck  7",
+          "el": "Ξύλινο Δάπεδο | Deck  7"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-6.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-6.webp"
+      },
+      {
+        "id": "contract-5-7",
+        "title": {
+          "en": "Ksulino Dapedo | Deck  8",
+          "el": "Ξύλινο Δάπεδο | Deck  8"
+        },
+        "image": "/DOMO/Images/Catalog/contract-5-7.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-5-7.webp"
+      }
+    ]
+  },
+  "contract-6": {
+    "title": {
+      "en": "Louvres & partitions",
+      "el": "Περσίδες & διαχωριστικά"
+    },
+    "items": [
+      {
+        "id": "contract-6-0",
+        "title": {
+          "en": "Persides diakhoristiko mpalkoniou",
+          "el": "Περσίδες διαχωριστικό μπαλκονιού"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-0.webp"
+      },
+      {
+        "id": "contract-6-1",
+        "title": {
+          "en": "Persides diakhoristiko khorou se xenodokheio",
+          "el": "Περσίδες διαχωριστικό χώρου σε ξενοδοχείο"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-1.jpeg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-1.webp"
+      },
+      {
+        "id": "contract-6-2",
+        "title": {
+          "en": "Ksuline kataskeue me kampules for khrese toikhopoiias",
+          "el": "Ξύλινη κατασκευή με καμπύλες για χρήση τοιχοποιίας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-2.webp"
+      },
+      {
+        "id": "contract-6-3",
+        "title": {
+          "en": "Eidika xulina diakhoristika for khrese toikhopoiias",
+          "el": "Ειδικά ξύλινα διαχωριστικά για χρήση τοιχοποιίας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-3.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-3.webp"
+      },
+      {
+        "id": "contract-6-4",
+        "title": {
+          "en": "Eidika xulina diakhoristika for khrese toikhopoiias",
+          "el": "Ειδικά ξύλινα διαχωριστικά για χρήση τοιχοποιίας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-4.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-4.webp"
+      },
+      {
+        "id": "contract-6-5",
+        "title": {
+          "en": "Eidika xulina diakhoristika for khrese toikhopoiias",
+          "el": "Ειδικά ξύλινα διαχωριστικά για χρήση τοιχοποιίας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-5.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-5.webp"
+      },
+      {
+        "id": "contract-6-6",
+        "title": {
+          "en": "Anoigokleiomenes persides se Gazebo",
+          "el": "Ανοιγοκλειόμενες περσίδες σε Gazebo"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-6.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-6.webp"
+      },
+      {
+        "id": "contract-6-7",
+        "title": {
+          "en": "Anoigokleiomenes persides for diakhoristiko khorou",
+          "el": "Ανοιγοκλειόμενες περσίδες για διαχωριστικό χώρου"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-7.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-7.webp"
+      },
+      {
+        "id": "contract-6-8",
+        "title": {
+          "en": "Kaphasoto diakhoristiko khorou se aule",
+          "el": "Καφασωτό διαχωριστικό χώρου σε αυλή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-8.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-8.webp"
+      },
+      {
+        "id": "contract-6-9",
+        "title": {
+          "en": "Anoigokleiomenes persides se mpalkoni",
+          "el": "Ανοιγοκλειόμενες περσίδες σε μπαλκόνι"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-9.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-9.webp"
+      },
+      {
+        "id": "contract-6-10",
+        "title": {
+          "en": "Sustema anoigokleiomenon persidon",
+          "el": "Σύστημα ανοιγοκλειώμενων περσίδων"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-10.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-10.webp"
+      },
+      {
+        "id": "contract-6-11",
+        "title": {
+          "en": "Persides proektase pergkolas",
+          "el": "Περσίδες προέκταση πέργκολας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-11.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-11.webp"
+      },
+      {
+        "id": "contract-6-12",
+        "title": {
+          "en": "Persides se mpalkoni",
+          "el": "Περσίδες σε μπαλκόνι"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-12.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-12.webp"
+      },
+      {
+        "id": "contract-6-13",
+        "title": {
+          "en": "Persides san periphraxe kai auloporta",
+          "el": "Περσίδες σαν περίφραξη και αυλόπορτα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-6-13.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-6-13.webp"
+      }
+    ]
+  },
+  "contract-7": {
+    "title": {
+      "en": "Structural solutions",
+      "el": "Δομικές λύσεις"
+    },
+    "items": [
+      {
+        "id": "contract-7-0",
+        "title": {
+          "en": "Ependuse toikhou",
+          "el": "Επένδυση τοίχου"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-0.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-0.webp"
+      },
+      {
+        "id": "contract-7-1",
+        "title": {
+          "en": "Ependuse kolonas",
+          "el": "Επένδυση κολώνας"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-1.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-1.webp"
+      },
+      {
+        "id": "contract-7-2",
+        "title": {
+          "en": "Ksulino patoma",
+          "el": "Ξύλινο πάτωμα"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-2.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-2.webp"
+      },
+      {
+        "id": "contract-7-3",
+        "title": {
+          "en": "Ksuline orophe",
+          "el": "Ξύλινη οροφή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-3.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-3.webp"
+      },
+      {
+        "id": "contract-7-4",
+        "title": {
+          "en": "Ksuline orophe",
+          "el": "Ξύλινη οροφή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-4.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-4.webp"
+      },
+      {
+        "id": "contract-7-5",
+        "title": {
+          "en": "Ksulino patari",
+          "el": "Ξύλινο πατάρι"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-5.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-5.webp"
+      },
+      {
+        "id": "contract-7-6",
+        "title": {
+          "en": "Ksuline orophe",
+          "el": "Ξύλινη οροφή"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-6.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-6.webp"
+      },
+      {
+        "id": "contract-7-7",
+        "title": {
+          "en": "Ependuse toikhou",
+          "el": "Επένδυση τοίχου"
+        },
+        "image": "/DOMO/Images/Catalog/contract-7-7.jpg",
+        "copy": {
+          "en": "A Domogroup construction, adapted to the requirements of the space. Speak with our team about materials, dimensions and finishes.",
+          "el": "Μια κατασκευή της Domogroup, προσαρμοσμένη στις απαιτήσεις του χώρου. Συζητήστε με την ομάδα μας για τα υλικά, τις διαστάσεις και τα φινιρίσματα."
+        },
+        "source": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+        "preview": "/DOMO/Images/Catalog/Previews/contract-7-7.webp"
+      }
+    ]
+  }
+}

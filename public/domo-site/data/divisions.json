@@ -1,0 +1,66 @@
+{
+  "contract": [
+    {
+      "title": "Σκάλες",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/skala/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/skales.jpg",
+      "local": "Images/Contract/01.jpg"
+    },
+    {
+      "title": "Κουφώματα & εξώπορτες",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/koufomata.jpg",
+      "local": "Images/Catalog/contract-1-2.jpg"
+    },
+    {
+      "title": "Εσωτερικές πόρτες",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/esoterikes-portes/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2022/02/Luxury_Mykonos_Villas_Amalthea_120_rsz-1.jpeg",
+      "local": "Images/Contract/03.jpeg"
+    },
+    {
+      "title": "Συστήματα σκίασης",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/pergkoles/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/pergoles.jpg",
+      "local": "Images/Catalog/contract-3-0.jpg"
+    },
+    {
+      "title": "Αυλόπορτες & περιφράξεις",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/avloportes.jpg",
+      "local": "Images/Contract/05.jpg"
+    },
+    {
+      "title": "Deck",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/deck/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/deck-1.jpg",
+      "local": "Images/Contract/06.jpg"
+    },
+    {
+      "title": "Περσίδες & διαχωριστικά",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/11/IMG_5481-scaled-1-800x800.jpeg",
+      "local": "Images/Header Left.jpg"
+    },
+    {
+      "title": "Δομικές λύσεις",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/domika.jpg",
+      "local": "Images/Contract/08.jpg"
+    }
+  ],
+  "living": [
+    {
+      "title": "Ντουλάπες",
+      "url": "https://www.domogroup.gr/product-category/epipla-ntoulapas/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/05/ntoulapes_domogroup.jpg",
+      "local": "Images/(5) Instagram_files/705440939_1284813923845712_1861242325754194766_n.jpg"
+    },
+    {
+      "title": "Κουζίνες",
+      "url": "https://www.domogroup.gr/product-category/kouzines/",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2023/10/Domogroup_Kitchen_Line_Ios_Rustic_2-scaled-1-800x800.jpg",
+      "local": "Images/(5) Instagram_files/773580807_1353890986938005_5939403977078431649_n.jpg"
+    }
+  ]
+}

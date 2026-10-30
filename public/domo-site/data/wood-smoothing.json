@@ -1,0 +1,117 @@
+[
+  {
+    "id": "wood-stroke-01",
+    "length": 3790.2874485000602,
+    "max_sample_deviation": 1.8820643280915992
+  },
+  {
+    "id": "wood-stroke-02",
+    "length": 3208.2290549567456,
+    "max_sample_deviation": 2.20814505073248
+  },
+  {
+    "id": "wood-stroke-03",
+    "length": 2467.181302708098,
+    "max_sample_deviation": 2.1404027479892775
+  },
+  {
+    "id": "wood-stroke-04",
+    "length": 3484.2554758547935,
+    "max_sample_deviation": 2.2130647642316053
+  },
+  {
+    "id": "wood-stroke-05",
+    "length": 2074.4960065548917,
+    "max_sample_deviation": 2.4033498838125853
+  },
+  {
+    "id": "wood-stroke-06",
+    "length": 1297.7463507880614,
+    "max_sample_deviation": 2.2985697502803397
+  },
+  {
+    "id": "wood-stroke-07",
+    "length": 900.6212634974647,
+    "max_sample_deviation": 1.7872043688428099
+  },
+  {
+    "id": "wood-stroke-08",
+    "length": 3514.8540497876197,
+    "max_sample_deviation": 1.8800657437607018
+  },
+  {
+    "id": "wood-stroke-09",
+    "length": 1164.0574869971408,
+    "max_sample_deviation": 1.627354821959089
+  },
+  {
+    "id": "wood-stroke-10",
+    "length": 2031.0769573959315,
+    "max_sample_deviation": 2.250655163294928
+  },
+  {
+    "id": "wood-stroke-11",
+    "length": 1244.607139920072,
+    "max_sample_deviation": 1.9850686825183266
+  },
+  {
+    "id": "wood-stroke-12",
+    "length": 2301.6536178871834,
+    "max_sample_deviation": 1.7459148341336685
+  },
+  {
+    "id": "wood-stroke-13",
+    "length": 1207.7106795074756,
+    "max_sample_deviation": 1.8327077026996472
+  },
+  {
+    "id": "wood-stroke-14",
+    "length": 382.1510980250983,
+    "max_sample_deviation": 1.3896552887247173
+  },
+  {
+    "id": "wood-stroke-15",
+    "length": 648.260579666595,
+    "max_sample_deviation": 1.845336202251825
+  },
+  {
+    "id": "wood-stroke-16",
+    "length": 255.66531004777457,
+    "max_sample_deviation": 2.409340485618964
+  },
+  {
+    "id": "wood-stroke-17",
+    "length": 247.17593625746582,
+    "max_sample_deviation": 1.9323884085053522
+  },
+  {
+    "id": "wood-stroke-18",
+    "length": 779.931471579898,
+    "max_sample_deviation": 2.013313779628517
+  },
+  {
+    "id": "wood-stroke-19",
+    "length": 4225.148781813937,
+    "max_sample_deviation": 2.0805466240414354
+  },
+  {
+    "id": "wood-stroke-20",
+    "length": 3297.2697336426186,
+    "max_sample_deviation": 2.202228850223324
+  },
+  {
+    "id": "wood-stroke-21",
+    "length": 2139.5122606039718,
+    "max_sample_deviation": 2.402707175058569
+  },
+  {
+    "id": "wood-stroke-22",
+    "length": 2767.6421910919016,
+    "max_sample_deviation": 2.318810439607125
+  },
+  {
+    "id": "wood-stroke-23",
+    "length": 3754.2920597321804,
+    "max_sample_deviation": 2.69391519361886
+  }
+]

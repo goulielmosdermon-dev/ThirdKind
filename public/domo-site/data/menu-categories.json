@@ -1,0 +1,82 @@
+{
+  "contract": [
+    {
+      "title": "Staircases",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/skala/"
+    },
+    {
+      "title": "Wooden windows & exterior doors",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/sistimata-xilinon-koufomaton-exoporta/"
+    },
+    {
+      "title": "Interior doors",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/esoterikes-portes/"
+    },
+    {
+      "title": "Wooden shading systems",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/pergkoles/"
+    },
+    {
+      "title": "Gates & fences",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/auloportes/"
+    },
+    {
+      "title": "Deck",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/deck/"
+    },
+    {
+      "title": "Louvres & partitions",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/persides-diaxoristika/"
+    },
+    {
+      "title": "Structural solutions",
+      "url": "https://www.domogroup.gr/geniki-xilourgiki/domikes-liseis/"
+    }
+  ],
+  "kitchens": [
+    {
+      "title": "Ithaki collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%b9%ce%b8%ce%ac%ce%ba%ce%b7/"
+    },
+    {
+      "title": "Ios collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%b9%ce%bf%cf%82-el/"
+    },
+    {
+      "title": "Pelion collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%cf%80%ce%ae%ce%bb%ce%b9%ce%bf-el/"
+    },
+    {
+      "title": "Porto Heli collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%cf%80%cf%8c%cf%81%cf%84%ce%bf-%cf%87%ce%ad%ce%bb%ce%b9-el/"
+    },
+    {
+      "title": "Gloss collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-gloss/"
+    },
+    {
+      "title": "Rustic collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-rustic/"
+    },
+    {
+      "title": "Athens collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%b1%ce%b8%ce%ae%ce%bd%ce%b1/"
+    },
+    {
+      "title": "Kasteli collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%ba%ce%b1%cf%83%cf%84%ce%ad%ce%bb%ce%b9/"
+    },
+    {
+      "title": "Kimolos collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%ba%ce%af%ce%bc%cf%89%ce%bb%ce%bf%cf%82/"
+    },
+    {
+      "title": "Mani collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%bc%ce%ac%ce%bd%ce%b7/"
+    },
+    {
+      "title": "Nisyros collection",
+      "url": "https://www.domogroup.gr/product-category/kouzines/%cf%83%ce%b5%ce%b9%cf%81%ce%ac-%ce%bd%ce%af%cf%83%cf%85%cf%81%ce%bf%cf%82/"
+    }
+  ]
+}

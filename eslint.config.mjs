@@ -9,6 +9,7 @@ const eslintConfig = defineConfig([
   prettier,
   globalIgnores([
     '.next/**',
+    'public/domo-site/**',
     'out/**',
     'build/**',
     'coverage/**',

@@ -1,0 +1,22 @@
+:root{--loader-min-time:3200ms;--loader-exit-duration:1100ms;--loader-word-duration:1200ms;--loader-word-stagger:180ms;--loader-grain-duration:2600ms;--loader-grain-stagger:25ms;}
+html.site-loading{overflow:hidden;}
+html.site-loading::before{content:'';position:fixed;inset:0;z-index:20000;background:var(--creme);transform:translateY(0);}
+html.loader-exiting::before{transform:translateY(-100%);transition:transform var(--loader-exit-duration) cubic-bezier(.76,0,.24,1);}
+.site-loader{position:fixed;inset:0;z-index:20001;display:grid;place-items:center;overflow:hidden;background:var(--creme);color:var(--orange);transform:translateY(0);transition:transform var(--loader-exit-duration) cubic-bezier(.76,0,.24,1);}
+.site-loader.is-leaving{transform:translateY(-100%);}
+.loader-wood{position:absolute;inset:var(--space-4);opacity:.32;mask-image:radial-gradient(ellipse at center,transparent 0%,transparent 18%,#000 70%);pointer-events:none;}
+.loader-wood svg{display:block;width:100%;height:100%;color:var(--orange);}
+.loader-wood path{stroke-dasharray:1;stroke-dashoffset:1;animation:loader-grain var(--loader-grain-duration) cubic-bezier(.45,0,.55,1) both;animation-delay:calc(var(--stroke-index) * var(--loader-grain-stagger));}
+.loader-copy{position:relative;text-align:center;max-width:calc(100% - var(--space-6));}
+.loader-title{margin:0;}
+.loader-title-row{display:flex;justify-content:center;gap:.22em;}
+.loader-word-mask{display:block;overflow:hidden;padding:.18em .08em;margin:-.18em -.08em;}
+.loader-word-mask[hidden]{display:none;}
+.loader-word{display:block;transform:translateY(calc(100% + .3em));animation:loader-word var(--loader-word-duration) cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--word-index) * var(--loader-word-stagger));}
+.loader-tagline{margin:var(--space-5) 0 0;padding:.15em .1em;overflow:hidden;}
+.loader-tagline span{display:block;animation:loader-word var(--loader-word-duration) cubic-bezier(.22,1,.36,1) 600ms both;}
+.loader-tagline span+span{animation-delay:760ms;}
+@keyframes loader-word{from{opacity:0;transform:translateY(calc(100% + .3em))}to{opacity:1;transform:translateY(0)}}
+@keyframes loader-grain{to{stroke-dashoffset:0}}
+@media(max-width:600px){.loader-wood{inset:0}.loader-wood svg{width:180%;max-width:none;transform:translateX(-22%)}}
+@media(prefers-reduced-motion:reduce){.site-loader,.loader-word,.loader-tagline span,.loader-wood path{transition:none;animation:none;transform:none;opacity:1}.loader-wood path{stroke-dashoffset:0}}

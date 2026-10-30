@@ -5,3 +5,6 @@ build
 coverage
 pnpm-lock.yaml
 next-env.d.ts
+
+# Generated static Domo site
+public/domo-site/

@@ -1,0 +1,112 @@
+{
+  "slug": "one-and-only-aesthesis",
+  "title": "One&Only Aesthesis villas",
+  "source": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%ce%b2%ce%af%ce%bb%ce%bb%ce%b5%cf%82-%cf%83%cf%84/",
+  "tags": [
+    "Contract",
+    "Hotels"
+  ],
+  "hero": {
+    "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/1.webp",
+    "local": "Images/Projects/OneAndOnly/1-enhanced.webp",
+    "alt": "One&Only Aesthesis villas — 6",
+    "original_local": "Images/Projects/OneAndOnly/1.webp"
+  },
+  "headline": "Η λεπτομέρεια<br>γίνεται εμπειρία.",
+  "introduction": "Ξυλουργικές κατασκευές για τις βίλλες του One&Only Aesthesis στη Γλυφάδα, με ενιαία σχεδιαστική προσέγγιση και ιδιαίτερη προσοχή στα υλικά.",
+  "paragraphs": [
+    "Η Domogroup ανέλαβε την ολοκληρωμένη κατασκευή ξύλινων εφαρμογών για τις κατοικίες του έργου. Η υλοποίηση ακολουθεί το αρχιτεκτονικό όραμα, συνδυάζοντας διαχρονικές γραμμές με τις πρακτικές ανάγκες κάθε βίλλας.",
+    "Κουζίνες κατά παραγγελία με φυσικές υφές και κρυφό φωτισμό, εσωτερικές πόρτες και ειδικά σχεδιασμένες ντουλάπες συνδέουν τους χώρους. Η συνέπεια στις λεπτομέρειες και η εργονομία διαμορφώνουν μια ήρεμη, ολοκληρωμένη εμπειρία διαμονής."
+  ],
+  "facts": [
+    {
+      "label": "Τοποθεσία",
+      "value": "Γλυφάδα"
+    },
+    {
+      "label": "Κατηγορία",
+      "value": "Hotels / Contract"
+    },
+    {
+      "label": "Αντικείμενο",
+      "value": "Κουζίνες, εσωτερικές πόρτες & ντουλάπες"
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/3.webp",
+      "local": "Images/Projects/OneAndOnly/3.webp",
+      "alt": "One&Only Aesthesis villas — 1",
+      "layout": "wide"
+    },
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/2.webp",
+      "local": "Images/Projects/OneAndOnly/2.webp",
+      "alt": "One&Only Aesthesis villas — 2",
+      "layout": "half"
+    },
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/Screenshot-2026-01-27-at-7.39.30-PM-1.png",
+      "local": "Images/Projects/OneAndOnly/Screenshot-2026-01-27-at-7.39.30-PM-1.png",
+      "alt": "One&Only Aesthesis villas — 3",
+      "layout": "half"
+    },
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/Screenshot-2026-01-27-at-7.37.58-PM-1.png",
+      "local": "Images/Projects/OneAndOnly/Screenshot-2026-01-27-at-7.37.58-PM-1.png",
+      "alt": "One&Only Aesthesis villas — 4",
+      "layout": "wide"
+    },
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/Screenshot-2026-01-27-at-7.36.10-PM.png",
+      "local": "Images/Projects/OneAndOnly/Screenshot-2026-01-27-at-7.36.10-PM.png",
+      "alt": "One&Only Aesthesis villas — 5",
+      "layout": "half"
+    }
+  ],
+  "newer": {
+    "url": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%ce%bd%ce%b5%cf%8c-%ce%ba%ce%b1%cf%84%ce%ac%cf%83/",
+    "source_title": "Ξυλουργικές κατασκευές για νεό κατάστημα Patiris",
+    "title": "Patiris store",
+    "category": "Business",
+    "image": "https://www.domogroup.gr/wp-content/uploads/2026/01/DSC07387-1024x682.jpg",
+    "local": "Images/ProjectIndex/project-07.jpg",
+    "local_url": "/DOMO/projects/patiris-store/"
+  },
+  "older": {
+    "url": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%cf%84%ce%bf-cine-paris/",
+    "source_title": "Ξυλουργικές κατασκευές για το Cine Paris",
+    "title": "Cine Paris",
+    "category": "Business",
+    "image": "https://www.domogroup.gr/wp-content/uploads/2026/01/DSC_0389-1024x681.jpg",
+    "local": "Images/ProjectIndex/project-09.jpg"
+  },
+  "related": [
+    {
+      "url": "https://www.domogroup.gr/portfolio/xilines-kataskeues-the-foundry-hotel-athens/",
+      "source_title": "Ξύλινες Κατασκευές Ξενοδοχείο The Foundry Hotel Athens",
+      "title": "The Foundry Hotel Athens",
+      "category": "Hotels",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/05/the_fountry_hotel_athens_01.jpg",
+      "local": "Images/Projects/Foundry/foundry-detailed.png",
+      "local_url": "/DOMO/projects/the-foundry-hotel-athens/",
+      "original_local": "Images/ProjectIndex/project-30.jpg"
+    },
+    {
+      "url": "https://www.domogroup.gr/portfolio/xilines-kataskeues-aegon-mykonos/",
+      "source_title": "Ξύλινες Κατασκευές Aegon Mykonos",
+      "title": "Aegon Mykonos",
+      "category": "Hotels",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/05/aegon_mykonos_01.jpg",
+      "local": "Images/ProjectIndex/project-31.jpg"
+    },
+    {
+      "url": "https://www.domogroup.gr/portfolio/xilines-kataskeues-xenodoxeio-bassa-maina/",
+      "source_title": "Ξύλινες Κατασκευές Ξενοδοχείο Bassa Maina",
+      "title": "Bassa Maina",
+      "category": "Hotels",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/06/8_0.jpeg",
+      "local": "Images/ProjectIndex/project-32.jpeg"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "vari",
+    "name": "Vari — Living & Contract",
+    "name_el": "Βάρη — Κατοικία & Κατασκευές",
+    "address": "Androu & Varis–Koropiou Avenue",
+    "address_el": "Άνδρου & Λεωφόρος Βάρης–Κορωπίου",
+    "phone": "+30 210 681 2340",
+    "telephone": "+302106812340",
+    "email": "info@domogroup.gr",
+    "image": "/DOMO/Images/About/vari.jpg",
+    "image_alt": "Domogroup showroom in Vari",
+    "image_alt_el": "Έκθεση Domogroup στη Βάρη"
+  },
+  {
+    "id": "kolonaki-contract",
+    "name": "Kolonaki — Contract",
+    "name_el": "Κολωνάκι — Κατασκευές",
+    "address": "35 Solonos & 10 Lykavittou, Kolonaki 106 71",
+    "address_el": "Σόλωνος 35 & Λυκαβηττού 10, Κολωνάκι 106 71",
+    "phone": "+30 210 663 4943",
+    "telephone": "+302106634943",
+    "email": "info@domogroup.gr",
+    "image": "/DOMO/Images/About/contract-kolonaki.jpg",
+    "image_alt": "Domogroup Contract showroom in Kolonaki",
+    "image_alt_el": "Έκθεση Domogroup Contract στο Κολωνάκι"
+  },
+  {
+    "id": "kolonaki-living",
+    "name": "Kolonaki — Living",
+    "name_el": "Κολωνάκι — Κατοικία",
+    "address": "25A Voukourestiou & Solonos, Kolonaki 106 71",
+    "address_el": "Βουκουρεστίου 25Α & Σόλωνος, Κολωνάκι 106 71",
+    "phone": "+30 210 361 9579",
+    "telephone": "+302103619579",
+    "email": "info@domogroup.gr",
+    "image": "/DOMO/Images/About/living-kolonaki.jpg",
+    "image_alt": "Domogroup Living showroom in Kolonaki",
+    "image_alt_el": "Έκθεση Domogroup Living στο Κολωνάκι"
+  }
+]

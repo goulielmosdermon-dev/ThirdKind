@@ -428,3 +428,12 @@ body.menu-is-open .site-header .site-logo img{filter:none;}
 @media(prefers-reduced-motion:reduce){.site-header .header-nav>.nav-division{animation:none}}
 
 .site-header:not(.has-background):not(.is-project-scrolled){padding-top:calc(var(--nav-padding-y) * .5);}
+
+/* Keep the expanded header compact on very wide displays. */
+@media(min-width:1800px){
+  .site-header:not(.has-background):not(.is-project-scrolled){gap:32px;}
+  .site-header:not(.has-background):not(.is-project-scrolled) .header-nav{gap:32px;}
+  .site-header:not(.has-background):not(.is-project-scrolled) .header-nav>:is(span,a){font-size:24px;}
+  .site-header:not(.has-background):not(.is-project-scrolled) .site-logo{width:89.6px;}
+  .site-header:not(.has-background):not(.is-project-scrolled) .menu-button{width:40px;height:24px;}
+}

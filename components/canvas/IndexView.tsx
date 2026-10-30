@@ -6,43 +6,20 @@ import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 
 import type { CanvasNode, LeafCanvasNode, PortableText } from '@/types/content';
 
-import {
-  editorialCopy,
-  editorialLeaves,
-  editorialThoughts,
-} from '@/lib/canvas/editorial';
+import { editorialLeaves, editorialThoughts } from '@/lib/canvas/editorial';
 import {
   COVER_FOCUS_FRAME,
   coverFocusStyle,
   isUnoptimizedAsset,
 } from '@/lib/content/mediaSrc';
 import { useSmoothScroll } from '@/lib/canvas/useSmoothScroll';
-import { EDITORIAL_LINE, EDITORIAL_LINE_PHONE } from '@/lib/type/display';
+import { EDITORIAL_LINE } from '@/lib/type/display';
 import { MaskedCycle } from '@/components/chrome/MaskedCycle';
 import { MOTION } from '@/lib/motion/tokens';
 import { HeroReel } from '@/components/canvas/HeroReel';
 import { SiteFooter } from '@/components/chrome/SiteFooter';
 import { PillLabel } from '@/components/sheet/PillLabel';
 import { ThoughtsReel } from '@/components/canvas/ThoughtsReel';
-
-function IndexArrow() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="ml-[0.25em] inline-block h-[0.92em] w-[0.92em] align-[-0.14em] text-ink"
-      aria-hidden
-    >
-      <path
-        d="M6.5 6.5 L17.5 17.5 M17.5 11.5 L17.5 17.5 L11.5 17.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="square"
-        strokeLinejoin="miter"
-      />
-    </svg>
-  );
-}
 
 /**
  * One slot per project, in the order the index reads them. The third runs the
@@ -375,19 +352,6 @@ export function IndexView({
     },
   };
 
-  // Each part of an index item arrives in turn: the line rises out of its
-  // mask, then the picture wipes open.
-  const mask = {
-    hidden: { y: reduced ? 0 : '110%' },
-    shown: {
-      y: 0,
-      transition: {
-        duration: reduced ? MOTION.reduced : 0.85,
-        ease: MOTION.easeOut,
-      },
-    },
-  };
-
   const wipe = {
     hidden: { clipPath: 'inset(100% 0% 0% 0%)' },
     shown: {
@@ -470,18 +434,11 @@ export function IndexView({
             const slot = phone
               ? { wrap: 'w-full', aspect: shape.aspect }
               : shape;
-            const { line, name } = editorialCopy(node);
-            // The arrow stays welded to the last word so it never wraps alone.
-            const cut = line.lastIndexOf(' ');
-            let lead = '';
-            let tail = line;
-            if (name) {
-              lead = `${line} `;
-              tail = '';
-            } else if (cut > 0) {
-              lead = line.slice(0, cut + 1);
-              tail = line.slice(cut + 1);
-            }
+            const [client, ...titleParts] = node.title.split(' — ');
+            const title = titleParts.length
+              ? titleParts.join(' — ')
+              : node.title;
+            const name = titleParts.length ? client : '';
             return (
               <motion.li
                 key={node.id}
@@ -502,39 +459,11 @@ export function IndexView({
                 <button
                   type="button"
                   className="group w-full cursor-pointer border-0 bg-transparent p-0 text-left text-ink"
+                  aria-label={node.title}
                   onClick={() => onOpen(node.href, node.id)}
                   onPointerEnter={() => onPrefetch?.(node.href)}
                   onFocus={() => onPrefetch?.(node.href)}
                 >
-                  {/* The line rises out of its own box — the same mask the
-                      writing's heading is read through. */}
-                  <span
-                    className={`block overflow-hidden pt-[0.12em] pb-[0.26em] ${
-                      phone
-                        ? '-mt-[0.12em] mb-[calc(0.75rem-0.26em)]'
-                        : '-mt-[0.12em] mb-[calc(1rem-0.26em)] max-w-[36rem]'
-                    }`}
-                  >
-                    <motion.p
-                      variants={mask}
-                      className={`${name ? 'font-sans' : 'font-display'} leading-snug`}
-                      // The one editorial size, shared with the writing and
-                      // the manifesto.
-                      style={{
-                        fontSize: phone ? EDITORIAL_LINE_PHONE : EDITORIAL_LINE,
-                      }}
-                    >
-                      {lead}
-                      <span className="whitespace-nowrap">
-                        {name ? (
-                          <span className="font-display text-mute">{name}</span>
-                        ) : (
-                          tail
-                        )}
-                        <IndexArrow />
-                      </span>
-                    </motion.p>
-                  </span>
                   <motion.span
                     variants={wipe}
                     // The still claims the header's cursor: over it, the same
@@ -568,6 +497,24 @@ export function IndexView({
                           />
                         </span>
                       )}
+                      <span className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-start p-[clamp(1rem,2cqi,1.75rem)] text-white">
+                        <span className="block overflow-hidden pt-[0.12em] pb-[0.26em]">
+                          <span
+                            className={`font-sans block leading-snug transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${phone ? 'translate-y-0' : 'translate-y-[110%] group-hover:translate-y-0 group-focus-visible:translate-y-0'}`}
+                            style={{ fontSize: EDITORIAL_LINE }}
+                          >
+                            {title}
+                            {name ? (
+                              <>
+                                {' '}
+                                <span className="font-display text-white/70">
+                                  {name}
+                                </span>
+                              </>
+                            ) : null}
+                          </span>
+                        </span>
+                      </span>
                     </span>
                   </motion.span>
                 </button>

@@ -1,5 +1,5 @@
 (() => {
-  const canonicalPath = path => path.replace(/\/+$/, '') || '/DOMO/';
+  const canonicalPath = path => path.replace(/\/+$/, '') || '/';
   const key = 'domo-page-transition';
   const root = document.documentElement;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');

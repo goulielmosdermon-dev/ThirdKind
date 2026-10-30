@@ -273,7 +273,9 @@
     "Επικοινωνία — Domogroup": "Contact — Domogroup",
     "Επισκεφθείτε μια έκθεση ή μιλήστε μας για τις ιδέες σας. Η ομάδα μας θα σας βοηθήσει να βρείτε τα κατάλληλα υλικά και τη σωστή προσέγγιση για τον χώρο σας.": "Visit a showroom or tell us what you have in mind. Our team can help you find the right materials and approach for your space.",
     "Μοιραστείτε τα σχέδιά σας, τα υλικά που σκέφτεστε ή τις ερωτήσεις σας με την ομάδα μας.": "Share your plans, materials or questions with our team.",
-    "Οδηγίες πρόσβασης": "Get directions"
+    "Οδηγίες πρόσβασης": "Get directions",
+    "Τοπική παραγωγή": "Local",
+    "ΤΟΠΙΚΗ ΠΑΡΑΓΩΓΗ": "LOCAL"
   },
   "en_to_el": {
     "About": "Για εμάς",
@@ -610,6 +612,9 @@
     "Contact — Domogroup": "Επικοινωνία — Domogroup",
     "Visit a showroom or tell us what you have in mind. Our team can help you find the right materials and approach for your space.": "Επισκεφθείτε μια έκθεση ή μιλήστε μας για τις ιδέες σας. Η ομάδα μας θα σας βοηθήσει να βρείτε τα κατάλληλα υλικά και τη σωστή προσέγγιση για τον χώρο σας.",
     "Share your plans, materials or questions with our team.": "Μοιραστείτε τα σχέδιά σας, τα υλικά που σκέφτεστε ή τις ερωτήσεις σας με την ομάδα μας.",
-    "Get directions": "Οδηγίες πρόσβασης"
+    "Get directions": "Οδηγίες πρόσβασης",
+    "Local": "Τοπική παραγωγή",
+    "LOCAL": "ΤΟΠΙΚΗ ΠΑΡΑΓΩΓΗ",
+    "Local — Domogroup": "Τοπική παραγωγή — Domogroup"
   }
 }

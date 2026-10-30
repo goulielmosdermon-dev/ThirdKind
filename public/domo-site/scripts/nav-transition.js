@@ -1,5 +1,5 @@
 (() => {
-  const canonicalPath = path => path.replace(/\/+$/, '') || '/DOMO/';
+  const canonicalPath = path => path.replace(/\/+$/, '') || '/';
   const storageKey = 'domo-navigation-transition';
   let previous;
   try {

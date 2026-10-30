@@ -328,7 +328,7 @@ body.menu-is-open .header-nav{visibility:hidden;pointer-events:none;}
 
 /* Light menu with a subdued wood pattern clear of the links. */
 .fullscreen-menu{background:var(--menu-surface);color:var(--menu-text);isolation:isolate;}
-.fullscreen-menu::before{content:'';position:absolute;inset:0;z-index:-1;background:url('/DOMO/Graphics/Wood-smooth.svg') center / cover no-repeat;background-size:auto 125%;opacity:var(--menu-wood-opacity);mask-image:radial-gradient(ellipse 95% 85% at left bottom,transparent 0%,transparent 62%,#000 98%);pointer-events:none;}
+.fullscreen-menu::before{content:'';position:absolute;inset:-10%;z-index:-1;background:url('../Graphics/Wood-smooth.svg') center / cover no-repeat;opacity:var(--menu-wood-opacity);mask-image:radial-gradient(ellipse 95% 85% at left bottom,transparent 0%,transparent 62%,#000 98%);pointer-events:none;}
 .fullscreen-menu-links{position:relative;z-index:1;}
 .fullscreen-menu-links a{text-transform:none;}
 body.menu-is-open .site-header{color:var(--menu-text);}
@@ -426,3 +426,5 @@ body.menu-is-open .site-header .site-logo img{filter:none;}
 .site-header:is(.has-background,.is-project-scrolled) .header-nav>.nav-division{display:inline-block;animation:nav-division-in 500ms ease both;}
 @keyframes nav-division-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.site-header .header-nav>.nav-division{animation:none}}
+
+.site-header:not(.has-background):not(.is-project-scrolled){padding-top:calc(var(--nav-padding-y) * .5);}

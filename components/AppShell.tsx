@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 import { motion, useReducedMotion } from 'motion/react';
 import type { ReactNode } from 'react';
 
@@ -33,6 +33,8 @@ export function AppShell({
   wordmarkRight: string;
 }) {
   const pathname = usePathname();
+  const sheetSegment = useSelectedLayoutSegment('sheet');
+  const intercepted = sheetSegment !== null && sheetSegment !== '__DEFAULT__';
   const reduced = useReducedMotion();
   const sheetOpen = pathname !== '/';
 
@@ -65,23 +67,15 @@ export function AppShell({
                   wordmarkRight={wordmarkRight}
                 />
               </motion.div>
-              {/*
-              Next keeps a parallel-route slot on its last match during soft
-              navigation — default.tsx only applies on a fresh load — so a
-              sheet closed with router.push('/') stays mounted, and its
-              invisible backdrop swallows every click on the canvas. The path
-              is the source of truth for whether a sheet exists.
-            */}
-              {/*
-                An intercepted sheet is drawn over the page it was opened
-                from — the work field stays where it was underneath — so the
-                slot has to win the stacking order against children, which
-                come after it in the DOM.
-              */}
+              {/* Render one reading surface: an intercepted slot retains its
+                  background route, which may itself contain a full-page sheet. */}
               {sheetOpen ? (
-                <div className="relative z-[45]">{sheet}</div>
-              ) : null}
-              {children}
+                <div key={pathname} className="relative z-[45]">
+                  {intercepted ? sheet : children}
+                </div>
+              ) : (
+                children
+              )}
               <CommandNav nodes={nodes} />
               <TopMenu nodes={nodes} />
             </div>

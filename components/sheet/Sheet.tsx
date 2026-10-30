@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useReducedMotion } from 'motion/react';
 import { motion } from 'motion/react';
 import {
@@ -30,7 +30,7 @@ function focusable(root: HTMLElement): HTMLElement[] {
   ].filter((node) => !node.hasAttribute('disabled') && node.tabIndex !== -1);
 }
 
-export function Sheet({
+function SheetContent({
   title,
   children,
   tone = 'chrome',
@@ -305,4 +305,9 @@ export function Sheet({
       </motion.div>
     </div>
   );
+}
+
+export function Sheet(props: Parameters<typeof SheetContent>[0]) {
+  const pathname = usePathname();
+  return <SheetContent key={pathname} {...props} />;
 }

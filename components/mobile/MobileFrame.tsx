@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 import type { CSSProperties, ReactNode } from 'react';
 
 import { CommandNav } from '@/components/chrome/CommandNav';
@@ -24,6 +24,9 @@ export function MobileFrame({
   nodes: CanvasNode[];
 }) {
   const pathname = usePathname();
+  const sheetSegment = useSelectedLayoutSegment('sheet');
+  const intercepted = sheetSegment !== null && sheetSegment !== '__DEFAULT__';
+  const backgroundSegment = useSelectedLayoutSegment();
   const onHome = pathname === MOBILE_PREFIX;
 
   return (
@@ -64,9 +67,14 @@ export function MobileFrame({
                   }
                 >
                   <InquiryProvider>
-                    {children}
-                    {/* See AppShell: a stale slot would block the canvas. */}
-                    {onHome ? null : sheet}
+                    {/* Keep the home preview mounted behind its overlay, but
+                        do not retain a second reading surface behind it. */}
+                    {onHome || !intercepted || backgroundSegment === null
+                      ? children
+                      : null}
+                    {!onHome && intercepted ? (
+                      <div key={pathname}>{sheet}</div>
+                    ) : null}
                     <CommandNav nodes={nodes} embedded />
                   </InquiryProvider>
                 </div>

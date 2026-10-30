@@ -1,4 +1,5 @@
 (() => {
+  const canonicalPath = path => path.replace(/\/+$/, '') || '/DOMO/';
   const key = 'domo-page-transition';
   const root = document.documentElement;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -7,7 +8,7 @@
     incoming = JSON.parse(sessionStorage.getItem(key) || 'null');
     sessionStorage.removeItem(key);
   } catch {}
-  if (!reduced.matches && incoming && incoming.path === location.pathname && Date.now() - incoming.time < 15000) {
+  if (!reduced.matches && incoming && canonicalPath(incoming.path) === canonicalPath(location.pathname) && Date.now() - incoming.time < 15000) {
     root.classList.add('page-entering');
     document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -20,7 +21,7 @@
     const link = event.target.closest('a[href]');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank' || link.hasAttribute('download') || reduced.matches) return;
     const target = new URL(link.href, location.href);
-    if (target.origin !== location.origin || target.pathname === location.pathname || !/^https?:$/.test(target.protocol)) return;
+    if (target.origin !== location.origin || canonicalPath(target.pathname) === canonicalPath(location.pathname) || !/^https?:$/.test(target.protocol)) return;
     event.preventDefault();
     if (leaving) return;
     leaving = true;

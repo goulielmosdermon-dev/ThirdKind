@@ -394,3 +394,16 @@
     transition: none;
   }
 }
+
+.collab-reference-item {
+  overflow: hidden;
+}
+.collab-image-preview[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.collab-preview-frame {
+  overflow: hidden;
+  flex-shrink: 0;
+}

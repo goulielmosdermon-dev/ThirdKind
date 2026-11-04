@@ -5,15 +5,17 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Plate } from '../2000/deck';
 
+type ReferenceImage = Plate & { cropScale?: number };
+
 export function ReferenceGallery({
   images,
   headingId,
 }: {
-  images: Plate[];
+  images: ReferenceImage[];
   headingId: string;
 }) {
   const [view, setView] = useState<'grid' | 'stack'>('grid');
-  const [selected, setSelected] = useState<Plate | null>(null);
+  const [selected, setSelected] = useState<ReferenceImage | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -88,6 +90,11 @@ export function ReferenceGallery({
               <Image
                 src={image.src}
                 alt={image.alt}
+                style={
+                  image.cropScale
+                    ? { transform: `scale(${image.cropScale})` }
+                    : undefined
+                }
                 width={image.w}
                 height={image.h}
                 unoptimized
@@ -126,15 +133,28 @@ export function ReferenceGallery({
           </svg>
         </button>
         {selected ? (
-          <Image
-            className="collab-preview-image"
-            src={selected.src}
-            alt={selected.alt}
-            width={selected.w}
-            height={selected.h}
-            unoptimized
-            sizes="100vw"
-          />
+          <div
+            className="collab-preview-frame"
+            style={{
+              width: `min(100%, calc((100dvh - 104px) * ${selected.w / selected.h}))`,
+              aspectRatio: `${selected.w} / ${selected.h}`,
+            }}
+          >
+            <Image
+              className="collab-preview-image"
+              src={selected.src}
+              alt={selected.alt}
+              width={selected.w}
+              height={selected.h}
+              unoptimized
+              sizes="100vw"
+              style={
+                selected.cropScale
+                  ? { transform: `scale(${selected.cropScale})` }
+                  : undefined
+              }
+            />
+          </div>
         ) : null}
       </dialog>
     </>

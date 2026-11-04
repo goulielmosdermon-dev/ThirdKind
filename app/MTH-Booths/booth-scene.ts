@@ -228,11 +228,15 @@ export async function createBoothScene(
     if (!video.videoWidth || !video.videoHeight) return;
     const videoAspect = video.videoWidth / video.videoHeight;
     const panelAspect = screenSize.x / screenSize.y;
-    // Centered cover mapping: fill the panel without distorting the footage.
-    const repeatX = Math.min(1, panelAspect / videoAspect);
-    const repeatY = Math.min(1, videoAspect / panelAspect);
+    // Centered cover mapping with a 1.7× zoom for larger wall artwork.
+    const repeatX = Math.min(1, panelAspect / videoAspect) / 1.7;
+    const repeatY = Math.min(1, videoAspect / panelAspect) / 1.7;
     videoTexture.repeat.set(repeatX, repeatY);
-    videoTexture.offset.set((1 - repeatX) / 2, (1 - repeatY) / 2);
+    // Compensate for the artwork's position inside the source video.
+    videoTexture.offset.set(
+      (1 - repeatX) / 2 - repeatX * 0.05,
+      (1 - repeatY) / 2,
+    );
     videoTexture.updateMatrix();
   };
   video.addEventListener('loadedmetadata', fitVideo);

@@ -15,7 +15,7 @@ const helixa = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Mind The Hack — Brand Video',
+  title: 'Mind The Hack — Product Video',
   robots: { index: false, follow: false },
 };
 
@@ -67,9 +67,9 @@ export default function MdhPage() {
           loop
           playsInline
           preload="metadata"
-          aria-label="Mind The Hack brand video"
+          aria-label="Mind The Hack product video"
         />
-        <p className="mdh-video-label">Brand Video</p>
+        <p className="mdh-video-label">Product video</p>
         <a
           className="mdh-scroll-cue"
           href="#mdh-script-title"

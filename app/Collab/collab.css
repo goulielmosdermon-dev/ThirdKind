@@ -374,3 +374,23 @@
     url('/Collab/pointer-hand.svg') 12 3,
     pointer;
 }
+
+.collab-reference-item img {
+  transition: opacity 0.2s ease;
+}
+
+@media (hover: hover) {
+  .collab-reference-item:hover img {
+    opacity: 0.7;
+  }
+}
+
+.collab-reference-item:focus-visible img {
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collab-reference-item img {
+    transition: none;
+  }
+}

@@ -10,9 +10,11 @@ type ReferenceImage = Plate & { cropScale?: number };
 export function ReferenceGallery({
   images,
   headingId,
+  heading = 'References',
 }: {
   images: ReferenceImage[];
   headingId: string;
+  heading?: string;
 }) {
   const [view, setView] = useState<'grid' | 'stack'>('grid');
   const [selected, setSelected] = useState<ReferenceImage | null>(null);
@@ -33,7 +35,7 @@ export function ReferenceGallery({
   return (
     <>
       <div className="collab-reference-heading">
-        <h2 id={headingId}>References</h2>
+        <h2 id={headingId}>{heading}</h2>
         <div
           className="collab-view-controls"
           role="group"

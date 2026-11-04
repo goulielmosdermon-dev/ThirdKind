@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
+import Image from 'next/image';
+import { SmallBoothViews } from './SmallBoothViews';
 
 function DrawingSection({
   number,
@@ -34,14 +36,10 @@ function DrawingSection({
       aria-labelledby={`booth-${number}`}
     >
       <header className="booth-section-header">
-        <span>Mind The Hack / Booth studies</span>
-        <h1 id={`booth-${number}`}>
-          <span>{number}</span> {title}
-        </h1>
+        <h1 id={`booth-${number}`}>{title}</h1>
       </header>
       <div className="booth-drawing">{children}</div>
       <footer className="booth-section-footer">
-        <span>{number} / 03</span>
         <span>
           {number === '01' ? 'Brand mark' : 'Schematic view · not to scale'}
         </span>
@@ -55,43 +53,89 @@ export function BoothDrawings() {
     <>
       <DrawingSection number="01" title="The mark">
         <svg
-          viewBox="0 0 1040 960"
+          viewBox="0 0 948 800"
           role="img"
-          aria-label="Mind The Hack geometric mark"
-          className="booth-mark"
+          aria-label="Front view of the Mind The Hack booth with geometric frame, counter and shelf"
+          className="booth-mark booth-front-mark"
         >
           <g
-            className="booth-mark-shapes"
-            fill="currentColor"
-            stroke="currentColor"
-            strokeWidth="1"
+            className="booth-front-panels"
+            strokeWidth="1.5"
+            strokeLinejoin="miter"
           >
             <path
               pathLength="1"
               className="booth-fill booth-outline"
-              d="M190 224H438V349H314V747H190Z"
+              d="M32 38H905V212H32Z"
             />
             <path
               pathLength="1"
               className="booth-fill booth-outline"
-              d="M438 349H568V474H438Z"
+              d="M32 212H205V766H32Z"
             />
             <path
               pathLength="1"
               className="booth-fill booth-outline"
-              d="M568 224H692V349H568Z"
+              d="M378 212H559V384H378Z"
             />
             <path
               pathLength="1"
               className="booth-fill booth-outline"
-              d="M692 349H818V747H692Z"
-            />
-            <path
-              pathLength="1"
-              className="booth-fill booth-outline"
-              d="M438 574H568V699H438Z"
+              d="M731 212H905V766H731Z"
             />
           </g>
+          <g
+            className="booth-front-counter"
+            strokeWidth="1.5"
+            strokeLinejoin="miter"
+          >
+            <path
+              pathLength="1"
+              className="booth-fill booth-outline"
+              d="M254 434H603V766H254Z"
+            />
+            <path
+              pathLength="1"
+              className="booth-fill booth-outline"
+              d="M32 29H379V38H32ZM254 422H603V444H254Z"
+            />
+            <path
+              pathLength="1"
+              className="booth-fill booth-outline"
+              d="M655 455H731V483L698 470L655 466Z"
+            />
+          </g>
+          <g className="booth-lines booth-front-detail">
+            <path
+              pathLength="1"
+              className="booth-outline"
+              d="M378 38V212M559 38V212M731 38V212M205 212H378V238H205M559 212H731V238H559"
+            />
+            <path
+              pathLength="1"
+              className="booth-outline"
+              d="M378 524H559V699H378ZM378 699H559V761H378Z"
+            />
+            <path
+              pathLength="1"
+              className="booth-outline booth-fine"
+              d="M32 766H905M254 434H603M254 444H603"
+            />
+          </g>
+          {[
+            'M32 38H378V212H205V766H32Z',
+            'M378 212H559V384H378Z',
+            'M378 524H559V699H378Z',
+            'M559 38H731V212H559Z',
+            'M731 212H905V766H731Z',
+          ].map((outline, index) => (
+            <path
+              key={outline}
+              className="booth-mark-highlight"
+              d={outline}
+              style={{ animationDelay: `${index * 0.55}s` }}
+            />
+          ))}
         </svg>
       </DrawingSection>
 
@@ -221,6 +265,22 @@ export function BoothDrawings() {
             />
           </g>
         </svg>
+      </DrawingSection>
+      <section
+        className="small-booth-image-section"
+        aria-label="3 × 3 booth render"
+      >
+        <Image
+          src="/MTH-Booths/3x3-corner.png"
+          alt="Mind The Hack 3×3 corner booth with illuminated green branding and reception counter"
+          width={3948}
+          height={2370}
+          unoptimized
+          sizes="100vw"
+        />
+      </section>
+      <DrawingSection number="04" title="3 × 3 booth">
+        <SmallBoothViews />
       </DrawingSection>
     </>
   );

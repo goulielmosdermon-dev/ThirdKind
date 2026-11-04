@@ -1,0 +1,216 @@
+.mdh-page {
+  background: #fff;
+  color: #000;
+  font-weight: 700;
+}
+
+.mdh-hero {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  background: #000;
+}
+
+.mdh-hero video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mdh-script {
+  padding: clamp(48px, 7vw, 112px) clamp(24px, 4vw, 64px);
+  font-size: clamp(24px, 2.7vw, 40px);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+}
+
+.mdh-script h1 {
+  font-family: inherit;
+  margin: 0 0 1.2em;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: inherit;
+  line-height: 1.05;
+}
+
+.mdh-speaker + .mdh-speaker {
+  margin-top: 1.15em;
+}
+
+.mdh-speaker h2,
+.mdh-speaker p {
+  font-family: inherit;
+  margin: 0 0 1.05em;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.mdh-images {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+  padding: 24px clamp(24px, 4vw, 64px) 64px;
+}
+
+.mdh-images figure {
+  margin: 0;
+}
+
+.mdh-images img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .mdh-images {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mdh-page,
+.mdh-page :is(h1, h2, p, span) {
+  font-family: var(--font-mdh-helixa), sans-serif;
+}
+
+.mdh-speaker [data-paragraph] {
+  opacity: 0.15;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mdh-speaker [data-paragraph] {
+    opacity: 1;
+  }
+}
+
+.mdh-scroll-cue {
+  position: absolute;
+  bottom: 24px;
+  right: clamp(24px, 4vw, 64px);
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  mix-blend-mode: difference;
+  animation: mdh-arrow-pulse 1.8s ease-in-out infinite;
+}
+
+.mdh-scroll-cue svg {
+  width: 28px;
+  height: 36px;
+}
+
+@keyframes mdh-arrow-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mdh-scroll-cue {
+    animation: none;
+  }
+}
+
+.mdh-video-label {
+  position: absolute;
+  bottom: 28px;
+  left: clamp(24px, 4vw, 64px);
+  margin: 0;
+  color: #fff;
+  font-size: clamp(32px, 4.5vw, 64px);
+  line-height: 1;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.mdh-animation-heading {
+  padding: clamp(48px, 7vw, 112px) clamp(24px, 4vw, 64px);
+}
+
+.mdh-animation-heading h2 {
+  max-width: 1100px;
+  margin: 0;
+  font-size: clamp(32px, 4.5vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.mdh-animations {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0 clamp(24px, 4vw, 64px) 64px;
+}
+
+.mdh-animations video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mdh-animation-frame {
+  overflow: hidden;
+}
+
+.mdh-animation-frame:first-child video {
+  transform: scale(1.01);
+}
+
+.mdh-animation-quote {
+  max-width: 1100px;
+  margin: clamp(40px, 5vw, 72px) 0 0;
+  font-family: inherit;
+}
+
+.mdh-animation-quote p {
+  margin: 0;
+  font-size: clamp(24px, 2.7vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.mdh-animation-quote .mdh-quote-mark {
+  display: block;
+  font-size: clamp(80px, 10vw, 144px);
+  line-height: 0.7;
+}
+
+.mdh-animation-quote .mdh-quote-close {
+  margin-top: 24px;
+  text-align: right;
+}
+
+.mdh-quote-section {
+  padding: clamp(48px, 7vw, 112px) clamp(24px, 4vw, 64px) 0;
+}
+
+.mdh-quote-section .mdh-animation-quote {
+  margin-top: 0;
+}
+
+.mdh-script > div {
+  max-width: 1100px;
+}
+
+.mdh-thank-you {
+  padding: clamp(80px, 12vw, 180px) clamp(24px, 4vw, 64px);
+}
+
+.mdh-thank-you h2 {
+  max-width: 1100px;
+  margin: 0;
+  font-size: clamp(32px, 4.5vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}

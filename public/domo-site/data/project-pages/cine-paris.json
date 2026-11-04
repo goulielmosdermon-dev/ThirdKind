@@ -1,0 +1,98 @@
+{
+  "slug": "cine-paris",
+  "title": "Cine Paris",
+  "source": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%cf%84%ce%bf-cine-paris/",
+  "tags": [
+    "Contract",
+    "Business"
+  ],
+  "hero": {
+    "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/DSC_0389.jpg",
+    "local": "Images/Projects/CineParis/DSC_0389.jpg",
+    "alt": "Timber-framed entrance to Cine Paris at dusk"
+  },
+  "headline": "A new chapter.<br>A familiar place.",
+  "introduction": "Carpentry for the renovation of Cine Paris in Athens. A project that brings timber into the cinema’s entrance and hospitality spaces.",
+  "paragraphs": [
+    "The entrance sets the scene: timber-framed doors open towards the street beneath the Cine Paris sign. Inside, the warm timber surfaces give the arrival its own character.",
+    "The story continues at the refreshment counter, where timber meets colour and light. These are the spaces around the screening: a place to arrive, meet and enjoy the evening."
+  ],
+  "facts": [
+    {
+      "label": "Location",
+      "value": "Athens"
+    },
+    {
+      "label": "Category",
+      "value": "Business / Contract"
+    },
+    {
+      "label": "Scope",
+      "value": "Renovation carpentry"
+    }
+  ],
+  "gallery": [
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/IMG_3812-scaled.jpg",
+      "local": "Images/Projects/CineParis/IMG_3812-scaled.jpg",
+      "alt": "Cine Paris refreshment counter in the afternoon light",
+      "layout": "half"
+    },
+    {
+      "url": "https://www.domogroup.gr/wp-content/uploads/2026/01/DSC_0415.jpg",
+      "local": "Images/Projects/CineParis/DSC_0415.jpg",
+      "alt": "Visitors gathered around the Cine Paris bar in the evening",
+      "layout": "half"
+    }
+  ],
+  "newer": {
+    "url": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%ce%bd%ce%b5%cf%8c-%ce%ba%ce%b1%cf%84%ce%ac%cf%83/",
+    "source_title": "Ξυλουργικές κατασκευές για νεό κατάστημα Patiris",
+    "title": "Patiris store",
+    "category": "Business",
+    "image": "https://www.domogroup.gr/wp-content/uploads/2026/01/DSC07387-1024x682.jpg",
+    "local": "Images/ProjectIndex/project-07.jpg",
+    "local_url": "/DOMO/projects/patiris-store/"
+  },
+  "older": {
+    "url": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%ce%b2%ce%af%ce%bb%ce%bb%ce%b5%cf%82-%cf%83%cf%84/",
+    "source_title": "Ξυλουργικές κατασκευές για Βίλλες στο One&Only Aesthesis",
+    "title": "One&Only Aesthesis villas",
+    "category": "Hotels",
+    "image": "https://www.domogroup.gr/wp-content/uploads/2026/01/1-1024x683.webp",
+    "local": "Images/Projects/OneAndOnly/1-enhanced.webp",
+    "local_url": "/DOMO/projects/one-and-only-aesthesis/",
+    "original_local": "Images/ProjectIndex/project-08.webp"
+  },
+  "related": [
+    {
+      "url": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%ce%bd%ce%b5%cf%8c-%ce%ba%ce%b1%cf%84%ce%ac%cf%83/",
+      "source_title": "Ξυλουργικές κατασκευές για νεό κατάστημα Patiris",
+      "title": "Patiris store",
+      "category": "Business",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2026/01/DSC07387-1024x682.jpg",
+      "local": "Images/ProjectIndex/project-07.jpg",
+      "local_url": "/DOMO/projects/patiris-store/"
+    },
+    {
+      "url": "https://www.domogroup.gr/portfolio/%ce%be%cf%85%ce%bb%ce%bf%cf%85%cf%81%ce%b3%ce%b9%ce%ba%ce%ad%cf%82-%ce%ba%ce%b1%cf%84%ce%b1%cf%83%ce%ba%ce%b5%cf%85%ce%ad%cf%82-%ce%b3%ce%b9%ce%b1-%ce%b2%ce%af%ce%bb%ce%bb%ce%b5%cf%82-%cf%83%cf%84/",
+      "source_title": "Ξυλουργικές κατασκευές για Βίλλες στο One&Only Aesthesis",
+      "title": "One&Only Aesthesis villas",
+      "category": "Hotels",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2026/01/1-1024x683.webp",
+      "local": "Images/Projects/OneAndOnly/1-enhanced.webp",
+      "local_url": "/DOMO/projects/one-and-only-aesthesis/",
+      "original_local": "Images/ProjectIndex/project-08.webp"
+    },
+    {
+      "url": "https://www.domogroup.gr/portfolio/xilines-kataskeues-the-foundry-hotel-athens/",
+      "source_title": "Ξύλινες Κατασκευές Ξενοδοχείο The Foundry Hotel Athens",
+      "title": "The Foundry Hotel Athens",
+      "category": "Hotels",
+      "image": "https://www.domogroup.gr/wp-content/uploads/2021/05/the_fountry_hotel_athens_01.jpg",
+      "local": "Images/Projects/Foundry/foundry-detailed.png",
+      "local_url": "/DOMO/projects/the-foundry-hotel-athens/",
+      "original_local": "Images/ProjectIndex/project-30.jpg"
+    }
+  ]
+}

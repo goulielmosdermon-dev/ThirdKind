@@ -1,0 +1,154 @@
+.booths-page {
+  background: #3b3b3a;
+  color: #e0e0dc;
+}
+
+.booths-page :is(h1, span) {
+  font-family: inherit;
+}
+
+.booth-section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 4vw, 64px);
+  border-bottom: 1px solid #ffffff15;
+}
+
+.booth-section-header,
+.booth-section-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.booth-section-header > span,
+.booth-section-footer {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #b8b8b2;
+}
+
+.booth-section-header h1 {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 32px);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.booth-section-header h1 span {
+  margin-right: 16px;
+  color: #a5a59e;
+  font-size: 12px;
+}
+
+.booth-drawing {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 32px;
+}
+
+.booth-drawing svg {
+  display: block;
+  width: 100%;
+  max-height: 76svh;
+  overflow: visible;
+}
+
+.booth-drawing .booth-mark {
+  max-width: 720px;
+  color: #b9bab7;
+}
+.booth-plan,
+.booth-elevation {
+  max-width: 1400px;
+}
+.booth-lines {
+  fill: none;
+  stroke: #c7c8c3;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.booth-fine {
+  stroke-width: 0.75;
+}
+.booth-panel {
+  fill: #a3a49f;
+  fill-opacity: 0.26;
+  stroke: none;
+}
+.booth-equipment {
+  stroke: #dedfd9;
+}
+
+.booth-outline {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.booth-fill {
+  opacity: 0;
+  transition: opacity 1.3s ease 0.4s;
+}
+
+.booth-equipment .booth-outline {
+  transition-delay: 0.65s;
+}
+.booth-mark-shapes .booth-outline:nth-child(2) {
+  transition-delay: 0.15s;
+}
+.booth-mark-shapes .booth-outline:nth-child(3) {
+  transition-delay: 0.3s;
+}
+.booth-mark-shapes .booth-outline:nth-child(4) {
+  transition-delay: 0.45s;
+}
+.booth-mark-shapes .booth-outline:nth-child(5) {
+  transition-delay: 0.6s;
+}
+.booth-section[data-visible='true'] .booth-outline {
+  stroke-dashoffset: 0;
+}
+.booth-section[data-visible='true'] .booth-fill {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .booth-section {
+    min-height: 75svh;
+  }
+  .booth-section-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .booth-section-footer {
+    font-size: 10px;
+  }
+  .booth-drawing svg {
+    min-height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booth-outline {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .booth-fill {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.booth-outline.booth-fill {
+  transition:
+    stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.3s ease;
+}

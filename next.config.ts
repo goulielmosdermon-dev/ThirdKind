@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        {
+          source: '/DOMO/projects/cine-paris',
+          destination: '/domo-site/projects/cine-paris/index.html',
+        },
         { source: '/DOMO/about', destination: '/domo-site/about/index.html' },
         {
           source: '/DOMO/business-solutions',

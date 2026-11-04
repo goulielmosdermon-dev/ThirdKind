@@ -1,0 +1,376 @@
+.collab {
+  --collab-gutter: clamp(24px, 4vw, 64px);
+  min-height: 100svh;
+  background: #fff;
+  color: #000;
+  font-family: var(--font-collab), sans-serif;
+  font-weight: 700;
+}
+
+.collab :is(h1, h2, h3, p, span, a, li, blockquote) {
+  font-family: inherit;
+}
+.collab main {
+  overflow: clip;
+}
+.collab-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding: 24px var(--collab-gutter);
+  background: transparent;
+  isolation: isolate;
+}
+.collab-nav a {
+  display: inline-block;
+  color: #fff;
+  opacity: 0.8;
+  font-size: clamp(12px, 1.1vw, 16px);
+  line-height: 1.2;
+  text-decoration: none;
+  text-underline-offset: 6px;
+  transition: opacity 0.2s ease;
+}
+.collab-nav a:hover,
+.collab-nav a[aria-current='page'] {
+  color: #fff;
+  opacity: 1;
+  text-decoration: underline;
+}
+.collab-nav a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+.collab-company {
+  min-height: calc(100svh - 80px);
+  background: #fff;
+  padding-bottom: 64px;
+}
+.collab-header {
+  position: relative;
+  height: 90svh;
+  overflow: hidden;
+  background: #111;
+}
+.collab-hero-image {
+  object-fit: cover;
+}
+.collab-header-abek {
+  background: #fec102;
+}
+.collab-hero-art {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto;
+  max-width: none;
+  height: 100%;
+}
+
+.collab-header h1 {
+  position: absolute;
+  bottom: clamp(28px, 4vw, 64px);
+  left: var(--collab-gutter);
+  right: var(--collab-gutter);
+  z-index: 1;
+  color: #fff;
+  mix-blend-mode: difference;
+  margin: 0;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.collab-section {
+  padding: clamp(48px, 7vw, 112px) var(--collab-gutter);
+}
+.collab h2 {
+  max-width: 1100px;
+  margin: 0 0 1.2em;
+  font-size: clamp(32px, 4.5vw, 64px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.collab-proposal blockquote {
+  max-width: 1100px;
+  margin: 0;
+}
+.collab-proposal p,
+.collab-copy {
+  max-width: 1100px;
+  font-size: clamp(24px, 2.7vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.collab-proposal p {
+  margin: 0 0 1.05em;
+}
+.collab-quote-mark {
+  display: block;
+  font-size: clamp(80px, 10vw, 144px);
+  line-height: 0.7;
+}
+.collab-quote-close {
+  text-align: right;
+  margin-top: 24px;
+}
+.collab-observations {
+  list-style: disc;
+  margin: 0;
+  padding-left: 1em;
+}
+.collab-observations li {
+  padding-left: 0.15em;
+  margin-bottom: 0.8em;
+}
+.collab-stories {
+  padding-top: 0;
+}
+.collab-story + .collab-story {
+  margin-top: clamp(56px, 7vw, 112px);
+}
+.collab-story h3 {
+  margin: 0 0 0.65em;
+  font-size: clamp(24px, 2.7vw, 40px);
+  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.collab-story-tag {
+  display: inline-block;
+  margin: 0 0 32px;
+  padding: 8px 12px;
+  border: 1px solid #000;
+  font-size: 14px;
+  line-height: 1;
+}
+.collab-copy p {
+  margin: 0 0 1.05em;
+}
+.collab-reference-section {
+  padding: clamp(48px, 7vw, 112px) var(--collab-gutter) 0;
+}
+.collab-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+.collab-reference-grid figure {
+  margin: 0;
+}
+.collab-reference-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.collab-empty {
+  margin: 0;
+  color: #777;
+  font-size: 20px;
+}
+@media (max-width: 640px) {
+  .collab-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-block: 18px;
+    gap: 16px;
+  }
+  .collab-reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.collab-nav a[data-contrast='dark'] {
+  color: #000;
+}
+.collab-nav a[data-contrast='light'] {
+  color: #fff;
+}
+.collab-header-abek h1 {
+  color: #000;
+  mix-blend-mode: normal;
+}
+
+.collab-team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: clamp(48px, 6vw, 80px);
+}
+
+.collab-team-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.collab-team-grid svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 962 / 575;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .collab-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .collab-team-grid figure {
+    border-radius: 12px;
+  }
+}
+
+/* The nav has its own dark scrim, so its labels stay white above every image. */
+.collab-nav a[data-contrast] {
+  color: #fff;
+}
+
+.collab-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -72px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0.65) 0%,
+    rgb(0 0 0 / 0.45) 25%,
+    rgb(0 0 0 / 0.18) 55%,
+    rgb(0 0 0 / 0.04) 80%,
+    transparent 100%
+  );
+}
+
+.collab-reference-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.collab-view-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.collab-view-controls button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+}
+.collab-view-controls button[aria-pressed='true'] {
+  background: transparent;
+  color: #000;
+}
+.collab-view-controls svg {
+  width: 24px;
+  height: 24px;
+}
+.collab-reference-grid[data-view='stack'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.collab-reference-item {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.collab-reference-item:focus-visible,
+.collab-view-controls button:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 4px;
+}
+
+.collab-image-preview {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 72px clamp(16px, 4vw, 64px) 32px;
+  border: 0;
+  background: rgb(0 0 0 / 0.96);
+  color: #fff;
+}
+.collab-image-preview::backdrop {
+  background: #000;
+}
+.collab-preview-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.collab-preview-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+.collab-preview-close svg {
+  width: 28px;
+  height: 28px;
+}
+
+.collab-story-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px 24px;
+  margin-bottom: 32px;
+}
+.collab-story-heading h3 {
+  margin: 0;
+}
+.collab-story-heading .collab-story-tag {
+  margin: 0;
+  font-size: clamp(24px, 2.7vw, 40px);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+}
+
+.collab,
+.collab a,
+.collab button {
+  cursor:
+    url('/Collab/pointer-hand.svg') 12 3,
+    pointer;
+}
+
+.collab .collab-reference-item,
+.collab .collab-reference-item img,
+.collab .collab-team-grid svg,
+.collab .collab-header img {
+  cursor:
+    url('/Collab/pointer-hand.svg') 12 3,
+    pointer;
+}

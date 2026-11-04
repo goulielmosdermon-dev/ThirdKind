@@ -1,0 +1,5 @@
+.viva-deck img[alt='VIVA'] {
+  filter: url('#viva-logo-transparent');
+  mix-blend-mode: normal;
+  clip-path: inset(1px);
+}

@@ -56,16 +56,22 @@ export function ArticleSheet({
           </h1>
         </header>
 
-        <div className="px-12 @md:px-[8cqi]">
+        {/* Same as a project's still: edge to edge, and 30% shorter than its
+            own proportions, the frame taking the width and cropping height. */}
+        <div
+          className="relative w-full overflow-hidden"
+          style={{
+            aspectRatio: `${article.coverImage.width} / ${article.coverImage.height * 0.7}`,
+          }}
+        >
           <Image
             src={article.coverImage.src}
             alt={article.coverImage.alt}
-            width={article.coverImage.width}
-            height={article.coverImage.height}
+            fill
             priority
-            sizes="(min-width: 1024px) 84vw, 84vw"
+            sizes="100vw"
             unoptimized={isUnoptimizedSrc(article.coverImage.src)}
-            className="h-auto w-full"
+            className="object-cover"
           />
         </div>
 
@@ -108,14 +114,11 @@ export function ArticleSheet({
                     {/* The row hangs off the foot: every still ends on the
                         same line and a tall one grows upward, so the pictures
                         stand on a shelf rather than dangling from a rail. The
-                        words are held to a height so the gap above each still
-                        is the same whether its title ran to one line or two. */}
-                    <div className="min-h-[4.75rem]">
-                      <p className="font-display text-[1.2rem] leading-tight text-ink">
+                        title is held to a height so the gap above each still
+                        is the same whether it ran to one line or two. */}
+                    <div className="min-h-[3rem]">
+                      <p className="font-sans text-[1.2rem] leading-tight text-ink">
                         {item.title}
-                      </p>
-                      <p className="mt-1 text-sm leading-snug text-mute">
-                        {item.hoverDescription}
                       </p>
                     </div>
                     {/* No crop: the still is shown at the shape it was made,

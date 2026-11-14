@@ -138,9 +138,9 @@ describe('editorialLeaves', () => {
       }),
     ]);
     expect(leaves.map((node) => node.id)).toEqual([
+      'auth',
       'scania',
       'up',
-      'auth',
       'nordic',
     ]);
   });

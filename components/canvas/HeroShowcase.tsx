@@ -22,7 +22,7 @@ export const HERO_IDS = [
  * one is framed to survive the crop with its subject centred.
  */
 const NARROW_STILLS: Record<string, string> = {
-  'project-scytales-2': '/work/scytales-2/gmb-3.jpg',
+  // Empty: the lead's new still is used on a phone as well.
 };
 
 /** How long a project holds before it gives way, in ms. */

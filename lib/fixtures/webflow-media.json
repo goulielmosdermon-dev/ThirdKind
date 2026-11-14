@@ -1,8 +1,8 @@
 {
   "work": {
     "rap-therapy": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67ec20f5b12965845e614ec5_Screenshot 2025-04-01 at 8.22.38 PM.png",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/685a4930790d05b4b1f687c4_Screenshot 2025-06-24 at 9.43.49 AM.png",
+      "thumb": "/work/rap-therapy/thumb.jpg",
+      "poster": "/work/rap-therapy/thumb.jpg",
       "heroVideo": "1070483583",
       "body": [
         "Inspired by Rap Therapy, a powerful initiative led by Bhishma that empowers young people from underserved neighborhoods through music, the film captures more than just a performance. It’s a protest. A raw and moving expression of resilience, anger, hope, and a plea for change, delivered through rap.",
@@ -59,8 +59,8 @@
       ]
     },
     "ilana": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67a0aa47ed5a037277c19d8f_Ilana.png",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67a0a6594188f4b1b225eb84_664256a9a618de1a03fb903e_Screenshot%202024-05-13%20at%207.06.25%E2%80%AFPM.png",
+      "thumb": "/work/ilana/thumb.jpg",
+      "poster": "/work/ilana/thumb.jpg",
       "heroVideo": "897034201",
       "body": [
         "The brand’s mission is rooted in diversity, inclusivity, and amplifying voices that have been underrepresented.",
@@ -104,8 +104,8 @@
       ]
     },
     "oldboy-brand": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67a0ad42875383aa5d7f6e14_Oldboy.jpeg",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67a0a659e0b78706efaa2244_656df63df3e53cb492fc2016_cover_86418_86418.jpeg",
+      "thumb": "/work/oldboy-brand/thumb.jpg",
+      "poster": "/work/oldboy-brand/thumb.jpg",
       "heroVideo": "891108973",
       "body": [
         "Oldboy Brand wanted to create a brand video that captured the essence of their identity, an unapologetic attitude towards fashion and life. The goal was to create a visually arresting story that showcased the brand's distinctive street culture and spoke to a global audience of trendsetters.",
@@ -149,8 +149,8 @@
       ]
     },
     "a-m": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67a0a9571b233de538accc13_655f1c6a50c6be39afa403e2_AM.gif",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/67a0a6597fead675b5ed4029_655f3d36c236318db2360390_Comp%201_00000.jpeg",
+      "thumb": "/work/a-m/thumb.jpg",
+      "poster": "/work/a-m/thumb.jpg",
       "heroVideo": "838480328",
       "body": [
         "A&M Architects, one of the most prestigious architectural firms in Athens, approached us to produces Annual New Year message.",
@@ -194,8 +194,8 @@
       ]
     },
     "noirgaze": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/679bc909ae27db2ecd14c79b_Screenshot 2025-01-30 at 6.45.56 PM.png",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/685a466b3072562fbedf65e9_Screenshot 2025-06-24 at 9.31.49 AM.png",
+      "thumb": "/work/noirgaze/thumb.jpg",
+      "poster": "/work/noirgaze/header.jpg",
       "heroVideo": "956762066",
       "body": [
         "We started with an in-depth exploration of Noir Gaze’s vision, analyzing its artistic influences and audience appeal to define a compelling visual narrative. Collaborating closely with the brand, we developed a sleek, moody aesthetic that encapsulated its cinematic essence, blending rich contrast and evocative lighting.",
@@ -255,8 +255,8 @@
       ]
     },
     "augustine-jewels": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/69d13ffb069cb974023ae6ff_thumb.jpg",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/69d13ffb069cb974023ae6ff_thumb.jpg",
+      "thumb": "/work/augustine-jewels/thumb.jpg",
+      "poster": "/work/augustine-jewels/thumb.jpg",
       "heroVideo": "935002942",
       "body": [
         "Augustine Jewels approached us to create a brand video that would visually communicate the enchanting beauty and elegance of their collections, while drawing inspiration from the mystical Northern Lights. The goal was to create an experience that evoked the awe and wonder of nature’s most captivating display.",
@@ -292,8 +292,8 @@
       ]
     },
     "up-hellas": {
-      "thumb": "/work/up-hellas/header.png",
-      "poster": "/work/up-hellas/header.png",
+      "thumb": "/work/up-hellas/thumb.jpg",
+      "poster": "/work/up-hellas/thumb.jpg",
       "heroVideo": "1148438581",
       "body": [
         "UP Hellas wanted to create a Christmas story inspired by \"A Christmas Carol\", but with a twist. This was initially meant to be a small and simple video, but we advised that if the goal was to create something character driven, the best approach was to fully deliver the goods. And so we did.",
@@ -353,8 +353,8 @@
       ]
     },
     "scania": {
-      "thumb": "/work/scania/header.png",
-      "poster": "/work/scania/header.png",
+      "thumb": "/work/scania/thumb.jpg",
+      "poster": "/work/scania/thumb.jpg",
       "heroVideo": null,
       "body": [
         "The Scania team is planning to revolutionise the truck driving industry with bespoke technology that will give freedom to millions of drivers worldwide.",
@@ -411,8 +411,8 @@
       ]
     },
     "scytales": {
-      "thumb": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/6a633b74357706f284345f20_Screenshot 2026-07-24 at 1.15.47 PM.png",
-      "poster": "https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/6a633b74357706f284345f20_Screenshot 2026-07-24 at 1.15.47 PM.png",
+      "thumb": "/work/scytales/thumb.jpg",
+      "poster": "/work/scytales/thumb.jpg",
       "heroVideo": null,
       "body": [
         "Sometimes tehnology can be hard to understand both for prospective clinets but also for the internal team itself.",
@@ -456,8 +456,8 @@
       ]
     },
     "scytales-2": {
-      "thumb": "/work/scytales-2/gmb-3.jpg",
-      "poster": "/work/scytales-2/str-1.jpg",
+      "thumb": "/work/scytales-2/thumb.jpg",
+      "poster": "/work/scytales-2/header.jpg",
       "heroVideo": null,
       "body": [
         "In this project, we handled the full production journey, from creative all the way to vfx and post-production, across four emotional short films, each exploring a domain where verifying identity genuinely matters: pornography, alcohol, gambling, and social media.",

@@ -146,6 +146,19 @@ const LOCAL_STILL: Record<
   string,
   Pick<ImageAsset, 'width' | 'height' | 'hotspot'>
 > = {
+  // The stills from the Work Thumbnails folder: index, Work sheet, header.
+  '/work/a-m/thumb.jpg': { width: 1000, height: 563 },
+  '/work/augustine-jewels/thumb.jpg': { width: 1562, height: 1066 },
+  '/work/ilana/thumb.jpg': { width: 2612, height: 1474 },
+  '/work/noirgaze/thumb.jpg': { width: 1405, height: 952 },
+  '/work/noirgaze/header.jpg': { width: 1452, height: 1602 },
+  '/work/oldboy-brand/thumb.jpg': { width: 3654, height: 2664 },
+  '/work/scania/thumb.jpg': { width: 2242, height: 1256 },
+  '/work/scytales-2/thumb.jpg': { width: 4816, height: 2688 },
+  '/work/scytales-2/header.jpg': { width: 4816, height: 2688 },
+  '/work/scytales/thumb.jpg': { width: 1446, height: 952 },
+  '/work/up-hellas/thumb.jpg': { width: 2688, height: 1500 },
+  '/work/rap-therapy/thumb.jpg': { width: 1970, height: 1368 },
   'https://cdn.prod.website-files.com/679b9562b273b12f8ccef48f/69d13ffb069cb974023ae6ff_thumb.jpg':
     { width: 1562, height: 1066 },
   '/work/scytales-2/gmb-3.jpg': { width: 5504, height: 3072 },

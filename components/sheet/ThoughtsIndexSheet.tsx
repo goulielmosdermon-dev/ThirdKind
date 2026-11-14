@@ -6,18 +6,6 @@ import { Sheet } from '@/components/sheet/Sheet';
 import { EDITORIAL_LINE } from '@/lib/type/display';
 import type { Article } from '@/types/content';
 
-function published(value: string): string {
-  const parsed = Date.parse(value);
-  if (Number.isNaN(parsed)) {
-    return '';
-  }
-  return new Date(parsed).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-}
-
 /** One frame for every card, the portrait of the reference card. */
 const CARD_ASPECT = '4 / 5';
 
@@ -38,7 +26,7 @@ function ArticleCard({ article }: { article: Article }) {
         style={{ aspectRatio: CARD_ASPECT }}
       >
         <span
-          className="font-display absolute top-0 left-0 block max-w-full p-[clamp(1rem,2cqi,1.75rem)] leading-snug"
+          className="font-sans absolute top-0 left-0 block max-w-full p-[clamp(1rem,2cqi,1.75rem)] leading-snug"
           style={{ fontSize: EDITORIAL_LINE }}
         >
           {article.title}
@@ -55,9 +43,6 @@ function ArticleCard({ article }: { article: Article }) {
             ))}
           </span>
         ) : null}
-      </span>
-      <span className="mt-3 block text-[0.82rem] leading-tight text-mute">
-        {published(article.publishedAt)}
       </span>
     </AppLink>
   );

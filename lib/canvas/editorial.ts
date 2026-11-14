@@ -7,9 +7,9 @@ import { leafReadingOrder } from '@/lib/canvas/readingOrder';
  * canvas and in the Work sheet; this is the run the page reads.
  */
 const INDEX_WORK_ORDER = [
+  '/work/scytales-2',
   '/work/scania',
   '/work/up-hellas',
-  '/work/scytales-2',
   '/work/augustine-jewels',
 ] as const;
 

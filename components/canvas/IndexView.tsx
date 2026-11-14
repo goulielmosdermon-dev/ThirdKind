@@ -73,7 +73,7 @@ const SLOT = [
 ] as const;
 
 const MANIFESTO_LEAD =
-  'Nobody likes being interrupted or preached at. What people want is to feel and believe. When a business means that, customers';
+  'Nobody likes being interrupted or preached at. What people want is to feel and believe. When a brand means that, customers';
 
 /**
  * The Why copy, one paragraph, standing still. Only its last word moves: it
@@ -418,17 +418,15 @@ export function IndexView({
         className={
           phone
             ? 'px-12 pt-4 pb-16'
-            : // No cap on the measure from here down, and a gutter that is a
-              // share of the screen rather than a number that stops growing:
-              // held to 92rem the index sat in a strip down the middle of a
-              // large display with the better part of it left empty either
-              // side. 12vw is what the old clamp already resolved to at the
-              // width the page was drawn for, so nothing moves until there is
-              // more screen than that.
+            : // No cap on the measure, and a gutter that is a share of the
+              // screen. The work list alone breaks out of it to run wall to
+              // wall; everything after it (the thoughts, the button) keeps it.
               'min-h-full px-12 pt-12 pb-16 md:px-[12vw] md:pt-[clamp(7rem,12vw,24rem)] md:pb-[clamp(6rem,10vw,20rem)]'
         }
       >
-        <ul className={`flex flex-col ${phone ? 'gap-12' : 'gap-16 md:gap-0'}`}>
+        <ul
+          className={`flex flex-col ${phone ? '-mx-12 gap-12' : '-mx-12 gap-16 md:-mx-[12vw] md:gap-0'}`}
+        >
           {items.map((node, index) => {
             const shape = SLOT[index % SLOT.length] ?? SLOT[0];
             const slot = phone
@@ -474,7 +472,9 @@ export function IndexView({
                   >
                     {/* Radius lives on the inner frame so the wipe's clip-path
                         does not square the corners off again. */}
-                    <span className="absolute inset-0 overflow-hidden bg-paper transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-none group-hover:rounded-[30px] group-focus-visible:rounded-[30px]">
+                    <span
+                      className={`absolute inset-0 overflow-hidden bg-paper transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-none ${phone ? 'group-hover:rounded-[30px] group-focus-visible:rounded-[30px]' : ''}`}
+                    >
                       {node.swatch ? (
                         <span
                           className="absolute inset-0"

@@ -37,17 +37,25 @@ export function ProjectSheet({
           </h1>
         </header>
 
-        <div className="px-12 pb-10 @md:px-[8cqi]">
-          <Image
-            src={project.posterImage.src}
-            alt={project.posterImage.alt}
-            width={project.posterImage.width}
-            height={project.posterImage.height}
-            priority
-            sizes="(min-width: 1024px) 84vw, 84vw"
-            unoptimized={isUnoptimizedAsset(project.posterImage)}
-            className="h-auto w-full"
-          />
+        {/* Edge to edge, and 30% shorter than the still's own proportions:
+            the frame takes the width and crops the height. */}
+        <div className="pb-10">
+          <div
+            className="relative w-full overflow-hidden"
+            style={{
+              aspectRatio: `${project.posterImage.width} / ${project.posterImage.height * 0.7}`,
+            }}
+          >
+            <Image
+              src={project.posterImage.src}
+              alt={project.posterImage.alt}
+              fill
+              priority
+              sizes="100vw"
+              unoptimized={isUnoptimizedAsset(project.posterImage)}
+              className="object-cover"
+            />
+          </div>
         </div>
 
         <div

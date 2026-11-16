@@ -4,6 +4,8 @@ import references from './references.json';
 import type { Plate } from '../2000/deck';
 
 export type Story = { title: string; tag?: string; paragraphs: string[] };
+export type CostLine = { label: string; amount: number };
+export type CostGroup = { title: string; lines: CostLine[] };
 export type Company = {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export type Company = {
   observations: string[];
   stories?: Story[];
   references: Plate[];
+  costBook?: CostGroup[];
 };
 
 const vivaStories: Story[] = chapters.flatMap((chapter) =>

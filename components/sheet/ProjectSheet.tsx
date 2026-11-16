@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 
@@ -37,14 +38,16 @@ export function ProjectSheet({
           </h1>
         </header>
 
-        {/* Edge to edge, and 30% shorter than the still's own proportions:
-            the frame takes the width and crops the height. */}
+        {/* Edge to edge; desktop crops height, phone runs twice as tall. */}
         <div className="pb-10">
           <div
-            className="relative w-full overflow-hidden"
-            style={{
-              aspectRatio: `${project.posterImage.width} / ${project.posterImage.height * 0.7}`,
-            }}
+            className="sheet-header-still relative w-full overflow-hidden"
+            style={
+              {
+                '--still-w': project.posterImage.width,
+                '--still-h': project.posterImage.height,
+              } as CSSProperties
+            }
           >
             <Image
               src={project.posterImage.src}

@@ -57,17 +57,19 @@ export function CompanyPage({ company }: { company: Company }) {
         </blockquote>
         {company.id === 'ag-design' ? <AgTeamGrid /> : null}
       </section>
-      <section
-        className="collab-section"
-        aria-labelledby={`${company.id}-observations`}
-      >
-        <h2 id={`${company.id}-observations`}>Observations</h2>
-        <ul className="collab-observations collab-copy">
-          {company.observations.map((observation) => (
-            <li key={observation}>{cleanCopy(observation)}</li>
-          ))}
-        </ul>
-      </section>
+      {company.observations.length ? (
+        <section
+          className="collab-section"
+          aria-labelledby={`${company.id}-observations`}
+        >
+          <h2 id={`${company.id}-observations`}>Observations</h2>
+          <ul className="collab-observations collab-copy">
+            {company.observations.map((observation) => (
+              <li key={observation}>{cleanCopy(observation)}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       {company.stories?.length ? (
         <section
           className="collab-section collab-stories"
@@ -75,13 +77,18 @@ export function CompanyPage({ company }: { company: Company }) {
         >
           <h2 id={`${company.id}-story`}>The story</h2>
           {company.stories.map((story) => (
-            <section key={story.title} className="collab-story">
-              <div className="collab-story-heading">
-                <h3>{story.title}</h3>
-                {story.tag ? (
-                  <p className="collab-story-tag">{story.tag}</p>
-                ) : null}
-              </div>
+            <section
+              key={story.title || story.paragraphs[0]}
+              className="collab-story"
+            >
+              {story.title || story.tag ? (
+                <div className="collab-story-heading">
+                  {story.title ? <h3>{story.title}</h3> : null}
+                  {story.tag ? (
+                    <p className="collab-story-tag">{story.tag}</p>
+                  ) : null}
+                </div>
+              ) : null}
               <div className="collab-copy">
                 {story.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{cleanCopy(paragraph)}</p>
@@ -103,6 +110,66 @@ export function CompanyPage({ company }: { company: Company }) {
           />
         </section>
       ) : null}
+      {company.costBook?.length ? (
+        <CostBook id={`${company.id}-cost-book`} groups={company.costBook} />
+      ) : null}
     </SlideUp>
+  );
+}
+
+function formatMoney(amount: number) {
+  return new Intl.NumberFormat('en-IE', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+function CostBook({
+  id,
+  groups,
+}: {
+  id: string;
+  groups: NonNullable<Company['costBook']>;
+}) {
+  const total = groups.reduce(
+    (sum, group) =>
+      sum + group.lines.reduce((groupSum, line) => groupSum + line.amount, 0),
+    0,
+  );
+
+  return (
+    <section className="collab-section collab-cost-book" aria-labelledby={id}>
+      <h2 id={id}>Cost Book</h2>
+      <div className="collab-cost-book-list">
+        {groups.map((group) => {
+          const subtotal = group.lines.reduce(
+            (sum, line) => sum + line.amount,
+            0,
+          );
+          return (
+            <div key={group.title} className="collab-cost-group">
+              <h3>{group.title}</h3>
+              <ul>
+                {group.lines.map((line) => (
+                  <li key={line.label}>
+                    <span>{line.label}</span>
+                    <span>{formatMoney(line.amount)}</span>
+                  </li>
+                ))}
+                <li className="collab-cost-subtotal">
+                  <span>Subtotal</span>
+                  <span>{formatMoney(subtotal)}</span>
+                </li>
+              </ul>
+            </div>
+          );
+        })}
+        <div className="collab-cost-total">
+          <span>Total</span>
+          <span>{formatMoney(total)}</span>
+        </div>
+      </div>
+    </section>
   );
 }

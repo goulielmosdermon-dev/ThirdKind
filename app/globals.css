@@ -297,3 +297,14 @@ body {
     transition: none;
   }
 }
+
+/* Work / thought header stills: crop height on desktop, twice as tall on phone. */
+.sheet-header-still {
+  aspect-ratio: var(--still-w) / calc(var(--still-h) * 0.7);
+}
+
+@media (max-width: 767px) {
+  .sheet-header-still {
+    aspect-ratio: var(--still-w) / calc(var(--still-h) * 1.4);
+  }
+}

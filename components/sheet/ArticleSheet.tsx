@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 
@@ -56,13 +57,15 @@ export function ArticleSheet({
           </h1>
         </header>
 
-        {/* Same as a project's still: edge to edge, and 30% shorter than its
-            own proportions, the frame taking the width and cropping height. */}
+        {/* Same as a project's still: edge to edge; phone runs twice as tall. */}
         <div
-          className="relative w-full overflow-hidden"
-          style={{
-            aspectRatio: `${article.coverImage.width} / ${article.coverImage.height * 0.7}`,
-          }}
+          className="sheet-header-still relative w-full overflow-hidden"
+          style={
+            {
+              '--still-w': article.coverImage.width,
+              '--still-h': article.coverImage.height,
+            } as CSSProperties
+          }
         >
           <Image
             src={article.coverImage.src}

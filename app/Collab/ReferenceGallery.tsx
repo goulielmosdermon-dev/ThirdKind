@@ -5,7 +5,21 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Plate } from '../2000/deck';
 
-type ReferenceImage = Plate & { cropScale?: number };
+type ReferenceImage = Plate & { cropScale?: number; cropSides?: number };
+
+const visibleWidth = (image: ReferenceImage) =>
+  image.w * (1 - 2 * (image.cropSides ?? 0));
+const cropStyle = (image: ReferenceImage) =>
+  image.cropSides
+    ? {
+        width: `${100 / (1 - 2 * image.cropSides)}%`,
+        maxWidth: 'none',
+        height: 'auto',
+        transform: `translateX(-${image.cropSides * 100}%)`,
+      }
+    : image.cropScale
+      ? { transform: `scale(${image.cropScale})` }
+      : undefined;
 
 export function ReferenceGallery({
   images,
@@ -88,15 +102,16 @@ export function ReferenceGallery({
               className="collab-reference-item"
               onClick={() => setSelected(image)}
               aria-label={`Preview ${image.alt}`}
+              style={
+                image.cropSides
+                  ? { aspectRatio: `${visibleWidth(image)} / ${image.h}` }
+                  : undefined
+              }
             >
               <Image
                 src={image.src}
                 alt={image.alt}
-                style={
-                  image.cropScale
-                    ? { transform: `scale(${image.cropScale})` }
-                    : undefined
-                }
+                style={cropStyle(image)}
                 width={image.w}
                 height={image.h}
                 unoptimized
@@ -138,8 +153,8 @@ export function ReferenceGallery({
           <div
             className="collab-preview-frame"
             style={{
-              width: `min(100%, calc((100dvh - 104px) * ${selected.w / selected.h}))`,
-              aspectRatio: `${selected.w} / ${selected.h}`,
+              width: `min(100%, calc((100dvh - 104px) * ${visibleWidth(selected) / selected.h}))`,
+              aspectRatio: `${visibleWidth(selected)} / ${selected.h}`,
             }}
           >
             <Image
@@ -150,11 +165,7 @@ export function ReferenceGallery({
               height={selected.h}
               unoptimized
               sizes="100vw"
-              style={
-                selected.cropScale
-                  ? { transform: `scale(${selected.cropScale})` }
-                  : undefined
-              }
+              style={cropStyle(selected)}
             />
           </div>
         ) : null}

@@ -6,9 +6,8 @@ import { useFramed } from '@/components/mobile/MobileChrome';
 import { useNarrow } from '@/lib/chrome/useNarrow';
 
 /**
- * On a phone, which card in a list is the one being read. Starts on the first
- * and follows the still that occupies the most of the screen as the reader
- * scrolls. Desktop is hover, so this stays off there.
+ * On a phone, which card in a list is the one being read: the one centred on
+ * screen, followed as the reader scrolls. Desktop is hover, so this stays off there.
  */
 export function useMobileSpotlight(count: number): {
   mobile: boolean;
@@ -42,17 +41,20 @@ export function useMobileSpotlight(count: number): {
       const rootBox = root
         ? root.getBoundingClientRect()
         : { top: 0, height: window.innerHeight };
-      // The card whose top has crossed this line is the one being read.
-      // Starts on the first; the next takes over once it has been scrolled
-      // far enough into the frame.
-      const line = rootBox.top + rootBox.height * 0.32;
+      // The card whose middle sits closest to the middle of the screen is
+      // the one being read.
+      const centre = rootBox.top + rootBox.height / 2;
       let best = 0;
+      let nearest = Infinity;
       for (let i = 0; i < count; i += 1) {
         const node = nodes[i];
         if (!node) {
           continue;
         }
-        if (node.getBoundingClientRect().top <= line) {
+        const box = node.getBoundingClientRect();
+        const distance = Math.abs(box.top + box.height / 2 - centre);
+        if (distance < nearest) {
+          nearest = distance;
           best = i;
         }
       }

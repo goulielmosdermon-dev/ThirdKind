@@ -36,6 +36,7 @@ const ASPECT_BY_SLUG: Record<string, string> = {
  * Desktop keeps the cycle.
  */
 const MOBILE_ASPECT_BY_SLUG: Record<string, string> = {
+  'scytales-2': '4/5',
   'oldboy-brand': '4/5',
   'a-m': '4/5',
 };
@@ -82,12 +83,10 @@ function ProjectCard({
     off: { transition: { staggerChildren: 0 } },
     on: { transition: { staggerChildren: reduced ? 0 : 0.07 } },
   };
-  // On a phone the title is always in view; only the tags wait for the scroll.
+  // On a phone the title and tags come up together on the card centred on
+  // screen.
   const line = {
-    off: {
-      y: mobile ? '0%' : '110%',
-      transition: { duration: MOTION.reduced },
-    },
+    off: { y: '110%', transition: { duration: MOTION.reduced } },
     on: {
       y: '0%',
       transition: {

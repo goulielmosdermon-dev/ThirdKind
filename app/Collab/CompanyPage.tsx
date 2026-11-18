@@ -110,8 +110,34 @@ export function CompanyPage({ company }: { company: Company }) {
           />
         </section>
       ) : null}
+      {company.process?.length ? (
+        <section
+          className="collab-section"
+          aria-labelledby={`${company.id}-process`}
+        >
+          <h2 id={`${company.id}-process`}>Process</h2>
+          <ul className="collab-observations collab-copy">
+            {company.process.map((step, index) => (
+              <li key={index}>{cleanCopy(step)}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       {company.costBook?.length ? (
         <CostBook id={`${company.id}-cost-book`} groups={company.costBook} />
+      ) : null}
+      {company.results?.length ? (
+        <section
+          className="collab-section"
+          aria-labelledby={`${company.id}-results`}
+        >
+          <h2 id={`${company.id}-results`}>Results</h2>
+          <ul className="collab-observations collab-copy">
+            {company.results.map((result, index) => (
+              <li key={index}>{cleanCopy(result)}</li>
+            ))}
+          </ul>
+        </section>
       ) : null}
     </SlideUp>
   );

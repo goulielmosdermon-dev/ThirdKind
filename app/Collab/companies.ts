@@ -14,6 +14,8 @@ export type Company = {
   stories?: Story[];
   references: Plate[];
   costBook?: CostGroup[];
+  process?: string[];
+  results?: string[];
 };
 
 const vivaStories: Story[] = chapters.flatMap((chapter) =>

@@ -82,8 +82,12 @@ function ProjectCard({
     off: { transition: { staggerChildren: 0 } },
     on: { transition: { staggerChildren: reduced ? 0 : 0.07 } },
   };
+  // On a phone the title is always in view; only the tags wait for the scroll.
   const line = {
-    off: { y: '110%', transition: { duration: MOTION.reduced } },
+    off: {
+      y: mobile ? '0%' : '110%',
+      transition: { duration: MOTION.reduced },
+    },
     on: {
       y: '0%',
       transition: {
@@ -119,10 +123,8 @@ function ProjectCard({
       onBlur={mobile ? undefined : () => setHover(false)}
     >
       <motion.span
-        className={`relative block w-full overflow-hidden bg-hairline transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          // Square on desktop at all times; only the phone's spotlight rounds.
-          mobile && active ? 'rounded-[30px]' : 'rounded-none'
-        }`}
+        // Square at all times, on the phone as on desktop.
+        className="relative block w-full overflow-hidden bg-hairline"
         style={{ aspectRatio: aspect }}
         initial={false}
         animate={active ? 'on' : 'off'}

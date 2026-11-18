@@ -153,7 +153,7 @@ const LOCAL_STILL: Record<
   '/work/noirgaze/thumb.jpg': { width: 1405, height: 952 },
   '/work/noirgaze/header.jpg': { width: 1452, height: 1602 },
   '/work/oldboy-brand/thumb.jpg': { width: 3654, height: 2664 },
-  '/work/scania/thumb.jpg': { width: 2242, height: 1256 },
+  '/work/scania/thumb.jpg': { width: 2155, height: 1256 },
   '/work/scytales-2/thumb.jpg': { width: 4816, height: 2688 },
   '/work/scytales-2/header.jpg': { width: 4816, height: 2688 },
   '/work/scytales/thumb.jpg': { width: 1446, height: 952 },
@@ -165,12 +165,8 @@ const LOCAL_STILL: Record<
   '/work/scytales-2/str-1.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/alc-3.jpg': { width: 5504, height: 3072 },
   '/work/scytales-2/sc-2.jpg': { width: 5504, height: 3072 },
-  // The truck stands a little right of the frame's middle.
-  '/work/scania/header.png': {
-    width: 2242,
-    height: 1256,
-    hotspot: { x: 0.519, y: 0.5 },
-  },
+  // Trimmed on the left so the truck sits on the frame's exact middle.
+  '/work/scania/header.png': { width: 2155, height: 1256 },
   '/work/up-hellas/header.png': { width: 2688, height: 1500 },
   '/work/up-hellas/poster.png': { width: 1736, height: 974 },
   '/work/up-hellas/still-1.png': { width: 1314, height: 1158 },

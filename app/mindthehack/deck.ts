@@ -410,7 +410,7 @@ export const chapters: Chapter[] = [
             title: 'Scania — Vehicle E-Wallet',
             poster: {
               src: '/work/scania/header.png',
-              w: 2242,
+              w: 2155,
               h: 1256,
               alt: 'Scania Vehicle E-Wallet',
             },

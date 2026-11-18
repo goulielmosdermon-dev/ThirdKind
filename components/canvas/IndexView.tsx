@@ -470,10 +470,9 @@ export function IndexView({
                     data-explore
                     className={`relative block w-full ${slot.aspect}`}
                   >
-                    {/* Radius lives on the inner frame so the wipe's clip-path
-                        does not square the corners off again. */}
                     <span
-                      className={`absolute inset-0 overflow-hidden bg-paper transition-[border-radius] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-none ${phone ? 'group-hover:rounded-[30px] group-focus-visible:rounded-[30px]' : ''}`}
+                      // Square at all times, on the phone as on desktop.
+                      className="absolute inset-0 overflow-hidden rounded-none bg-paper"
                     >
                       {node.swatch ? (
                         <span
@@ -493,14 +492,14 @@ export function IndexView({
                             quality={95}
                             unoptimized={isUnoptimizedAsset(node.thumbnail)}
                             style={coverFocusStyle(node.thumbnail)}
-                            className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
+                            className={`object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${phone ? '' : 'md:group-hover:scale-[1.045]'}`}
                           />
                         </span>
                       )}
                       <span className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-start p-[clamp(1rem,2cqi,1.75rem)] text-white">
                         <span className="block overflow-hidden pt-[0.12em] pb-[0.26em]">
                           <span
-                            className={`font-sans block leading-snug transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${phone ? 'translate-y-0' : 'translate-y-[110%] group-hover:translate-y-0 group-focus-visible:translate-y-0'}`}
+                            className={`font-sans block leading-snug transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${phone ? 'translate-y-0' : 'translate-y-0 md:translate-y-[110%] md:group-hover:translate-y-0 md:group-focus-visible:translate-y-0'}`}
                             style={{ fontSize: EDITORIAL_LINE }}
                           >
                             {title}

@@ -139,6 +139,16 @@ export function CompanyPage({ company }: { company: Company }) {
           </ul>
         </section>
       ) : null}
+      <footer className="collab-section collab-footer">
+        <a
+          className="collab-copy"
+          href="https://thirdkindcreative.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          thirdkindcreative.com
+        </a>
+      </footer>
     </SlideUp>
   );
 }

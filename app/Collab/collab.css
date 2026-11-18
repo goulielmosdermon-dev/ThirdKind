@@ -456,3 +456,13 @@
   border-bottom: 2px solid #000;
   padding-block: 0.7em;
 }
+
+.collab-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+.collab-footer a:hover {
+  opacity: 0.6;
+}

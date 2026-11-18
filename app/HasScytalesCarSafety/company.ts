@@ -35,24 +35,24 @@ export const company: Company = {
     {
       title: 'Pre-production',
       lines: [
-        { label: 'Locations', amount: 637 },
-        { label: 'Props', amount: 468 },
-        { label: 'Transportation', amount: 823 },
+        { label: 'Locations', amount: 650 },
+        { label: 'Props', amount: 450 },
+        { label: 'Transportation', amount: 840 },
       ],
     },
     {
       title: 'Production',
       lines: [
         { label: 'Filming', amount: 4000 },
-        { label: 'Equipment', amount: 912 },
-        { label: 'Food', amount: 118 },
+        { label: 'Equipment', amount: 900 },
+        { label: 'Food', amount: 100 },
       ],
     },
     {
       title: 'Post-production',
       lines: [
-        { label: 'Editing', amount: 1771 },
-        { label: 'VFX', amount: 1011 },
+        { label: 'Editing', amount: 1800 },
+        { label: 'VFX', amount: 1000 },
       ],
     },
   ],

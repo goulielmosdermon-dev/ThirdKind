@@ -45,8 +45,8 @@ export function CompanyPage({ company }: { company: Company }) {
           <span className="collab-quote-mark" aria-hidden="true">
             “
           </span>
-          {company.quote.map((paragraph) => (
-            <p key={paragraph}>{cleanCopy(paragraph)}</p>
+          {company.quote.map((paragraph, index) => (
+            <p key={index}>{cleanCopy(paragraph)}</p>
           ))}
           <span
             className="collab-quote-mark collab-quote-close"
@@ -90,8 +90,8 @@ export function CompanyPage({ company }: { company: Company }) {
                 </div>
               ) : null}
               <div className="collab-copy">
-                {story.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{cleanCopy(paragraph)}</p>
+                {story.paragraphs.map((paragraph, index) => (
+                  <p key={index}>{cleanCopy(paragraph)}</p>
                 ))}
               </div>
             </section>

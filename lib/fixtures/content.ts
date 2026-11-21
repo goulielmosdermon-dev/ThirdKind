@@ -171,6 +171,8 @@ const LOCAL_STILL: Record<
   '/work/up-hellas/poster.png': { width: 1736, height: 974 },
   '/work/up-hellas/still-1.png': { width: 1314, height: 1158 },
   '/work/up-hellas/still-2.png': { width: 2068, height: 1154 },
+  '/thoughts/why-storytelling-wins.jpg': { width: 968, height: 882 },
+  '/thoughts/right-stories.jpg': { width: 896, height: 1152 },
 };
 
 function optimized(asset: ImageAsset): ImageAsset {

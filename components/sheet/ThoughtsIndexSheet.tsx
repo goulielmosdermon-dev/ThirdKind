@@ -1,125 +1,74 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { IndexHeading } from '@/components/sheet/IndexHeading';
 import { Sheet } from '@/components/sheet/Sheet';
-import { useMobileSpotlight } from '@/lib/chrome/useMobileSpotlight';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
-import { MOTION } from '@/lib/motion/tokens';
+import { readMinutes, splitTitle } from '@/lib/content/articleTitle';
 import { EDITORIAL_LINE } from '@/lib/type/display';
 import type { Article } from '@/types/content';
 
-/** One frame for every card, the portrait of the reference card. */
-const CARD_ASPECT = '4 / 5';
-
 /**
- * A plain black card: square corners, the title held top left and the tags
- * bottom right. On desktop the tags are always on show and the still fades up
- * behind them on hover. On a phone the card being read, as the work index
- * picks it, brings up its still and then its tags one by one.
+ * One line of the reading list: what kind of piece, the title, how long it
+ * takes. A rule between lines, no buttons — the whole line is the link.
+ * On hover the cover follows the pointer along the line.
  */
-function ArticleCard({
-  article,
-  mobile,
-  spotlighted,
-  index,
-  setNode,
-}: {
-  article: Article;
-  mobile: boolean;
-  spotlighted: boolean;
-  index: number;
-  setNode: (index: number, node: HTMLElement | null) => void;
-}) {
-  const reduced = useReducedMotion() ?? false;
-  const tags = (article.tags ?? []).filter((tag) => tag.trim().length > 0);
-  // Desktop keeps its tags in view, so only the phone runs them in and out.
-  const active = mobile ? spotlighted : true;
-
-  const group = {
-    off: { transition: { staggerChildren: 0 } },
-    on: {
-      transition: {
-        delayChildren: reduced ? 0 : 0.15,
-        staggerChildren: reduced ? 0 : 0.07,
-      },
-    },
-  };
-  const tag = {
-    off: {
-      opacity: 0,
-      y: reduced ? 0 : 6,
-      transition: { duration: MOTION.reduced },
-    },
-    on: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: reduced ? MOTION.reduced : 0.45,
-        ease: MOTION.easeOut,
-      },
-    },
-  };
+function ArticleRow({ article }: { article: Article }) {
+  const [hover, setHover] = useState(false);
+  const [x, setX] = useState(0);
+  const [lead, rest] = splitTitle(article.title);
+  const kind = article.tags?.[0] ?? 'Thought';
+  const minutes = readMinutes(article);
 
   return (
     <AppLink
       href={`/thoughts/${article.slug.current}`}
-      className="group block w-full"
-      ref={(node) => setNode(index, node)}
+      className="group relative grid w-full grid-cols-[minmax(7rem,14%)_1fr_auto] items-baseline gap-x-[3cqi] py-[clamp(0.9rem,1.6cqi,1.4rem)] text-ink no-underline max-md:grid-cols-1 max-md:gap-y-1"
+      onPointerEnter={() => setHover(true)}
+      onPointerLeave={() => setHover(false)}
+      onPointerMove={(e) =>
+        setX(e.clientX - e.currentTarget.getBoundingClientRect().left)
+      }
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
     >
+      <span className="font-sans text-sm opacity-60">{kind}</span>
+
       <span
-        className="relative block w-full overflow-hidden bg-black text-white"
-        style={{ aspectRatio: CARD_ASPECT }}
+        className="relative z-10 leading-snug transition-opacity duration-300 group-hover:opacity-70"
+        style={{ fontSize: EDITORIAL_LINE }}
       >
-        <span
-          aria-hidden
-          className={`absolute inset-0 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            mobile
-              ? spotlighted
-                ? 'opacity-100'
-                : 'opacity-0'
-              : 'opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'
-          }`}
-        >
-          <Image
-            src={article.coverImage.src}
-            alt=""
-            fill
-            sizes="(min-width: 768px) 25vw, 92vw"
-            quality={90}
-            unoptimized={isUnoptimizedAsset(article.coverImage)}
-            className="object-cover"
-          />
-          {/* Keeps the white type readable over a light still. */}
-          <span className="absolute inset-0 bg-black/30" />
-        </span>
-        <span
-          className="font-sans absolute top-0 left-0 z-10 block max-w-full p-[clamp(1rem,2cqi,1.75rem)] leading-snug"
-          style={{ fontSize: EDITORIAL_LINE }}
-        >
-          {article.title}
-        </span>
-        {tags.length ? (
-          <motion.span
-            variants={group}
-            initial={false}
-            animate={active ? 'on' : 'off'}
-            className="absolute right-0 bottom-0 z-10 flex max-w-full flex-wrap justify-end gap-1.5 p-[clamp(1rem,2cqi,1.75rem)]"
-          >
-            {tags.map((name) => (
-              <motion.span
-                key={name}
-                variants={tag}
-                className="rounded-full border-2 border-white/70 px-3 py-1 text-[0.78rem] font-medium leading-none"
-              >
-                {name}
-              </motion.span>
-            ))}
-          </motion.span>
-        ) : null}
+        <span className="font-sans font-medium">{lead}</span>
+        {rest && <span className="font-display"> {rest}</span>}
+      </span>
+
+      <span className="font-sans text-sm whitespace-nowrap max-md:hidden">
+        <span className="font-medium">{minutes} min</span>{' '}
+        <span className="opacity-60">read</span>
+      </span>
+
+      <span
+        aria-hidden
+        className={`pointer-events-none absolute top-1/2 left-0 z-20 hidden w-[min(16cqi,10rem)] overflow-hidden bg-hairline transition-opacity duration-300 md:block ${
+          hover ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{
+          aspectRatio: '16 / 9',
+          transform: `translate(calc(${x}px - 50%), -50%)`,
+        }}
+      >
+        <Image
+          src={article.coverImage.src}
+          alt=""
+          fill
+          sizes="10rem"
+          quality={90}
+          unoptimized={isUnoptimizedAsset(article.coverImage)}
+          className="object-cover"
+        />
       </span>
     </AppLink>
   );
@@ -127,14 +76,11 @@ function ArticleCard({
 
 export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
   const framed = useFramed();
-  const { mobile, activeIndex, setNode } = useMobileSpotlight(articles.length);
 
   return (
     <Sheet title="Thoughts" tone="editorial">
       <div data-surface="light" className="bg-paper">
         <div
-          // Clear of the close button, which floats over this corner. The
-          // about sheets stand their headings off by the same amount.
           className={`px-[3cqi] pb-[3cqi] max-md:px-12 ${
             framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'
           }`}
@@ -142,17 +88,17 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
           <IndexHeading name="Thoughts" />
         </div>
 
-        <div className="grid grid-cols-1 gap-[1.6cqi] px-[3cqi] pt-[3cqi] pb-[6cqi] max-md:gap-5 max-md:px-12 @md:grid-cols-4">
-          {articles.map((article, index) => (
-            <ArticleCard
-              key={article._id}
-              article={article}
-              mobile={mobile}
-              spotlighted={activeIndex === index}
-              index={index}
-              setNode={setNode}
-            />
-          ))}
+        <div className="px-[3cqi] pt-[1cqi] pb-[8cqi] max-md:px-12">
+          <ul className="m-0 list-none p-0">
+            {articles.map((article) => (
+              <li
+                key={article._id}
+                className="border-b border-ink last:border-b-0"
+              >
+                <ArticleRow article={article} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Sheet>

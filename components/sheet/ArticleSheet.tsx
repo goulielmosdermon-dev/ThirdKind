@@ -8,6 +8,7 @@ import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
 import { HEADER_LINE } from '@/lib/type/display';
+import { readMinutes, splitTitle } from '@/lib/content/articleTitle';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
 import type { Article } from '@/types/content';
 
@@ -41,20 +42,37 @@ export function ArticleSheet({
   byline: { name: string; role: string; linkedInUrl?: string };
 }) {
   const framed = useFramed();
+  const [lead, rest] = splitTitle(article.title);
+  const minutes = readMinutes(article);
   return (
     <Sheet title={article.title} tone="editorial">
       <article data-surface="light" className="bg-paper">
         <header
-          className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
+          className={`px-12 pb-16 @md:px-[8cqi] @md:pb-[7cqi] ${framed ? 'pt-[9rem]' : 'pt-32 @md:pt-[10cqi]'}`}
         >
-          {/* The piece's own title, at the header's size and weight, so
-              opening a thought is the same voice the page opens on. */}
+          {/* The title says what the piece is in the sans, then finishes in
+              the serif — the same turn the Thoughts index makes on each line. */}
           <h1
-            className="font-display w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
+            className="w-full max-w-[30ch] leading-[1.08] tracking-[-0.015em] text-ink"
             style={{ fontSize: HEADER_LINE }}
           >
-            {article.title}
+            <span className="font-sans font-semibold tracking-[-0.025em]">
+              {lead}
+            </span>
+            {rest ? <span className="font-display"> {rest}</span> : null}
           </h1>
+          <p className="mt-8 font-sans text-sm text-ink @md:mt-10 @md:text-base">
+            {article.tags?.length ? (
+              <>
+                {article.tags.join(', ')}
+                <span aria-hidden className="mx-2">
+                  •
+                </span>
+              </>
+            ) : null}
+            <span className="font-semibold">{minutes} min</span>{' '}
+            <span className="opacity-70">read</span>
+          </p>
         </header>
 
         {/* Same as a project's still: edge to edge; phone runs twice as tall. */}

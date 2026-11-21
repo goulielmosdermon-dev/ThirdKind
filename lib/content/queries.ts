@@ -103,8 +103,10 @@ export async function projectStaticParams(): Promise<{ slug: string }[]> {
 
 export async function allArticles(): Promise<Article[]> {
   const { articles } = await getSiteContent();
+  // A featured piece leads the list; the rest run newest first.
   return [...articles].sort(
     (left, right) =>
+      Number(Boolean(right.featured)) - Number(Boolean(left.featured)) ||
       Date.parse(right.publishedAt) - Date.parse(left.publishedAt),
   );
 }
@@ -139,7 +141,7 @@ export async function articleStaticParams(): Promise<{ slug: string }[]> {
 }
 
 export function aboutStaticParams(): { section: AboutSectionKey }[] {
-  return ABOUT_KEYS.filter((key) => !isHiddenAboutKey(key)).map(
-    (section) => ({ section }),
-  );
+  return ABOUT_KEYS.filter((key) => !isHiddenAboutKey(key)).map((section) => ({
+    section,
+  }));
 }

@@ -72,6 +72,30 @@ export function CommandNav({
   const { headerPassed } = usePageScroll();
   const waiting = !embedded && !headerPassed && path === '/';
 
+  // The width the page buttons wrap at once the bar is fully open. Held fixed
+  // while the bar widens, so they wrap the same at every frame and the menu's
+  // height is measured once, rather than measured narrow and snapping after.
+  const [chipsWidth, setChipsWidth] = useState<number>();
+  useEffect(() => {
+    const measure = () => {
+      const bar = rootRef.current;
+      if (!bar) return;
+      const rem = parseFloat(
+        getComputedStyle(document.documentElement).fontSize,
+      );
+      const block = embedded
+        ? ((bar.offsetParent as HTMLElement | null)?.clientWidth ??
+          window.innerWidth)
+        : window.innerWidth;
+      const openWidth = Math.min(block * 0.92, 26.667 * rem);
+      // Less the bar's side padding (1rem each) and its 1px border.
+      setChipsWidth(openWidth - 2 * rem - 2);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [embedded]);
+
   useEffect(() => {
     if (!open) {
       return;
@@ -149,9 +173,11 @@ export function CommandNav({
       // Floats over the page, so the surface probe looks straight past it.
       data-overlay
       data-chrome
-      className={`pointer-events-auto inset-x-0 bottom-5 z-50 mx-auto w-[min(92%,20rem)] ${
-        embedded ? 'absolute' : 'fixed'
-      }`}
+      // Closed it is a small bar; opening, it widens from the centre as the
+      // menu grows upward, so the whole thing opens from small to large.
+      className={`pointer-events-auto inset-x-0 bottom-5 z-50 mx-auto ${
+        open ? 'w-[min(92%,26.667rem)]' : 'w-[min(92%,15.5rem)]'
+      } ${embedded ? 'absolute' : 'fixed'}`}
       style={{
         opacity: waiting ? 0 : reveal,
         transform: waiting
@@ -159,7 +185,7 @@ export function CommandNav({
           : undefined,
         pointerEvents: complete && !waiting ? 'auto' : 'none',
         transition: complete
-          ? 'opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)'
+          ? 'opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.35s cubic-bezier(0.22, 1, 0.36, 1)'
           : 'opacity 0.5s ease',
       }}
       aria-hidden={!complete || waiting}
@@ -171,7 +197,7 @@ export function CommandNav({
         // Motion's layout projection used to scale the whole bar instead,
         // which is what made it jump on open.
         // The index images' radius, fixed, so it never jumps as the menu opens.
-        className={`rounded-md border px-3 py-1.5 shadow-[0_10px_30px_rgb(28_26_22/0.08)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`rounded-md border px-4 py-2 shadow-[0_10px_30px_rgb(28_26_22/0.08)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           dark ? 'border-white/20 bg-white/12' : 'border-ink/10 bg-white/10'
         }`}
       >
@@ -187,7 +213,10 @@ export function CommandNav({
               transition={{ duration: MOTION.hub, ease: MOTION.easeOut }}
               className="overflow-hidden"
             >
-              <div className="pt-1.5 pb-3 flex flex-wrap gap-1.5">
+              <div
+                className="pt-2 pb-4 flex flex-wrap gap-2"
+                style={{ width: chipsWidth }}
+              >
                 {PAGES.map((page) => {
                   const current = pageIsCurrent(page.label, path);
                   return (
@@ -195,7 +224,7 @@ export function CommandNav({
                       key={page.label}
                       href={resolveHref(page)}
                       aria-current={current ? 'page' : undefined}
-                      className={`rounded-md px-2.5 py-1 text-xs transition-colors duration-300 ${
+                      className={`rounded-md px-[0.833rem] py-[0.333rem] text-[1rem] leading-[1.333rem] transition-colors duration-300 ${
                         dark
                           ? 'bg-white/15 text-white'
                           : 'bg-black/[0.08] text-ink'
@@ -220,7 +249,7 @@ export function CommandNav({
             </motion.nav>
           ) : null}
         </AnimatePresence>
-        <form onSubmit={onSubmit} className="flex items-center gap-3">
+        <form onSubmit={onSubmit} className="flex items-center gap-4">
           <input
             ref={inputRef}
             value={query}
@@ -228,7 +257,7 @@ export function CommandNav({
             onFocus={() => setOpen(true)}
             placeholder="Explore ThirdKind"
             aria-label="Explore ThirdKind"
-            className={`min-w-0 flex-1 bg-transparent text-[0.8rem] outline-none transition-colors duration-300 focus-visible:outline-none ${
+            className={`min-w-0 flex-1 bg-transparent text-[1.067rem] outline-none transition-colors duration-300 focus-visible:outline-none ${
               dark
                 ? 'text-white placeholder:text-white/70'
                 : 'text-ink placeholder:text-ink/70'
@@ -239,15 +268,20 @@ export function CommandNav({
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls={menuId}
-            className="flex h-7 w-7 shrink-0 items-center justify-center focus-visible:outline-none"
+            className="flex h-[2.333rem] w-[2.333rem] shrink-0 cursor-pointer items-center justify-center focus-visible:outline-none"
             onClick={() => setOpen((value) => !value)}
           >
-            <span className="flex h-3 w-4 flex-col justify-between" aria-hidden>
+            <span
+              className="flex h-2.5 w-[1.333rem] flex-col justify-between"
+              aria-hidden
+            >
+              {/* The two lines meet in the middle and cross into an × as the
+                  menu opens, and part back into lines as it closes. */}
               <span
-                className={`h-px transition-colors duration-300 ${dark ? 'bg-white' : 'bg-ink'}`}
+                className={`h-px transition-[background-color,translate,rotate] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${dark ? 'bg-white' : 'bg-ink'} ${open ? 'translate-y-[4.5px] rotate-45' : ''}`}
               />
               <span
-                className={`h-px transition-colors duration-300 ${dark ? 'bg-white' : 'bg-ink'}`}
+                className={`h-px transition-[background-color,translate,rotate] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${dark ? 'bg-white' : 'bg-ink'} ${open ? '-translate-y-[4.5px] -rotate-45' : ''}`}
               />
             </span>
           </button>

@@ -161,7 +161,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls={menuId}
-          className="relative flex h-10 w-10 items-center justify-end focus-visible:outline-none"
+          className="relative flex h-10 w-10 cursor-pointer items-center justify-end focus-visible:outline-none"
           onClick={() => setOpen((value) => !value)}
         >
           {/* Two lines that cross into an X while the menu is open. */}

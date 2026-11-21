@@ -155,38 +155,32 @@ function ProjectCard({
               className="font-sans block leading-snug"
               style={{ fontSize: EDITORIAL_LINE }}
             >
-              {sameName ? (
-                project.title
-              ) : (
-                <>
-                  {project.title}{' '}
-                  <span className="font-display text-white/70">
-                    {project.client}
-                  </span>
-                </>
+              {/* Set like the project's own header: the client in the
+                  sans, the work's name finishing the line in the serif. */}
+              <span className="font-semibold">
+                {sameName ? project.title : project.client}
+              </span>
+              {sameName ? null : (
+                <span className="font-display"> {project.title}</span>
               )}
             </motion.span>
           </span>
           {tags.length || country ? (
-            <span className="mt-2 flex flex-wrap gap-1.5">
-              {tags.map((name) => (
-                <motion.span
-                  key={name}
-                  variants={tag}
-                  className="rounded-full border border-white/60 px-3 py-1 text-[0.78rem] leading-none"
-                >
-                  {name}
-                </motion.span>
-              ))}
-              {country ? (
-                <motion.span
-                  variants={tag}
-                  className="border border-white/60 px-3 py-1 text-[0.78rem] leading-none"
-                >
-                  {country}
-                </motion.span>
+            // One line, as under the project's header: services, then where.
+            <motion.span
+              variants={tag}
+              className="mt-1 block font-sans text-[0.85rem] leading-snug"
+            >
+              {tags.join(', ')}
+              {tags.length && country ? (
+                <span aria-hidden className="mx-2">
+                  •
+                </span>
               ) : null}
-            </span>
+              {country ? (
+                <span className="text-white/70">{country}</span>
+              ) : null}
+            </motion.span>
           ) : null}
         </motion.span>
       </motion.span>

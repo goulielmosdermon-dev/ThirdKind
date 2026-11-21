@@ -14,7 +14,8 @@ import type { Article } from '@/types/content';
 /**
  * One line of the reading list: what kind of piece, the title, how long it
  * takes. A rule between lines, no buttons — the whole line is the link.
- * On hover the cover follows the pointer along the line.
+ * On hover the cover follows the pointer along the line and the other lines
+ * fall back, so the one under the pointer is the only one at full tone.
  */
 function ArticleRow({ article }: { article: Article }) {
   const [hover, setHover] = useState(false);
@@ -26,7 +27,7 @@ function ArticleRow({ article }: { article: Article }) {
   return (
     <AppLink
       href={`/thoughts/${article.slug.current}`}
-      className="group relative grid w-full grid-cols-[minmax(7rem,14%)_1fr_auto] items-baseline gap-x-[3cqi] py-[clamp(0.9rem,1.6cqi,1.4rem)] text-ink no-underline max-md:grid-cols-1 max-md:gap-y-1"
+      className="group relative grid w-full transition-opacity duration-300 group-hover/list:[&:not(:hover)]:opacity-30 grid-cols-[minmax(7rem,14%)_1fr_auto] items-baseline gap-x-[3cqi] py-[clamp(0.9rem,1.6cqi,1.4rem)] text-ink no-underline max-md:grid-cols-1 max-md:gap-y-1"
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
       onPointerMove={(e) =>
@@ -38,7 +39,7 @@ function ArticleRow({ article }: { article: Article }) {
       <span className="font-sans text-sm opacity-60">{kind}</span>
 
       <span
-        className="relative z-10 leading-snug transition-opacity duration-300 group-hover:opacity-70"
+        className="relative z-10 leading-snug"
         style={{ fontSize: EDITORIAL_LINE }}
       >
         <span className="font-sans font-medium">{lead}</span>
@@ -89,7 +90,7 @@ export function ThoughtsIndexSheet({ articles }: { articles: Article[] }) {
         </div>
 
         <div className="px-[3cqi] pt-[1cqi] pb-[8cqi] max-md:px-12">
-          <ul className="m-0 list-none p-0">
+          <ul className="group/list m-0 list-none p-0">
             {articles.map((article) => (
               <li
                 key={article._id}

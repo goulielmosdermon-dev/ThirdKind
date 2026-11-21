@@ -8,6 +8,7 @@ import { AppLink, useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
 import { Sheet } from '@/components/sheet/Sheet';
 import { HeroFilm, WorkReel, WorkStory } from '@/components/sheet/WorkMedia';
+import { PROJECT_COUNTRY } from '@/lib/canvas/derive';
 import { isUnoptimizedAsset } from '@/lib/content/mediaSrc';
 import { vimeoIdFromUrl } from '@/lib/content/vimeo';
 import { HEADER_LINE } from '@/lib/type/display';
@@ -23,19 +24,44 @@ export function ProjectSheet({
   const framed = useFramed();
   const vimeoId = vimeoIdFromUrl(project.heroVideoUrl);
   const useStory = project.story.length > 0;
+  const sameName = project.client.trim() === project.title.trim();
+  // The published service list doubles as the work's tags, as on the index.
+  const services = project.credits
+    .map((credit) => credit.role)
+    .filter((role) => role.trim().length > 0);
+  const country = PROJECT_COUNTRY[project.slug.current];
 
   return (
     <Sheet title={project.title} tone="editorial">
       <article data-surface="light" className="bg-paper">
         <header
-          className={`px-12 pb-10 @md:px-[8cqi] ${framed ? 'pt-[6.5rem]' : 'pt-20 @md:pt-24'}`}
+          className={`px-12 pb-16 @md:px-[8cqi] @md:pb-[7cqi] ${framed ? 'pt-[9rem]' : 'pt-32 @md:pt-[10cqi]'}`}
         >
+          {/* Set like a thought's title: the client in the sans, the work's
+              own name finishing the line in the serif. A project named after
+              its client is just the name. */}
           <h1
-            className="font-display w-full max-w-[18ch] leading-[1.02] font-semibold tracking-[-0.015em] text-balance text-ink"
+            className="w-full max-w-[30ch] leading-[1.08] tracking-[-0.015em] text-ink"
             style={{ fontSize: HEADER_LINE }}
           >
-            {project.title}
+            <span className="font-sans font-semibold tracking-[-0.025em]">
+              {sameName ? project.title : project.client}
+            </span>
+            {sameName ? null : (
+              <span className="font-display"> {project.title}</span>
+            )}
           </h1>
+          {services.length > 0 || country ? (
+            <p className="mt-8 font-sans text-sm text-ink @md:mt-10 @md:text-base">
+              {services.join(', ')}
+              {services.length > 0 && country ? (
+                <span aria-hidden className="mx-2">
+                  •
+                </span>
+              ) : null}
+              {country ? <span className="opacity-70">{country}</span> : null}
+            </p>
+          ) : null}
         </header>
 
         {/* Edge to edge; desktop crops height, phone runs twice as tall. */}

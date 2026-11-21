@@ -940,7 +940,7 @@ const aboutSections: AboutSection[] = [
         title: 'Earning the minute',
         slug: { current: 'earning-the-minute' },
         description:
-          'Nobody owes you their attention, and the skip button is right there. The question is never whether the work is on brand. It’s whether someone free to leave at any second stays.',
+          'Nobody owes you their attention, and the skip button is right there. The question is whether someone free to leave at any second stays.',
       },
     ],
     faqs: [

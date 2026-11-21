@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useId, useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 
 import { useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
-import { ServicesFaq } from '@/components/sheet/ServicesFaq';
+import { RuledList, ServicesFaq } from '@/components/sheet/ServicesFaq';
 import { ServicesHands } from '@/components/sheet/ServicesHands';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
@@ -52,9 +51,6 @@ const CELL = [
   '@md:col-start-3 @md:row-start-2',
   '@md:col-start-4 @md:row-start-2',
 ];
-
-const TEAM_INTRO =
-  'From slightly elsewhere. Different backgrounds, one stubborn standard for the work.';
 
 const TEAM_NAME =
   'A close encounter of the third kind, in Hynek’s classification, popularised by Close Encounters of the Third Kind (1977), is contact with an unidentified presence. The name is the brief: make something that feels like it arrived from slightly elsewhere.';
@@ -168,95 +164,16 @@ function ProcessView({
  * One discipline, dressed like the FAQ rows beside it. The panel still opens
  * over whatever sits below it in the grid so the other column never reflows.
  */
-function DisciplineRow({
-  service,
-  open,
-  onToggle,
-}: {
-  service: ServiceOffering;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const reduced = useReducedMotion() ?? false;
-  const panelId = useId();
-
-  return (
-    <li className="relative">
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={open}
-        aria-controls={panelId}
-        className="group flex w-full cursor-pointer items-baseline justify-between gap-4 border-0 bg-transparent py-2 text-left text-ink"
-      >
-        <span
-          className={`text-[clamp(1rem,1.5vw,1.2rem)] leading-snug underline underline-offset-4 ${
-            open
-              ? 'font-display italic'
-              : 'font-sans not-italic group-hover:font-display group-hover:italic'
-          }`}
-        >
-          {service.title}
-        </span>
-        <span
-          aria-hidden
-          className="shrink-0 text-[clamp(1rem,1.5vw,1.2rem)] leading-none"
-        >
-          +
-        </span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open ? (
-          <motion.div
-            id={panelId}
-            key="panel"
-            role="region"
-            // The panel is in flow, so opening a row pushes the rest of the
-            // list down. It used to be absolutely positioned at @md, which
-            // painted it straight over the next button and hid it.
-            className="overflow-hidden"
-            initial={reduced ? { height: 'auto' } : { height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={reduced ? { height: 0 } : { height: 0, opacity: 0 }}
-            transition={{
-              duration: reduced ? MOTION.reduced : MOTION.hub,
-              ease: MOTION.easeOut,
-            }}
-          >
-            <div className="flex gap-3 pt-1 pr-1 pb-4 pl-0 @md:pb-5">
-              <span aria-hidden className="text-mute">
-                &#8627;
-              </span>
-              <p className="text-[clamp(1rem,1.5vw,1.2rem)] leading-[1.45] text-ink">
-                {service.description}
-              </p>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </li>
-  );
-}
-
+/** The disciplines, set as the same ruled list as the questions below. */
 function DisciplineGrid({ services }: { services: ServiceOffering[] }) {
-  const [open, setOpen] = useState<string | null>(null);
-
   return (
-    <ul className="grid grid-cols-1 gap-x-8 gap-y-1 @md:grid-cols-2">
-      {services.map((service) => {
-        const key = service.slug.current;
-        return (
-          <DisciplineRow
-            key={key}
-            service={service}
-            open={open === key}
-            onToggle={() =>
-              setOpen((current) => (current === key ? null : key))
-            }
-          />
-        );
-      })}
-    </ul>
+    <RuledList
+      items={services.map((service) => ({
+        key: service.slug.current,
+        label: service.title,
+        body: service.description,
+      }))}
+    />
   );
 }
 
@@ -338,8 +255,9 @@ export function AboutSheet({
 }) {
   // Why opens its body with the same line as an h2, so a standfirst would repeat it.
   let intro = section.hoverDescription;
+  // Team opens straight onto the portraits, with no line under its heading.
   if (section.key === 'team') {
-    intro = TEAM_INTRO;
+    intro = '';
   } else if (section.key === 'process') {
     intro = PROCESS_INTRO;
   } else if (section.key === 'why') {
@@ -452,7 +370,7 @@ export function AboutSheet({
                       <p className="mt-4 font-display text-lede leading-tight">
                         {member.name}
                       </p>
-                      <p className="mt-1 font-display text-sm text-mute">
+                      <p className="mt-1 font-sans text-sm text-mute">
                         {member.role}
                       </p>
                     </li>

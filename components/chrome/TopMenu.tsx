@@ -120,7 +120,9 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
                         onClick={() => openPage(page.href)}
                       >
                         <span
-                          className="relative inline-block font-sans leading-[1.15] tracking-[-0.015em] text-white not-italic after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/menu:font-display group-hover/menu:italic group-hover/menu:after:scale-x-100"
+                          // Stays in the sans on hover. The underline draws in from the left
+                          // and leaves to the right, on a slow, even ease.
+                          className="relative inline-block font-sans leading-[1.15] tracking-[-0.015em] text-white after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-700 after:ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/menu:after:origin-left group-hover/menu:after:scale-x-100"
                           style={{ fontSize: MENU_LINE }}
                         >
                           {page.label}

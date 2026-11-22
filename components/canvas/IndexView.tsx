@@ -502,7 +502,7 @@ export function IndexView({
                             className={`font-sans block leading-snug transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${phone ? 'translate-y-0' : 'translate-y-0 md:translate-y-[110%] md:group-hover:translate-y-0 md:group-focus-visible:translate-y-0'}`}
                             style={{ fontSize: EDITORIAL_LINE }}
                           >
-                            {title}
+                            <span className="font-semibold">{title}</span>
                             {name ? (
                               <>
                                 {' '}
@@ -516,6 +516,29 @@ export function IndexView({
                       </span>
                     </span>
                   </motion.span>
+                  {/* At rest the title sits under the still. On hover it rises
+                      out through its mask as the one on the picture rises in,
+                      so there is only ever one title showing. Same size and
+                      the same inset as the one on the picture. The phone shows
+                      the one on the picture already, so it has no second. */}
+                  {phone ? null : (
+                    <span className="mt-3 hidden overflow-hidden px-[clamp(1rem,2cqi,1.75rem)] pt-[0.12em] pb-[0.26em] md:block">
+                      <span
+                        className="font-sans block leading-snug transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[110%] group-focus-visible:-translate-y-[110%]"
+                        style={{ fontSize: EDITORIAL_LINE }}
+                      >
+                        <span className="font-semibold">{title}</span>
+                        {name ? (
+                          <>
+                            {' '}
+                            <span className="font-display text-ink/60">
+                              {name}
+                            </span>
+                          </>
+                        ) : null}
+                      </span>
+                    </span>
+                  )}
                 </button>
               </motion.li>
             );

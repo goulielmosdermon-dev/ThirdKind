@@ -72,6 +72,9 @@ const SLOT = [
   },
 ] as const;
 
+const MANIFESTO_OPENING =
+  'Your creative partner, dedicated and addicted to telling stories that authentically align with brand communication objectives. We believe beyond: beyond the ordinary, beyond the mundane, beyond the moon. We look at the stars. The communication landscape is changing. Brands, companies, organizations need to, have to, embrace creativity beyond the status quo.';
+
 const MANIFESTO_LEAD =
   'Nobody likes being interrupted or preached at. What people want is to feel and believe. When a brand means that, customers';
 
@@ -126,6 +129,10 @@ function ManifestoBand({
             : 'px-12 py-14 md:px-[12vw] md:py-[clamp(6rem,11vw,22rem)]'
         }
       >
+        {/* The band opens on who we are, then the argument it closes on. */}
+        <p className="mb-[0.9em] font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
+          {MANIFESTO_OPENING}
+        </p>
         <p className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
           {MANIFESTO_LEAD}{' '}
           <motion.span

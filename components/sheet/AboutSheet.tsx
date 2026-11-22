@@ -5,7 +5,8 @@ import { motion, useReducedMotion } from 'motion/react';
 
 import { useFramed } from '@/components/mobile/MobileChrome';
 import { PortableBody } from '@/components/sheet/PortableBody';
-import { RuledList, ServicesFaq } from '@/components/sheet/ServicesFaq';
+import { ServicesFaq } from '@/components/sheet/ServicesFaq';
+import { ServicesVenn } from '@/components/sheet/ServicesVenn';
 import { ServicesHands } from '@/components/sheet/ServicesHands';
 import { Sheet } from '@/components/sheet/Sheet';
 import { isUnoptimizedSrc } from '@/lib/content/mediaSrc';
@@ -164,23 +165,9 @@ function ProcessView({
  * One discipline, dressed like the FAQ rows beside it. The panel still opens
  * over whatever sits below it in the grid so the other column never reflows.
  */
-/** The disciplines, set as the same ruled list as the questions below. */
-function DisciplineGrid({ services }: { services: ServiceOffering[] }) {
-  return (
-    <RuledList
-      items={services.map((service) => ({
-        key: service.slug.current,
-        label: service.title,
-        body: service.description,
-      }))}
-    />
-  );
-}
-
 function ServicesView({
   title,
   lede,
-  services,
   faqs,
   framed,
 }: {
@@ -206,7 +193,7 @@ function ServicesView({
         {/* One offer, said once. What follows is not a list of things to buy;
           it is the order the one thing gets made in. */}
         {lede ? (
-          <div className="mt-[4cqi] max-w-[42rem] max-md:mt-12">
+          <div className="mt-[4cqi] max-md:mt-12">
             <h2 className="font-sans text-[1.65rem] leading-snug font-semibold text-ink">
               {lede.headline}
             </h2>
@@ -222,7 +209,7 @@ function ServicesView({
         ) : null}
 
         <div className="mt-[6cqi]">
-          <DisciplineGrid services={services} />
+          <ServicesVenn />
         </div>
       </div>
 

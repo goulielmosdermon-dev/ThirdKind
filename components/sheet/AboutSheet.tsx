@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
 
 import { useFramed } from '@/components/mobile/MobileChrome';
-import { PortableBody } from '@/components/sheet/PortableBody';
 import { ServicesFaq } from '@/components/sheet/ServicesFaq';
 import { ServicesVenn } from '@/components/sheet/ServicesVenn';
 import { ServicesHands } from '@/components/sheet/ServicesHands';
@@ -76,11 +75,11 @@ function PoemReveal({ lines, framed }: { lines: string[]; framed: boolean }) {
 
   return (
     <div
-      className={`flex min-h-[var(--frame-h,calc(100dvh-5rem))] items-center px-12 @md:px-[8cqi] pb-24 ${
+      className={`flex min-h-[var(--frame-h,calc(100dvh-5rem))] items-center justify-center px-12 @md:px-[8cqi] pb-24 ${
         framed ? 'pt-[6.5rem]' : 'pt-20'
       }`}
     >
-      <div className="max-w-[28ch]">
+      <div className="text-center">
         {lines.map((line, index) => (
           <motion.p
             key={`${index}-${line}`}
@@ -91,7 +90,8 @@ function PoemReveal({ lines, framed }: { lines: string[]; framed: boolean }) {
               delay: reduced ? 0 : 0.08 + index * 0.16,
               ease: MOTION.easeOut,
             }}
-            className="font-display text-[1.05rem] leading-[1.85] text-ink"
+            // Set like the Why page: the sans at the manifesto's size, centred.
+            className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em] text-ink"
           >
             {line}
           </motion.p>
@@ -326,11 +326,11 @@ export function AboutSheet({
                     // that do the work. Capped, there was not enough width for
                     // the gaps to read as anything but leftovers.
                     'px-12 pb-24 @md:px-[8cqi] @md:pb-28'
-                  : `mx-auto max-w-[42rem] px-12 @md:px-0 ${
-                      section.key === 'why'
-                        ? 'pb-48 @md:pb-56'
-                        : 'pb-24 @md:pb-28'
-                    }`
+                  : section.key === 'why'
+                    ? // Set like the manifesto band on the home page: the
+                      // same type, the same inset, read as one argument.
+                      'px-12 pb-48 @md:px-[12vw] @md:pb-56'
+                    : 'mx-auto max-w-[42rem] px-12 pb-24 @md:px-0 @md:pb-28'
               }
             >
               {section.key === 'team' ? (
@@ -370,12 +370,16 @@ export function AboutSheet({
                 </p>
               ) : null}
 
-              {section.key === 'why' ? (
-                <PortableBody
-                  value={section.pageBody ?? section.body}
-                  density="editorial"
-                />
-              ) : null}
+              {section.key === 'why'
+                ? poemLines(section.pageBody ?? section.body).map((line) => (
+                    <p
+                      key={line}
+                      className="mb-[0.9em] font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em] text-ink last:mb-0"
+                    >
+                      {line}
+                    </p>
+                  ))
+                : null}
             </div>
           </>
         )}

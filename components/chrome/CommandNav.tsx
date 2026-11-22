@@ -88,8 +88,8 @@ export function CommandNav({
           window.innerWidth)
         : window.innerWidth;
       const openWidth = Math.min(block * 0.92, 26.667 * rem);
-      // Less the bar's side padding (1rem each) and its 1px border.
-      setChipsWidth(openWidth - 2 * rem - 2);
+      // Less the bar's side padding (1rem each).
+      setChipsWidth(openWidth - 2 * rem);
     };
     measure();
     window.addEventListener('resize', measure);
@@ -196,9 +196,9 @@ export function CommandNav({
         // height grows it upward and leaves the input exactly where it was.
         // Motion's layout projection used to scale the whole bar instead,
         // which is what made it jump on open.
-        // The index images' radius, fixed, so it never jumps as the menu opens.
-        className={`rounded-md border px-4 py-2 shadow-[0_10px_30px_rgb(28_26_22/0.08)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          dark ? 'border-white/20 bg-white/12' : 'border-ink/10 bg-white/10'
+        // Square-cornered, with no outline: just the blurred glass.
+        className={`px-4 py-2 shadow-[0_10px_30px_rgb(28_26_22/0.08)] backdrop-blur-2xl backdrop-saturate-150 transition-[background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          dark ? 'bg-white/12' : 'bg-white/10'
         }`}
       >
         <AnimatePresence initial={false}>
@@ -214,7 +214,7 @@ export function CommandNav({
               className="overflow-hidden"
             >
               <div
-                className="pt-2 pb-4 flex flex-wrap gap-2"
+                className="pt-2 pb-4 flex flex-wrap gap-x-5 gap-y-2"
                 style={{ width: chipsWidth }}
               >
                 {PAGES.map((page) => {
@@ -224,10 +224,17 @@ export function CommandNav({
                       key={page.label}
                       href={resolveHref(page)}
                       aria-current={current ? 'page' : undefined}
-                      className={`rounded-md px-[0.833rem] py-[0.333rem] text-[1rem] leading-[1.333rem] transition-colors duration-300 ${
+                      // Plain words set like the "Explore ThirdKind" line:
+                      // same size, weight and grey. The page you are on is
+                      // the one in full ink.
+                      className={`group/link inline-flex items-center font-sans text-[1.067rem] leading-[1.4rem] transition-colors duration-300 ${
                         dark
-                          ? 'bg-white/15 text-white'
-                          : 'bg-black/[0.08] text-ink'
+                          ? current
+                            ? 'text-white'
+                            : 'text-white/70 hover:text-white'
+                          : current
+                            ? 'text-ink'
+                            : 'text-ink/70 hover:text-ink'
                       }`}
                       onClick={() => {
                         const href = resolveHref(page);
@@ -241,7 +248,9 @@ export function CommandNav({
                         setQuery('');
                       }}
                     >
-                      {page.label}
+                      <span className="relative after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-700 after:ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/link:after:origin-left group-hover/link:after:scale-x-100">
+                        {page.label}
+                      </span>
                     </AppLink>
                   );
                 })}

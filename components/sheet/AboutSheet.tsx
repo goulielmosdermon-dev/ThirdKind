@@ -91,7 +91,7 @@ function PoemReveal({ lines, framed }: { lines: string[]; framed: boolean }) {
               ease: MOTION.easeOut,
             }}
             // Set like the Why page: the sans at the manifesto's size, centred.
-            className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em] text-ink"
+            className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.16] tracking-[-0.015em] text-ink"
           >
             {line}
           </motion.p>
@@ -374,7 +374,7 @@ export function AboutSheet({
                 ? poemLines(section.pageBody ?? section.body).map((line) => (
                     <p
                       key={line}
-                      className="mb-[0.9em] font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em] text-ink last:mb-0"
+                      className="mb-[0.9em] font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.16] tracking-[-0.015em] text-ink last:mb-0"
                     >
                       {line}
                     </p>

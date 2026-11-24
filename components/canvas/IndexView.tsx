@@ -72,8 +72,11 @@ const SLOT = [
   },
 ] as const;
 
-const MANIFESTO_OPENING =
-  'Your creative partner, dedicated and addicted to telling stories that authentically align with brand communication objectives. We believe beyond: beyond the ordinary, beyond the mundane, beyond the moon. We look at the stars. The communication landscape is changing. Brands, companies, organizations need to, have to, embrace creativity beyond the status quo.';
+/** The band's opening paragraphs, before the argument it closes on. */
+const MANIFESTO_OPENING = [
+  'Your creative partner, devoted (addicted, really) to telling stories that ring true to what a brand needs to say.',
+  'We believe in beyond: beyond the ordinary, beyond the mundane, beyond the moon, we look at the stars. The way brands talk is changing, and companies and organizations don’t just need to embrace creativity beyond the status quo. They have to.',
+];
 
 const MANIFESTO_LEAD =
   'Nobody likes being interrupted or preached at. What people want is to feel and believe. When a brand means that, customers';
@@ -130,10 +133,15 @@ function ManifestoBand({
         }
       >
         {/* The band opens on who we are, then the argument it closes on. */}
-        <p className="mb-[0.9em] font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
-          {MANIFESTO_OPENING}
-        </p>
-        <p className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.34] tracking-[-0.015em]">
+        {MANIFESTO_OPENING.map((paragraph) => (
+          <p
+            key={paragraph}
+            className="mb-[0.9em] font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.16] tracking-[-0.015em]"
+          >
+            {paragraph}
+          </p>
+        ))}
+        <p className="font-sans text-[clamp(2rem,4.8vw,4.5rem)] leading-[1.16] tracking-[-0.015em]">
           {MANIFESTO_LEAD}{' '}
           <motion.span
             className="inline-block"

@@ -122,7 +122,7 @@ export function TopMenu({ nodes }: { nodes: CanvasNode[] }) {
                         <span
                           // Stays in the sans on hover. The underline draws in from the left
                           // and leaves to the right, on a slow, even ease.
-                          className={`relative inline-block font-sans leading-[1.15] tracking-[-0.015em] after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-700 after:ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/menu:after:origin-left group-hover/menu:after:scale-x-100${page.label === 'Remember' ? ' nav-marker' : ''}`}
+                          className={`relative inline-block font-sans leading-[1.15] tracking-[-0.015em] after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-700 after:ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/menu:after:origin-left group-hover/menu:after:scale-x-100${page.label === 'Remember' ? ' underline underline-offset-4 after:hidden' : ''}`}
                           style={{ fontSize: MENU_LINE }}
                         >
                           {page.label}

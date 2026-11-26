@@ -249,7 +249,7 @@ export function CommandNav({
                       }}
                     >
                       <span
-                        className={`relative after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-700 after:ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/link:after:origin-left group-hover/link:after:scale-x-100${page.label === 'Remember' ? ' nav-marker' : ''}`}
+                        className={`relative after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-700 after:ease-[cubic-bezier(0.65,0,0.35,1)] group-hover/link:after:origin-left group-hover/link:after:scale-x-100${page.label === 'Remember' ? ' underline underline-offset-4 after:hidden' : ''}`}
                       >
                         {page.label}
                       </span>

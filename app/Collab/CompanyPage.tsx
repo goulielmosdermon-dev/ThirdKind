@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { ReactNode } from 'react';
 
 import { SlideUp } from './SlideUp';
 import { ReferenceGallery } from './ReferenceGallery';
@@ -6,7 +7,13 @@ import { AgTeamGrid } from './AgTeamGrid';
 import headers from './headers.json';
 import type { Company } from './companies';
 
-export function CompanyPage({ company }: { company: Company }) {
+export function CompanyPage({
+  company,
+  beforeReferences,
+}: {
+  company: Company;
+  beforeReferences?: ReactNode;
+}) {
   const hero = headers[company.id as keyof typeof headers];
   const cleanCopy = (copy: string) => copy.replace(/\s*[—–]\s*/g, ', ');
   return (
@@ -141,6 +148,7 @@ export function CompanyPage({ company }: { company: Company }) {
           <p className="collab-copy">{company.why}</p>
         </section>
       ) : null}
+      {beforeReferences}
       {company.references.length ? (
         <section
           className="collab-reference-section"
@@ -167,7 +175,11 @@ export function CompanyPage({ company }: { company: Company }) {
         </section>
       ) : null}
       {company.costBook?.length ? (
-        <CostBook id={`${company.id}-cost-book`} groups={company.costBook} />
+        <CostBook
+          id={`${company.id}-cost-book`}
+          groups={company.costBook}
+          title={company.costBookTitle}
+        />
       ) : null}
       {company.results?.length ? (
         <section
@@ -207,10 +219,13 @@ function formatMoney(amount: number) {
 function CostBook({
   id,
   groups,
+  title = 'Cost Book',
 }: {
   id: string;
   groups: NonNullable<Company['costBook']>;
+  title?: string;
 }) {
+  const showGroups = groups.length > 1;
   const total = groups.reduce(
     (sum, group) =>
       sum + group.lines.reduce((groupSum, line) => groupSum + line.amount, 0),
@@ -219,7 +234,7 @@ function CostBook({
 
   return (
     <section className="collab-section collab-cost-book" aria-labelledby={id}>
-      <h2 id={id}>Cost Book</h2>
+      <h2 id={id}>{title}</h2>
       <div className="collab-cost-book-list">
         {groups.map((group) => {
           const subtotal = group.lines.reduce(
@@ -228,7 +243,7 @@ function CostBook({
           );
           return (
             <div key={group.title} className="collab-cost-group">
-              <h3>{group.title}</h3>
+              {showGroups ? <h3>{group.title}</h3> : null}
               <ul>
                 {group.lines.map((line) => (
                   <li key={line.label}>
@@ -236,10 +251,12 @@ function CostBook({
                     <span>{formatMoney(line.amount)}</span>
                   </li>
                 ))}
-                <li className="collab-cost-subtotal">
-                  <span>Subtotal</span>
-                  <span>{formatMoney(subtotal)}</span>
-                </li>
+                {showGroups ? (
+                  <li className="collab-cost-subtotal">
+                    <span>Subtotal</span>
+                    <span>{formatMoney(subtotal)}</span>
+                  </li>
+                ) : null}
               </ul>
             </div>
           );

@@ -42,6 +42,25 @@ export const company: Company = {
       ],
     },
   ],
-  why: 'Tennis feels familiar and fits a story about giving it another shot. An exhausted player lying on the court, with a ball bouncing inches from his face, is a hook from the first frame. In extreme slow motion, the spinning ball and the moment it hits the strings look spectacular. Tennis rewards persistence, so when that third shot finally lands, the victory feels earned. We carry that feeling into the final moment, when he learns his home loan has been approved.',
+  why: 'Tennis feels familiar and fits a story about giving it another shot. An exhausted player lying on the court, with a ball bouncing inches from his face, is a hook from the first frame. In extreme slow motion, the spinning ball and the moment it hits the strings look spectacular. Tennis rewards persistence, so when that third shot finally lands, the victory feels earned. We carry that feeling into the final moment, when he learns his home loan has been approved. A blue tennis court would bring CrediaBank’s colours into every shot and give us room to work with different camera angles in one location. The court gives us a ready-made set, and shooting in daylight keeps the lighting setup simple.',
   references,
+  costBookTitle: 'Budget',
+  costBook: [
+    {
+      title: 'Film costs',
+      lines: [
+        { label: 'Production management fee', amount: 1750 },
+        { label: 'Director’s fee', amount: 2000 },
+        { label: 'Post-production fee', amount: 2000 },
+        { label: 'DoP fee', amount: 2000 },
+        { label: 'Equipment', amount: 1500 },
+        { label: 'Crew', amount: 2400 },
+        { label: 'Cast', amount: 500 },
+        { label: 'Outfit', amount: 155 },
+        { label: 'Locations', amount: 1000 },
+        { label: 'Hair and makeup (HMU)', amount: 250 },
+        { label: 'Contingency', amount: 500 },
+      ],
+    },
+  ],
 };

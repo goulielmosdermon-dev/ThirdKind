@@ -22,6 +22,7 @@ export type Company = {
   why?: string;
   references: Plate[];
   costBook?: CostGroup[];
+  costBookTitle?: string;
   process?: string[];
   results?: string[];
 };

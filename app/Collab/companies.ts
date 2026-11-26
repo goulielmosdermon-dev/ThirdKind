@@ -19,6 +19,7 @@ export type Company = {
   proposalImage?: Plate;
   observations: string[];
   stories?: Story[];
+  why?: string;
   references: Plate[];
   costBook?: CostGroup[];
   process?: string[];

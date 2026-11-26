@@ -42,5 +42,6 @@ export const company: Company = {
       ],
     },
   ],
+  why: 'Tennis feels familiar and fits a story about giving it another shot. An exhausted player lying on the court, with a ball bouncing inches from his face, is a hook from the first frame. In extreme slow motion, the spinning ball and the moment it hits the strings look spectacular. Tennis rewards persistence, so when that third shot finally lands, the victory feels earned. We carry that feeling into the final moment, when he learns his home loan has been approved.',
   references,
 };

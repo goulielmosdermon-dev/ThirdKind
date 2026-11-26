@@ -132,6 +132,15 @@ export function CompanyPage({ company }: { company: Company }) {
           ))}
         </section>
       ) : null}
+      {company.why ? (
+        <section
+          className="collab-section collab-why"
+          aria-labelledby={`${company.id}-why`}
+        >
+          <h2 id={`${company.id}-why`}>WHY</h2>
+          <p className="collab-copy">{company.why}</p>
+        </section>
+      ) : null}
       {company.references.length ? (
         <section
           className="collab-reference-section"

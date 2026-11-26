@@ -20,13 +20,12 @@
   text-align: left;
 }
 
-.crediabank .collab-stories {
+.crediabank :is(.collab-stories, .collab-why) {
   padding-top: clamp(48px, 7vw, 112px);
   text-align: center;
 }
 
-.crediabank .collab-stories h2,
-.crediabank .collab-stories .collab-copy {
+.crediabank :is(.collab-stories, .collab-why) :is(h2, .collab-copy) {
   margin-inline: auto;
 }
 

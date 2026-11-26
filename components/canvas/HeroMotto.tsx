@@ -55,9 +55,7 @@ export function HeroMotto({
           <span
             // The step to the right is a desktop shape; on a phone there is
             // no room for it and the line stacks flush under the first.
-            // The answering line stays in the display face, set light against
-            // the bold: one voice, said twice, at either end of its range.
-            className="block font-display font-light md:pl-[4.2em]"
+            className="block font-sans font-light md:pl-[4.2em]"
             style={{ opacity: lines[1], transition: 'opacity 0.5s ease' }}
           >
             in a world of ordinary

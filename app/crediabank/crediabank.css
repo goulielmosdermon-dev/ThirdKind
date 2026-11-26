@@ -1,0 +1,35 @@
+.collab.crediabank {
+  font-weight: 400;
+}
+
+.crediabank .collab-header {
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.crediabank .collab-header h1 {
+  clip-path: inset(50%);
+}
+
+.crediabank .collab-proposal blockquote {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.crediabank .collab-quote-mark:not(.collab-quote-close) {
+  text-align: left;
+}
+
+.crediabank .collab-stories {
+  padding-top: clamp(48px, 7vw, 112px);
+  text-align: center;
+}
+
+.crediabank .collab-stories h2,
+.crediabank .collab-stories .collab-copy {
+  margin-inline: auto;
+}
+
+.crediabank .collab-story-heading {
+  justify-content: center;
+}

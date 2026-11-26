@@ -7,6 +7,7 @@ export type Story = {
   title: string;
   tag?: string;
   tagHref?: string;
+  screenplay?: boolean;
   paragraphs: string[];
 };
 export type CostLine = { label: string; amount: number };
@@ -15,6 +16,7 @@ export type Company = {
   id: string;
   name: string;
   quote: string[];
+  proposalImage?: Plate;
   observations: string[];
   stories?: Story[];
   references: Plate[];

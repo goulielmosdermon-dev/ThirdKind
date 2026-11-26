@@ -57,6 +57,17 @@ export function CompanyPage({ company }: { company: Company }) {
         </blockquote>
         {company.id === 'ag-design' ? <AgTeamGrid /> : null}
       </section>
+      {company.proposalImage ? (
+        <Image
+          className="block h-auto w-full"
+          src={company.proposalImage.src}
+          alt={company.proposalImage.alt}
+          width={company.proposalImage.w}
+          height={company.proposalImage.h}
+          sizes="100vw"
+          unoptimized
+        />
+      ) : null}
       {company.observations.length ? (
         <section
           className="collab-section"
@@ -97,7 +108,24 @@ export function CompanyPage({ company }: { company: Company }) {
               ) : null}
               <div className="collab-copy">
                 {story.paragraphs.map((paragraph, index) => (
-                  <p key={index}>{cleanCopy(paragraph)}</p>
+                  <p
+                    key={index}
+                    className={
+                      story.screenplay ? 'whitespace-pre-line' : undefined
+                    }
+                  >
+                    {story.screenplay
+                      ? paragraph
+                          .split('**')
+                          .map((part, position) =>
+                            position % 2 === 0 ? (
+                              part
+                            ) : (
+                              <strong key={position}>{part}</strong>
+                            ),
+                          )
+                      : cleanCopy(paragraph)}
+                  </p>
                 ))}
               </div>
             </section>

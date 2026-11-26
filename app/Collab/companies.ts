@@ -3,7 +3,12 @@ import references from './references.json';
 
 import type { Plate } from '../2000/deck';
 
-export type Story = { title: string; tag?: string; paragraphs: string[] };
+export type Story = {
+  title: string;
+  tag?: string;
+  tagHref?: string;
+  paragraphs: string[];
+};
 export type CostLine = { label: string; amount: number };
 export type CostGroup = { title: string; lines: CostLine[] };
 export type Company = {
@@ -18,7 +23,7 @@ export type Company = {
   results?: string[];
 };
 
-const vivaStories: Story[] = chapters.flatMap((chapter) =>
+export const vivaStories: Story[] = chapters.flatMap((chapter) =>
   chapter.blocks.flatMap((block) =>
     block.kind === 'copy' &&
     ['Sleep Tight', 'The Taxi Driver', 'The Tip'].includes(block.title ?? '') &&
@@ -33,7 +38,7 @@ const vivaStories: Story[] = chapters.flatMap((chapter) =>
       : [],
   ),
 );
-const vivaReferences = chapters.flatMap((chapter) =>
+export const vivaReferences = chapters.flatMap((chapter) =>
   chapter.blocks.flatMap((block) =>
     block.kind === 'justified' ? block.images : [],
   ),

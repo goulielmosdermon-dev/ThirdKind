@@ -85,7 +85,13 @@ export function CompanyPage({ company }: { company: Company }) {
                 <div className="collab-story-heading">
                   {story.title ? <h3>{story.title}</h3> : null}
                   {story.tag ? (
-                    <p className="collab-story-tag">{story.tag}</p>
+                    <p className="collab-story-tag">
+                      {story.tagHref ? (
+                        <a href={story.tagHref}>{story.tag}</a>
+                      ) : (
+                        story.tag
+                      )}
+                    </p>
                   ) : null}
                 </div>
               ) : null}

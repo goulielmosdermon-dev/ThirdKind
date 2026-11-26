@@ -147,10 +147,10 @@
 .collab-story-tag {
   display: inline-block;
   margin: 0 0 32px;
-  padding: 8px 12px;
-  border: 1px solid #000;
   font-size: 14px;
   line-height: 1;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 .collab-copy p {
   margin: 0 0 1.05em;

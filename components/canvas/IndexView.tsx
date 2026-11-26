@@ -75,7 +75,8 @@ const SLOT = [
 /** The band's opening paragraphs, before the argument it closes on. */
 const MANIFESTO_OPENING = [
   'Your creative partner, devoted (addicted, really) to telling stories that ring true to what a brand needs to say.',
-  'We believe in beyond: beyond the ordinary, beyond the mundane, beyond the moon, we look at the stars. The way brands talk is changing, and companies and organizations don’t just need to embrace creativity beyond the status quo. They have to.',
+  'We believe in beyond: beyond the ordinary, beyond the mundane, beyond the moon, we aim at the stars.',
+  'The way brands talk is changing, and companies and organizations don’t just need to embrace creativity beyond the status quo. They have to.',
 ];
 
 const MANIFESTO_LEAD =

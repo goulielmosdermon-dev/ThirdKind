@@ -17,11 +17,15 @@ export type Company = {
   name: string;
   quote: string[];
   proposalImage?: Plate;
+  closingImage?: Plate;
+  budgetVideo?: { src: string; width: number; height: number };
+  filmingSchedule?: { label: string; dates: string }[];
   observations: string[];
   stories?: Story[];
   why?: string;
   references: Plate[];
   costBook?: CostGroup[];
+  team?: { name: string; role: string; href: string }[];
   costBookTitle?: string;
   collapseCostBook?: boolean;
   process?: string[];

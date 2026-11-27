@@ -6,7 +6,7 @@ export const company: Company = {
   id: 'crediabank',
   name: 'CrediaBank',
   quote: [
-    'ThirdKind proposes a short film for CrediaBank’s «Σπίτι μου ΙΙΙ» campaign. In extreme slow motion, an exhausted tennis player misses twice and finally lands his third shot. His courtside celebration sets up a second win when he checks his phone and sees that his home loan has been approved.',
+    'Based on the brief by Credia Bank, ThirdKind proposes a short film for the «Σπίτι μου ΙΙΙ» campaign. In extreme slow motion, an exhausted tennis player misses twice and finally lands his third shot. His courtside celebration sets up a second win when he checks his phone and sees that his home loan has been approved.',
   ],
   proposalImage: {
     src: '/crediabank/references/amica-go-together-2.webp',
@@ -15,13 +15,19 @@ export const company: Company = {
     h: 1440,
   },
   observations: [],
+  closingImage: {
+    src: '/crediabank/closing.jpg',
+    alt: 'A tennis player smiles at his phone. CrediaBank. Η τράπεζά σου.',
+    w: 3840,
+    h: 2160,
+  },
   stories: [
     {
       title: '3η και τυχερή!',
       screenplay: true,
       paragraphs: [
         '**EXT. TENNIS COURT. DAY. EXTREME SLOW MOTION.**',
-        'A tennis player lies flat on his back on a sunlit hard court. Dozens of balls lie scattered around him. His chest rises and falls beneath a cream polo with a rust-striped collar. He wears short white tennis shorts and a faded terrycloth headband that barely holds back his thick, rounded Afro. He has a peculiar, expressive face. Even exhausted, one eyebrow sits a little higher than the other.',
+        'A tennis player lies flat on his back on a sunlit hard court. Dozens of balls lie scattered around him. His chest rises and falls beneath a cream polo with a rust-striped collar. He wears short white tennis shorts and a faded terrycloth headband that barely holds back his thick, curly hair. He has a peculiar, expressive face. Even exhausted, one eyebrow sits a little higher than the other.',
         'A ball drops into frame and bounces inches from his cheek. Only his eyes move.',
         '**VO**\n«Την πρώτη, ούτε που ασχολήθηκες…»',
         'The ball bounces away. Another lost point.',
@@ -34,7 +40,7 @@ export const company: Company = {
         '**VO**\n«Μήπως η τρίτη είναι η τυχερή σου;»',
         'He swings. For an instant, the ball flattens against the strings. It clears the net and lands just inside the far baseline.',
         '**It’s in.**',
-        'A huge grin breaks across his face. He leaps, fist raised, sweat flying from his Afro. We hold him at the top of the jump, celebrating a single forehand like he’s just won Wimbledon.',
+        'A huge grin breaks across his face. He leaps, fist raised, sweat flying from his curls. We hold him at the top of the jump, celebrating a single forehand like he’s just won Wimbledon.',
         '**MEDIUM SHOT:** A moment later, he’s sitting on the courtside bench, racket beside him, looking at his phone. His thumb stops mid-scroll. One eyebrow lifts. Then that grin comes back. He reads the message: **«Σπίτι μου ΙΙΙ»**.',
         '**«Το δάνειό σου εγκρίθηκε.»**',
         '**END CARD**\nΠρόγραμμα «Σπίτι μου ΙΙΙ»,\nμε την υποστήριξη της CrediaBank.',
@@ -44,17 +50,37 @@ export const company: Company = {
   ],
   why: 'Tennis feels familiar and fits a story about giving it another shot. An exhausted player lying on the court, with a ball bouncing inches from his face, is a hook from the first frame. In extreme slow motion, the spinning ball and the moment it hits the strings look spectacular. Tennis rewards persistence, so when that third shot finally lands, the victory feels earned. We carry that feeling into the final moment, when he learns his home loan has been approved. A blue tennis court would bring CrediaBank’s colours into every shot and give us room to work with different camera angles in one location. The court gives us a ready-made set, and shooting in daylight keeps the lighting setup simple.',
   references,
+  team: [
+    {
+      name: 'Goulielmos Dermon',
+      role: 'Director',
+      href: 'https://goulielmos.site',
+    },
+    {
+      name: 'Chris Hudson',
+      role: 'DoP',
+      href: 'https://www.c-hudson.com/',
+    },
+  ],
   costBookTitle: 'Budget',
+  filmingSchedule: [
+    { label: 'Estimated filming', dates: '14 December' },
+    { label: 'Post-production', dates: '15, 16, 17 and 18 December' },
+    { label: 'Delivery', dates: '19 December' },
+  ],
+  budgetVideo: {
+    src: '/crediabank/banner-loop.mp4',
+    width: 2206,
+    height: 946,
+  },
   collapseCostBook: true,
   costBook: [
     {
       title: 'Film costs',
       lines: [
         { label: 'Production management fee', amount: 1850 },
-        { label: 'Director’s fee', amount: 2000 },
-        { label: 'DoP fee', amount: 2000 },
         { label: 'Equipment', amount: 2000 },
-        { label: 'Crew', amount: 3200 },
+        { label: 'Crew', amount: 7200 },
         { label: 'Cast fee (to be confirmed)', amount: 500 },
         { label: 'Outfit (to be confirmed)', amount: 160 },
         { label: 'Locations (to be confirmed)', amount: 1000 },

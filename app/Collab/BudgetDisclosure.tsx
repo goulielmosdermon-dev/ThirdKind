@@ -16,6 +16,7 @@ export function BudgetDisclosure({
 
   return (
     <>
+      <span className="mb-3 block text-center text-sm">Estimated</span>
       <p className="mb-5 text-center text-[clamp(3rem,8vw,7rem)] leading-none tracking-tight">
         {total}
       </p>

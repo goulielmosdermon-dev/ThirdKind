@@ -175,6 +175,55 @@ export function CompanyPage({
           </ul>
         </section>
       ) : null}
+      {company.team?.length ? (
+        <section
+          className="collab-section collab-credits"
+          aria-labelledby={`${company.id}-team`}
+        >
+          <h2 id={`${company.id}-team`}>Team</h2>
+          <ul className="collab-copy">
+            {company.team.map(({ name, role, href }) => (
+              <li key={href}>
+                <a className="underline underline-offset-4" href={href}>
+                  {name}
+                </a>
+                <span className="block text-base">{role}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {company.budgetVideo ? (
+        <section aria-label="Campaign video">
+          <video
+            aria-label="Campaign video loop"
+            className="block h-auto w-full"
+            src={company.budgetVideo.src}
+            width={company.budgetVideo.width}
+            height={company.budgetVideo.height}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        </section>
+      ) : null}
+      {company.filmingSchedule?.length ? (
+        <section
+          className="collab-section collab-filming"
+          aria-labelledby={`${company.id}-filming`}
+        >
+          <h2 id={`${company.id}-filming`}>Filming</h2>
+          <dl className="collab-copy">
+            {company.filmingSchedule.map(({ label, dates }) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{dates}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ) : null}
       {company.costBook?.length ? (
         <CostBook
           id={`${company.id}-cost-book`}
@@ -195,6 +244,16 @@ export function CompanyPage({
             ))}
           </ul>
         </section>
+      ) : null}
+      {company.closingImage ? (
+        <Image
+          className="block h-auto w-full"
+          src={company.closingImage.src}
+          alt={company.closingImage.alt}
+          width={company.closingImage.w}
+          height={company.closingImage.h}
+          unoptimized
+        />
       ) : null}
       <footer className="collab-section collab-footer">
         <a

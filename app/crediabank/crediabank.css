@@ -5,7 +5,11 @@
 
 .crediabank .collab-header {
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2 / 1;
+}
+
+.crediabank .collab-hero-image {
+  object-position: center 74%;
 }
 
 .crediabank .collab-header h1 {
@@ -80,6 +84,34 @@
 
 .crediabank :is(.collab-cost-book h2, .collab-footer) {
   text-align: center;
+}
+
+.crediabank :is(.collab-credits, .collab-filming) {
+  text-align: center;
+}
+
+.crediabank .collab-filming :is(h2, dl) {
+  margin-inline: auto;
+}
+
+.crediabank .collab-filming dl {
+  display: grid;
+  gap: 1em;
+}
+
+.crediabank .collab-filming dt {
+  font-weight: 700;
+}
+
+.crediabank .collab-credits :is(h2, ul) {
+  margin-inline: auto;
+}
+
+.crediabank .collab-credits ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px clamp(32px, 8vw, 112px);
 }
 
 .crediabank .collab-reference-grid[data-view='grid'] img {

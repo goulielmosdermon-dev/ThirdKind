@@ -23,6 +23,7 @@ export type Company = {
   references: Plate[];
   costBook?: CostGroup[];
   costBookTitle?: string;
+  collapseCostBook?: boolean;
   process?: string[];
   results?: string[];
 };

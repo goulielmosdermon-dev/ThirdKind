@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { SlideUp } from './SlideUp';
 import { ReferenceGallery } from './ReferenceGallery';
 import { AgTeamGrid } from './AgTeamGrid';
+import { BudgetDisclosure } from './BudgetDisclosure';
 import headers from './headers.json';
 import type { Company } from './companies';
 
@@ -179,6 +180,7 @@ export function CompanyPage({
           id={`${company.id}-cost-book`}
           groups={company.costBook}
           title={company.costBookTitle}
+          collapsed={company.collapseCostBook}
         />
       ) : null}
       {company.results?.length ? (
@@ -220,10 +222,12 @@ function CostBook({
   id,
   groups,
   title = 'Cost Book',
+  collapsed = false,
 }: {
   id: string;
   groups: NonNullable<Company['costBook']>;
   title?: string;
+  collapsed?: boolean;
 }) {
   const showGroups = groups.length > 1;
   const total = groups.reduce(
@@ -235,37 +239,49 @@ function CostBook({
   return (
     <section className="collab-section collab-cost-book" aria-labelledby={id}>
       <h2 id={id}>{title}</h2>
-      <div className="collab-cost-book-list">
-        {groups.map((group) => {
-          const subtotal = group.lines.reduce(
-            (sum, line) => sum + line.amount,
-            0,
-          );
-          return (
-            <div key={group.title} className="collab-cost-group">
-              {showGroups ? <h3>{group.title}</h3> : null}
-              <ul>
-                {group.lines.map((line) => (
-                  <li key={line.label}>
-                    <span>{line.label}</span>
-                    <span>{formatMoney(line.amount)}</span>
-                  </li>
-                ))}
-                {showGroups ? (
-                  <li className="collab-cost-subtotal">
-                    <span>Subtotal</span>
-                    <span>{formatMoney(subtotal)}</span>
-                  </li>
-                ) : null}
-              </ul>
-            </div>
-          );
-        })}
-        <div className="collab-cost-total">
-          <span>Total</span>
-          <span>{formatMoney(total)}</span>
+      {collapsed ? (
+        <BudgetDisclosure
+          total={formatMoney(total)}
+          lines={groups.flatMap((group) =>
+            group.lines.map(({ label, amount }) => ({
+              label,
+              amount: formatMoney(amount),
+            })),
+          )}
+        />
+      ) : (
+        <div className="collab-cost-book-list">
+          {groups.map((group) => {
+            const subtotal = group.lines.reduce(
+              (sum, line) => sum + line.amount,
+              0,
+            );
+            return (
+              <div key={group.title} className="collab-cost-group">
+                {showGroups ? <h3>{group.title}</h3> : null}
+                <ul>
+                  {group.lines.map((line) => (
+                    <li key={line.label}>
+                      <span>{line.label}</span>
+                      <span>{formatMoney(line.amount)}</span>
+                    </li>
+                  ))}
+                  {showGroups ? (
+                    <li className="collab-cost-subtotal">
+                      <span>Subtotal</span>
+                      <span>{formatMoney(subtotal)}</span>
+                    </li>
+                  ) : null}
+                </ul>
+              </div>
+            );
+          })}
+          <div className="collab-cost-total">
+            <span>Total</span>
+            <span>{formatMoney(total)}</span>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

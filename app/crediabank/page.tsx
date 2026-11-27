@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 
 import { CompanyPage } from '../Collab/CompanyPage';
 import { company } from './company';
@@ -57,12 +58,14 @@ export default function Page() {
             </p>
           </div>
           <div
-            className="grid"
-            style={{
-              gridTemplateColumns: characterImages
-                .map(({ width, height }) => `minmax(0, ${width / height}fr)`)
-                .join(' '),
-            }}
+            className="collab-character-grid"
+            style={
+              {
+                '--character-columns': characterImages
+                  .map(({ width, height }) => `minmax(0, ${width / height}fr)`)
+                  .join(' '),
+              } as CSSProperties
+            }
           >
             {characterImages.map(({ file, alt, width, height }) => (
               <Image

@@ -78,6 +78,7 @@ export const company: Company = {
     },
   ],
   costBookTitle: 'Budget',
+  hideCostBook: true,
   filmingSchedule: [
     { label: 'Estimated filming', dates: '14 December' },
     { label: 'Post-production', dates: '15, 16, 17 and 18 December' },

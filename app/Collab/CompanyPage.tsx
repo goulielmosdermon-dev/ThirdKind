@@ -226,7 +226,7 @@ export function CompanyPage({
           </dl>
         </section>
       ) : null}
-      {company.costBook?.length ? (
+      {!company.hideCostBook && company.costBook?.length ? (
         <CostBook
           id={`${company.id}-cost-book`}
           groups={company.costBook}

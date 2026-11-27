@@ -25,6 +25,7 @@ export type Company = {
   why?: string;
   references: Plate[];
   costBook?: CostGroup[];
+  hideCostBook?: boolean;
   team?: { name: string; role: string; href: string }[];
   costBookTitle?: string;
   collapseCostBook?: boolean;

@@ -2,6 +2,21 @@ import references from './references.json';
 
 import type { Company } from '../Collab/companies';
 
+const filmCosts = [
+  { label: 'Production management fee', amount: 1850 },
+  { label: 'Equipment', amount: 2000 },
+  { label: 'Crew', amount: 7200 },
+  { label: 'Cast fee (to be confirmed)', amount: 500 },
+  { label: 'Voiceover actor (to be confirmed)', amount: 400 },
+  { label: 'Outfit (to be confirmed)', amount: 160 },
+  { label: 'Locations (to be confirmed)', amount: 1000 },
+  { label: 'Hair and makeup (HMU)', amount: 250 },
+  { label: 'Post-production fee (including all formats)', amount: 2500 },
+];
+const contingency =
+  Math.round(filmCosts.reduce((total, line) => total + line.amount, 0) * 5) /
+  100;
+
 export const company: Company = {
   id: 'crediabank',
   name: 'CrediaBank',
@@ -69,7 +84,7 @@ export const company: Company = {
     { label: 'Delivery', dates: '19 December' },
   ],
   budgetVideo: {
-    src: '/crediabank/banner-loop.mp4',
+    src: '/crediabank/banner-loop.mp4?v=2',
     width: 2206,
     height: 946,
   },
@@ -77,17 +92,7 @@ export const company: Company = {
   costBook: [
     {
       title: 'Film costs',
-      lines: [
-        { label: 'Production management fee', amount: 1850 },
-        { label: 'Equipment', amount: 2000 },
-        { label: 'Crew', amount: 7200 },
-        { label: 'Cast fee (to be confirmed)', amount: 500 },
-        { label: 'Outfit (to be confirmed)', amount: 160 },
-        { label: 'Locations (to be confirmed)', amount: 1000 },
-        { label: 'Hair and makeup (HMU)', amount: 250 },
-        { label: 'Contingency', amount: 400 },
-        { label: 'Post-production fee (including all formats)', amount: 2500 },
-      ],
+      lines: [...filmCosts, { label: 'Contingency (5%)', amount: contingency }],
     },
   ],
 };

@@ -194,10 +194,10 @@ export function CompanyPage({
         </section>
       ) : null}
       {company.budgetVideo ? (
-        <section aria-label="Campaign video">
+        <section className="collab-campaign-video" aria-label="Campaign video">
           <video
             aria-label="Campaign video loop"
-            className="block h-auto w-full"
+            className="pointer-events-none block h-auto w-full"
             src={company.budgetVideo.src}
             width={company.budgetVideo.width}
             height={company.budgetVideo.height}
@@ -205,6 +205,8 @@ export function CompanyPage({
             muted
             loop
             playsInline
+            disablePictureInPicture
+            disableRemotePlayback
           />
         </section>
       ) : null}
@@ -273,7 +275,8 @@ function formatMoney(amount: number) {
   return new Intl.NumberFormat('en-IE', {
     style: 'currency',
     currency: 'EUR',
-    maximumFractionDigits: 0,
+    minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
+    maximumFractionDigits: 2,
   }).format(amount);
 }
 

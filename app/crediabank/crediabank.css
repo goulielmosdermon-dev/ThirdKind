@@ -16,6 +16,18 @@
   clip-path: inset(50%);
 }
 
+.crediabank .collab-campaign-video {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2206 / 926;
+}
+
+.crediabank .collab-campaign-video video {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+}
+
 .crediabank .collab-proposal blockquote {
   margin-inline: auto;
   text-align: center;
